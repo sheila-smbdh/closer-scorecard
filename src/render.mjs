@@ -88,14 +88,17 @@ function page(body, width) {
   return `<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><style>${CSS}</style></head><body><div class="card ${width === 'wide' ? 'wide' : ''}">${body}</div></body></html>`;
 }
 
-// No-show: 8 · 3 confirmed (2 setter, 1 closer) / Cancel: 2 / Rescheduled: 1
+// No-show: 8 · 6 pre-call confirmation sent by closer / Cancel: 2 / Rescheduled: 1
 function showBreakdown(sr) {
   if (sr.noShow == null) return null;
   const c = sr.confirm;
   let ns = `No-show: <b>${sr.noShow}</b>`;
   if (c && sr.noShow) {
-    const who = [c.setter ? `${c.setter} setter` : '', c.closer ? `${c.closer} closer` : ''].filter(Boolean).join(', ');
-    ns += ` · ${c.confirmed} confirmed${who ? ` (${who})` : ''}`;
+    // "6 pre-call confirmation sent by closer", or "2 pre-call confirmation sent by setter, 1 by closer"
+    const parts = [[c.setter, 'setter'], [c.closer, 'closer']].filter(([n]) => n);
+    ns += parts.length
+      ? ` · ${parts.map(([n, who], i) => (i ? `${n} by ${who}` : `${n} pre-call confirmation sent by ${who}`)).join(', ')}`
+      : ' · 0 pre-call confirmation sent';
   }
   return `${ns}<br>Cancel: <b>${sr.cancel}</b><br>Rescheduled: <b>${sr.resched}</b>`;
 }
