@@ -9,7 +9,7 @@ export const TARGETS = {
   lateCloseHour: 17,       // calendars that close by 5pm ET most weekdays get a Focus item
   showRate: 0.8,
   avgRevenueFloor: 17500,  // MTD revenue generated / closes
-  monthlyCash: 200000,     // PROVISIONAL until per-closer targets come from the tracker DB
+  monthlyCash: 200000,     // fallback straight-line pace, only when the snapshot has no tracker pull
 };
 
 // Activity arrays: [booked calls, live calls, offers, closes, revenue generated, cash collected]
@@ -24,6 +24,15 @@ export function status(value, target) {
 }
 
 const pct = (a, b) => (b ? a / b : null);
+
+// Tracker pace.status -> tile color
+const TRACKER_STATUS = { ahead: 'hit', on_pace: 'hit', slightly_behind: 'almost', behind: 'missed' };
+
+// How the tracker set a closer's month target, for the cash tile's small text
+export const TARGET_SOURCE = {
+  hand_set: 'set by leadership', new_rep_ramp: 'new-closer ramp', roster_dollars: 'from the roster',
+  auto_split: 'share of team goal', ramping_no_target: 'no target yet',
+};
 
 // Booked/showed for one closer over [from, to] ("MM-DD"). EOD Tracker is the source of truth; a day the
 // closer has no EOD report for is filled from the Sales Tracker. No-show/cancel/reschedule only exist in EOD.
@@ -100,13 +109,26 @@ export function closerMetrics(data, closer, edition) {
   avgRevenue.status = avgRevenue.value == null ? 'track'
     : avgRevenue.value >= TARGETS.avgRevenueFloor ? 'hit' : 'missed';
 
-  const cashExpected = newHire ? null
-    : TARGETS.monthlyCash * (bdElapsed / data.month.business_days);
-  const cash = {
-    value: mtd[CASH], expected: cashExpected, monthTarget: newHire ? null : TARGETS.monthlyCash,
-    status: status(mtd[CASH], cashExpected),
-    paceRatio: cashExpected ? mtd[CASH] / cashExpected : null,
-  };
+  // Cash pace: the tracker read API (back-loaded month curve, per-closer targets) when the snapshot has it
+  const tp = data.tracker?.through?.slice(5) === ed.through_key ? data.tracker.closers?.[closer.key] : null;
+  let cash;
+  if (tp) {
+    const hasPace = tp.expected_cash != null && tp.target_source !== 'ramping_no_target';
+    cash = {
+      value: tp.cash, expected: hasPace ? tp.expected_cash : null, monthTarget: hasPace ? tp.month_target : null,
+      targetSource: tp.target_source, source: 'tracker', salesTrackerCash: mtd[CASH],
+      status: hasPace ? (TRACKER_STATUS[tp.status] ?? status(tp.cash, tp.expected_cash)) : 'track',
+      paceRatio: hasPace ? tp.pct_of_pace ?? (tp.expected_cash ? tp.cash / tp.expected_cash : null) : null,
+    };
+  } else {
+    const cashExpected = newHire ? null
+      : TARGETS.monthlyCash * (bdElapsed / data.month.business_days);
+    cash = {
+      value: mtd[CASH], expected: cashExpected, monthTarget: newHire ? null : TARGETS.monthlyCash, source: 'provisional',
+      status: status(mtd[CASH], cashExpected),
+      paceRatio: cashExpected ? mtd[CASH] / cashExpected : null,
+    };
+  }
 
   const revPerCall = { value: mtdBS.booked ? mtd[REV] / mtdBS.booked : null, rev: mtd[REV], calls: mtdBS.booked, status: 'track' };
 
@@ -203,6 +225,16 @@ export function runFlags(data, metrics, edition) {
     if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
     if (m.pipeline?.nonstandard) flags.push(`${k}: ${m.pipeline.nonstandard} open pipeline leads have no standard status.`);
     if (!m.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
+    if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {
+      flags.push(`${k}: cash through ${ed.through} is $${m.cash.value?.toLocaleString('en-US')} in the tracker, $${m.cash.salesTrackerCash?.toLocaleString('en-US')} in the Sales Tracker snapshot.`);
+    }
+    if (m.cash.source === 'tracker' && m.cash.status === 'track' && !m.newHire) flags.push(`${k}: tracker has no cash target (${m.cash.targetSource ?? 'unknown'}).`);
+  }
+  const t = data.tracker;
+  if (!t || t.through?.slice(5) !== ed.through_key) flags.push(`Cash pace: no tracker pull through ${ed.through}; used the provisional $200K straight-line pace.`);
+  else {
+    if (t.all_checks_pass === false) flags.push(`Tracker checks failed: ${t.failed_checks.join('; ') || 'see /api/read/closers'}.`);
+    if (t.unmatched?.length) flags.push(`Tracker has no row for ${t.unmatched.join(', ')}; their cash pace is provisional.`);
   }
   return flags;
 }
