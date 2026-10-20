@@ -5,6 +5,8 @@ Weekly scorecard image for each closer, plus a Monday leadership table.
 - **Monday 8:00am ET**: last week's final numbers (Mon to Sun) to each closer, and the leadership table.
 - **Wednesday 8:00am ET**: this week so far, with pace against target.
 
+Start with `docs/HANDOFF.md` for decisions and next steps.
+
 Status: **samples only, awaiting leadership sign-off.** Nothing is scheduled and nothing is sent to closers yet.
 
 ## Build the samples
@@ -29,7 +31,7 @@ Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin ar
 | Booked calls | Scheduled calls in the week (Mon to Sun) | 20 a week, 4 a workday (fully ramped). New hires: their own targets (pending) | EOD Tracker; any day without an EOD report is filled from Sales Tracker `Inputs`, and that merged total is the source of truth (also for month to date, revenue per call and month over month) |
 | Show rate | Showed ÷ booked, same week. Small text: No-show (with how many got a text/email confirmation the day before or same day, split setter vs closer), Cancel, Rescheduled | 80% | EOD Tracker (+ Sales Tracker fills); confirmations from Close |
 | Average revenue | Revenue generated ÷ closes (Close 1), month to date | Floor $17,500 (pass/fail) | `Inputs` / `Leaderboard` |
-| Cash collected pace | Cash collected MTD vs monthly target × business days elapsed ÷ business days in month | $200K a month **provisional** until per-closer targets come from the tracker DB | `Inputs` |
+| Cash collected pace | Samples: cash MTD vs $200K × business days elapsed ÷ business days (provisional). Next: tracker read API `pace.expected_cash` on the tracker's back-loaded curve and each closer's real `month_target` | Per-closer target from the tracker | `/api/read/closers` (`TRACKER_READ_TOKEN`) |
 | Projected closes | Open **High Confidence + Soft Verbal / Reengaged** leads in the closer's current-month section. WIP (Working / Good Call) shown in small type, not counted | None (tracked) | Pipeline Review, closer tabs |
 | Pipeline accuracy | Of last Monday's projected leads, how many are Closed or Signed by Sunday | None (tracked) | Weekly pipeline snapshot (starts first Monday after launch) |
 | Revenue per call | Revenue generated ÷ booked calls (EOD + fills), month to date | None (tracked) | `Inputs` + EOD Tracker |
@@ -50,8 +52,8 @@ Revenue generated is contract value booked at close; cash collected is money act
 
 1. Leadership sign-off on layout and definitions.
 2. Oliver and Tyler new-hire targets.
-3. Tracker Supabase URL + service-role key as environment secrets (Zain), for per-closer cash targets.
-4. Direct Calendly + Google Calendar slot count (see `docs/ROUTINE_DRAFT.md`). The discovery event is a round-robin ("Discovery Call with SMB Deal Hunter Pro", Enrollment Team), so per-closer slots come from each host's availability, not the pooled event.
+3. Switch cash pace to the tracker read API (`TRACKER_READ_TOKEN` is set; see `docs/HANDOFF.md`).
+4. Direct Calendly slot count to cross-check Messi (the discovery event is a round-robin, so per-closer slots come from each host's availability).
 5. Closers clean up pipeline statuses.
 
 ## Run flags
