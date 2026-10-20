@@ -1,0 +1,1594 @@
+{
+ "_note": "Friday pipeline report sample, pulled 2026-10-20 (Tue) for sign-off. pipeline_leads: each closer's October section of Pipeline Review as [name, status, expected cash (col D), Closed? (col F)].",
+ "report_date": "2026-10-20",
+ "month": "October",
+ "month_key": "2026-10",
+ "closers": [
+  {
+   "key": "Owen",
+   "name": "Owen Henderson",
+   "short": "Owen",
+   "slack": "U08PHDM1HFE",
+   "new_hire": false
+  },
+  {
+   "key": "Adam",
+   "name": "Adam Larkins",
+   "short": "Adam",
+   "slack": "U09PVSS26GM",
+   "new_hire": false
+  },
+  {
+   "key": "JZ",
+   "name": "Jordan Zadrozny",
+   "short": "JZ",
+   "slack": "U06TMEKK9E1",
+   "new_hire": false
+  },
+  {
+   "key": "VeJohn",
+   "name": "VeJohn C Heinemann",
+   "short": "VeJohn",
+   "slack": "U09TW8ZC6HF",
+   "new_hire": false
+  },
+  {
+   "key": "Julien",
+   "name": "Julien Breteau",
+   "short": "Julien",
+   "slack": "U0B01Q061B6",
+   "new_hire": false
+  },
+  {
+   "key": "Nick",
+   "name": "Nick Vaughan",
+   "short": "Nick",
+   "slack": "U0AUK90SG3A",
+   "new_hire": false
+  },
+  {
+   "key": "Omar",
+   "name": "Omar Kaddoura",
+   "short": "Omar",
+   "slack": "U08U0S37C0P",
+   "new_hire": false
+  },
+  {
+   "key": "Harry",
+   "name": "Harry Whyte",
+   "short": "Harry",
+   "slack": "U0BA8C73GK1",
+   "new_hire": false
+  },
+  {
+   "key": "Solomon",
+   "name": "Solomon House",
+   "short": "Solomon",
+   "slack": "U0BMBFU1UHH",
+   "new_hire": false
+  },
+  {
+   "key": "Daniel",
+   "name": "Daniel Jenkins",
+   "short": "Daniel",
+   "slack": "U0BKT632M9Q",
+   "new_hire": false
+  },
+  {
+   "key": "Kevin",
+   "name": "Kevin Manuel",
+   "short": "Kevin",
+   "slack": "U0BK51SUY8Z",
+   "new_hire": false
+  },
+  {
+   "key": "Oliver",
+   "name": "Oliver English",
+   "short": "Oliver",
+   "slack": "U0C4C8J3N05",
+   "new_hire": true
+  },
+  {
+   "key": "Tyler",
+   "name": "Tyler Johnson",
+   "short": "Tyler",
+   "slack": "U0C4MFY6EBC",
+   "new_hire": true
+  }
+ ],
+ "pipeline_leads": {
+  "Owen": [
+   [
+    "Gee Vee",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Nick Traf",
+    "Closed",
+    "$19,000.00",
+    "TRUE"
+   ],
+   [
+    "Josh Scoresby",
+    "Closed",
+    "$18,000.00",
+    "TRUE"
+   ],
+   [
+    "Brad Feur",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Mattew Benn",
+    "Soft Verbal / Reengaged",
+    "$19,000.00",
+    "FALSE"
+   ],
+   [
+    "John Fritzel / JST holdings",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Bob Kelley",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Karen Wood",
+    "Working / Good call",
+    "$19,000.00",
+    "FALSE"
+   ],
+   [
+    "Matt Susk",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Bill Klein",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Anthony Perez",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Dave Stefsnski",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Hemal Shah",
+    "High Confidence",
+    "$19,000.00",
+    "FALSE"
+   ],
+   [
+    "Benjamin Jolloff",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Imran Maj",
+    "Working / Good call",
+    "$19,000.00",
+    "FALSE"
+   ],
+   [
+    "David Foster / Son",
+    "High Confidence",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Brian Delany",
+    "High Confidence",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Robbie Adams",
+    "Working / Good call",
+    "$20,000.00",
+    "FALSE"
+   ]
+  ],
+  "JZ": [
+   [
+    "Christina Blair",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Jamal Giddens",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Matt Matherne",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Jake Israel",
+    "Delayed",
+    "$19,000.00",
+    ""
+   ],
+   [
+    "Sankey Alexander",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Jason Bushan",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Joe Cleary",
+    "High Confidence",
+    "$15,000.00",
+    ""
+   ],
+   [
+    "Ryan Santwire",
+    "Soft Verbal / Reengaged",
+    "$15,000.00",
+    ""
+   ],
+   [
+    "Adam Fiala",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Zach Agopian",
+    "Working / Good call",
+    "$17,500.00",
+    ""
+   ],
+   [
+    "Lorenzo Hoff",
+    "High Confidence",
+    "$15,000.00",
+    ""
+   ],
+   [
+    "Connor Barbare",
+    "Soft Verbal / Reengaged",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Daniel Oh",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Rob L'amour",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Natasha Kiemnec",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Jerry Tolochko",
+    "Soft Verbal / Reengaged",
+    "$15,000.00",
+    ""
+   ]
+  ],
+  "Adam": [
+   [
+    "Javiar Potasman",
+    "Soft Verbal / Reengaged",
+    "$15,000.00",
+    ""
+   ],
+   [
+    "Melissa Parker",
+    "Closed",
+    "$17,500.00",
+    ""
+   ],
+   [
+    "Nick Patel",
+    "Delayed",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Doug Schaaf",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Kyle Sheppard",
+    "High Confidence",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Jacinta Chadwick",
+    "Working / Good call",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Rena Chen",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Marko Knezevic",
+    "High Confidence",
+    "$15,000.00",
+    ""
+   ],
+   [
+    "Anna Dev",
+    "Signed",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Ralph Plaskett",
+    "Closed",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Chad Perez",
+    "Delayed",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Chad Kirschenblatt",
+    "Delayed",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Joe Lashinger",
+    "Working / Good call",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Manpreet Bawa",
+    "Delayed",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Gafar Odufuye",
+    "High Confidence",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Joe Ngassa",
+    "Soft Verbal / Reengaged",
+    "$15,000.00",
+    ""
+   ],
+   [
+    "Jon Price",
+    "Lost",
+    "$15,000.00",
+    ""
+   ],
+   [
+    "Chris Brehm",
+    "High Confidence",
+    "$18,000.00",
+    ""
+   ]
+  ],
+  "VeJohn": [
+   [
+    "Sonia Barts",
+    "Closed",
+    "$16,000.00",
+    "TRUE"
+   ],
+   [
+    "Jack Walsh",
+    "Closed",
+    "$16,000.00",
+    "TRUE"
+   ],
+   [
+    "Shawn O'Donnell",
+    "Closed",
+    "$16,000.00",
+    "TRUE"
+   ],
+   [
+    "Josh Bonifield",
+    "Delayed",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Margot Slamkowski",
+    "Delayed",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Kellen Groves",
+    "Closed",
+    "$15,000.00",
+    "TRUE"
+   ],
+   [
+    "Matt Sole",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Nic Green",
+    "High Confidence",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Steve Janowiak",
+    "Working / Good call",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Robbie Gergly",
+    "High Confidence",
+    "$15,000.00",
+    "FALSE"
+   ],
+   [
+    "Ross Wigon",
+    "High Confidence",
+    "$15,000.00",
+    "FALSE"
+   ],
+   [
+    "Thomas Graff",
+    "Soft Verbal / Reengaged",
+    "$16,000.00",
+    "FALSE"
+   ]
+  ],
+  "Julien": [
+   [
+    "Joel Lewis",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "Michael Betourney",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Dean Julia",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Clement Attakora & Andrew Gray",
+    "Working / Good call",
+    "",
+    "FALSE"
+   ],
+   [
+    "Milica Arion",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Leah Zilla",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "Pavan Battula",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Meagan Bamba-Ba",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "Brian Carvajal",
+    "Signed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Michelle & Steve Anderson",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Bhargav Teja Anusuri",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Peyton Bowman",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "Jonathan Fuisz",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "David Hua",
+    "Working / Good call",
+    "",
+    "FALSE"
+   ],
+   [
+    "Rob Shuhy",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "Frederick Wallenmaeir",
+    "Working / Good call",
+    "",
+    "FALSE"
+   ],
+   [
+    "Scott Fife",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Jack Carr",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Chad Robins",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Robert Wales",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Harish Shahi",
+    "Delayed",
+    "",
+    "FALSE"
+   ],
+   [
+    "Anshul Pandey",
+    "Working / Good call",
+    "",
+    "FALSE"
+   ],
+   [
+    "Jullie & Chris Li",
+    "Closed",
+    "$15,000.00",
+    "TRUE"
+   ],
+   [
+    "Monica Lee",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "David Gilio",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "Elliott Benedict",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ],
+   [
+    "Brianna Bermudez",
+    "High Confidence",
+    "",
+    "FALSE"
+   ],
+   [
+    "Danielle Aroeste",
+    "High Confidence",
+    "",
+    "FALSE"
+   ],
+   [
+    "Tyler Noyes",
+    "Soft Verbal / Reengaged",
+    "",
+    "FALSE"
+   ]
+  ],
+  "Nick": [
+   [
+    "Matt Macleod",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Amitabh Deo",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Zachary Carmichael",
+    "Closed",
+    "20000",
+    ""
+   ],
+   [
+    "Joseph Elishmereni",
+    "Delayed",
+    "",
+    ""
+   ],
+   [
+    "Keith Johnson III",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Jacob Miller",
+    "Closed",
+    "15000",
+    ""
+   ],
+   [
+    "Gunnar Schultz",
+    "Closed",
+    "16000",
+    ""
+   ],
+   [
+    "Michael Kasseris",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Derek Neuman",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Wesley Frommel",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Dan Bailey",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Chris Vinar",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Will Gray",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Steve Poleskey",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "George Willis",
+    "Delayed",
+    "",
+    ""
+   ],
+   [
+    "Gurkirat (Prince) Mundeir",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Levon Kololyan",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Demetrios Christofidis",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Ravi",
+    "Sent Contact",
+    "",
+    ""
+   ],
+   [
+    "Andre Zukerman",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Joshua Thompson",
+    "Delayed",
+    "",
+    ""
+   ],
+   [
+    "Dean Van Patten",
+    "Delayed",
+    "",
+    ""
+   ],
+   [
+    "D.A. McComas",
+    "Delayed",
+    "",
+    ""
+   ],
+   [
+    "Vijay Kumar",
+    "Delayed",
+    "",
+    ""
+   ],
+   [
+    "Maxwell Mickey",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Eric McCue",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Jonathan Baldwin",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Eric Rubinstein",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Tyler Mounce",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Alexandra Hirt",
+    "Closed",
+    "18000",
+    ""
+   ],
+   [
+    "Angelo Kramvis",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Austin Junker",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Ricky Lora",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Martin Smith",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Katrina Nowosielski",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Robyn Horvath",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Ryan Paterno",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Dan Housley",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Menny Shalom",
+    "Warm - Reviewing info.",
+    "",
+    ""
+   ],
+   [
+    "Jared Goldenberg",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Natalia Robert-Nunez",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ],
+   [
+    "Jack Hammond",
+    "Responsive - Luke Warm",
+    "",
+    ""
+   ]
+  ],
+  "Omar": [
+   [
+    "Mike King (& Wife)",
+    "Soft Verbal / Reengaged",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "John Eaves (& Van)",
+    "High Confidence",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Thomas Aellis & Partner Steve",
+    "Working / Good call",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Chase Countryman & Alicia",
+    "Soft Verbal / Reengaged",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Alex Cabrera",
+    "Soft Verbal / Reengaged",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Christina Sanini & Husband Kevin",
+    "Working / Good call",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Lia Meden",
+    "Soft Verbal / Reengaged",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Stephen Mull",
+    "Working / Good call",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "William and Jennifer Reau",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Luke Smith",
+    "High Confidence",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Ben Ellis",
+    "Soft Verbal / Reengaged",
+    "$18,000.00",
+    "FALSE"
+   ],
+   [
+    "Nadim Qureshi",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Harry Ostrander",
+    "Working / Good call",
+    "$18,000.00",
+    "FALSE"
+   ]
+  ],
+  "Harry": [
+   [
+    "Dave Leresche",
+    "Closed",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Kevin and Ben Pratt",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Talwinder Kaila",
+    "",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Kevin Gindi",
+    "Delayed",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Carlos Sanchez",
+    "Delayed",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Pai Her",
+    "Soft Verbal / Reengagd",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Leah and John Tressler",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Ryan Meade",
+    "Delayed",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Dustin Schwichtenberg",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Andre Sakai",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "James Chang",
+    "Delayed",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Lisle Elliman",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Clay Kersterson",
+    "Closed",
+    "$19,000.00",
+    ""
+   ],
+   [
+    "Peter Herskovitz",
+    "Working / Good call",
+    "$18,000.00",
+    ""
+   ],
+   [
+    "Bruce Graham",
+    "Delayed",
+    "$17,500.00",
+    ""
+   ],
+   [
+    "Paul Passalino",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Crystal Chao",
+    "",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Ari Brownstein",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Payel Chowdhury",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Kirk Yogan",
+    "",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Mike Perinotti",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Jeffery and Derek",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Jack Morrissey",
+    "High Confidence",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Robert Beaton",
+    "Delayed",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Austin Malotke",
+    "Delayed",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Ryan Holgrem",
+    "Closed",
+    "$19,000.00",
+    ""
+   ],
+   [
+    "Will Donaldson",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Keshav",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ],
+   [
+    "Ben Smith",
+    "Working / Good call",
+    "$20,000.00",
+    ""
+   ]
+  ],
+  "Kevin": [
+   [
+    "Jake Philo",
+    "High Confidence",
+    "$18,000",
+    ""
+   ],
+   [
+    "Chynna VanArsdale",
+    "Working / Good Call",
+    "$18,000",
+    ""
+   ],
+   [
+    "Andrew Ie",
+    "Working / Good Call",
+    "$20,000",
+    ""
+   ],
+   [
+    "Jonathan Machado",
+    "Working / Good Call",
+    "$20,000",
+    ""
+   ],
+   [
+    "Nicolle Endoso",
+    "Working / Good Call",
+    "$18,000",
+    ""
+   ],
+   [
+    "Sam Charles",
+    "Delayed",
+    "$17,000",
+    ""
+   ],
+   [
+    "Vijay Bhaskar Gaddam",
+    "High Confidence",
+    "$18,000",
+    ""
+   ],
+   [
+    "Dave Young",
+    "Closed",
+    "$18,000",
+    ""
+   ],
+   [
+    "Kye Dipboye",
+    "Delayed",
+    "$18,000",
+    ""
+   ],
+   [
+    "Tyler Nortillo",
+    "Closed",
+    "$18,000",
+    ""
+   ],
+   [
+    "Taylor Crane",
+    "Soft Verbal / Reengaged",
+    "$18,000",
+    ""
+   ],
+   [
+    "James Lee",
+    "Soft Verbal / Reengaged",
+    "$20,000",
+    ""
+   ]
+  ],
+  "Solomon": [
+   [
+    "Joseph St Germain",
+    "",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Blake Izabal",
+    "Delayed",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Steve Schrag",
+    "",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Victor Schaefer",
+    "Delayed",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Alex Sinunu",
+    "Delayed",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Jon Levine",
+    "",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Chris Fenimore",
+    "",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Betty Lee",
+    "Closed",
+    "$16,000.00",
+    "TRUE"
+   ],
+   [
+    "Jerry Cucinella",
+    "",
+    "$20,000.00",
+    "FALSE"
+   ],
+   [
+    "Naveen Pitchandi",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Domonic Moore",
+    "Closed",
+    "$20,000.00",
+    "TRUE"
+   ],
+   [
+    "Collin Croskery",
+    "Verbal",
+    "$20,000.00",
+    "FALSE"
+   ]
+  ],
+  "Daniel": [
+   [
+    "Justin Heo",
+    "Working / Good Call",
+    "18000",
+    ""
+   ],
+   [
+    "Saqib Jamal",
+    "Soft Verbal / Reengaged",
+    "20000",
+    ""
+   ],
+   [
+    "Becca Price/Rusell McKee",
+    "Soft Verbal / Reengaged",
+    "15000",
+    ""
+   ],
+   [
+    "Pradepthi",
+    "High Confidence",
+    "20000",
+    ""
+   ],
+   [
+    "John Mallott",
+    "Working / Good Call",
+    "$18,000",
+    ""
+   ],
+   [
+    "Jaimi Truhler",
+    "Soft Verbal / Reengaged",
+    "$17,500",
+    ""
+   ],
+   [
+    "Tim Carkin",
+    "High Confidence",
+    "18000",
+    ""
+   ],
+   [
+    "Vikram Jalli",
+    "Working / Good Call",
+    "16000",
+    ""
+   ],
+   [
+    "Ari Ruden",
+    "Working / Good Call",
+    "18000",
+    ""
+   ],
+   [
+    "Ryan Noble",
+    "Soft Verbal / Reengaged",
+    "20000",
+    ""
+   ],
+   [
+    "Venkatesh Rajan",
+    "Soft Verbal / Reengaged",
+    "20000",
+    ""
+   ],
+   [
+    "Bob Bruennig",
+    "Soft Verbal / Reengaged",
+    "20000",
+    ""
+   ],
+   [
+    "Molly Hennessy",
+    "High Confidence",
+    "20000",
+    ""
+   ],
+   [
+    "Ryan Lopez",
+    "Soft Verbal / Reengaged",
+    "20000",
+    ""
+   ],
+   [
+    "Michael Chunn",
+    "Soft Verbal / Reengaged",
+    "17,500",
+    ""
+   ],
+   [
+    "Gareth Cheng",
+    "Soft Verbal / Reengaged",
+    "15,000",
+    ""
+   ]
+  ]
+ },
+ "tracker": {
+  "through": "2026-10-18",
+  "generated_at": "2026-10-20T19:52:41.047Z",
+  "data_pulled_at": "2026-10-20T19:33:06.754Z",
+  "all_checks_pass": true,
+  "failed_checks": [],
+  "targets_note": null,
+  "unmatched": [],
+  "closers": {
+   "Owen": {
+    "tracker_name": "Owen",
+    "rep_id": "owen",
+    "month_target": 416738,
+    "target_source": "auto_split",
+    "cash": 97000,
+    "expected_cash": 159692,
+    "pct_of_pace": 0.6074,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 97000
+   },
+   "Adam": {
+    "tracker_name": "Adam L",
+    "rep_id": "adam-l",
+    "month_target": 285178,
+    "target_source": "auto_split",
+    "cash": 68000,
+    "expected_cash": 109279,
+    "pct_of_pace": 0.6223,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 68000
+   },
+   "JZ": {
+    "tracker_name": "Jay Z",
+    "rep_id": "jay-z",
+    "month_target": 362873,
+    "target_source": "auto_split",
+    "cash": 37500,
+    "expected_cash": 139051,
+    "pct_of_pace": 0.2697,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 37500
+   },
+   "VeJohn": {
+    "tracker_name": "VeJohn",
+    "rep_id": "vejohn",
+    "month_target": 265582,
+    "target_source": "auto_split",
+    "cash": 81000,
+    "expected_cash": 101770,
+    "pct_of_pace": 0.7959,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 81000
+   },
+   "Julien": {
+    "tracker_name": "Julien",
+    "rep_id": "julien",
+    "month_target": 195174,
+    "target_source": "auto_split",
+    "cash": 15000,
+    "expected_cash": 74790,
+    "pct_of_pace": 0.2006,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 15000
+   },
+   "Nick": {
+    "tracker_name": "Nick",
+    "rep_id": "nick",
+    "month_target": 286163,
+    "target_source": "auto_split",
+    "cash": 69000,
+    "expected_cash": 109656,
+    "pct_of_pace": 0.6292,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 69000
+   },
+   "Omar": {
+    "tracker_name": "Omar",
+    "rep_id": "omar",
+    "month_target": 275922,
+    "target_source": "auto_split",
+    "cash": 15000,
+    "expected_cash": 105732,
+    "pct_of_pace": 0.1419,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 55000
+   },
+   "Harry": {
+    "tracker_name": "Harry",
+    "rep_id": "harry",
+    "month_target": 260757,
+    "target_source": "auto_split",
+    "cash": 39000,
+    "expected_cash": 99921,
+    "pct_of_pace": 0.3903,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 58000
+   },
+   "Solomon": {
+    "tracker_name": "Solomon",
+    "rep_id": "solomon",
+    "month_target": 200000,
+    "target_source": "new_rep_ramp",
+    "cash": 56000,
+    "expected_cash": 76639,
+    "pct_of_pace": 0.7307,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 56000
+   },
+   "Daniel": {
+    "tracker_name": "Daniel",
+    "rep_id": "daniel",
+    "month_target": 200000,
+    "target_source": "new_rep_ramp",
+    "cash": 0,
+    "expected_cash": 76639,
+    "pct_of_pace": 0,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 0
+   },
+   "Kevin": {
+    "tracker_name": "Kevin",
+    "rep_id": "kevin",
+    "month_target": 200000,
+    "target_source": "new_rep_ramp",
+    "cash": 42000,
+    "expected_cash": 76639,
+    "pct_of_pace": 0.548,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 42000
+   },
+   "Oliver": {
+    "tracker_name": "Oliver",
+    "rep_id": "oliver",
+    "month_target": 51613,
+    "target_source": "new_rep_ramp",
+    "cash": 0,
+    "expected_cash": 19778,
+    "pct_of_pace": 0,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 0
+   },
+   "Tyler": {
+    "tracker_name": "Tyler",
+    "rep_id": "tyler",
+    "month_target": 0,
+    "target_source": "ramping_no_target",
+    "cash": null,
+    "expected_cash": null,
+    "pct_of_pace": null,
+    "status": null,
+    "through_date": "2026-10-18",
+    "cash_mtd": 0
+   }
+  }
+ },
+ "as_of_label": "Tue Oct 20 (sample)",
+ "cash_label": "cash collected month to date from the 2M tracker, through 2026-10-18"
+}
