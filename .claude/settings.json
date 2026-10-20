@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run tracker:*)",
+      "Bash(npm run -s tracker:*)",
+      "Bash(node src/fetch-tracker.mjs:*)"
+    ]
+  }
+}
