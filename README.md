@@ -31,7 +31,7 @@ Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin ar
 | Day by day | Per day: open slots offered (dotted box: 45-min starts inside Calendly hours left free on Google Calendar, discovery calls included), booked calls (solid), showed (dark) | 5 slots, 4 booked, 3 showed a day | Google Calendar + Calendly hours, `Inputs` |
 | Average revenue | Revenue generated ÷ closes (Close 1), month to date | Floor $17,500 (pass/fail) | `Inputs` / `Leaderboard` |
 | Cash collected pace | Cash collected MTD vs monthly target × business days elapsed ÷ business days in month | $200K a month **provisional** until per-closer targets come from the tracker DB | `Inputs` |
-| Projected closes | Open **High Confidence + Soft Verbal / Reengaged** leads in the closer's current-month section. Working / Good Call shown in small type, not counted | None (tracked) | Pipeline Review, closer tabs |
+| Projected closes | Open **High Confidence + Soft Verbal / Reengaged** leads in the closer's current-month section. WIP (Working / Good Call) shown in small type, not counted | None (tracked) | Pipeline Review, closer tabs |
 | Pipeline accuracy | Of last Monday's projected leads, how many are Closed or Signed by Sunday | None (tracked) | Weekly pipeline snapshot (starts first Monday after launch) |
 | Revenue per call | Revenue generated ÷ booked calls, month to date | None (tracked) | `Inputs` |
 | Closes | Close 1 in the week, with revenue generated | None (tracked) | `Inputs` |
