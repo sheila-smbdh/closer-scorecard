@@ -59,7 +59,7 @@ export function closerMetrics(data, closer, edition) {
   const showRate = {
     value: pct(showed, booked), live: showed, booked, target: TARGETS.showRate,
     noShow: eod ? eodWeek[2] : null, cancel: eod ? eodWeek[3] : null, resched: eod ? eodWeek[4] : null,
-    confirm: data.confirmations?.[edition]?.[closer.key] ?? null,
+    confirm: data.noshow_confirm?.[edition]?.[closer.key] ?? null,
   };
   showRate.status = booked ? status(showRate.value, TARGETS.showRate) : 'track';
 
@@ -159,7 +159,7 @@ export function winsAndFixes(m) {
 
   if (m.showRate.status === 'hit') wins.push(['Show rate', `${fmtPct(m.showRate.value)}, target 80%.`]);
   else if (m.showRate.status !== 'track') fixes.push(['Show rate', m.showRate.confirm?.total
-    ? `${fmtPct(m.showRate.value)}. ${m.showRate.confirm.texted} of ${m.showRate.confirm.total} misses got a same-day text.`
+    ? `${fmtPct(m.showRate.value)}. ${m.showRate.confirm.confirmed} of ${m.showRate.noShow} no-shows were confirmed.`
     : `${fmtPct(m.showRate.value)}, target 80%.`]);
 
   if (m.calendar?.closesEarly && !m.calendar.away) fixes.push(['Later slots', `Calendar closes ${m.calendar.usualText}. Open slots after 5pm ET.`]);

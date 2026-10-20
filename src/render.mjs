@@ -104,18 +104,16 @@ function page(body, width) {
   return `<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><style>${CSS}</style></head><body><div class="card ${width === 'wide' ? 'wide' : ''}">${body}</div></body></html>`;
 }
 
-// "8 no-show · 2 cancelled · 1 rescheduled", then how many of the missed calls got a same-day text
+// No-show: 8 · 3 confirmed (2 setter, 1 closer) / Cancel: 2 / Rescheduled: 1
 function showBreakdown(sr) {
   if (sr.noShow == null) return null;
-  const parts = [[sr.noShow, 'no-show'], [sr.cancel, 'cancelled'], [sr.resched, 'rescheduled']].filter(([n]) => n);
-  if (!parts.length) return null;
-  let html = `Didn't show: ${parts.map(([n, l]) => `${n} ${l}`).join(' · ')}`;
   const c = sr.confirm;
-  if (c && c.total) {
-    const who = [c.setter ? `${c.setter} setter` : '', c.closer ? `${c.closer} you` : '', c.other ? `${c.other} other` : ''].filter(Boolean).join(', ');
-    html += `<br>Same-day text on no-shows/cancels: ${c.texted} of ${c.total}${who ? ` (${who})` : ''}`;
+  let ns = `No-show: <b>${sr.noShow}</b>`;
+  if (c && sr.noShow) {
+    const who = [c.setter ? `${c.setter} setter` : '', c.closer ? `${c.closer} closer` : ''].filter(Boolean).join(', ');
+    ns += ` · ${c.confirmed} confirmed${who ? ` (${who})` : ''}`;
   }
-  return html;
+  return `${ns}<br>Cancel: <b>${sr.cancel}</b><br>Rescheduled: <b>${sr.resched}</b>`;
 }
 
 export function closerCard(m, month) {
@@ -236,7 +234,7 @@ export function closerCard(m, month) {
 <div class="section"><h2>MONTH OVER MONTH</h2>
 <p class="key">${month.label} 1 to ${m.ed.through.split(' ')[1]} compared with the same days in ${month.prev_label}.</p>
 <div class="mom">${momCells}</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Same-day text: an outbound text to the lead on the call day before the call, from Close. Open slots: discovery start times Calendly offers over the next 7 days; day by day, slots offered inside your Calendly hours that your Google Calendar left free (booked discovery calls count as slots). Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days; day by day, slots offered inside your Calendly hours that your Google Calendar left free (booked discovery calls count as slots). Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
   return page(body);
 }
 
@@ -250,7 +248,7 @@ export function leadershipTable(rows, data) {
     return `<tr><td>${esc(m.closer.short)}${m.newHire ? '<small>new hire</small>' : ''}</td>
 ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : m.calendar ? `till ${m.calendar.usualText}` : 'next 7 days')}
 ${cell(m.calls.status, m.calls.value, m.calls.target ? `of ${m.calls.target}` : 'target pending')}
-${cell(m.showRate.status, fmtPct(m.showRate.value), `${m.showRate.live}/${m.showRate.booked}${m.showRate.noShow != null ? ` · ${m.showRate.noShow} NS · ${m.showRate.cancel} C · ${m.showRate.resched} R` : ''}${m.showRate.confirm?.total ? ` · texted ${m.showRate.confirm.texted}/${m.showRate.confirm.total}` : ''}`)}
+${cell(m.showRate.status, fmtPct(m.showRate.value), `${m.showRate.live}/${m.showRate.booked}${m.showRate.noShow != null ? ` · ${m.showRate.noShow} NS · ${m.showRate.cancel} C · ${m.showRate.resched} R` : ''}${m.showRate.confirm?.total ? ` · ${m.showRate.confirm.confirmed}/${m.showRate.noShow} NS confirmed` : ''}`)}
 ${cell('track', m.closes.value, fmtMoney(m.closes.rev, true))}
 ${cell('track', p ? p.projected : '–', p ? `${p.hc} HC · ${p.sv} SV · ${p.working} W${p.nonstandard ? ` · ${p.nonstandard} untagged` : ''}` : 'no tab')}
 ${cell(m.cash.status, fmtMoney(m.cash.value, true), m.cash.expected ? `${fmtPct(m.cash.paceRatio)} of pace` : 'target pending')}
