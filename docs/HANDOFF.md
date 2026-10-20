@@ -1,6 +1,8 @@
 # Handoff: closer scorecard (state as of Oct 20, 2026)
 
-Read this first in a new session. Owner: Sheila. Nothing has been sent to closers and no routine is scheduled: Sheila is getting leadership sign-off on the samples first.
+Read this first in a new session. Owner: Sheila.
+
+**Repo rule:** only commit and push to `sheila-smbdh/closer-scorecard`. Never push, branch or open PRs on `zain-smbdh/smbdh-2m-tracker`; it is read-only reference (use its read API instead). Nothing has been sent to closers and no routine is scheduled: Sheila is getting leadership sign-off on the samples first.
 
 ## Next step (do this first)
 
