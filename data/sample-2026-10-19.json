@@ -2435,5 +2435,124 @@
   "Harry": [
    "10-15"
   ]
- }
+ },
+ "confirmations": {
+  "monday": {
+   "Omar": {
+    "total": 10,
+    "texted": 1,
+    "setter": 0,
+    "closer": 1,
+    "other": 0
+   },
+   "Owen": {
+    "total": 4,
+    "texted": 1,
+    "setter": 1,
+    "closer": 0,
+    "other": 0
+   },
+   "Adam": {
+    "total": 2,
+    "texted": 2,
+    "setter": 0,
+    "closer": 2,
+    "other": 0
+   },
+   "JZ": {
+    "total": 2,
+    "texted": 1,
+    "setter": 0,
+    "closer": 1,
+    "other": 0
+   },
+   "VeJohn": {
+    "total": 4,
+    "texted": 0,
+    "setter": 0,
+    "closer": 0,
+    "other": 0
+   },
+   "Nick": {
+    "total": 7,
+    "texted": 2,
+    "setter": 1,
+    "closer": 1,
+    "other": 0
+   },
+   "Harry": {
+    "total": 4,
+    "texted": 1,
+    "setter": 0,
+    "closer": 0,
+    "other": 1
+   },
+   "Solomon": {
+    "total": 4,
+    "texted": 2,
+    "setter": 0,
+    "closer": 2,
+    "other": 0
+   },
+   "Daniel": {
+    "total": 2,
+    "texted": 0,
+    "setter": 0,
+    "closer": 0,
+    "other": 0
+   },
+   "Kevin": {
+    "total": 5,
+    "texted": 2,
+    "setter": 2,
+    "closer": 0,
+    "other": 0
+   }
+  },
+  "wednesday": {
+   "JZ": {
+    "total": 2,
+    "texted": 0,
+    "setter": 0,
+    "closer": 0,
+    "other": 0
+   },
+   "Kevin": {
+    "total": 3,
+    "texted": 0,
+    "setter": 0,
+    "closer": 0,
+    "other": 0
+   },
+   "Harry": {
+    "total": 2,
+    "texted": 1,
+    "setter": 0,
+    "closer": 1,
+    "other": 0
+   },
+   "Nick": {
+    "total": 2,
+    "texted": 0,
+    "setter": 0,
+    "closer": 0,
+    "other": 0
+   },
+   "Solomon": {
+    "total": 1,
+    "texted": 1,
+    "setter": 0,
+    "closer": 1,
+    "other": 0
+   },
+   "Owen": {
+    "total": 1,
+    "texted": 0,
+    "setter": 0,
+    "closer": 0,
+    "other": 0
+   }
+  }
+ },
+ "_confirmations_note": "No-shows and cancels from the EOD Tracker, checked in Close: an outbound text to the lead on the call day before the call. Texts sent after the call start, replies to a lead who had already cancelled, and 'I'm on Zoom' texts at call time are not counted."
 }

@@ -158,7 +158,9 @@ export function winsAndFixes(m) {
   else if (m.calls.target != null) fixes.push(['Booked calls', monday ? `${m.calls.value} of ${m.calls.target}.` : `${m.calls.value} vs ${m.calls.target} pace by today.`]);
 
   if (m.showRate.status === 'hit') wins.push(['Show rate', `${fmtPct(m.showRate.value)}, target 80%.`]);
-  else if (m.showRate.status !== 'track') fixes.push(['Show rate', `${fmtPct(m.showRate.value)}. Confirm every call the same day.`]);
+  else if (m.showRate.status !== 'track') fixes.push(['Show rate', m.showRate.confirm?.total
+    ? `${fmtPct(m.showRate.value)}. ${m.showRate.confirm.texted} of ${m.showRate.confirm.total} misses got a same-day text.`
+    : `${fmtPct(m.showRate.value)}, target 80%.`]);
 
   if (m.calendar?.closesEarly && !m.calendar.away) fixes.push(['Later slots', `Calendar closes ${m.calendar.usualText}. Open slots after 5pm ET.`]);
 
