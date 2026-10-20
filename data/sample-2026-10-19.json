@@ -5612,5 +5612,172 @@
    ]
   }
  },
- "_daily_note": "daily_eod: EOD Tracker [scheduled, showed, no-show, cancelled, rescheduled] per report date. daily_st: Sales Tracker Inputs [sched, live]. Booked/showed = EOD, with any day missing from the EOD filled from the Sales Tracker; the merged total is the source of truth."
+ "_daily_note": "daily_eod: EOD Tracker [scheduled, showed, no-show, cancelled, rescheduled] per report date. daily_st: Sales Tracker Inputs [sched, live]. Booked/showed = EOD, with any day missing from the EOD filled from the Sales Tracker; the merged total is the source of truth.",
+ "tracker": {
+  "through": "2026-10-18",
+  "generated_at": "2026-10-20T19:52:41.047Z",
+  "data_pulled_at": "2026-10-20T19:33:06.754Z",
+  "all_checks_pass": true,
+  "failed_checks": [],
+  "targets_note": null,
+  "unmatched": [],
+  "closers": {
+   "Owen": {
+    "tracker_name": "Owen",
+    "rep_id": "owen",
+    "month_target": 416738,
+    "target_source": "auto_split",
+    "cash": 97000,
+    "expected_cash": 159692,
+    "pct_of_pace": 0.6074,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 97000
+   },
+   "Adam": {
+    "tracker_name": "Adam L",
+    "rep_id": "adam-l",
+    "month_target": 285178,
+    "target_source": "auto_split",
+    "cash": 68000,
+    "expected_cash": 109279,
+    "pct_of_pace": 0.6223,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 68000
+   },
+   "JZ": {
+    "tracker_name": "Jay Z",
+    "rep_id": "jay-z",
+    "month_target": 362873,
+    "target_source": "auto_split",
+    "cash": 37500,
+    "expected_cash": 139051,
+    "pct_of_pace": 0.2697,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 37500
+   },
+   "VeJohn": {
+    "tracker_name": "VeJohn",
+    "rep_id": "vejohn",
+    "month_target": 265582,
+    "target_source": "auto_split",
+    "cash": 81000,
+    "expected_cash": 101770,
+    "pct_of_pace": 0.7959,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 81000
+   },
+   "Julien": {
+    "tracker_name": "Julien",
+    "rep_id": "julien",
+    "month_target": 195174,
+    "target_source": "auto_split",
+    "cash": 15000,
+    "expected_cash": 74790,
+    "pct_of_pace": 0.2006,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 15000
+   },
+   "Nick": {
+    "tracker_name": "Nick",
+    "rep_id": "nick",
+    "month_target": 286163,
+    "target_source": "auto_split",
+    "cash": 69000,
+    "expected_cash": 109656,
+    "pct_of_pace": 0.6292,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 69000
+   },
+   "Omar": {
+    "tracker_name": "Omar",
+    "rep_id": "omar",
+    "month_target": 275922,
+    "target_source": "auto_split",
+    "cash": 15000,
+    "expected_cash": 105732,
+    "pct_of_pace": 0.1419,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 55000
+   },
+   "Harry": {
+    "tracker_name": "Harry",
+    "rep_id": "harry",
+    "month_target": 260757,
+    "target_source": "auto_split",
+    "cash": 39000,
+    "expected_cash": 99921,
+    "pct_of_pace": 0.3903,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 58000
+   },
+   "Solomon": {
+    "tracker_name": "Solomon",
+    "rep_id": "solomon",
+    "month_target": 200000,
+    "target_source": "new_rep_ramp",
+    "cash": 56000,
+    "expected_cash": 76639,
+    "pct_of_pace": 0.7307,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 56000
+   },
+   "Daniel": {
+    "tracker_name": "Daniel",
+    "rep_id": "daniel",
+    "month_target": 200000,
+    "target_source": "new_rep_ramp",
+    "cash": 0,
+    "expected_cash": 76639,
+    "pct_of_pace": 0,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 0
+   },
+   "Kevin": {
+    "tracker_name": "Kevin",
+    "rep_id": "kevin",
+    "month_target": 200000,
+    "target_source": "new_rep_ramp",
+    "cash": 42000,
+    "expected_cash": 76639,
+    "pct_of_pace": 0.548,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 42000
+   },
+   "Oliver": {
+    "tracker_name": "Oliver",
+    "rep_id": "oliver",
+    "month_target": 51613,
+    "target_source": "new_rep_ramp",
+    "cash": 0,
+    "expected_cash": 19778,
+    "pct_of_pace": 0,
+    "status": "behind",
+    "through_date": "2026-10-18",
+    "cash_mtd": 0
+   },
+   "Tyler": {
+    "tracker_name": "Tyler",
+    "rep_id": "tyler",
+    "month_target": 0,
+    "target_source": "ramping_no_target",
+    "cash": null,
+    "expected_cash": null,
+    "pct_of_pace": null,
+    "status": null,
+    "through_date": "2026-10-18",
+    "cash_mtd": 0
+   }
+  }
+ }
 }
