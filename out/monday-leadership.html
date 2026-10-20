@@ -37,22 +37,6 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-.pace{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:190px;position:relative;
-  border-bottom:1px solid var(--line);margin-top:6px}
-.pace .col{position:relative;height:100%}
-.pace .slotbox{position:absolute;bottom:0;left:16%;right:16%;border:2.5px dashed #8a8f96;border-bottom:none;border-radius:6px 6px 0 0}
-.pace .slotbox.future{border-color:#c9ccd0}
-.pace .booked{position:absolute;bottom:0;left:26%;right:26%;border-radius:4px 4px 0 0;opacity:.45}
-.pace .showed{position:absolute;bottom:0;left:26%;right:26%;border-radius:4px 4px 0 0}
-.pace .hit .booked,.pace .hit .showed{background:var(--hit)} .pace .almost .booked,.pace .almost .showed{background:var(--almost)}
-.pace .missed .booked,.pace .missed .showed{background:var(--missed)} .pace .track .booked,.pace .track .showed{background:var(--track)}
-.daykey{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin-bottom:10px}
-.daykey span{display:inline-block;width:16px;height:12px;border-radius:2px;margin-left:10px}
-.daykey .kbox{border:2px dashed #8a8f96;margin-left:0} .daykey .kbook{background:#999;opacity:.45} .daykey .kshow{background:#555}
-.days .dn{font-size:14px;color:var(--muted)} .days .dv{font-size:14px;font-weight:700;color:var(--ink);margin-top:2px}
-.k-s{color:#6b7076} .k-b{color:var(--ink)} .k-w{color:var(--ink)}
-.days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;text-align:center;font-size:14px;color:var(--muted);margin-top:6px}
-.verdict{display:flex;gap:16px;align-items:center;margin-bottom:12px;font-size:17px}
 .mom{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .mom>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .mom .l{font-size:14px;color:var(--muted);font-weight:600}
@@ -83,39 +67,39 @@ tr.total td{background:#f1efea;font-weight:800}
 <tbody><tr><td>Owen</td>
 <td class="hit">36<small>till 6pm ET</small></td>
 <td class="hit">23<small>of 20</small></td>
-<td class="almost">78%<small>18/23 · 3 NS · 1 C · 1 R · texted 1/4</small></td>
+<td class="almost">78%<small>18/23 · 3 NS · 1 C · 1 R · 1/3 NS confirmed</small></td>
 <td class="track">1<small>$20K</small></td>
 <td class="track">10<small>2 HC · 8 SV · 3 W</small></td>
 <td class="almost">$97K<small>89% of pace</small></td>
 <td class="hit">$19,400<small>5 closes MTD</small></td>
-<td class="track">$2,853<small>MTD</small></td>
+<td class="track">$2,310<small>MTD</small></td>
 <td class="track">▼ 53%<small>$97K vs $206K</small></td></tr><tr><td>Adam</td>
 <td class="hit">28<small>till 9pm ET</small></td>
 <td class="missed">6<small>of 20</small></td>
-<td class="almost">67%<small>4/6 · 2 NS · 0 C · 0 R · texted 2/2</small></td>
+<td class="almost">67%<small>4/6 · 2 NS · 0 C · 0 R · 2/2 NS confirmed</small></td>
 <td class="track">1<small>$18K</small></td>
 <td class="track">7<small>5 HC · 2 SV · 6 W</small></td>
 <td class="missed">$68K<small>62% of pace</small></td>
 <td class="missed">$17,000<small>4 closes MTD</small></td>
-<td class="track">$2,345<small>MTD</small></td>
+<td class="track">$2,194<small>MTD</small></td>
 <td class="track">▼ 55%<small>$68K vs $151K</small></td></tr><tr><td>JZ</td>
 <td class="hit">27<small>till 5pm ET</small></td>
-<td class="missed">5<small>of 20</small></td>
-<td class="missed">60%<small>3/5 · 1 NS · 1 C · 0 R · texted 1/2</small></td>
+<td class="missed">8<small>of 20</small></td>
+<td class="almost">75%<small>6/8 · 1 NS · 1 C · 0 R · 1/1 NS confirmed</small></td>
 <td class="track">2<small>$37.5K</small></td>
 <td class="track">11<small>5 HC · 6 SV · 4 W</small></td>
 <td class="missed">$37.5K<small>34% of pace</small></td>
 <td class="hit">$18,750<small>2 closes MTD</small></td>
-<td class="track">$1,500<small>MTD</small></td>
+<td class="track">$1,293<small>MTD</small></td>
 <td class="track">▼ 28%<small>$37.5K vs $52K</small></td></tr><tr><td>VeJohn</td>
 <td class="missed">12<small>till 9pm ET</small></td>
 <td class="almost">17<small>of 20</small></td>
-<td class="almost">76%<small>13/17 · 2 NS · 2 C · 0 R · texted 0/4</small></td>
+<td class="almost">76%<small>13/17 · 2 NS · 2 C · 0 R · 2/2 NS confirmed</small></td>
 <td class="track">2<small>$35K</small></td>
 <td class="track">4<small>3 HC · 1 SV · 1 W</small></td>
 <td class="missed">$81K<small>74% of pace</small></td>
 <td class="missed">$16,200<small>5 closes MTD</small></td>
-<td class="track">$2,531<small>MTD</small></td>
+<td class="track">$2,314<small>MTD</small></td>
 <td class="track">▼ 32%<small>$81K vs $119K</small></td></tr><tr><td>Julien</td>
 <td class="hit">27<small>till 1pm ET</small></td>
 <td class="missed">1<small>of 20</small></td>
@@ -127,44 +111,44 @@ tr.total td{background:#f1efea;font-weight:800}
 <td class="track">$882<small>MTD</small></td>
 <td class="track">▼ 17%<small>$15K vs $18K</small></td></tr><tr><td>Nick</td>
 <td class="missed">16<small>till 5pm ET</small></td>
-<td class="missed">13<small>of 20</small></td>
-<td class="missed">46%<small>6/13 · 7 NS · 0 C · 0 R · texted 2/7</small></td>
+<td class="almost">16<small>of 20</small></td>
+<td class="missed">56%<small>9/16 · 7 NS · 0 C · 0 R · 6/7 NS confirmed</small></td>
 <td class="track">2<small>$34K</small></td>
 <td class="track">0<small>0 HC · 0 SV · 0 W · 32 untagged</small></td>
 <td class="missed">$69K<small>63% of pace</small></td>
 <td class="missed">$17,250<small>4 closes MTD</small></td>
-<td class="track">$1,725<small>MTD</small></td>
+<td class="track">$1,605<small>MTD</small></td>
 <td class="track">▼ 46%<small>$69K vs $129K</small></td></tr><tr><td>Omar</td>
 <td class="hit">27<small>till 4pm ET</small></td>
 <td class="hit">25<small>of 20</small></td>
-<td class="missed">56%<small>14/25 · 8 NS · 2 C · 1 R · texted 1/10</small></td>
+<td class="missed">56%<small>14/25 · 8 NS · 2 C · 1 R · 6/8 NS confirmed</small></td>
 <td class="track">0<small>$0</small></td>
 <td class="track">7<small>2 HC · 5 SV · 4 W</small></td>
 <td class="missed">$15K<small>14% of pace</small></td>
 <td class="missed">$15,000<small>1 closes MTD</small></td>
-<td class="track">$326<small>MTD</small></td>
+<td class="track">$294<small>MTD</small></td>
 <td class="track">▼ 86%<small>$15K vs $106K</small></td></tr><tr><td>Harry</td>
 <td class="hit">34<small>till 6pm ET</small></td>
 <td class="missed">14<small>of 20</small></td>
-<td class="almost">71%<small>10/14 · 2 NS · 2 C · 0 R · texted 1/4</small></td>
+<td class="almost">71%<small>10/14 · 2 NS · 2 C · 0 R · 1/2 NS confirmed</small></td>
 <td class="track">0<small>$0</small></td>
 <td class="track">6<small>5 HC · 1 SV · 10 W · 3 untagged</small></td>
 <td class="missed">$39K<small>36% of pace</small></td>
 <td class="hit">$19,500<small>2 closes MTD</small></td>
-<td class="track">$1,000<small>MTD</small></td>
+<td class="track">$1,026<small>MTD</small></td>
 <td class="track">▼ 45%<small>$39K vs $70.5K</small></td></tr><tr><td>Solomon</td>
 <td class="hit">35<small>till 10pm ET</small></td>
 <td class="missed">12<small>of 20</small></td>
-<td class="almost">67%<small>8/12 · 4 NS · 0 C · 0 R · texted 2/4</small></td>
+<td class="almost">67%<small>8/12 · 4 NS · 0 C · 0 R · 3/4 NS confirmed</small></td>
 <td class="track">3<small>$56K</small></td>
 <td class="track">0<small>0 HC · 0 SV · 0 W · 6 untagged</small></td>
 <td class="missed">$56K<small>51% of pace</small></td>
 <td class="hit">$18,667<small>3 closes MTD</small></td>
-<td class="track">$1,217<small>MTD</small></td>
+<td class="track">$1,120<small>MTD</small></td>
 <td class="track">▼ 37%<small>$56K vs $88.5K</small></td></tr><tr><td>Daniel</td>
 <td class="hit">37<small>till 6pm ET</small></td>
 <td class="missed">8<small>of 20</small></td>
-<td class="almost">63%<small>5/8 · 2 NS · 0 C · 1 R · texted 0/2</small></td>
+<td class="almost">63%<small>5/8 · 2 NS · 0 C · 1 R · 1/2 NS confirmed</small></td>
 <td class="track">0<small>$0</small></td>
 <td class="track">0<small>0 HC · 0 SV · 0 W · 11 untagged</small></td>
 <td class="missed">$0<small>0% of pace</small></td>
@@ -173,12 +157,12 @@ tr.total td{background:#f1efea;font-weight:800}
 <td class="track">▼ 100%<small>$0 vs $32.5K</small></td></tr><tr><td>Kevin</td>
 <td class="almost">21<small>till 8pm ET</small></td>
 <td class="almost">15<small>of 20</small></td>
-<td class="almost">67%<small>10/15 · 3 NS · 2 C · 0 R · texted 2/5</small></td>
+<td class="almost">67%<small>10/15 · 3 NS · 2 C · 0 R · 3/3 NS confirmed</small></td>
 <td class="track">2<small>$36K</small></td>
 <td class="track">0<small>0 HC · 0 SV · 0 W · 8 untagged</small></td>
 <td class="missed">$42K<small>39% of pace</small></td>
 <td class="hit">$18,000<small>2 closes MTD</small></td>
-<td class="track">$973<small>MTD</small></td>
+<td class="track">$878<small>MTD</small></td>
 <td class="track">▼ 74%<small>$36K vs $137K</small></td></tr><tr><td>Oliver<small>new hire</small></td>
 <td class="track">–<small>not a host</small></td>
 <td class="track">3<small>target pending</small></td>
@@ -197,5 +181,5 @@ tr.total td{background:#f1efea;font-weight:800}
 <td class="track">$0<small>target pending</small></td>
 <td class="track">–<small>0 closes MTD</small></td>
 <td class="track">$0<small>MTD</small></td>
-<td class="track">–<small>$0 vs $0</small></td></tr><tr class="total"><td>Team</td><td>–</td><td>151<small>2 of 11 hit 20</small></td><td>69%<small>104/151</small></td><td>14<small>$252K</small></td><td>57</td><td>$520K</td><td>$17,707<small>29 closes MTD</small></td><td>–</td><td>–</td></tr></tbody></table>
+<td class="track">–<small>$0 vs $0</small></td></tr><tr class="total"><td>Team</td><td>–</td><td>157<small>2 of 11 hit 20</small></td><td>70%<small>110/157</small></td><td>14<small>$252K</small></td><td>57</td><td>$520K</td><td>$17,707<small>29 closes MTD</small></td><td>–</td><td>–</td></tr></tbody></table>
 <div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to Oct 18; month over month compares with the same days in September. Cash pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker. Slots are Calendly discovery start times over the next 7 days, with the time each closer's calendar closes (ET). Projected closes count open High Confidence and Soft Verbal / Reengaged leads in each closer's October pipeline tab; "untagged" = open leads with a blank or non-standard status.</div></div></body></html>

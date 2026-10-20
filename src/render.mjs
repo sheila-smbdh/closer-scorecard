@@ -47,22 +47,6 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-.pace{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:190px;position:relative;
-  border-bottom:1px solid var(--line);margin-top:6px}
-.pace .col{position:relative;height:100%}
-.pace .slotbox{position:absolute;bottom:0;left:16%;right:16%;border:2.5px dashed #8a8f96;border-bottom:none;border-radius:6px 6px 0 0}
-.pace .slotbox.future{border-color:#c9ccd0}
-.pace .booked{position:absolute;bottom:0;left:26%;right:26%;border-radius:4px 4px 0 0;opacity:.45}
-.pace .showed{position:absolute;bottom:0;left:26%;right:26%;border-radius:4px 4px 0 0}
-.pace .hit .booked,.pace .hit .showed{background:var(--hit)} .pace .almost .booked,.pace .almost .showed{background:var(--almost)}
-.pace .missed .booked,.pace .missed .showed{background:var(--missed)} .pace .track .booked,.pace .track .showed{background:var(--track)}
-.daykey{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin-bottom:10px}
-.daykey span{display:inline-block;width:16px;height:12px;border-radius:2px;margin-left:10px}
-.daykey .kbox{border:2px dashed #8a8f96;margin-left:0} .daykey .kbook{background:#999;opacity:.45} .daykey .kshow{background:#555}
-.days .dn{font-size:14px;color:var(--muted)} .days .dv{font-size:14px;font-weight:700;color:var(--ink);margin-top:2px}
-.k-s{color:#6b7076} .k-b{color:var(--ink)} .k-w{color:var(--ink)}
-.days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;text-align:center;font-size:14px;color:var(--muted);margin-top:6px}
-.verdict{display:flex;gap:16px;align-items:center;margin-bottom:12px;font-size:17px}
 .mom{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .mom>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .mom .l{font-size:14px;color:var(--muted);font-weight:600}
@@ -181,30 +165,6 @@ export function closerCard(m, month) {
     targetText: 'No target',
   });
 
-  // Day by day: dotted box = open slots offered, solid = booked, dark = showed
-  const maxDay = Math.max(8, ...m.days.map((d) => Math.max(d.slots ?? 0, d.booked ?? 0)));
-  const h = (v) => `${((v ?? 0) / maxDay) * 100}%`;
-  const dayTone = (d) => (d.weekend ? 'track' : d.booked >= TARGETS.callsPerWorkday ? 'hit' : d.booked >= TARGETS.callsPerWorkday - 1 ? 'almost' : 'missed');
-  const dayCols = m.days.map((d) => {
-    if (d.future) {
-      return `<div class="col">${d.slots != null ? `<div class="slotbox future" style="height:${h(d.slots)}"></div>` : ''}</div>`;
-    }
-    return `<div class="col ${dayTone(d)}">
-      ${d.slots != null ? `<div class="slotbox" style="height:${h(d.slots)}"></div>` : ''}
-      <div class="booked" style="height:${h(d.booked)}"></div>
-      <div class="showed" style="height:${h(d.showed)}"></div></div>`;
-  }).join('');
-  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const dayNums = m.days.map((d, i) => `<div><div class="dn">${dayNames[i]}</div>${d.future
-    ? `<div class="dv">${d.slots != null ? `${d.slots} open` : ''}</div>`
-    : `<div class="dv"><span class="k-s">${d.slots ?? '–'}</span> · <span class="k-b">${d.booked}</span> · <span class="k-w">${d.showed}</span></div>`}</div>`).join('');
-  const behind = m.calls.target != null && m.calls.value < m.calls.target;
-  const wk = TARGETS.callsPerWeek;
-  const verdict = m.calls.target == null ? `<span class="chip" style="background:var(--track)">TRACKING</span> ${m.calls.value} booked so far`
-    : monday
-      ? `<span class="chip" style="background:${behind ? 'var(--missed)' : 'var(--hit)'}">${behind ? 'FINISHED BEHIND' : 'FINISHED ON TARGET'}</span> ${m.calls.value} of ${wk} booked calls for the week`
-      : `<span class="chip" style="background:${behind ? 'var(--missed)' : 'var(--hit)'}">${behind ? 'TRENDING BEHIND' : 'ON PACE'}</span> ${m.calls.value} booked vs ${m.calls.target} pace by today · on track for ${m.calls.projected} of ${wk}`;
-
   const momCells = m.mom.map((r) => {
     const d = r.delta;
     const cls = d == null ? 'flat' : d > 0.02 ? 'up' : d < -0.02 ? 'down' : 'flat';
@@ -226,15 +186,10 @@ export function closerCard(m, month) {
 <div class="section"><h2>YOUR NUMBERS VS TARGET</h2>
 <p class="key">Green: you hit the target. Yellow: almost there (75% of the target or more). Red: you missed it. Blue: a number we track, with no target. The black line on each bar is the target.</p>
 <div class="grid">${slotTile}${callsTile}${showTile}${avgTile}${cashTile}${pipeTile}${rpcTile}${closesTile}</div></div>
-<div class="section"><h2>${monday ? 'LAST WEEK, DAY BY DAY' : 'THIS WEEK’S PACE'}</h2>
-<div class="verdict">${verdict}</div>
-<div class="daykey"><span class="kbox"></span>Open slots (goal 5 a day) <span class="kbook"></span>Booked calls (goal 4) <span class="kshow"></span>Showed (goal 3) <em style="margin-left:auto;font-style:normal">Numbers under each day: open · booked · showed</em></div>
-<div class="pace">${dayCols}</div>
-<div class="days">${dayNums}</div></div>
 <div class="section"><h2>MONTH OVER MONTH</h2>
 <p class="key">${month.label} 1 to ${m.ed.through.split(' ')[1]} compared with the same days in ${month.prev_label}.</p>
 <div class="mom">${momCells}</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days; day by day, slots offered inside your Calendly hours that your Google Calendar left free (booked discovery calls count as slots). Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports (Sales Tracker for any day without one), also used for month to date and revenue per call. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days. Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
   return page(body);
 }
 

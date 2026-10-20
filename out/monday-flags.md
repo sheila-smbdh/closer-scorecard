@@ -1,32 +1,33 @@
 # Scorecard flags: Monday, Oct 19
 
-- Owen: EOD says 23 booked / 18 showed, Sales Tracker says 19 / 16.
-- Owen: Messi shows 36 open slots for 10-19 + 7 days, Google Calendar estimate is 18.
-- Adam: EOD says 6 booked / 4 showed, Sales Tracker says 6 / 3.
+- Owen: week totals (EOD + fills) 23 booked / 18 showed, Sales Tracker alone 19 / 16.
+- Owen: month to date also filled from the Sales Tracker on 10-02, 10-05, 10-08, 10-09.
+- Adam: week totals (EOD + fills) 6 booked / 4 showed, Sales Tracker alone 6 / 3.
 - Adam: EOD "showed" left blank on 10-13; filled in as booked minus no-shows, cancels and reschedules.
-- JZ: EOD says 5 booked / 3 showed, Sales Tracker says 4 / 4.
-- JZ: no EOD report for 10-13, 10-15 although the Sales Tracker logged calls.
-- VeJohn: EOD says 17 booked / 13 showed, Sales Tracker says 14 / 7.
+- JZ: no EOD report for 10-13, 10-15; filled from the Sales Tracker.
+- JZ: week totals (EOD + fills) 8 booked / 6 showed, Sales Tracker alone 4 / 4.
+- JZ: month to date also filled from the Sales Tracker on 10-01, 10-02, 10-07.
+- VeJohn: week totals (EOD + fills) 17 booked / 13 showed, Sales Tracker alone 14 / 7.
 - VeJohn: EOD "showed" left blank on 10-12, 10-13, 10-14, 10-15, 10-16, 10-17; filled in as booked minus no-shows, cancels and reschedules.
-- Julien: EOD says 1 booked / 1 showed, Sales Tracker says 0 / 1.
-- Julien: Messi shows 27 open slots for 10-19 + 7 days, Google Calendar estimate is 16.
-- Nick: EOD says 13 booked / 6 showed, Sales Tracker says 13 / 9.
-- Nick: no EOD report for 10-16 although the Sales Tracker logged calls.
+- Julien: week totals (EOD + fills) 1 booked / 1 showed, Sales Tracker alone 0 / 1.
+- Nick: no EOD report for 10-16; filled from the Sales Tracker.
+- Nick: week totals (EOD + fills) 16 booked / 9 showed, Sales Tracker alone 13 / 9.
 - Nick: 32 open pipeline leads have no standard status.
-- Omar: EOD says 25 booked / 14 showed, Sales Tracker says 20 / 12.
+- Omar: week totals (EOD + fills) 25 booked / 14 showed, Sales Tracker alone 20 / 12.
 - Omar: EOD "showed" left blank on 10-14; filled in as booked minus no-shows, cancels and reschedules.
-- Harry: EOD says 14 booked / 10 showed, Sales Tracker says 13 / 10.
-- Harry: Messi shows 34 open slots for 10-19 + 7 days, Google Calendar estimate is 21.
+- Harry: week totals (EOD + fills) 14 booked / 10 showed, Sales Tracker alone 13 / 10.
+- Harry: month to date also filled from the Sales Tracker on 10-05.
 - Harry: EOD "showed" left blank on 10-15; filled in as booked minus no-shows, cancels and reschedules.
 - Harry: 3 open pipeline leads have no standard status.
-- Solomon: EOD says 12 booked / 8 showed, Sales Tracker says 10 / 7.
-- Solomon: Messi shows 35 open slots for 10-19 + 7 days, Google Calendar estimate is 16.
+- Solomon: week totals (EOD + fills) 12 booked / 8 showed, Sales Tracker alone 10 / 7.
+- Solomon: month to date also filled from the Sales Tracker on 10-09.
 - Solomon: 6 open pipeline leads have no standard status.
-- Daniel: EOD says 8 booked / 5 showed, Sales Tracker says 8 / 4.
+- Daniel: week totals (EOD + fills) 8 booked / 5 showed, Sales Tracker alone 8 / 4.
 - Daniel: 11 open pipeline leads have no standard status.
-- Kevin: EOD says 15 booked / 10 showed, Sales Tracker says 14 / 10.
+- Kevin: week totals (EOD + fills) 15 booked / 10 showed, Sales Tracker alone 14 / 10.
+- Kevin: month to date also filled from the Sales Tracker on 10-05.
 - Kevin: 8 open pipeline leads have no standard status.
-- Oliver: no EOD reports, booked/showed taken from the Sales Tracker.
+- Oliver: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Oliver: no Pipeline Review tab.
-- Tyler: no EOD reports, booked/showed taken from the Sales Tracker.
+- Tyler: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: no Pipeline Review tab.
