@@ -1,5 +1,5 @@
 {
- "_note": "Friday pipeline report sample, pulled 2026-10-20 (Tue) for sign-off. pipeline_leads: each closer's October section of Pipeline Review as [name, status, expected cash (col D), Closed? (col F)].",
+ "_note": "Friday pipeline report sample, pulled 2026-10-20 (Tue). pipeline_leads: each closer's October section of Pipeline Review as [name, status (col B), expected cash (col D), outcome (col F: Closed/Signed/Delayed, or TRUE/FALSE under the old convention), Close lead id]. close_won: Close opportunities won with a close date this month that carry a Cash Collected value, as [closer, contact, lead id, cash collected, paid date]. pipeline_index: where a close_won lead sits on Pipeline Review when it is outside this month's section, as [section, name, status, cash].",
  "report_date": "2026-10-20",
  "month": "October",
  "month_key": "2026-10",
@@ -102,109 +102,127 @@
     "Gee Vee",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    ""
    ],
    [
     "Nick Traf",
     "Closed",
     "$19,000.00",
-    "TRUE"
+    "TRUE",
+    ""
    ],
    [
     "Josh Scoresby",
     "Closed",
     "$18,000.00",
-    "TRUE"
+    "TRUE",
+    ""
    ],
    [
     "Brad Feur",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_ncfRvkndfxQ3ikAGPcAQB3zzpOhubMciyVdvtm382Px"
    ],
    [
     "Mattew Benn",
     "Soft Verbal / Reengaged",
     "$19,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_OE9W6HmEQ52eSm1rsga4T5cELRZjXbsn1YfhZVwczxK"
    ],
    [
     "John Fritzel / JST holdings",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_Rc2ODiqT4Vmf1ABINfVeLHTniYxo9leyV7YJHkyruZE"
    ],
    [
     "Bob Kelley",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_sh6QcgcgWJuBTYSDVIfpqmHqR5VfhxOfi83poeh6Xb9"
    ],
    [
     "Karen Wood",
     "Working / Good call",
     "$19,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_P1DmSiFDwkD2m4bygrqN76i1QL0xjLWdpTfY5NEq06p"
    ],
    [
     "Matt Susk",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_vsHWLFhKgeRXXQBeyTWjhuOuFoFtkSresndn92G03ko"
    ],
    [
     "Bill Klein",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_LZYH2OqZbov2YaDmmxmtGcyynQ9YQrgpoPWov6dlGSd"
    ],
    [
     "Anthony Perez",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_Avxw78PT4LNM1vMmlHr1JQ6B34P9hmQUObIIhPHbNdx"
    ],
    [
     "Dave Stefsnski",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_1d8xByPSu4slvK5yhGODmmj0EhoYvJmhchXHt3IIoZY"
    ],
    [
     "Hemal Shah",
     "High Confidence",
     "$19,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_BDOGUyeoxNZhNi9AVa1CviUofsoQtaCFb3veCbuLvl3"
    ],
    [
     "Benjamin Jolloff",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_OtcWy50fHYQDUQE3jiUuLUMEA0espFRBttFUdUCZSBT"
    ],
    [
     "Imran Maj",
     "Working / Good call",
     "$19,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_lit7axsBwI9kQUJCU03liJIfUMflhIVTWCLpUnYqPZi"
    ],
    [
     "David Foster / Son",
     "High Confidence",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_74knef3IYN3tAdVNxnKFexRtlt1SbzEXlpNvUEgz6nE"
    ],
    [
     "Brian Delany",
     "High Confidence",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_1muSZZcf6iQ44q2tQIUpU6Zp22G6X8uOzrkDvTUdOho"
    ],
    [
     "Robbie Adams",
     "Working / Good call",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_sIvj8hkYX47XwjiUGyp2HI8r8wcMDJHBdMqzF1WXcjh"
    ]
   ],
   "JZ": [
@@ -212,96 +230,126 @@
     "Christina Blair",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_tH0GgDYMn6LUemGr3XaJRx5jYSiAitrPGgR4YYzHfAv"
    ],
    [
     "Jamal Giddens",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_R5bJ6kOExtn67xB0RVgFDS3NVm0BpRadjCAYhkWsTde"
    ],
    [
     "Matt Matherne",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_Qdjt1Nf3JkH91B62fc7AmG9O2mHzVEyGJKY0OrgwTTK"
    ],
    [
     "Jake Israel",
     "Delayed",
     "$19,000.00",
-    ""
+    "",
+    "lead_xO2e7aGSggAZIxvKNVihrYuBtPCE4xbEf4JrwRzwSwo"
    ],
    [
     "Sankey Alexander",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_i5ekme1MPDGW4OYgI65l7vqlrR0WrIwhNh7BiL64blZ"
    ],
    [
     "Jason Bushan",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    ""
+    "",
+    "lead_r77HutuFz6ifn02hr6oASj25CNDfN7ULcbjMyDjnonx"
    ],
    [
     "Joe Cleary",
     "High Confidence",
     "$15,000.00",
-    ""
+    "",
+    "lead_r77HutuFz6ifn02hr6oASj25CNDfN7ULcbjMyDjnonx"
    ],
    [
     "Ryan Santwire",
     "Soft Verbal / Reengaged",
     "$15,000.00",
-    ""
+    "",
+    "lead_8OKwtstzF6bTZI9hHHdfT0exLfro5uK8cE2YQowGWjv"
    ],
    [
     "Adam Fiala",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_LJfMMVRhcC9MvlVupSA7Bh0AGC9300yQX00ok1FOtYy"
    ],
    [
     "Zach Agopian",
     "Working / Good call",
     "$17,500.00",
+    "",
     ""
    ],
    [
     "Lorenzo Hoff",
     "High Confidence",
     "$15,000.00",
-    ""
+    "",
+    "lead_7zisAoWqZXEsOcoQ4yGvHyJ4qz3j2FWcCfsCRpJ5fh3"
    ],
    [
     "Connor Barbare",
     "Soft Verbal / Reengaged",
     "$18,000.00",
-    ""
+    "",
+    "lead_MotBZSaiiSBj7ppCvo5W69ozWhJUYOmDOUPXGeWLn4l"
    ],
    [
     "Daniel Oh",
     "Soft Verbal / Reengaged",
     "$20,000.00",
+    "",
     ""
    ],
    [
     "Rob L'amour",
     "High Confidence",
     "$20,000.00",
+    "",
     ""
    ],
    [
     "Natasha Kiemnec",
     "Soft Verbal / Reengaged",
     "$20,000.00",
+    "",
     ""
    ],
    [
     "Jerry Tolochko",
     "Soft Verbal / Reengaged",
     "$15,000.00",
+    "",
+    ""
+   ],
+   [
+    "Shaun Barot",
+    "High Confidence",
+    "$15,000.00",
+    "",
+    ""
+   ],
+   [
+    "Vikram Modi",
+    "Soft Verbal / Reengaged",
+    "$16,000.00",
+    "",
     ""
    ]
   ],
@@ -310,109 +358,127 @@
     "Javiar Potasman",
     "Soft Verbal / Reengaged",
     "$15,000.00",
-    ""
+    "",
+    "lead_ACnOJqSiVhEmDDAuNpbU9QLobUFyloXS9ZNhyQPzxzT"
    ],
    [
     "Melissa Parker",
     "Closed",
     "$17,500.00",
-    ""
+    "",
+    "lead_MHRkgL8Sjmp7460mjG3aBRjSocVjlm61ZnqOAcjGR8p"
    ],
    [
     "Nick Patel",
     "Delayed",
     "$20,000.00",
-    ""
+    "",
+    "lead_Sfg9PQcskkv6sNQNeUmDjAO747uGwUBFsIJbIBpOSyk"
    ],
    [
     "Doug Schaaf",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_gBCpJmKTHkzSqVJaIgE2CDglVlELmoB5pszjec7fjme"
    ],
    [
     "Kyle Sheppard",
     "High Confidence",
     "$18,000.00",
-    ""
+    "",
+    "lead_SraPc8T3sUsAOPScnWDsaBod4nuLytyIxQBOJCZkZ7W"
    ],
    [
     "Jacinta Chadwick",
     "Working / Good call",
     "$18,000.00",
-    ""
+    "",
+    "lead_pGJJ9fibLj8NMGvgrfueoveBsNtjjxxAayfJxGldrKG"
    ],
    [
     "Rena Chen",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_6Z8dzZxONEaap2dza4yRbOgc0nOpMGaYXxcKefGACR1"
    ],
    [
     "Marko Knezevic",
     "High Confidence",
     "$15,000.00",
-    ""
+    "",
+    "lead_Xxdg0IzVeChIOYT2IsLfcscHHDjUvA3ARjuvNKmnSV8"
    ],
    [
     "Anna Dev",
     "Signed",
     "$18,000.00",
-    ""
+    "",
+    "lead_Y3S9fikQHHaNL2qv2M3x7xKAMyXCD2AXBz02r8RJjX1"
    ],
    [
     "Ralph Plaskett",
     "Closed",
     "$18,000.00",
-    ""
+    "",
+    "lead_kvSHdKIxoQYC0DRG5UcXpvcNeq2jTCSLo66zbUIoGRB"
    ],
    [
     "Chad Perez",
     "Delayed",
     "$18,000.00",
-    ""
+    "",
+    "lead_UCriPXIHddbjWdoiIm6ASSkSVgUrJpTJJahAF952XIh"
    ],
    [
     "Chad Kirschenblatt",
     "Delayed",
     "$18,000.00",
-    ""
+    "",
+    "lead_pw9mWGnu0rjp5tRALrGxauGWp0MtpPc9chlCz7er15P"
    ],
    [
     "Joe Lashinger",
     "Working / Good call",
     "$18,000.00",
-    ""
+    "",
+    "lead_KWA4tI6dGpLjMXxespgAa5GjUBNfIlL20FTq48ZsflQ"
    ],
    [
     "Manpreet Bawa",
     "Delayed",
     "$18,000.00",
-    ""
+    "",
+    "lead_MX5nGH6FGiAWxyCuG7BhMOqTMlmEjkHHD6OVH2InqZE"
    ],
    [
     "Gafar Odufuye",
     "High Confidence",
     "$18,000.00",
-    ""
+    "",
+    "lead_UpsbmFo6ShvTskDeEhQ7OQMUq0cAQCycGPeoFlkSQcC"
    ],
    [
     "Joe Ngassa",
     "Soft Verbal / Reengaged",
     "$15,000.00",
-    ""
+    "",
+    "lead_Lb9oXVKO3mn0Sef8QqPkmMbvAibGWD5huKb2uzYj2Gl"
    ],
    [
     "Jon Price",
     "Lost",
     "$15,000.00",
-    ""
+    "",
+    "lead_lAsCWo3VX9LE4mCagenbh5nNn68CygCpEW60Fihugxr"
    ],
    [
     "Chris Brehm",
     "High Confidence",
     "$18,000.00",
-    ""
+    "",
+    "lead_mXCK0eEnU71oxWud2txvNHChFY2Fn81z1knLQwWEY3L"
    ]
   ],
   "VeJohn": [
@@ -420,73 +486,85 @@
     "Sonia Barts",
     "Closed",
     "$16,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_M9AKwWXp3Ylayh0MO3AVrFc6GkO4WfTrAoRlZDSgeuj"
    ],
    [
     "Jack Walsh",
     "Closed",
     "$16,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_noUf02yijfYFtidKwAatXovFXxQtCY8SNWGMJrbTZ01"
    ],
    [
     "Shawn O'Donnell",
     "Closed",
     "$16,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_GlijpthptGBdy59iAy8mM1AlYtoaOC7PTGXrRuqRT4h"
    ],
    [
     "Josh Bonifield",
     "Delayed",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_IeAgum6eK4UhdUzU5Nis0o4dKet1GuPVjCsFTKSpCMl"
    ],
    [
     "Margot Slamkowski",
     "Delayed",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_NbtVxigYVZgEiRPZsLAbJH3UadzBhsGEMiQYr40ni1M"
    ],
    [
     "Kellen Groves",
     "Closed",
     "$15,000.00",
-    "TRUE"
+    "TRUE",
+    ""
    ],
    [
     "Matt Sole",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_CH6ggAr96c61ifUeI0lK42I9iKPqzmFDVbMEAS441S6"
    ],
    [
     "Nic Green",
     "High Confidence",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_kAS9Ieej7JwHxYpexVPxxMvPOqccIVnXehc2NNoZ4P6"
    ],
    [
     "Steve Janowiak",
     "Working / Good call",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_TUykDhZXxvKtYvD1xZ3jyKBCJn5NnMgvYzj47kKzSBv"
    ],
    [
     "Robbie Gergly",
     "High Confidence",
     "$15,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_qCc7F45FunM8789PvHFJf3H060dO3Jok2v6IMz4WNUG"
    ],
    [
     "Ross Wigon",
     "High Confidence",
     "$15,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_whq5EMoXPZ4NHojDrkQqzQzXoPrhfkPhUubzlIl0UTn"
    ],
    [
     "Thomas Graff",
     "Soft Verbal / Reengaged",
     "$16,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ]
   ],
   "Julien": [
@@ -494,429 +572,528 @@
     "Joel Lewis",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_OWzfFagfGpByoMUyaUgbc9bEO7o2wMrsmtTS8HPy3wU"
    ],
    [
     "Michael Betourney",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_ix40tvhaIhwKOSa0vmDOdFLBRYxUqyrIYTpCAJNfQFY"
    ],
    [
     "Dean Julia",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_Zfe4V8RrMDmnpkf0JcYsXUBGRXaP7K57EqA5q5mnmY1"
    ],
    [
     "Clement Attakora & Andrew Gray",
     "Working / Good call",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_L1S78nh1ZAJiLR2gv3QB1RE1t97NNuMYBJxmu3dm4kO"
    ],
    [
     "Milica Arion",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_M3R1QfOIlrDegPh6VASmK2htxNk1Z2zLanUPflkNE9B"
    ],
    [
     "Leah Zilla",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_77a49aqKsgYGf8jbVBeqywNznl4C42IOZQxuouilJHv"
    ],
    [
     "Pavan Battula",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_UrkFN7ST5K5i4U5foA7xh1TXFVOPEsUPFLOa1wYAgID"
    ],
    [
     "Meagan Bamba-Ba",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_EweTMBP0UqvWdBNmcBwYsElTenqpUxzTjpE4FyZVJfy"
    ],
    [
     "Brian Carvajal",
     "Signed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_nDy1GYLyANpy0vt3enE9hwigX502X7yw1Z5SAsUfguY"
    ],
    [
     "Michelle & Steve Anderson",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_HetHd8HaM2pbk8dYIh7cxDZpN1h0mKY9MfWrOruVqCA"
    ],
    [
     "Bhargav Teja Anusuri",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_Uc7pmbm8ocabPDRyszM3qpAMpFaVckUGTysFklmX3ph"
    ],
    [
     "Peyton Bowman",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_5GBgso9vbxL8hbcObpfN5AGLftVUV76i8af9QVKynni"
    ],
    [
     "Jonathan Fuisz",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_DGEDydu72EajxPIZRA3Rk9nvUe4Q49Fjr3pFXITawy3"
    ],
    [
     "David Hua",
     "Working / Good call",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_aRhK46QYq8sHMxHbF00pEbbQwlrSBSM4GzSYaxDaUiJ"
    ],
    [
     "Rob Shuhy",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_8TC1OXiv3xEQZIex3CTWBs81n9k0bxAmEpSD6fpgKT3"
    ],
    [
     "Frederick Wallenmaeir",
     "Working / Good call",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_vh9pkHjCkgJJO0BNSigctBCyJv40Rjiz4jBP5BkeXdd"
    ],
    [
     "Scott Fife",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_o8OSVVQGja1bXGbtT25SHriIDvLHURhv1KR0Un8Nt4G"
    ],
    [
     "Jack Carr",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_DKZCb6SlR9U9CGOikhIZEufLDdX6786oSRV3uBvC96L"
    ],
    [
     "Chad Robins",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_OAkVb34zAAOJ6Bt8JTb27HkzdjtcQcrrPPThryMEe7F"
    ],
    [
     "Robert Wales",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_Q4AufjeZUqqq3KyeN3giQwULfrgy898C0acqup7ZyP8"
    ],
    [
     "Harish Shahi",
     "Delayed",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_YfTvE6bc6olTz2qbRT9KT5m7pN4FJrsncbY7MPVbWiA"
    ],
    [
     "Anshul Pandey",
     "Working / Good call",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_IkOvpuzWk5ojm7QDf56Di9WC0fTFaXafQgp1exlBcNZ"
    ],
    [
     "Jullie & Chris Li",
     "Closed",
     "$15,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_LD2XoMWVuyt80G5w962YXtjkYZOGL3i1dC4CVoEMz09"
    ],
    [
     "Monica Lee",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_D7q8xd9R6wcSQn4x4cpmUmmJ64mFko2OtFizmIsXbDc"
    ],
    [
     "David Gilio",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_KxXA6R55px2VmClnhAvgGqZehT5HovfEgFyKUw9UYFB"
    ],
    [
     "Elliott Benedict",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_DAsONVCzThU3tZaDOIcuMrx3p2Xbx76P7UMuu2HJXOg"
    ],
    [
     "Brianna Bermudez",
     "High Confidence",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_JIuuoj5WpUm69Y3IipFgvnYyI1ePOrGJCNxxtl6kU51"
    ],
    [
     "Danielle Aroeste",
     "High Confidence",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_P8bMdkibbsWSFTuXZgorehPLVZRUfH8PnrO8i3T4Tpq"
    ],
    [
     "Tyler Noyes",
     "Soft Verbal / Reengaged",
     "",
-    "FALSE"
+    "FALSE",
+    "lead_mvNvg5v32Zgy2sLpxiLs7p1iNaHdrg9Adn8Olwfzanp"
    ]
   ],
   "Nick": [
    [
     "Matt Macleod",
-    "Responsive - Luke Warm",
+    "Soft Verbal / Reengaged",
     "",
-    ""
+    "",
+    "lead_QoInrtPNaIfPfrTInR3XbsBtTYhkqjOtlIQb6YKycpZ"
    ],
    [
     "Amitabh Deo",
-    "Warm - Reviewing info.",
+    "Soft Verbal / Reengaged",
     "",
-    ""
+    "",
+    "lead_VKGJHuczcFGPpA5pdqx0YIeb1iF3LAfYTIQaWyN65RW"
    ],
    [
     "Zachary Carmichael",
     "Closed",
     "20000",
-    ""
+    "",
+    "lead_OaI9vgRTLPgmSLYzRR2PleyEaOnaqYeap7Pun8FBNEq"
    ],
    [
     "Joseph Elishmereni",
     "Delayed",
     "",
-    ""
+    "",
+    "lead_oWShxSMoOHV7JeZ9CBjhXJBNEbtweeNzQAO6qxIL2U7"
    ],
    [
     "Keith Johnson III",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_GioxqPM4YYfZuv3WUXqSXl05AuhWoudSUeNnOWP8ch4"
    ],
    [
     "Jacob Miller",
     "Closed",
     "15000",
-    ""
+    "",
+    "lead_bflJFeO854C0xY4eO4XhRiZZSTT1IxnuJvjh99wf3Rn"
    ],
    [
     "Gunnar Schultz",
     "Closed",
     "16000",
-    ""
+    "",
+    "lead_fQOcwzxp7Agzl1a4GCzOCI56pvueKqOojIFZmNYhe2q"
    ],
    [
     "Michael Kasseris",
-    "Warm - Reviewing info.",
+    "Soft Verbal / Reengaged",
     "",
-    ""
+    "",
+    "lead_V7RyxxUA6dMtAkX8tXmB0zlBJoIhDWqQrO28RmV5GfC"
    ],
    [
     "Derek Neuman",
-    "Warm - Reviewing info.",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_qYC4kh3s7JymMTHKeLMqFw6SlyQ2JD3KTl8CWXGGRHR"
    ],
    [
     "Wesley Frommel",
-    "Responsive - Luke Warm",
+    "High Confidence",
     "",
-    ""
+    "",
+    "lead_wOvVJaGhScA4Ak1xTuMO0rSFpqQ8rYIw7nnLx7TTeUQ"
    ],
    [
     "Dan Bailey",
-    "Warm - Reviewing info.",
+    "Soft Verbal / Reengaged",
     "",
-    ""
+    "",
+    "lead_0DIR3y1EqTn5aVtIRJypP87ZhaCQjJgYmHdfTO5Q2J9"
    ],
    [
     "Chris Vinar",
-    "Warm - Reviewing info.",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_IHB9HBn4dT6D6YlcU6FBpbU74uAxdVlMSvZJYjsbiEg"
    ],
    [
     "Will Gray",
-    "Warm - Reviewing info.",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_inVAGflB8ianUNMHmCUs8Frm1euQm66FiKNHhPfWbC5"
    ],
    [
     "Steve Poleskey",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_cCLm3Y5xA2Ab7oaJfQRYYbUbAxrwpWp7srm4OF7aqJp"
    ],
    [
     "George Willis",
     "Delayed",
     "",
-    ""
+    "",
+    "lead_suvj2i7Ka2G8Tm4f7ycNbhD8odeqAzGFvXAAPNff5Cw"
    ],
    [
     "Gurkirat (Prince) Mundeir",
-    "Responsive - Luke Warm",
+    "Delayed",
     "",
-    ""
+    "",
+    "lead_OwzOsR7GsgAEkv9i7hEeWEQcqVMHKrJyOqNEfdskJmW"
    ],
    [
     "Levon Kololyan",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_YbRjAgWeOEI0sdzFHWjXolmD62VhxaORQ6cOLivfINd"
    ],
    [
     "Demetrios Christofidis",
-    "Warm - Reviewing info.",
+    "Soft Verbal / Reengaged",
     "",
-    ""
+    "",
+    "lead_L1E15M2DIRV0wHb8cr5GPxDOaZKjB0k2bIh6YUuwnvb"
    ],
    [
     "Ravi",
-    "Sent Contact",
+    "Delayed",
+    "",
     "",
     ""
    ],
    [
     "Andre Zukerman",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_fQBVYJukExSSlSZu0BH7IyOjPHA6zWIhPN9kf41pbrI"
    ],
    [
     "Joshua Thompson",
     "Delayed",
     "",
-    ""
+    "",
+    "lead_AuzV8sLT1tTLCB18p6NMXDlTDC5p89zqj18d8a9A0iV"
    ],
    [
     "Dean Van Patten",
     "Delayed",
     "",
-    ""
+    "",
+    "lead_iqzC2xMQsY6P1VAwEJ5Gry5qHj1LP3cUKozpjneLEDh"
    ],
    [
     "D.A. McComas",
     "Delayed",
     "",
-    ""
+    "",
+    "lead_j1JPXcgSd4mtsigPz57EWfmH3Ls2RdjwSJ1YEfbOQc4"
    ],
    [
     "Vijay Kumar",
     "Delayed",
     "",
-    ""
+    "",
+    "lead_eMIEXdi7Weh3utjsiDLUVf9lMRbPjCZAT04c45acogd"
    ],
    [
     "Maxwell Mickey",
-    "Warm - Reviewing info.",
+    "Delayed",
     "",
-    ""
+    "",
+    "lead_O7GL6l5qagkiFXqzL4YTNxhb0rKHbxQUoKpB5FRsmF0"
    ],
    [
     "Eric McCue",
-    "Responsive - Luke Warm",
+    "Delayed",
     "",
-    ""
+    "",
+    "lead_UkviMsEJ8LZnvvw7qF9qXGNxG9P6MjucGipx117JN0z"
    ],
    [
     "Jonathan Baldwin",
-    "Responsive - Luke Warm",
+    "Delayed",
     "",
-    ""
+    "",
+    "lead_5ElcdU2wAM5qMg5RcqwUVZCm5g3qv3jduareZwFKBmr"
    ],
    [
     "Eric Rubinstein",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_Z5xuTFYmbVHs0OQIg66iorGCwnRwlMe5cMgjHLG8vLc"
    ],
    [
     "Tyler Mounce",
-    "Warm - Reviewing info.",
+    "Soft Verbal / Reengaged",
     "",
-    ""
+    "",
+    "lead_Zo3jSE8Mkvl1t0bjDEEVkcn26EwKakWyLvJJ3ygRZES"
    ],
    [
     "Alexandra Hirt",
     "Closed",
     "18000",
-    ""
+    "",
+    "lead_sIJwNFRw3mnSWFAhXbNfVeKuYJlRfxMYUoStaP39Hxu"
    ],
    [
     "Angelo Kramvis",
-    "Responsive - Luke Warm",
+    "Delayed",
     "",
-    ""
+    "",
+    "lead_KGx17wpMlZvo6zRXTSkcfKhFCd4nEkrMOoxr9ilccq5"
    ],
    [
     "Austin Junker",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_j14UGG4KJASvIpErMjzDkLdsXvlI74EkdNZLkdfwnQD"
    ],
    [
     "Ricky Lora",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_lx8JyaVI5UNDzuyJsU1MhMsKir6JRX7PTUkupH3BD49"
    ],
    [
     "Martin Smith",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_L9VveLXgAW9lZtOD3JrBVT1btBiN8jEEuhgY1ZuGRNK"
    ],
    [
     "Katrina Nowosielski",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_BrAWDSAOUjJUd3iF8U9laNZZSHgPEIIZAHKV0T1ozQA"
    ],
    [
     "Robyn Horvath",
-    "Warm - Reviewing info.",
+    "Soft Verbal / Reengaged",
     "",
-    ""
+    "",
+    "lead_N7wsWc5MBo88LlXJ7MZSEN2SykfktlI5DwIcoKpwEkb"
    ],
    [
     "Ryan Paterno",
-    "Warm - Reviewing info.",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_xPb0RHe5HXGnXOVqNXb8Z1aDJdgks5YENFwk4cUiYP5"
    ],
    [
     "Dan Housley",
-    "Warm - Reviewing info.",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_ueqVxeJHBHVZ3s5K7yWba3O3Ji5EHsoetwbv6Phjfhw"
    ],
    [
     "Menny Shalom",
-    "Warm - Reviewing info.",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_VKHGHAgpTbVMGaVUdP4i120fS2BSUVWceCMsTn7EpdX"
    ],
    [
     "Jared Goldenberg",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_OzK8RipNVBxLzox8FKeCDHyNeQiO5cV8alobNRDA6vX"
    ],
    [
     "Natalia Robert-Nunez",
-    "Responsive - Luke Warm",
+    "Delayed",
     "",
-    ""
+    "",
+    "lead_hQlAdHbSykweQyWxQo45R91gCDXytsgcwDl89cVo8Mx"
    ],
    [
     "Jack Hammond",
-    "Responsive - Luke Warm",
+    "Working/Good Call",
     "",
-    ""
+    "",
+    "lead_QFw7z5TAIDUNVrXEZViaEQDIZ1ZycpuZoLZ53XiJo7V"
+   ],
+   [
+    "Josh Aguilar",
+    "High Confidence",
+    "",
+    "",
+    "lead_wsOKmrjvTe458sNzXjAugqzaeXzHrC7C2lGpOnC6xoy"
+   ],
+   [
+    "John Hayter",
+    "Soft Verbal / Reengaged",
+    "",
+    "",
+    "lead_llEOLm0iTwmm9snPv0RQwnQBd7XqDIuiTAoNd43sTF2"
+   ],
+   [
+    "Robert Desio",
+    "Working/Good Call",
+    "",
+    "",
+    "lead_wgij9t9COBoVH95bbjhfuZEitSI867SPMrwyuBL0Ole"
+   ],
+   [
+    "Ryan Lavernia",
+    "Working/Good Call",
+    "",
+    "",
+    "lead_uVWmN9iMC0LEqNxsl4sCG8xR87k06i8xoZV6WPlIBLE"
    ]
   ],
   "Omar": [
@@ -924,79 +1101,92 @@
     "Mike King (& Wife)",
     "Soft Verbal / Reengaged",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_a4NwzajaeglcKIR3bpQUf5DJfLS7elVAL4xYZUEwv59"
    ],
    [
     "John Eaves (& Van)",
     "High Confidence",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_DVlvXGwlFZCxgQUFY4Y2yuNVGRJATgcCBFA9x4XNLe2"
    ],
    [
     "Thomas Aellis & Partner Steve",
     "Working / Good call",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_LSdOuv0gRbHUiMPMuBVAJGBorD3lGMzYAp2AV0S5zNi"
    ],
    [
     "Chase Countryman & Alicia",
     "Soft Verbal / Reengaged",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_b87dC50QXplW5RW2sSXUYG9B5I8L6fihLkYll4Jpeqk"
    ],
    [
     "Alex Cabrera",
     "Soft Verbal / Reengaged",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_LZQ7rOyJs5ZsluckTeA98j0WsaytYtvfprctIBMNId3"
    ],
    [
     "Christina Sanini & Husband Kevin",
     "Working / Good call",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_gRBoymzS6SkiUUKPpvMnL5Wpok4dyHdZ149btaMqwMx"
    ],
    [
     "Lia Meden",
     "Soft Verbal / Reengaged",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_DP3VWUxK8UHNlGX0YLjHymqgx7tNsopYkpWk8npu0Hg"
    ],
    [
     "Stephen Mull",
     "Working / Good call",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_lQ661xkkGboCN6ij5I1CK7NwUyoKDkbf0cqd2zcUIwf"
    ],
    [
     "William and Jennifer Reau",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_2KkuhsmodpwNgeqZJMEWKM2q1dPfPr2uQCto1BT6pxX"
    ],
    [
     "Luke Smith",
     "High Confidence",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_Jfez9syhPiLqyLJmsV5uoddb7bA0GvROOtKnrfDzxj4"
    ],
    [
     "Ben Ellis",
     "Soft Verbal / Reengaged",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_0ZN0FNotL3rJ0kG43sN6vH0f8UjfndYBCif1qBnpAHF"
    ],
    [
     "Nadim Qureshi",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    "lead_CnPDK12aZU4YSleJ7QviGmQQqfcWl6fywepRXuSvnm5"
    ],
    [
     "Harry Ostrander",
     "Working / Good call",
     "$18,000.00",
-    "FALSE"
+    "FALSE",
+    "lead_ZgmWwmELSQwrCIHqrxenA0kJNoF1jxwBIBswifyiXNw"
    ]
   ],
   "Harry": [
@@ -1004,175 +1194,218 @@
     "Dave Leresche",
     "Closed",
     "$20,000.00",
-    ""
+    "",
+    "lead_NieqCZGnMX15xugmo04o717In61DiYogKKubMdQgJRe"
    ],
    [
     "Kevin and Ben Pratt",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_BiX2nKwfrhx33Rr5hSOo9pygFBY93NbFDogxq6n3bEB"
    ],
    [
     "Talwinder Kaila",
     "",
     "$18,000.00",
-    ""
+    "",
+    "lead_aVxnlP2V14jO7AkFQOPTmZ1Q4f0A3NWWR1CDSZsEgr5"
    ],
    [
     "Kevin Gindi",
     "Delayed",
     "$18,000.00",
-    ""
+    "",
+    "lead_4Ys20gGtaVfcvk59r4jmHEm76dKQyj3QDzVzDvsehcO"
    ],
    [
     "Carlos Sanchez",
     "Delayed",
     "$20,000.00",
-    ""
+    "",
+    "lead_PLlkfWfp64Z4Zu9tfcZrcCs0oNOVl5bcHSd4mRQTjN1"
    ],
    [
     "Pai Her",
     "Soft Verbal / Reengagd",
     "$20,000.00",
-    ""
+    "",
+    "lead_PzKLB4nkFBB53mBxUI6zax3R8yhmCOpcQSTtmxBdvOR"
    ],
    [
     "Leah and John Tressler",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_BxnNqn7HY9yl02r5QOaQCJZHtBC5Y65WjBGaTjUcgXV"
    ],
    [
     "Ryan Meade",
     "Delayed",
     "$20,000.00",
-    ""
+    "",
+    "lead_rstm0r12eM2PEuyTx7pjznZg4eWy3ZpeMwPhmUmOUP0"
    ],
    [
     "Dustin Schwichtenberg",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_rstm0r12eM2PEuyTx7pjznZg4eWy3ZpeMwPhmUmOUP0"
    ],
    [
     "Andre Sakai",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_F92QZqvquwCgvcz5mXDsAzZ7OTN9ezwL5xwa8JeyprK"
    ],
    [
     "James Chang",
     "Delayed",
     "$20,000.00",
-    ""
+    "",
+    "lead_N6LgVI7cFVSYp2IBpTiTK7lAlu6k9qEICGvOveVjLMW"
    ],
    [
     "Lisle Elliman",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_s1KspcJNJzdn8XAzICykzojNEOzCk75o15dVCa1YbN4"
    ],
    [
     "Clay Kersterson",
     "Closed",
     "$19,000.00",
-    ""
+    "",
+    "lead_dBcdrlhI2v7E8yNcIFpxbsf3VJwfuBNmXbzpeP0QXjh"
    ],
    [
     "Peter Herskovitz",
     "Working / Good call",
     "$18,000.00",
-    ""
+    "",
+    "lead_YBT0sJ1ghp55dH7v8VyxBjEbQljgthpoZYMH1RMP222"
    ],
    [
     "Bruce Graham",
     "Delayed",
     "$17,500.00",
-    ""
+    "",
+    "lead_RYNKQC8TySBbGJuWiCjPBBF0trOBokbOMmCFTi4RCdn"
    ],
    [
     "Paul Passalino",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_0rd2x6e9UXqOYhkSn7LX00ZvDRadwStAev6TK79t9ym"
    ],
    [
     "Crystal Chao",
     "",
     "$20,000.00",
-    ""
+    "",
+    "lead_u2oym0QomquiZa1N8wEdeJgbZLS8aXLgSLmWzuvGLvn"
    ],
    [
     "Ari Brownstein",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_IqkbR6bh5Rp48ZONNsCSxjYIpDG0SBJPJabGzQf26US"
    ],
    [
     "Payel Chowdhury",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_FpV2WsECtCpxnD3L6zzGVZo7WTyMXUPX6wrysCWjGjr"
    ],
    [
     "Kirk Yogan",
     "",
     "$20,000.00",
-    ""
+    "",
+    "lead_uXPDIurSO0iIvhzxLJDu09yUVkyxBZNSDLVA012vVyg"
    ],
    [
     "Mike Perinotti",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_TBpm66iHtRAEBPz7VAOpu1P6aB7LxnTfSrU3L0SMFz2"
    ],
    [
     "Jeffery and Derek",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_1fmJxCWgsLJB4V70CZlMQCkUFgQ1KOvraFtjHKS1YS5"
    ],
    [
     "Jack Morrissey",
     "High Confidence",
     "$20,000.00",
-    ""
+    "",
+    "lead_tBbjTgaBpsf3L9aA7SBhdIrUWkHKNkhkCEsynC3vrYq"
    ],
    [
     "Robert Beaton",
     "Delayed",
     "$20,000.00",
-    ""
+    "",
+    "lead_YBT0sJ1ghp55dH7v8VyxBjEbQljgthpoZYMH1RMP222"
    ],
    [
     "Austin Malotke",
     "Delayed",
     "$20,000.00",
-    ""
+    "",
+    "lead_D4PYE8Qd2Y0D0OP9aCfv2H6FIPn2PaMAWy83lmdxa67"
    ],
    [
     "Ryan Holgrem",
     "Closed",
     "$19,000.00",
-    ""
+    "",
+    "lead_mLwVE5OdjeVf0x9andUxe2MK0MvrcVfKmITJaP074VZ"
    ],
    [
     "Will Donaldson",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_FJSEWfRps9Q5hJLDa5JpMS0H4vkOoDxFi7NL2uKB0xQ"
    ],
    [
     "Keshav",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_xgrgFIffhqhIP5OmS6GWxPTIOvhudpfE9UKeFp6cFj6"
    ],
    [
     "Ben Smith",
     "Working / Good call",
     "$20,000.00",
-    ""
+    "",
+    "lead_58EWA2wu6dDBMQhl8LIe7FjdCCV2zbk2CuGnXhbf6Ye"
+   ],
+   [
+    "Francisco Reyna",
+    "Working / Good call",
+    "$20,000.00",
+    "",
+    "lead_CnQV0mzNuydtkROSxRABWUMMwmEhtfIfVN8s640Bx8L"
+   ],
+   [
+    "Brian Colonna",
+    "Working / Good call",
+    "$20,000.00",
+    "",
+    "lead_CJAeCqfNLsH6WWZZ4KW1jjFp8VLK0sIhyQxhdaWaZDF"
    ]
   ],
   "Kevin": [
@@ -1180,73 +1413,85 @@
     "Jake Philo",
     "High Confidence",
     "$18,000",
-    ""
+    "",
+    "lead_WhS8voWWSKlrVhpuIwsMQFclgPsBbwPTN0sdOU3z0l7"
    ],
    [
     "Chynna VanArsdale",
     "Working / Good Call",
     "$18,000",
-    ""
+    "",
+    "lead_RmxbE0CSeocBfEp32hXaRNTMSmjAUyiUAAoaZVIToGm"
    ],
    [
     "Andrew Ie",
     "Working / Good Call",
     "$20,000",
-    ""
+    "",
+    "lead_Ezq6BuWdD2YZMcpFU6xnHFpa8oQUkJExJop8z0CzfFb"
    ],
    [
     "Jonathan Machado",
     "Working / Good Call",
     "$20,000",
-    ""
+    "",
+    "lead_ipcWAkipqnEofapDteCcx2poM7BHTGdilpNhu9pl2Yu"
    ],
    [
     "Nicolle Endoso",
     "Working / Good Call",
     "$18,000",
-    ""
+    "Nicolle is fully in,",
+    "lead_6MTyRgAeRps82Cnl7NYvXH92lnYi2ziM6Lp0kgrMmoD"
    ],
    [
     "Sam Charles",
     "Delayed",
     "$17,000",
-    ""
+    "excuse around his wo",
+    "lead_f5V53BzVoYQhuAx1AvBqKpyVzq5QmhheiaHQgXP2NKb"
    ],
    [
     "Vijay Bhaskar Gaddam",
     "High Confidence",
     "$18,000",
-    ""
+    "",
+    "lead_aFr2ySeyaXnv3eUbxmdJ0qucCmH6cqjCBv1C2QLlbgn"
    ],
    [
     "Dave Young",
     "Closed",
     "$18,000",
-    ""
+    "",
+    "lead_6zV0l4LSLCLIAy7ekOIfKIf2znMbod26anLByTeXDea"
    ],
    [
     "Kye Dipboye",
     "Delayed",
     "$18,000",
-    ""
+    "His wife told him no",
+    "lead_89m8DZo0XQkPC8n3iHwSB3pkO1FckYZVX5H7WqM8EY1"
    ],
    [
     "Tyler Nortillo",
     "Closed",
     "$18,000",
-    ""
+    "",
+    "lead_0E53jEqIuUpBFfICpZe1W3dNh6YkwZAu3DiFSZ40iy6"
    ],
    [
     "Taylor Crane",
     "Soft Verbal / Reengaged",
     "$18,000",
-    ""
+    "",
+    "lead_LJknt6vl4hDX354KQEKEzeZdJck2Q7URX29fJDjStit"
    ],
    [
     "James Lee",
     "Soft Verbal / Reengaged",
     "$20,000",
-    ""
+    "",
+    "lead_y9TiMdapoNc7lTzohyycgSrwjiDroHiehGVOeXu3zg7"
    ]
   ],
   "Solomon": [
@@ -1254,73 +1499,85 @@
     "Joseph St Germain",
     "",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Blake Izabal",
     "Delayed",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Steve Schrag",
     "",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Victor Schaefer",
     "Delayed",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Alex Sinunu",
     "Delayed",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Jon Levine",
     "",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Chris Fenimore",
     "",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Betty Lee",
     "Closed",
     "$16,000.00",
-    "TRUE"
+    "TRUE",
+    ""
    ],
    [
     "Jerry Cucinella",
     "",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ],
    [
     "Naveen Pitchandi",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    ""
    ],
    [
     "Domonic Moore",
     "Closed",
     "$20,000.00",
-    "TRUE"
+    "TRUE",
+    ""
    ],
    [
     "Collin Croskery",
     "Verbal",
     "$20,000.00",
-    "FALSE"
+    "FALSE",
+    ""
    ]
   ],
   "Daniel": [
@@ -1328,97 +1585,113 @@
     "Justin Heo",
     "Working / Good Call",
     "18000",
-    ""
+    "",
+    "lead_8Dq55yjklYCri5MEmDcEKZpI4HUC6k60VrGk4NlaH4b"
    ],
    [
     "Saqib Jamal",
     "Soft Verbal / Reengaged",
     "20000",
-    ""
+    "",
+    "lead_NIj9VDhdxsUDSqzxalUuWYmSan1JpmCq1DfJPSliPoR"
    ],
    [
     "Becca Price/Rusell McKee",
     "Soft Verbal / Reengaged",
     "15000",
-    ""
+    "",
+    "lead_pwJjoBJ3BVoV0L4KRqslyWqLxrH8Ml1gaV5hgX892dG"
    ],
    [
     "Pradepthi",
     "High Confidence",
     "20000",
-    ""
+    "",
+    "lead_4AAIVAangD0YHOjCjrGkFI916K9IoNCh5czJBRbf3ec"
    ],
    [
     "John Mallott",
     "Working / Good Call",
     "$18,000",
-    ""
+    "",
+    "lead_h69AFNotVpdp4PQ22r2ksQsVOQQiVT7lvOQsHXDakeh"
    ],
    [
     "Jaimi Truhler",
     "Soft Verbal / Reengaged",
     "$17,500",
-    ""
+    "",
+    "lead_qUk7tYyPaLtKD86iRQUR7BEbdr45cUTKFWo77Hbl7GU"
    ],
    [
     "Tim Carkin",
     "High Confidence",
     "18000",
-    ""
+    "",
+    "lead_vUPrLpjo8d6CmjZsAXsu5u9qdHAUvlhzgOB6jglOrl5"
    ],
    [
     "Vikram Jalli",
     "Working / Good Call",
     "16000",
-    ""
+    "",
+    "lead_TQPQWPSNXjGWXiCUjHSRHzWeXuhRm1aW1TzVayc1cJj"
    ],
    [
     "Ari Ruden",
     "Working / Good Call",
     "18000",
-    ""
+    "",
+    "lead_m67isbz0CRogpRejhtlI1Kgi1CtRYHva0kk443S54Bb"
    ],
    [
     "Ryan Noble",
     "Soft Verbal / Reengaged",
     "20000",
-    ""
+    "",
+    "lead_S05OFvUlyDMMDNGqPxYFlNAU2NEK15gy8EmsPzQiP8d"
    ],
    [
     "Venkatesh Rajan",
     "Soft Verbal / Reengaged",
     "20000",
-    ""
+    "",
+    "lead_GUNBJKPF4dNtJrbnvifTtVffuAjq3UlFmgbYF6MNiLK"
    ],
    [
     "Bob Bruennig",
     "Soft Verbal / Reengaged",
     "20000",
-    ""
+    "",
+    "lead_d43O16CmJ7QPaW1SyxZGV9fDs7IfwubnJGSrj8jbGjy"
    ],
    [
     "Molly Hennessy",
     "High Confidence",
     "20000",
-    ""
+    "",
+    "lead_yBrtUj2OBSVxWOCYjcJITPlD1bQB6R9Q0ojrfBgn3yG"
    ],
    [
     "Ryan Lopez",
     "Soft Verbal / Reengaged",
     "20000",
-    ""
+    "",
+    "lead_SpmDifC31wTiDEQ8kBkevYXtwCagCQtYhTtEDzOLARh"
    ],
    [
     "Michael Chunn",
     "Soft Verbal / Reengaged",
     "17,500",
-    ""
+    "",
+    "lead_1qlDKANQvvnH8q2lh4zhuF9VrlQqARrg3HYlQXN3tIb"
    ],
    [
     "Gareth Cheng",
     "Soft Verbal / Reengaged",
     "15,000",
-    ""
+    "",
+    "lead_iqZ3beSF7vlwkH7PlxaqmYo2lXJg5Yy0Famw9fmuLBh"
    ]
   ]
  },
@@ -1590,5 +1863,319 @@
   }
  },
  "as_of_label": "Tue Oct 20 (sample)",
- "cash_label": "cash collected month to date from the 2M tracker, through 2026-10-18"
+ "cash_label": "cash collected month to date from the 2M tracker, through 2026-10-18",
+ "close_won": [
+  [
+   "Julien",
+   "",
+   "lead_nDy1GYLyANpy0vt3enE9hwigX502X7yw1Z5SAsUfguY",
+   15000,
+   "10-20"
+  ],
+  [
+   "Harry",
+   "Ryan Holmgren",
+   "lead_mLwVE5OdjeVf0x9andUxe2MK0MvrcVfKmITJaP074VZ",
+   19000,
+   "10-20"
+  ],
+  [
+   "JZ",
+   "Neal Simpson",
+   "lead_fgPl05VubSsIkxzwEJ9p6sNE9UDlEIG6ps3fIb5EABu",
+   17500,
+   "10-19"
+  ],
+  [
+   "VeJohn",
+   "Shawn O'Donnell",
+   "lead_GlijpthptGBdy59iAy8mM1AlYtoaOC7PTGXrRuqRT4h",
+   15000,
+   "10-15"
+  ],
+  [
+   "Owen",
+   "",
+   "lead_Avxw78PT4LNM1vMmlHr1JQ6B34P9hmQUObIIhPHbNdx",
+   20000,
+   "10-14"
+  ],
+  [
+   "VeJohn",
+   "Matt Sole",
+   "lead_CH6ggAr96c61ifUeI0lK42I9iKPqzmFDVbMEAS441S6",
+   20000,
+   "10-14"
+  ],
+  [
+   "Omar",
+   "William Reau",
+   "lead_2KkuhsmodpwNgeqZJMEWKM2q1dPfPr2uQCto1BT6pxX",
+   20000,
+   "10-19"
+  ],
+  [
+   "Harry",
+   "Clay Kesterson",
+   "lead_dBcdrlhI2v7E8yNcIFpxbsf3VJwfuBNmXbzpeP0QXjh",
+   19000,
+   "10-11"
+  ],
+  [
+   "Yobani",
+   "",
+   "lead_XbjokOQtOgO4JAwZNu6AbzgzSv8urS5TrACSgq4fT3b",
+   20000,
+   "10-09"
+  ],
+  [
+   "Nick",
+   "Alexandra Hirt",
+   "lead_sIJwNFRw3mnSWFAhXbNfVeKuYJlRfxMYUoStaP39Hxu",
+   18000,
+   "10-14"
+  ],
+  [
+   "Harry",
+   "Dave Leresche",
+   "lead_NieqCZGnMX15xugmo04o717In61DiYogKKubMdQgJRe",
+   20000,
+   "10-08"
+  ],
+  [
+   "Kevin",
+   "Tyler Nortillo",
+   "lead_0E53jEqIuUpBFfICpZe1W3dNh6YkwZAu3DiFSZ40iy6",
+   18000,
+   "10-16"
+  ],
+  [
+   "VeJohn",
+   "Jack Walsh",
+   "lead_noUf02yijfYFtidKwAatXovFXxQtCY8SNWGMJrbTZ01",
+   15000,
+   "10-07"
+  ],
+  [
+   "Adam",
+   "Ralph Plaskett",
+   "lead_kvSHdKIxoQYC0DRG5UcXpvcNeq2jTCSLo66zbUIoGRB",
+   18000,
+   "10-12"
+  ],
+  [
+   "Kevin",
+   "Dave Young",
+   "lead_6zV0l4LSLCLIAy7ekOIfKIf2znMbod26anLByTeXDea",
+   18000,
+   "10-14"
+  ],
+  [
+   "Nick",
+   "Gunnar Schultz",
+   "lead_fQOcwzxp7Agzl1a4GCzOCI56pvueKqOojIFZmNYhe2q",
+   16000,
+   "10-14"
+  ],
+  [
+   "Owen",
+   "Joshua Scoresby",
+   "lead_2JCvXrKU0nCyVZS9CdIuoPXC4yfCPbn0gki0LfdGA4L",
+   18000,
+   "10-06"
+  ],
+  [
+   "Omar",
+   "Ammar Aboulnasr",
+   "lead_NeFoTQiNIkxN5SKczqUU04D1SJ1w5TdEg635sQkhEb3",
+   15000,
+   "10-04"
+  ],
+  [
+   "VeJohn",
+   "Kellen Groves",
+   "lead_tZ8byeodvRoBuUeUiYvcb6nYKMWBURRkfrdKEqFe83Q",
+   15000,
+   "10-03"
+  ],
+  [
+   "Adam",
+   "David McKie",
+   "lead_a0MOk5cYE2bFlClNoVV92i9IoLvU51od5TZCWr0Rp7w",
+   17500,
+   "10-02"
+  ],
+  [
+   "VeJohn",
+   "Larry and Sonia Barts",
+   "lead_M9AKwWXp3Ylayh0MO3AVrFc6GkO4WfTrAoRlZDSgeuj",
+   16000,
+   "10-01"
+  ],
+  [
+   "Owen",
+   "Bryan Lui",
+   "lead_BUwqX11t8zC0NiRBayED7VpHzjn1hhduXbwPbG9DjEZ",
+   19000,
+   "10-01"
+  ],
+  [
+   "Harry",
+   "Christopher Cheung",
+   "lead_ERTzgvSBstToqH2YbZLkV9gnogT9hzYJLNJ8fwiETay",
+   15000,
+   "10-01"
+  ],
+  [
+   "Harry",
+   "Robert Kolansky",
+   "lead_lB8XzOJnYM3D7JTvJhKsslzAz8MSthv7lugC9kZJ1p1",
+   18000,
+   "10-01"
+  ],
+  [
+   "Nick",
+   "Jacob Miller",
+   "lead_bflJFeO854C0xY4eO4XhRiZZSTT1IxnuJvjh99wf3Rn",
+   15000,
+   "10-02"
+  ],
+  [
+   "Adam",
+   "Angel Cachinero",
+   "lead_y8p1kDynLT3K8B6vjYrR6gj7fRX6d3ggl2tOAwq9tRU",
+   17500,
+   "10-02"
+  ],
+  [
+   "Nick",
+   "Zachary Carmichael",
+   "lead_OaI9vgRTLPgmSLYzRR2PleyEaOnaqYeap7Pun8FBNEq",
+   20000,
+   "10-06"
+  ],
+  [
+   "Owen",
+   "John Fritzel",
+   "lead_Rc2ODiqT4Vmf1ABINfVeLHTniYxo9leyV7YJHkyruZE",
+   20000,
+   "10-19"
+  ],
+  [
+   "Solomon",
+   "Naveen Pitchandi",
+   "lead_dUy9MpueHKEiOIVrroWdVPLKKlvbEA5qPctWuI6Q4Ej",
+   20000,
+   "10-16"
+  ],
+  [
+   "Owen",
+   "Mike Simpson",
+   "lead_LHeMtZRb9sHRgtVFlN0DYbcPYKL4YBB3gasiG8Cmo3N",
+   18000,
+   "10-01"
+  ],
+  [
+   "Solomon",
+   "Domonic Moore",
+   "lead_4aO17NgpKRcQ8NJtVKuiwZmdrMpqU1AlS2NPaDuLWZQ",
+   20000,
+   "10-13"
+  ],
+  [
+   "Omar",
+   "Nadim Qureshi",
+   "lead_CnPDK12aZU4YSleJ7QviGmQQqfcWl6fywepRXuSvnm5",
+   20000,
+   "10-20"
+  ],
+  [
+   "JZ",
+   "Daniel Lepore",
+   "lead_mRNiSVk4s3OEJySsBSlObUzLWLUIEXfipoJUhLCxuME",
+   20000,
+   "10-13"
+  ],
+  [
+   "Owen",
+   "Abby Manawes",
+   "lead_cArGKX7uBmxwc5W58vS5BtKuaa7vpV8DHMCQmgb59PL",
+   20000,
+   "10-01"
+  ],
+  [
+   "Solomon",
+   "Betty Lee",
+   "lead_EUFuuY7q2LVem7RXkjxgeON2HStj2u3XtbcXF20aJ4Q",
+   16000,
+   "10-13"
+  ],
+  [
+   "Julien",
+   "Jullie Li",
+   "lead_LD2XoMWVuyt80G5w962YXtjkYZOGL3i1dC4CVoEMz09",
+   15000,
+   "10-15"
+  ],
+  [
+   "Owen",
+   "Nick Tranfaglia",
+   "lead_cbFj6HerzvCxmGLEZPc878Uk1Xs7aVf2HFtLdIh1rt8",
+   19000,
+   "10-06"
+  ],
+  [
+   "Adam",
+   "Melissa Parker",
+   "lead_MHRkgL8Sjmp7460mjG3aBRjSocVjlm61ZnqOAcjGR8p",
+   15000,
+   "10-07"
+  ],
+  [
+   "Owen",
+   "Gee Varughese",
+   "lead_pLoP6dUznLH77EIxmzalzKevTUAJUKCDglYAmVwJhbT",
+   20000,
+   "10-06"
+  ]
+ ],
+ "pipeline_index": {
+  "lead_a0MOk5cYE2bFlClNoVV92i9IoLvU51od5TZCWr0Rp7w": [
+   "September",
+   "David MckIe",
+   "Closed",
+   "$17,500.00"
+  ],
+  "lead_ERTzgvSBstToqH2YbZLkV9gnogT9hzYJLNJ8fwiETay": [
+   "September",
+   "Christopher Cheung",
+   "Closed",
+   "$20,000.00"
+  ],
+  "lead_lB8XzOJnYM3D7JTvJhKsslzAz8MSthv7lugC9kZJ1p1": [
+   "September",
+   "Robert Kolansky",
+   "Closed",
+   "$20,000.00"
+  ],
+  "lead_LHeMtZRb9sHRgtVFlN0DYbcPYKL4YBB3gasiG8Cmo3N": [
+   "September",
+   "Mike Simpson",
+   "Closed",
+   "$18,000.00"
+  ],
+  "lead_cArGKX7uBmxwc5W58vS5BtKuaa7vpV8DHMCQmgb59PL": [
+   "September",
+   "Abby Manawes",
+   "Closed",
+   "$20,000.00"
+  ],
+  "lead_BUwqX11t8zC0NiRBayED7VpHzjn1hhduXbwPbG9DjEZ": [
+   "September",
+   "Bryan Lui",
+   "Soft Verbal / Reengaged",
+   "$19,000.00"
+  ]
+ },
+ "close_pulled_at": "2026-10-20 7:30pm ET"
 }

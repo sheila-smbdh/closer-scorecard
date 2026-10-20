@@ -9,14 +9,16 @@ Sample: `out/pipeline-2026-10-20.png`. Proposed cron: `CRON_TZ=America/New_York 
 4. Ramping: Tyler, Oliver
 
 ## Steps
-1. Pipeline Review `1pX0nlLTJkQ-cAzgUk0QLQrhX6xjfaviAFoQIc_NaHVc`: each closer's tab, rows under the current month header until the next month header, as `[name, status (B), expected cash (D), Closed? (F)]` into `pipeline_leads`.
-2. Actual cash: `node src/fetch-tracker.mjs <data.json> <report date>` (cash_mtd, month_target).
-3. Render: `node src/pipeline-report.mjs <data.json> out`.
-4. Post the PNG to #sales-strategy; send `out/pipeline-<date>-flags.md` to Sheila.
-5. Save that Friday's lead statuses to `data/pipeline-snapshots/<date>.json` so month-end KPIs can tell which closed leads were High Confidence vs Soft Verbal (the sheet overwrites the status with Closed).
+1. Pipeline Review `1pX0nlLTJkQ-cAzgUk0QLQrhX6xjfaviAFoQIc_NaHVc`: each closer's tab, rows under the current month header until the next month header, as `[name, status (B), expected cash (D), outcome (F), Close lead id (from the C link)]` into `pipeline_leads`. Also note where any Close-paid lead sits outside that section (`pipeline_index`).
+2. Close: `find_opportunities` status won, close date in the month (paginate). Keep those with a Cash Collected value as `close_won` `[closer, contact, lead id, cash, paid date]`. Opportunities owned by setters are listed in the flags only.
+3. Render: `node src/pipeline-report.mjs <data.json> out`. Writes the PNG, `out/pipeline-<date>-flags.md`, `out/pipeline-<date>-leads.md` (every lead's bucket) and `data/pipeline-snapshots/<date>.json`. Commit the snapshot.
+4. Post the PNG to #sales-strategy; send the flags file to Sheila.
+5. If Pipeline Review or Close fails, DM Sheila and do not post.
 
 ## Definitions
-- Closed = status Closed or Signed, or the Closed? box ticked. Delayed and Lost are not open.
-- KPI: 80% of High Confidence and 50% of Soft Verbal / Reengaged closed by month end. Working: no KPI.
-- Projected cash = closed + open HC + open SV (column D). At KPI = closed + 80% HC + 50% SV.
-- Blank, "Verbal" or personal statuses are flagged as "need a status" and not counted.
+- Labeling convention: column B = High Confidence / Soft Verbal / Working; column F = Closed / Signed / Delayed. During the switch an outcome in column B (and TRUE in F) is still read; the lead's category then comes from the last snapshot that saw it open, else "not recorded".
+- Closed = Closed or Signed. Delayed and Lost are neither open nor closed. "Verbal" counts as High Confidence and is flagged for relabeling.
+- KPI: 80% of High Confidence and 50% of Soft Verbal / Reengaged closed by month end, over every lead in that category this month (open + closed). Working: no KPI.
+- Projected cash = closed + every open HC and SV lead (column D; Close cash for closed leads when available). If KPIs hit = closed + 80% of open HC + 50% of open SV.
+- Actual cash = sum of Close "Cash Collected" on the closer's won opportunities closed this month.
+- Close check: every Closed/Signed lead must have a paid, won Close opportunity; amounts that differ from column D, Close payments still marked open on the sheet, and Close payments missing from the month's section are flagged.
