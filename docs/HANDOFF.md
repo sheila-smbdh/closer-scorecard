@@ -14,6 +14,8 @@ curl -s -H "Authorization: Bearer $TRACKER_READ_TOKEN" "https://smbdh-2m-tracker
 
 Then, per closer: tile value = `pace.cash`, pace line = `pace.expected_cash`, status from `pace.status` (ahead / on_pace -> green, slightly_behind -> yellow, behind -> red), small text = `month_target` + `target_source`. Drop the provisional $200K straight-line pace (`TARGETS.monthlyCash` in `src/metrics.mjs`). Show `all_checks_pass: false` as a run flag. Consider also using `/api/read/closers` for MTD cash/closes/revenue instead of the Sales Tracker. Never print the token.
 
+**Status (Oct 20):** wired. `npm run tracker -- 2026-10-18` (`src/fetch-tracker.mjs`) pulls `/api/read/closers` into the snapshot's `tracker` block; `src/metrics.mjs` uses it for the cash tile whenever `tracker.through` matches the edition's last day, and falls back to the provisional $200K straight line (with a run flag) otherwise. Run flags also cover failed tracker checks, closers with no tracker row, and tracker vs Sales Tracker cash differences. Zain's API doc: tracker `/api/read` (endpoint list and field definitions).
+
 ## What exists
 
 - `src/metrics.mjs`: metric definitions, statuses, Wins/Focus text, run flags.

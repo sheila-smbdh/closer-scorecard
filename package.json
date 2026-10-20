@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "tracker": "node src/fetch-tracker.mjs data/sample-2026-10-19.json",
     "monday": "node src/build.mjs data/sample-2026-10-19.json out monday",
     "wednesday": "node src/build.mjs data/sample-2026-10-19.json out wednesday"
   },

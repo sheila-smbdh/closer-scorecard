@@ -3,7 +3,7 @@
 // target tiles (green hit, yellow 75%+, red missed, blue tracked), then pace,
 // month over month and a definitions footer.
 
-import { winsAndFixes, fmtPct, fmtMoney, TARGETS } from './metrics.mjs';
+import { winsAndFixes, fmtPct, fmtMoney, TARGETS, TARGET_SOURCE } from './metrics.mjs';
 
 const CHIP = { hit: 'HIT', almost: 'ALMOST', missed: 'MISSED', track: 'TRACKING' };
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -144,7 +144,9 @@ export function closerCard(m, month) {
   const cashTile = tile({
     label: 'Cash collected pace', value: fmtMoney(c.value, true), statusKey: c.status,
     sub: c.expected ? `Pace by ${m.ed.through} is ${fmtMoney(c.expected, true)} (${fmtPct(c.paceRatio)} of pace)` : 'Collected this month',
-    small: c.monthTarget ? `Month target ${fmtMoney(c.monthTarget, true)} (provisional)` : null,
+    small: !c.monthTarget ? null : c.source === 'tracker'
+      ? `Month target ${fmtMoney(c.monthTarget, true)} (${TARGET_SOURCE[c.targetSource] ?? c.targetSource})`
+      : `Month target ${fmtMoney(c.monthTarget, true)} (provisional)`,
     bar: bar(c.value, c.expected), targetText: c.expected ? `Pace ${fmtMoney(c.expected, true)}` : 'New-hire target coming',
   });
   const p = m.pipeline;
@@ -192,7 +194,7 @@ export function closerCard(m, month) {
 <div class="section"><h2>MONTH OVER MONTH</h2>
 <p class="key">${month.label} 1 to ${m.ed.through.split(' ')[1]} compared with the same days in ${month.prev_label}.</p>
 <div class="mom">${momCells}</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports (Sales Tracker for any day without one), also used for month to date and revenue per call. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days. Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports (Sales Tracker for any day without one), also used for month to date and revenue per call. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days. Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. ${m.cash.source === 'tracker' ? 'Cash pace: what the 2M tracker expects you to have collected by this day on its month curve, which is back-loaded (more cash lands late in the month), against your month target.' : 'Cash pace: month target × business days so far ÷ business days in the month.'} Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
   return page(body);
 }
 
@@ -230,6 +232,6 @@ ${cell('track', momTxt, `${fmtMoney(mom.now, true)} vs ${fmtMoney(mom.prev, true
 <div class="legend"><span style="--c:var(--hit)">Hit</span><span style="--c:var(--almost)">Almost (75%+)</span><span style="--c:var(--missed)">Missed</span><span style="--c:var(--track)">Tracked, no target</span></div>
 <table><thead><tr><th>Closer</th><th>Open slots<br>target 25</th><th>Booked calls<br>target 20</th><th>Show rate<br>target 80%</th><th>Closes<br>last week</th><th>Projected closes<br>HC + SV</th><th>Cash MTD<br>vs pace</th><th>Avg revenue<br>floor $17.5K</th><th>Revenue<br>per call</th><th>Revenue MoM<br>same days</th></tr></thead>
 <tbody>${body}${total}</tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}; month over month compares with the same days in September. Cash pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker. Slots are Calendly discovery start times over the next 7 days, with the time each closer's calendar closes (ET). Projected closes count open High Confidence and Soft Verbal / Reengaged leads in each closer's October pipeline tab; "untagged" = open leads with a blank or non-standard status.</div>`;
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}; month over month compares with the same days in September. ${data.tracker?.through?.slice(5) === ed.through_key ? 'Cash pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve.' : 'Cash pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots are Calendly discovery start times over the next 7 days, with the time each closer's calendar closes (ET). Projected closes count open High Confidence and Soft Verbal / Reengaged leads in each closer's October pipeline tab; "untagged" = open leads with a blank or non-standard status.</div>`;
   return page(html, 'wide');
 }
