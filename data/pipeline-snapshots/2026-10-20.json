@@ -9,7 +9,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-06"
@@ -20,7 +20,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 19000,
     "close_paid": 19000,
     "close_paid_date": "10-06"
@@ -31,7 +31,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 18000,
     "close_paid": 18000,
     "close_paid_date": "10-06"
@@ -64,7 +64,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-19"
@@ -119,7 +119,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-14"
@@ -220,7 +220,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 17500,
     "close_paid": 15000,
     "close_paid_date": "10-07"
@@ -297,7 +297,7 @@
     "status_b": "Signed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "signed, not paid",
     "cash": 18000,
     "close_paid": null,
     "close_paid_date": null
@@ -308,7 +308,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 18000,
     "close_paid": 18000,
     "close_paid_date": "10-12"
@@ -609,7 +609,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 16000,
     "close_paid": 16000,
     "close_paid_date": "10-01"
@@ -620,7 +620,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 16000,
     "close_paid": 15000,
     "close_paid_date": "10-07"
@@ -631,7 +631,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 16000,
     "close_paid": 15000,
     "close_paid_date": "10-15"
@@ -664,7 +664,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 15000,
     "close_paid": 15000,
     "close_paid_date": "10-03"
@@ -675,7 +675,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-14"
@@ -831,7 +831,7 @@
     "status_b": "Signed",
     "outcome_f": "FALSE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": null,
     "close_paid": 15000,
     "close_paid_date": "10-20"
@@ -985,7 +985,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 15000,
     "close_paid": 15000,
     "close_paid_date": "10-15"
@@ -1086,7 +1086,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-06"
@@ -1119,7 +1119,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 15000,
     "close_paid": 15000,
     "close_paid_date": "10-02"
@@ -1130,7 +1130,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 16000,
     "close_paid": 16000,
     "close_paid_date": "10-14"
@@ -1383,7 +1383,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 18000,
     "close_paid": 18000,
     "close_paid_date": "10-14"
@@ -1660,7 +1660,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-19"
@@ -1693,7 +1693,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-20"
@@ -1717,7 +1717,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-08"
@@ -1849,7 +1849,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 19000,
     "close_paid": 19000,
     "close_paid_date": "10-11"
@@ -1992,7 +1992,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 19000,
     "close_paid": 19000,
     "close_paid_date": "10-20"
@@ -2137,7 +2137,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 16000,
     "close_paid": 16000,
     "close_paid_date": "10-13"
@@ -2159,7 +2159,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-16"
@@ -2170,7 +2170,7 @@
     "status_b": "Closed",
     "outcome_f": "TRUE",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 20000,
     "close_paid": 20000,
     "close_paid_date": "10-13"
@@ -2449,7 +2449,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 18000,
     "close_paid": 18000,
     "close_paid_date": "10-14"
@@ -2471,7 +2471,7 @@
     "status_b": "Closed",
     "outcome_f": "",
     "category": "unknown",
-    "outcome": "closed",
+    "outcome": "paid",
     "cash": 18000,
     "close_paid": 18000,
     "close_paid_date": "10-16"

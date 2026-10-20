@@ -3,7 +3,7 @@
 --sv:#7d5f00;--sv-bg:#fbf1cf;--wk:#2d5bb8;--wk-bg:#e5ebf6;--red:#c8423d;--red-bg:#f9e2e1}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
-.card{width:1500px;padding:40px 44px 32px;background:var(--bg)}
+.card{width:1720px;padding:40px 44px 32px;background:var(--bg)}
 .eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
 h1{font-size:38px;font-weight:800;margin:8px 0 6px}
 .lede{font-size:18px;color:var(--muted)}
@@ -37,116 +37,150 @@ tr.tot td{background:#f1f0ec;font-weight:700}
     <div class="k-hc"><b>High Confidence</b>80% should close by month end</div>
     <div class="k-sv"><b>Soft Verbal / Reengaged</b>50% should close by month end</div>
     <div class="k-wk"><b>Working / Good call</b>Some should close</div>
-    <div class="k-cash"><b>Cash</b>Projected = closed + every open HC and SV lead. If KPIs hit = closed + 80% of HC + 50% of SV</div>
+    <div class="k-cash"><b>Cash</b>Projected = collected + signed + every open HC and SV lead. If KPIs hit = collected + signed + 80% of HC + 50% of SV</div>
   </div>
   <table>
-    <tr><th>Closer</th><th>High Confidence<br>open</th><th>Soft Verbal /<br>Reengaged open</th><th>Working<br>open</th><th>Closed or signed<br>this month</th><th>Projected cash</th><th>Actual cash<br>collected</th></tr>
-    <tr class="pod"><td colspan="7">Owen's pod<span>Owen and his trainees</span></td></tr>
+    <tr><th>Closer</th><th>High Confidence<br>open</th><th>Soft Verbal /<br>Reengaged open</th><th>Working<br>open</th><th>Closed<br>(paid in Close)</th><th>Signed,<br>not paid yet</th><th>Cash projected vs<br>collected on closes</th><th>Projected cash</th><th>Actual cash<br>collected</th></tr>
+    <tr class="pod"><td colspan="9">Owen's pod<span>Owen and his trainees</span></td></tr>
       <tr><td>Owen</td>
     <td><span class="n hc">3</span><span class="sub">0 closed · 3 more for 80%</span></td>
     <td><span class="n sv">7</span><span class="sub">0 closed · 4 more for 50%</span></td>
     <td><span class="n wk">3</span><span class="sub">0 closed</span></td>
-    <td><span class="n">5</span><span class="sub">0 delayed</span><span class="ok">all paid in Close</span></td>
-    <td><span class="n">$293K</span><span class="sub">if KPIs hit $212K</span></td>
-    <td><span class="n">$154K</span><span class="pct p-mid">53%</span><span class="sub">8 paid in Close</span></td></tr><tr><td>Jay Z (Jordan)</td>
+    <td><span class="n">8</span><span class="sub">5 Oct pipeline · 3 Sep pipeline</span><span class="sub">0 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">100%</span><span class="sub">$154K collected of $154K projected</span><span class="ok">all amounts match</span></td>
+    <td><span class="n">$350K</span><span class="sub">if KPIs hit $269K</span></td>
+    <td><span class="n">$154K</span><span class="pct p-low">44%</span><span class="sub">from 8 closes</span></td></tr><tr><td>Jay Z (Jordan)</td>
     <td><span class="n hc">6</span><span class="sub">0 closed · 5 more for 80%</span></td>
     <td><span class="n sv">7</span><span class="sub">0 closed · 4 more for 50%</span></td>
     <td><span class="n wk">4</span><span class="sub">0 closed</span></td>
-    <td><span class="n">0</span><span class="sub">1 delayed</span></td>
-    <td><span class="n">$229K</span><span class="sub">if KPIs hit $146K</span></td>
-    <td><span class="n">$38K</span><span class="pct p-low">16%</span><span class="sub">2 paid in Close</span></td></tr><tr><td>Adam</td>
+    <td><span class="n">2</span><span class="sub">2 not on sheet</span><span class="sub">1 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="na">–</span></td>
+    <td><span class="n">$267K</span><span class="sub">if KPIs hit $184K</span></td>
+    <td><span class="n">$38K</span><span class="pct p-low">14%</span><span class="sub">from 2 closes</span></td></tr><tr><td>Adam</td>
     <td><span class="n hc">5</span><span class="sub">0 closed · 4 more for 80%</span></td>
     <td><span class="n sv">2</span><span class="sub">0 closed · 1 more for 50%</span></td>
     <td><span class="n wk">3</span><span class="sub">0 closed</span></td>
-    <td><span class="n">3</span><span class="sub">4 delayed</span><span class="warn">1 not paid in Close</span></td>
-    <td><span class="n">$170K</span><span class="sub">if KPIs hit $137K</span></td>
-    <td><span class="n">$68K</span><span class="pct p-low">40%</span><span class="sub">4 paid in Close</span></td></tr><tr><td>VeJohn</td>
+    <td><span class="n">4</span><span class="sub">2 Oct pipeline · 1 Sep pipeline · 1 not on sheet</span><span class="sub">4 delayed</span></td>
+    <td><span class="n sv">1</span><span class="sub">$18K expected</span></td>
+    <td><span class="n">95%</span><span class="sub">$50.5K collected of $53K projected</span><span class="warn">1 of 3 deals off</span></td>
+    <td><span class="n">$205K</span><span class="sub">if KPIs hit $172K</span></td>
+    <td><span class="n">$68K</span><span class="pct p-low">33%</span><span class="sub">from 4 closes</span></td></tr><tr><td>VeJohn</td>
     <td><span class="n hc">3</span><span class="sub">0 closed · 3 more for 80%</span></td>
     <td><span class="n sv">1</span><span class="sub">0 closed · 1 more for 50%</span></td>
     <td><span class="n wk">1</span><span class="sub">0 closed</span></td>
-    <td><span class="n">5</span><span class="sub">2 delayed</span><span class="ok">all paid in Close</span></td>
+    <td><span class="n">5</span><span class="sub">5 Oct pipeline</span><span class="sub">2 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">98%</span><span class="sub">$81K collected of $83K projected</span><span class="warn">2 of 5 deals off</span></td>
     <td><span class="n">$147K</span><span class="sub">if KPIs hit $129K</span></td>
-    <td><span class="n">$81K</span><span class="pct p-mid">55%</span><span class="sub">5 paid in Close</span></td></tr>
+    <td><span class="n">$81K</span><span class="pct p-mid">55%</span><span class="sub">from 5 closes</span></td></tr>
       <tr class="tot"><td>Pod total</td>
     <td><span class="n hc">17</span><span class="sub">0 closed · 15 more for 80%</span></td>
     <td><span class="n sv">17</span><span class="sub">0 closed · 10 more for 50%</span></td>
     <td><span class="n wk">11</span><span class="sub">0 closed</span></td>
-    <td><span class="n">13</span><span class="sub">7 delayed</span><span class="warn">1 not paid in Close</span></td>
-    <td><span class="n">$839K</span><span class="sub">if KPIs hit $624K</span></td>
-    <td><span class="n">$341K</span><span class="pct p-low">41%</span><span class="sub">19 paid in Close</span></td></tr><tr class="pod"><td colspan="7">Jay's pod: fully ramped<span>Jay's trainees</span></td></tr>
+    <td><span class="n">19</span><span class="sub">12 Oct pipeline · 4 Sep pipeline · 3 not on sheet</span><span class="sub">7 delayed</span></td>
+    <td><span class="n sv">1</span><span class="sub">$18K expected</span></td>
+    <td><span class="n">98%</span><span class="sub">$285.5K collected of $290K projected</span><span class="warn">3 of 16 deals off</span></td>
+    <td><span class="n">$969K</span><span class="sub">if KPIs hit $754K</span></td>
+    <td><span class="n">$341K</span><span class="pct p-low">35%</span><span class="sub">from 19 closes</span></td></tr><tr class="pod"><td colspan="9">Jay's pod: fully ramped<span>Jay's trainees</span></td></tr>
       <tr><td>Nick</td>
     <td><span class="n hc">2</span><span class="sub">0 closed · 2 more for 80%</span></td>
     <td><span class="n sv">8</span><span class="sub">0 closed · 4 more for 50%</span></td>
     <td><span class="n wk">19</span><span class="sub">0 closed</span></td>
-    <td><span class="n">4</span><span class="sub">13 delayed</span><span class="ok">all paid in Close</span></td>
+    <td><span class="n">4</span><span class="sub">4 Oct pipeline</span><span class="sub">13 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">100%</span><span class="sub">$69K collected of $69K projected</span><span class="ok">all amounts match</span></td>
     <td><span class="n">$69K</span><span class="sub">if KPIs hit $69K</span></td>
-    <td><span class="n">$69K</span><span class="pct p-hit">100%</span><span class="sub">4 paid in Close</span></td></tr><tr><td>Harry</td>
+    <td><span class="n">$69K</span><span class="pct p-hit">100%</span><span class="sub">from 4 closes</span></td></tr><tr><td>Harry</td>
     <td><span class="n hc">5</span><span class="sub">0 closed · 4 more for 80%</span></td>
     <td><span class="n sv">1</span><span class="sub">0 closed · 1 more for 50%</span></td>
     <td><span class="n wk">12</span><span class="sub">0 closed</span></td>
-    <td><span class="n">3</span><span class="sub">7 delayed</span><span class="ok">all paid in Close</span></td>
-    <td><span class="n">$178K</span><span class="sub">if KPIs hit $148K</span></td>
-    <td><span class="n">$91K</span><span class="pct p-mid">51%</span><span class="sub">5 paid in Close</span></td></tr><tr><td>Omar</td>
+    <td><span class="n">5</span><span class="sub">3 Oct pipeline · 2 Sep pipeline</span><span class="sub">7 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">93%</span><span class="sub">$91K collected of $98K projected</span><span class="warn">2 of 5 deals off</span></td>
+    <td><span class="n">$211K</span><span class="sub">if KPIs hit $181K</span></td>
+    <td><span class="n">$91K</span><span class="pct p-low">43%</span><span class="sub">from 5 closes</span></td></tr><tr><td>Omar</td>
     <td><span class="n hc">2</span><span class="sub">0 closed · 2 more for 80%</span></td>
     <td><span class="n sv">5</span><span class="sub">0 closed · 3 more for 50%</span></td>
     <td><span class="n wk">4</span><span class="sub">0 closed</span></td>
-    <td><span class="n">2</span><span class="sub">0 delayed</span><span class="ok">all paid in Close</span></td>
-    <td><span class="n">$168K</span><span class="sub">if KPIs hit $115K</span></td>
-    <td><span class="n">$55K</span><span class="pct p-low">33%</span><span class="sub">3 paid in Close</span></td></tr><tr><td>Julien</td>
+    <td><span class="n">3</span><span class="sub">2 Oct pipeline · 1 not on sheet</span><span class="sub">0 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">100%</span><span class="sub">$40K collected of $40K projected</span><span class="ok">all amounts match</span></td>
+    <td><span class="n">$183K</span><span class="sub">if KPIs hit $130K</span></td>
+    <td><span class="n">$55K</span><span class="pct p-low">30%</span><span class="sub">from 3 closes</span></td></tr><tr><td>Julien</td>
     <td><span class="n hc">2</span><span class="sub">0 closed · 2 more for 80%</span></td>
     <td><span class="n sv">10</span><span class="sub">0 closed · 5 more for 50%</span></td>
     <td><span class="n wk">4</span><span class="sub">0 closed</span></td>
-    <td><span class="n">2</span><span class="sub">11 delayed</span><span class="ok">all paid in Close</span></td>
+    <td><span class="n">2</span><span class="sub">2 Oct pipeline</span><span class="sub">11 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">100%</span><span class="sub">$15K collected of $15K projected</span><span class="ok">all amounts match</span></td>
     <td><span class="n">$30K</span><span class="sub">if KPIs hit $30K</span></td>
-    <td><span class="n">$30K</span><span class="pct p-hit">100%</span><span class="sub">2 paid in Close</span></td></tr>
+    <td><span class="n">$30K</span><span class="pct p-hit">100%</span><span class="sub">from 2 closes</span></td></tr>
       <tr class="tot"><td>Pod total</td>
     <td><span class="n hc">11</span><span class="sub">0 closed · 10 more for 80%</span></td>
     <td><span class="n sv">24</span><span class="sub">0 closed · 13 more for 50%</span></td>
     <td><span class="n wk">39</span><span class="sub">0 closed</span></td>
-    <td><span class="n">11</span><span class="sub">31 delayed</span><span class="ok">all paid in Close</span></td>
-    <td><span class="n">$445K</span><span class="sub">if KPIs hit $362K</span></td>
-    <td><span class="n">$245K</span><span class="pct p-mid">55%</span><span class="sub">14 paid in Close</span></td></tr><tr class="pod"><td colspan="7">Jay's pod: newly ramped<span>Month 4</span></td></tr>
+    <td><span class="n">14</span><span class="sub">11 Oct pipeline · 2 Sep pipeline · 1 not on sheet</span><span class="sub">31 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">97%</span><span class="sub">$215K collected of $222K projected</span><span class="warn">2 of 12 deals off</span></td>
+    <td><span class="n">$493K</span><span class="sub">if KPIs hit $410K</span></td>
+    <td><span class="n">$245K</span><span class="pct p-low">50%</span><span class="sub">from 14 closes</span></td></tr><tr class="pod"><td colspan="9">Jay's pod: newly ramped<span>Month 4</span></td></tr>
       <tr><td>Kevin</td>
     <td><span class="n hc">2</span><span class="sub">0 closed · 2 more for 80%</span></td>
     <td><span class="n sv">2</span><span class="sub">0 closed · 1 more for 50%</span></td>
     <td><span class="n wk">4</span><span class="sub">0 closed</span></td>
-    <td><span class="n">2</span><span class="sub">2 delayed</span><span class="ok">all paid in Close</span></td>
+    <td><span class="n">2</span><span class="sub">2 Oct pipeline</span><span class="sub">2 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">100%</span><span class="sub">$36K collected of $36K projected</span><span class="ok">all amounts match</span></td>
     <td><span class="n">$110K</span><span class="sub">if KPIs hit $84K</span></td>
-    <td><span class="n">$36K</span><span class="pct p-low">33%</span><span class="sub">2 paid in Close</span></td></tr><tr><td>Solomon</td>
+    <td><span class="n">$36K</span><span class="pct p-low">33%</span><span class="sub">from 2 closes</span></td></tr><tr><td>Solomon</td>
     <td><span class="n hc">1</span><span class="sub">0 closed · 1 more for 80%</span></td>
     <td><span class="n sv">0</span><span class="sub">&nbsp;</span></td>
     <td><span class="n wk">0</span><span class="sub">0 closed</span></td>
-    <td><span class="n">3</span><span class="sub">3 delayed</span><span class="ok">all paid in Close</span></td>
+    <td><span class="n">3</span><span class="sub">3 Oct pipeline</span><span class="sub">3 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">100%</span><span class="sub">$56K collected of $56K projected</span><span class="ok">all amounts match</span></td>
     <td><span class="n">$76K</span><span class="sub">if KPIs hit $72K</span></td>
-    <td><span class="n">$56K</span><span class="pct p-mid">74%</span><span class="sub">3 paid in Close</span></td></tr><tr><td>Daniel</td>
+    <td><span class="n">$56K</span><span class="pct p-mid">74%</span><span class="sub">from 3 closes</span></td></tr><tr><td>Daniel</td>
     <td><span class="n hc">3</span><span class="sub">0 closed · 3 more for 80%</span></td>
     <td><span class="n sv">9</span><span class="sub">0 closed · 5 more for 50%</span></td>
     <td><span class="n wk">4</span><span class="sub">0 closed</span></td>
-    <td><span class="n">0</span><span class="sub">0 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span><span class="sub">0 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="na">–</span></td>
     <td><span class="n">$223K</span><span class="sub">if KPIs hit $129K</span></td>
-    <td><span class="n">$0K</span><span class="pct p-low">0%</span><span class="sub">0 paid in Close</span></td></tr>
+    <td><span class="n">$0K</span><span class="pct p-low">0%</span><span class="sub">from 0 closes</span></td></tr>
       <tr class="tot"><td>Pod total</td>
     <td><span class="n hc">6</span><span class="sub">0 closed · 6 more for 80%</span></td>
     <td><span class="n sv">11</span><span class="sub">0 closed · 6 more for 50%</span></td>
     <td><span class="n wk">8</span><span class="sub">0 closed</span></td>
-    <td><span class="n">5</span><span class="sub">5 delayed</span><span class="ok">all paid in Close</span></td>
+    <td><span class="n">5</span><span class="sub">5 Oct pipeline</span><span class="sub">5 delayed</span></td>
+    <td><span class="n">0</span><span class="sub">&nbsp;</span></td>
+    <td><span class="n">100%</span><span class="sub">$92K collected of $92K projected</span><span class="ok">all amounts match</span></td>
     <td><span class="n">$409K</span><span class="sub">if KPIs hit $285K</span></td>
-    <td><span class="n">$92K</span><span class="pct p-low">22%</span><span class="sub">5 paid in Close</span></td></tr><tr class="pod"><td colspan="7">Ramping<span>Not fully ramped yet</span></td></tr>
-      <tr><td>Tyler</td><td colspan="5" style="text-align:left"><span class="na">No Pipeline Review tab yet</span></td>
-      <td><span class="n">$0K</span><span class="sub">0 paid in Close</span></td></tr><tr><td>Oliver</td><td colspan="5" style="text-align:left"><span class="na">No Pipeline Review tab yet</span></td>
-      <td><span class="n">$0K</span><span class="sub">0 paid in Close</span></td></tr>
+    <td><span class="n">$92K</span><span class="pct p-low">22%</span><span class="sub">from 5 closes</span></td></tr><tr class="pod"><td colspan="9">Ramping<span>Not fully ramped yet</span></td></tr>
+      <tr><td>Tyler</td><td colspan="3" style="text-align:left"><span class="na">No Pipeline Review tab yet</span></td>
+      <td><span class="n">0</span><span class="sub">&nbsp;</span></td><td><span class="na">–</span></td><td><span class="na">–</span></td><td><span class="na">–</span></td>
+      <td><span class="n">$0K</span></td></tr><tr><td>Oliver</td><td colspan="3" style="text-align:left"><span class="na">No Pipeline Review tab yet</span></td>
+      <td><span class="n">0</span><span class="sub">&nbsp;</span></td><td><span class="na">–</span></td><td><span class="na">–</span></td><td><span class="na">–</span></td>
+      <td><span class="n">$0K</span></td></tr>
       
     <tr class="tot"><td>All closers</td>
     <td><span class="n hc">34</span><span class="sub">0 closed · 31 more for 80%</span></td>
     <td><span class="n sv">52</span><span class="sub">0 closed · 29 more for 50%</span></td>
     <td><span class="n wk">58</span><span class="sub">0 closed</span></td>
-    <td><span class="n">29</span><span class="sub">43 delayed</span><span class="warn">1 not paid in Close</span></td>
-    <td><span class="n">$1.69M</span><span class="sub">if KPIs hit $1.27M</span></td>
-    <td><span class="n">$678K</span><span class="pct p-low">40%</span><span class="sub">38 paid in Close</span></td></tr>
+    <td><span class="n">38</span><span class="sub">28 Oct pipeline · 6 Sep pipeline · 4 not on sheet</span><span class="sub">43 delayed</span></td>
+    <td><span class="n sv">1</span><span class="sub">$18K expected</span></td>
+    <td><span class="n">98%</span><span class="sub">$592.5K collected of $604K projected</span><span class="warn">5 of 33 deals off</span></td>
+    <td><span class="n">$1.87M</span><span class="sub">if KPIs hit $1.45M</span></td>
+    <td><span class="n">$678K</span><span class="pct p-low">36%</span><span class="sub">from 38 closes</span></td></tr>
   </table>
   <div class="footer">
-    Closed = Closed or Signed. Delayed and Lost are not open and not closed. Projected cash uses each lead's amount in column D.
-    Actual cash = Cash Collected on won Close opportunities closed this month (pulled 2026-10-20 7:30pm ET). The % chip is actual ÷ projected.
+    Closed = a won opportunity in Close with cash collected this month (pulled 2026-10-20 7:30pm ET), so it always matches actual cash; the line under it says which Pipeline Review section the lead was in.
+    Signed, not paid yet = Closed or Signed on the sheet with no payment in Close. Delayed and Lost are neither open nor closed.
+    Cash projected vs collected compares each closed lead's column D amount with what Close collected.
+    Projected cash = collected + signed-not-paid + every open HC and SV lead (column D). The % chip is actual ÷ projected.
     "N closed" under each category counts closes whose category was recorded on an earlier run.
   </div>
   </div></body></html>

@@ -4,17 +4,17 @@
 
 | Lead | Column B | Column F | Bucket | Outcome | Paid in Close |
 |---|---|---|---|---|---|
-| Gee Vee | Closed | TRUE | not recorded | closed | $20,000 on 10-06 |
-| Nick Traf | Closed | TRUE | not recorded | closed | $19,000 on 10-06 |
-| Josh Scoresby | Closed | TRUE | not recorded | closed | $18,000 on 10-06 |
+| Gee Vee | Closed | TRUE | not recorded | paid | $20,000 on 10-06 |
+| Nick Traf | Closed | TRUE | not recorded | paid | $19,000 on 10-06 |
+| Josh Scoresby | Closed | TRUE | not recorded | paid | $18,000 on 10-06 |
 | Brad Feur | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | Mattew Benn | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
-| John Fritzel / JST holdings | Closed | TRUE | not recorded | closed | $20,000 on 10-19 |
+| John Fritzel / JST holdings | Closed | TRUE | not recorded | paid | $20,000 on 10-19 |
 | Bob Kelley | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | Karen Wood | Working / Good call | FALSE | Working | open |  |
 | Matt Susk | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | Bill Klein | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
-| Anthony Perez | Closed | TRUE | not recorded | closed | $20,000 on 10-14 |
+| Anthony Perez | Closed | TRUE | not recorded | paid | $20,000 on 10-14 |
 | Dave Stefsnski | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | Hemal Shah | High Confidence | FALSE | High Confidence | open |  |
 | Benjamin Jolloff | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
@@ -28,15 +28,15 @@
 | Lead | Column B | Column F | Bucket | Outcome | Paid in Close |
 |---|---|---|---|---|---|
 | Javiar Potasman | Soft Verbal / Reengaged |  | Soft Verbal / Reengaged | open |  |
-| Melissa Parker | Closed |  | not recorded | closed | $15,000 on 10-07 |
+| Melissa Parker | Closed |  | not recorded | paid | $15,000 on 10-07 |
 | Nick Patel | Delayed |  | not recorded | delayed |  |
 | Doug Schaaf | Working / Good call |  | Working | open |  |
 | Kyle Sheppard | High Confidence |  | High Confidence | open |  |
 | Jacinta Chadwick | Working / Good call |  | Working | open |  |
 | Rena Chen | High Confidence |  | High Confidence | open |  |
 | Marko Knezevic | High Confidence |  | High Confidence | open |  |
-| Anna Dev | Signed |  | not recorded | closed |  |
-| Ralph Plaskett | Closed |  | not recorded | closed | $18,000 on 10-12 |
+| Anna Dev | Signed |  | not recorded | signed, not paid |  |
+| Ralph Plaskett | Closed |  | not recorded | paid | $18,000 on 10-12 |
 | Chad Perez | Delayed |  | not recorded | delayed |  |
 | Chad Kirschenblatt | Delayed |  | not recorded | delayed |  |
 | Joe Lashinger | Working / Good call |  | Working | open |  |
@@ -73,13 +73,13 @@
 
 | Lead | Column B | Column F | Bucket | Outcome | Paid in Close |
 |---|---|---|---|---|---|
-| Sonia Barts | Closed | TRUE | not recorded | closed | $16,000 on 10-01 |
-| Jack Walsh | Closed | TRUE | not recorded | closed | $15,000 on 10-07 |
-| Shawn O'Donnell | Closed | TRUE | not recorded | closed | $15,000 on 10-15 |
+| Sonia Barts | Closed | TRUE | not recorded | paid | $16,000 on 10-01 |
+| Jack Walsh | Closed | TRUE | not recorded | paid | $15,000 on 10-07 |
+| Shawn O'Donnell | Closed | TRUE | not recorded | paid | $15,000 on 10-15 |
 | Josh Bonifield | Delayed | FALSE | not recorded | delayed |  |
 | Margot Slamkowski | Delayed | FALSE | not recorded | delayed |  |
-| Kellen Groves | Closed | TRUE | not recorded | closed | $15,000 on 10-03 |
-| Matt Sole | Closed | TRUE | not recorded | closed | $20,000 on 10-14 |
+| Kellen Groves | Closed | TRUE | not recorded | paid | $15,000 on 10-03 |
+| Matt Sole | Closed | TRUE | not recorded | paid | $20,000 on 10-14 |
 | Nic Green | High Confidence | FALSE | High Confidence | open |  |
 | Steve Janowiak | Working / Good call | FALSE | Working | open |  |
 | Robbie Gergly | High Confidence | FALSE | High Confidence | open |  |
@@ -98,7 +98,7 @@
 | Leah Zilla | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | Pavan Battula | Delayed | FALSE | not recorded | delayed |  |
 | Meagan Bamba-Ba | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
-| Brian Carvajal | Signed | FALSE | not recorded | closed | $15,000 on 10-20 |
+| Brian Carvajal | Signed | FALSE | not recorded | paid | $15,000 on 10-20 |
 | Michelle & Steve Anderson | Delayed | FALSE | not recorded | delayed |  |
 | Bhargav Teja Anusuri | Delayed | FALSE | not recorded | delayed |  |
 | Peyton Bowman | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
@@ -112,7 +112,7 @@
 | Robert Wales | Delayed | FALSE | not recorded | delayed |  |
 | Harish Shahi | Delayed | FALSE | not recorded | delayed |  |
 | Anshul Pandey | Working / Good call | FALSE | Working | open |  |
-| Jullie & Chris Li | Closed | TRUE | not recorded | closed | $15,000 on 10-15 |
+| Jullie & Chris Li | Closed | TRUE | not recorded | paid | $15,000 on 10-15 |
 | Monica Lee | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | David Gilio | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | Elliott Benedict | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
@@ -126,11 +126,11 @@
 |---|---|---|---|---|---|
 | Matt Macleod | Soft Verbal / Reengaged |  | Soft Verbal / Reengaged | open |  |
 | Amitabh Deo | Soft Verbal / Reengaged |  | Soft Verbal / Reengaged | open |  |
-| Zachary Carmichael | Closed |  | not recorded | closed | $20,000 on 10-06 |
+| Zachary Carmichael | Closed |  | not recorded | paid | $20,000 on 10-06 |
 | Joseph Elishmereni | Delayed |  | not recorded | delayed |  |
 | Keith Johnson III | Working/Good Call |  | Working | open |  |
-| Jacob Miller | Closed |  | not recorded | closed | $15,000 on 10-02 |
-| Gunnar Schultz | Closed |  | not recorded | closed | $16,000 on 10-14 |
+| Jacob Miller | Closed |  | not recorded | paid | $15,000 on 10-02 |
+| Gunnar Schultz | Closed |  | not recorded | paid | $16,000 on 10-14 |
 | Michael Kasseris | Soft Verbal / Reengaged |  | Soft Verbal / Reengaged | open |  |
 | Derek Neuman | Working/Good Call |  | Working | open |  |
 | Wesley Frommel | High Confidence |  | High Confidence | open |  |
@@ -153,7 +153,7 @@
 | Jonathan Baldwin | Delayed |  | not recorded | delayed |  |
 | Eric Rubinstein | Working/Good Call |  | Working | open |  |
 | Tyler Mounce | Soft Verbal / Reengaged |  | Soft Verbal / Reengaged | open |  |
-| Alexandra Hirt | Closed |  | not recorded | closed | $18,000 on 10-14 |
+| Alexandra Hirt | Closed |  | not recorded | paid | $18,000 on 10-14 |
 | Angelo Kramvis | Delayed |  | not recorded | delayed |  |
 | Austin Junker | Working/Good Call |  | Working | open |  |
 | Ricky Lora | Working/Good Call |  | Working | open |  |
@@ -183,17 +183,17 @@
 | Christina Sanini & Husband Kevin | Working / Good call | FALSE | Working | open |  |
 | Lia Meden | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
 | Stephen Mull | Working / Good call | FALSE | Working | open |  |
-| William and Jennifer Reau | Closed | TRUE | not recorded | closed | $20,000 on 10-19 |
+| William and Jennifer Reau | Closed | TRUE | not recorded | paid | $20,000 on 10-19 |
 | Luke Smith | High Confidence | FALSE | High Confidence | open |  |
 | Ben Ellis | Soft Verbal / Reengaged | FALSE | Soft Verbal / Reengaged | open |  |
-| Nadim Qureshi | Closed | TRUE | not recorded | closed | $20,000 on 10-20 |
+| Nadim Qureshi | Closed | TRUE | not recorded | paid | $20,000 on 10-20 |
 | Harry Ostrander | Working / Good call | FALSE | Working | open |  |
 
 ## Harry
 
 | Lead | Column B | Column F | Bucket | Outcome | Paid in Close |
 |---|---|---|---|---|---|
-| Dave Leresche | Closed |  | not recorded | closed | $20,000 on 10-08 |
+| Dave Leresche | Closed |  | not recorded | paid | $20,000 on 10-08 |
 | Kevin and Ben Pratt | High Confidence |  | High Confidence | open |  |
 | Talwinder Kaila | (blank) |  | – | open |  |
 | Kevin Gindi | Delayed |  | not recorded | delayed |  |
@@ -205,7 +205,7 @@
 | Andre Sakai | High Confidence |  | High Confidence | open |  |
 | James Chang | Delayed |  | not recorded | delayed |  |
 | Lisle Elliman | Working / Good call |  | Working | open |  |
-| Clay Kersterson | Closed |  | not recorded | closed | $19,000 on 10-11 |
+| Clay Kersterson | Closed |  | not recorded | paid | $19,000 on 10-11 |
 | Peter Herskovitz | Working / Good call |  | Working | open |  |
 | Bruce Graham | Delayed |  | not recorded | delayed |  |
 | Paul Passalino | Working / Good call |  | Working | open |  |
@@ -218,7 +218,7 @@
 | Jack Morrissey | High Confidence |  | High Confidence | open |  |
 | Robert Beaton | Delayed |  | not recorded | delayed |  |
 | Austin Malotke | Delayed |  | not recorded | delayed |  |
-| Ryan Holgrem | Closed |  | not recorded | closed | $19,000 on 10-20 |
+| Ryan Holgrem | Closed |  | not recorded | paid | $19,000 on 10-20 |
 | Will Donaldson | Working / Good call |  | Working | open |  |
 | Keshav | Working / Good call |  | Working | open |  |
 | Ben Smith | Working / Good call |  | Working | open |  |
@@ -236,10 +236,10 @@
 | Alex Sinunu | Delayed | FALSE | not recorded | delayed |  |
 | Jon Levine | (blank) | FALSE | – | open |  |
 | Chris Fenimore | (blank) | FALSE | – | open |  |
-| Betty Lee | Closed | TRUE | not recorded | closed | $16,000 on 10-13 |
+| Betty Lee | Closed | TRUE | not recorded | paid | $16,000 on 10-13 |
 | Jerry Cucinella | (blank) | FALSE | – | open |  |
-| Naveen Pitchandi | Closed | TRUE | not recorded | closed | $20,000 on 10-16 |
-| Domonic Moore | Closed | TRUE | not recorded | closed | $20,000 on 10-13 |
+| Naveen Pitchandi | Closed | TRUE | not recorded | paid | $20,000 on 10-16 |
+| Domonic Moore | Closed | TRUE | not recorded | paid | $20,000 on 10-13 |
 | Collin Croskery | Verbal | FALSE | High Confidence | open |  |
 
 ## Daniel
@@ -274,8 +274,8 @@
 | Nicolle Endoso | Working / Good Call | Nicolle is fully in, | Working | open |  |
 | Sam Charles | Delayed | excuse around his wo | not recorded | delayed |  |
 | Vijay Bhaskar Gaddam | High Confidence |  | High Confidence | open |  |
-| Dave Young | Closed |  | not recorded | closed | $18,000 on 10-14 |
+| Dave Young | Closed |  | not recorded | paid | $18,000 on 10-14 |
 | Kye Dipboye | Delayed | His wife told him no | not recorded | delayed |  |
-| Tyler Nortillo | Closed |  | not recorded | closed | $18,000 on 10-16 |
+| Tyler Nortillo | Closed |  | not recorded | paid | $18,000 on 10-16 |
 | Taylor Crane | Soft Verbal / Reengaged |  | Soft Verbal / Reengaged | open |  |
 | James Lee | Soft Verbal / Reengaged |  | Soft Verbal / Reengaged | open |  |

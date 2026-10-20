@@ -3,20 +3,22 @@
 - Owen: Bryan Lui: paid $19,000 in Close on 10-01, listed in the September section as Soft Verbal / Reengaged
 - Owen: Mike Simpson: paid $18,000 in Close on 10-01, listed in the September section as Closed
 - Owen: Abby Manawes: paid $20,000 in Close on 10-01, listed in the September section as Closed
-- Adam: Melissa Parker: sheet $17,500 vs Close cash collected $15,000
+- Adam: Melissa Parker: projected $17,500, collected $15,000 in Close
 - Adam: Anna Dev: Signed on the sheet but no paid, won opportunity in Close this month
 - Adam: David McKie: paid $17,500 in Close on 10-02, listed in the September section as Closed
 - Adam: Angel Cachinero: paid $17,500 in Close on 10-02, not on Pipeline Review
 - JZ: Neal Simpson: paid $17,500 in Close on 10-19, not on Pipeline Review
 - JZ: Daniel Lepore: paid $20,000 in Close on 10-13, not on Pipeline Review
-- VeJohn: Jack Walsh: sheet $16,000 vs Close cash collected $15,000
-- VeJohn: Shawn O'Donnell: sheet $16,000 vs Close cash collected $15,000
-- Julien: Brian Carvajal: no cash amount on the sheet; Close shows $15,000
+- VeJohn: Jack Walsh: projected $16,000, collected $15,000 in Close
+- VeJohn: Shawn O'Donnell: projected $16,000, collected $15,000 in Close
+- Julien: Brian Carvajal: no projected amount on the sheet; Close shows $15,000 collected
 - Julien: 12 open High Confidence / Soft Verbal leads have no cash amount
 - Nick: 10 open High Confidence / Soft Verbal leads have no cash amount
 - Omar: Ammar Aboulnasr: paid $15,000 in Close on 10-04, not on Pipeline Review
 - Harry: status labels to fix: blank status
+- Harry: Christopher Cheung: projected $20,000, collected $15,000 in Close
 - Harry: Christopher Cheung: paid $15,000 in Close on 10-01, listed in the September section as Closed
+- Harry: Robert Kolansky: projected $20,000, collected $18,000 in Close
 - Harry: Robert Kolansky: paid $18,000 in Close on 10-01, listed in the September section as Closed
 - Solomon: status labels to fix: blank status, "Verbal" (counted as High Confidence)
 - Oliver: no Pipeline Review tab

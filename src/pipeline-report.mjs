@@ -80,9 +80,17 @@ export function closerRow(data, c) {
   const leads = Array.isArray(raw) ? raw : raw?.leads;
   const paid = data.close_won.filter(([k]) => k === c.key).map(([, contact, lead_id, cash, date]) => ({ contact, lead_id, cash, date, used: false }));
   const r = { closer: c, hasTab: !!leads, leads: [], flags: [],
-    open: { hc: 0, sv: 0, working: 0 }, won: { hc: 0, sv: 0, working: 0, unknown: 0 }, delayed: 0, closed: 0, confirmed: 0,
-    cashClosed: 0, cashHc: 0, cashSv: 0, noAmount: 0, labels: new Set(),
+    open: { hc: 0, sv: 0, working: 0 }, won: { hc: 0, sv: 0, working: 0, unknown: 0 }, delayed: 0,
+    src: {}, signedUnpaid: 0, cashSigned: 0, accProj: 0, accPaid: 0, accDeals: 0, accOff: 0,
+    cashHc: 0, cashSv: 0, noAmount: 0, labels: new Set(),
     actual: paid.reduce((a, p) => a + p.cash, 0), deals: paid.length };
+  const month = data.month;
+  // Projection accuracy on a paid close: the closer's column D amount vs Close cash collected
+  const accuracy = (name, amt, p) => {
+    if (amt == null) { r.flags.push(`${name}: no projected amount on the sheet; Close shows $${p.cash.toLocaleString()} collected`); return; }
+    r.accProj += amt; r.accPaid += p.cash; r.accDeals++;
+    if (amt !== p.cash) { r.accOff++; r.flags.push(`${name}: projected $${amt.toLocaleString()}, collected $${p.cash.toLocaleString()} in Close`); }
+  };
 
   for (const [name, b, cash, f, lead_id] of leads ?? []) {
     const out = outcome(b, f);
@@ -93,18 +101,24 @@ export function closerRow(data, c) {
     const amt = money(cash);
     const p = paid.find((x) => !x.used && ((lead_id && x.lead_id === lead_id) || (x.contact && sameName(x.contact, name))));
     if (p) p.used = true;
-    const lead = { name, lead_id, status_b: b, outcome_f: f, category: cat ?? 'none', outcome: out ?? 'open', cash: amt, close_paid: p?.cash ?? null, close_paid_date: p?.date ?? null };
+    const lead = { name, lead_id, status_b: b, outcome_f: f, category: cat ?? 'none', outcome: p ? 'paid' : out ?? 'open',
+      cash: amt, close_paid: p?.cash ?? null, close_paid_date: p?.date ?? null };
     r.leads.push(lead);
 
+    // Paid in Close this month = closed, whatever the sheet says
+    if (p) {
+      r.src[month] = (r.src[month] ?? 0) + 1;
+      r.won[cat ?? 'unknown']++;
+      accuracy(name, amt, p);
+      if (out !== 'closed') r.flags.push(`${name}: paid $${p.cash.toLocaleString()} in Close on ${p.date}, sheet still says ${b || 'blank'}`);
+      continue;
+    }
     if (out === 'lost') continue;
     if (out === 'delayed') { r.delayed++; continue; }
     if (out === 'closed') {
-      r.closed++; r.won[cat]++; r.cashClosed += p?.cash ?? amt ?? 0;
-      if (p) {
-        r.confirmed++;
-        if (amt != null && amt !== p.cash) r.flags.push(`${name}: sheet $${amt.toLocaleString()} vs Close cash collected $${p.cash.toLocaleString()}`);
-        if (amt == null) r.flags.push(`${name}: no cash amount on the sheet; Close shows $${p.cash.toLocaleString()}`);
-      } else r.flags.push(`${name}: ${b || f} on the sheet but no paid, won opportunity in Close this month`);
+      r.signedUnpaid++; r.cashSigned += amt ?? 0;
+      lead.outcome = 'signed, not paid';
+      r.flags.push(`${name}: ${b === 'Closed' || f === 'Closed' ? 'Closed' : 'Signed'} on the sheet but no paid, won opportunity in Close this month`);
       continue;
     }
     if (!cat) continue; // open with no usable status: listed in flags via labels
@@ -113,12 +127,16 @@ export function closerRow(data, c) {
       if (amt == null) r.noAmount++;
       if (cat === 'hc') r.cashHc += amt ?? 0; else r.cashSv += amt ?? 0;
     }
-    if (p) r.flags.push(`${name}: paid $${p.cash.toLocaleString()} in Close on ${p.date}, sheet still says ${b || 'blank'}`);
   }
+  // Paid in Close but not in this month's section: an earlier month's section, or not on the sheet
   for (const p of paid.filter((x) => !x.used)) {
     const where = data.pipeline_index?.[p.lead_id];
-    r.flags.push(`${p.contact || where?.[1] || p.lead_id}: paid $${p.cash.toLocaleString()} in Close on ${p.date}, ` +
-      (where ? `listed in the ${where[0]} section as ${where[2] || 'blank'}` : 'not on Pipeline Review'));
+    const sec = where ? where[0].charAt(0).toUpperCase() + where[0].slice(1).toLowerCase() : 'not on sheet';
+    r.src[sec] = (r.src[sec] ?? 0) + 1;
+    const name = p.contact || where?.[1] || p.lead_id;
+    if (where) accuracy(name, money(where[3]), p);
+    r.flags.push(`${name}: paid $${p.cash.toLocaleString()} in Close on ${p.date}, ` +
+      (where ? `listed in the ${sec} section as ${where[2] || 'blank'}` : 'not on Pipeline Review'));
   }
   if (r.labels.size) r.flags.unshift(`status labels to fix: ${[...r.labels].join(', ')}`);
   if (r.noAmount) r.flags.push(`${r.noAmount} open High Confidence / Soft Verbal leads have no cash amount`);
@@ -129,8 +147,9 @@ export function closerRow(data, c) {
   };
   r.hcGoal = goal('hc', KPI.hc);
   r.svGoal = goal('sv', KPI.sv);
-  r.projected = r.cashClosed + r.cashHc + r.cashSv;
-  r.ifKpi = r.cashClosed + r.cashHc * KPI.hc + r.cashSv * KPI.sv;
+  // Paid cash is real; signed-but-unpaid is expected at the sheet amount
+  r.projected = r.actual + r.cashSigned + r.cashHc + r.cashSv;
+  r.ifKpi = r.actual + r.cashSigned + r.cashHc * KPI.hc + r.cashSv * KPI.sv;
   return r;
 }
 
@@ -142,7 +161,7 @@ const CSS = `
 --sv:#7d5f00;--sv-bg:#fbf1cf;--wk:#2d5bb8;--wk-bg:#e5ebf6;--red:#c8423d;--red-bg:#f9e2e1}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
-.card{width:1500px;padding:40px 44px 32px;background:var(--bg)}
+.card{width:1720px;padding:40px 44px 32px;background:var(--bg)}
 .eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
 h1{font-size:38px;font-weight:800;margin:8px 0 6px}
 .lede{font-size:18px;color:var(--muted)}
@@ -179,24 +198,43 @@ function pctChip(actual, projected) {
 
 const goalText = (g, won, pct) => (g.total ? `${won} closed · ${g.need ? `${g.need} more for ${pct}` : `${pct} hit`}` : '&nbsp;');
 
+const SHORT = (m) => (m === 'not on sheet' ? 'not on sheet' : `${m.slice(0, 3)} pipeline`);
+const fmtK = (n) => `$${(n / 1000).toFixed(n % 1000 ? 1 : 0)}K`;
+
+function closedCell(r) {
+  // Every close counted here is a paid, won opportunity in Close; the sub line says where it sat on Pipeline Review
+  const order = [data.month, ...Object.keys(r.src).filter((k) => k !== data.month && k !== 'not on sheet'), 'not on sheet'];
+  const parts = order.filter((k) => r.src[k]).map((k) => `${r.src[k]} ${SHORT(k)}`);
+  return `<td><span class="n">${r.deals}</span><span class="sub">${parts.join(' · ') || '&nbsp;'}</span>${r.delayed != null ? `<span class="sub">${r.delayed} delayed</span>` : ''}</td>`;
+}
+function accuracyCell(r) {
+  if (!r.accDeals) return '<td><span class="na">–</span></td>';
+  const pct = r.accPaid / r.accProj;
+  return `<td><span class="n">${Math.round(pct * 100)}%</span><span class="sub">${fmtK(r.accPaid)} collected of ${fmtK(r.accProj)} projected</span>` +
+    `${r.accOff ? `<span class="warn">${r.accOff} of ${r.accDeals} deals off</span>` : '<span class="ok">all amounts match</span>'}</td>`;
+}
+
 function cells(r) {
   if (!r.hasTab) {
-    return `<td colspan="5" style="text-align:left"><span class="na">No Pipeline Review tab yet</span></td>
-      <td><span class="n">${fmt$(r.actual)}</span><span class="sub">${r.deals} paid in Close</span></td>`;
+    return `<td colspan="3" style="text-align:left"><span class="na">No Pipeline Review tab yet</span></td>
+      ${closedCell({ ...r, delayed: null })}<td><span class="na">–</span></td><td><span class="na">–</span></td><td><span class="na">–</span></td>
+      <td><span class="n">${fmt$(r.actual)}</span></td>`;
   }
-  const unpaid = r.closed - r.confirmed;
   return `
     <td><span class="n hc">${r.open.hc}</span><span class="sub">${goalText(r.hcGoal, r.won.hc, '80%')}</span></td>
     <td><span class="n sv">${r.open.sv}</span><span class="sub">${goalText(r.svGoal, r.won.sv, '50%')}</span></td>
     <td><span class="n wk">${r.open.working}</span><span class="sub">${r.won.working} closed</span></td>
-    <td><span class="n">${r.closed}</span><span class="sub">${r.delayed} delayed</span>${unpaid ? `<span class="warn">${unpaid} not paid in Close</span>` : r.closed ? '<span class="ok">all paid in Close</span>' : ''}</td>
+    ${closedCell(r)}
+    <td><span class="n${r.signedUnpaid ? ' sv' : ''}">${r.signedUnpaid}</span><span class="sub">${r.signedUnpaid ? `${fmt$(r.cashSigned)} expected` : '&nbsp;'}</span></td>
+    ${accuracyCell(r)}
     <td><span class="n">${fmt$(r.projected)}</span><span class="sub">if KPIs hit ${fmt$(r.ifKpi)}</span></td>
-    <td><span class="n">${fmt$(r.actual)}</span>${pctChip(r.actual, r.projected)}<span class="sub">${r.deals} paid in Close</span></td>`;
+    <td><span class="n">${fmt$(r.actual)}</span>${pctChip(r.actual, r.projected)}<span class="sub">from ${r.deals} closes</span></td>`;
 }
 
 function total(rows) {
-  const t = { hasTab: true, open: { hc: 0, sv: 0, working: 0 }, won: { hc: 0, sv: 0, working: 0 }, hcGoal: { total: 0, need: 0 }, svGoal: { total: 0, need: 0 } };
-  for (const k of ['closed', 'confirmed', 'delayed', 'projected', 'ifKpi', 'actual', 'deals']) t[k] = rows.reduce((a, r) => a + r[k], 0);
+  const t = { hasTab: true, src: {}, open: { hc: 0, sv: 0, working: 0 }, won: { hc: 0, sv: 0, working: 0 }, hcGoal: { total: 0, need: 0 }, svGoal: { total: 0, need: 0 } };
+  for (const k of ['deals', 'signedUnpaid', 'cashSigned', 'delayed', 'accProj', 'accPaid', 'accDeals', 'accOff', 'projected', 'ifKpi', 'actual']) t[k] = rows.reduce((a, r) => a + r[k], 0);
+  for (const r of rows) for (const [k, v] of Object.entries(r.src)) t.src[k] = (t.src[k] ?? 0) + v;
   for (const r of rows.filter((r) => r.hasTab)) {
     for (const c of ['hc', 'sv', 'working']) { t.open[c] += r.open[c]; t.won[c] += r.won[c]; }
     for (const g of ['hcGoal', 'svGoal']) { t[g].total += r[g].total; t[g].need += r[g].need; }
@@ -209,7 +247,7 @@ export function reportHtml(data, rows) {
   const name = (c) => (c.key === 'JZ' ? 'Jay Z (Jordan)' : c.short);
   const body = PODS.map((pod) => {
     const pr = pod.keys.map((k) => byKey[k]).filter(Boolean);
-    return `<tr class="pod"><td colspan="7">${esc(pod.title)}<span>${esc(pod.note)}</span></td></tr>
+    return `<tr class="pod"><td colspan="9">${esc(pod.title)}<span>${esc(pod.note)}</span></td></tr>
       ${pr.map((r) => `<tr><td>${esc(name(r.closer))}</td>${cells(r)}</tr>`).join('')}
       ${pr.filter((r) => r.hasTab).length > 1 ? `<tr class="tot"><td>Pod total</td>${cells(total(pr))}</tr>` : ''}`;
   }).join('');
@@ -221,16 +259,18 @@ export function reportHtml(data, rows) {
     <div class="k-hc"><b>High Confidence</b>80% should close by month end</div>
     <div class="k-sv"><b>Soft Verbal / Reengaged</b>50% should close by month end</div>
     <div class="k-wk"><b>Working / Good call</b>Some should close</div>
-    <div class="k-cash"><b>Cash</b>Projected = closed + every open HC and SV lead. If KPIs hit = closed + 80% of HC + 50% of SV</div>
+    <div class="k-cash"><b>Cash</b>Projected = collected + signed + every open HC and SV lead. If KPIs hit = collected + signed + 80% of HC + 50% of SV</div>
   </div>
   <table>
-    <tr><th>Closer</th><th>High Confidence<br>open</th><th>Soft Verbal /<br>Reengaged open</th><th>Working<br>open</th><th>Closed or signed<br>this month</th><th>Projected cash</th><th>Actual cash<br>collected</th></tr>
+    <tr><th>Closer</th><th>High Confidence<br>open</th><th>Soft Verbal /<br>Reengaged open</th><th>Working<br>open</th><th>Closed<br>(paid in Close)</th><th>Signed,<br>not paid yet</th><th>Cash projected vs<br>collected on closes</th><th>Projected cash</th><th>Actual cash<br>collected</th></tr>
     ${body}
     <tr class="tot"><td>All closers</td>${cells(total(rows))}</tr>
   </table>
   <div class="footer">
-    Closed = Closed or Signed. Delayed and Lost are not open and not closed. Projected cash uses each lead's amount in column D.
-    Actual cash = Cash Collected on won Close opportunities closed this month (pulled ${esc(data.close_pulled_at)}). The % chip is actual ÷ projected.
+    Closed = a won opportunity in Close with cash collected this month (pulled ${esc(data.close_pulled_at)}), so it always matches actual cash; the line under it says which Pipeline Review section the lead was in.
+    Signed, not paid yet = Closed or Signed on the sheet with no payment in Close. Delayed and Lost are neither open nor closed.
+    Cash projected vs collected compares each closed lead's column D amount with what Close collected.
+    Projected cash = collected + signed-not-paid + every open HC and SV lead (column D). The % chip is actual ÷ projected.
     "N closed" under each category counts closes whose category was recorded on an earlier run.
   </div>
   </div></body></html>`;
@@ -242,7 +282,7 @@ const base = path.join(outDir, `pipeline-${data.report_date}`);
 const html = reportHtml(data, rows);
 fs.writeFileSync(`${base}.html`, html);
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
-const page = await browser.newPage({ deviceScaleFactor: 2, viewport: { width: 1500, height: 900 } });
+const page = await browser.newPage({ deviceScaleFactor: 2, viewport: { width: 1720, height: 900 } });
 await page.setContent(html, { waitUntil: 'load' });
 await page.locator('.card').screenshot({ path: `${base}.png` });
 await browser.close();
