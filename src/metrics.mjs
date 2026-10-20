@@ -37,20 +37,31 @@ export function closerMetrics(data, closer, edition) {
   const bdElapsed = monday ? data.month.business_days_elapsed_mon : data.month.business_days_elapsed_wed;
   const newHire = closer.new_hire;
 
+  // Booked / showed / no-show / cancel / reschedule come from the EOD Tracker (source of truth).
+  // The Sales Tracker is only a cross-check; it is used here when a closer has no EOD rows at all.
+  const eod = data.eod?.[closer.key];
+  const weekDays = ed.week_days.filter((d) => d <= ed.through_key);
+  const eodWeek = [0, 0, 0, 0, 0];
+  if (eod) weekDays.forEach((d) => (eod[d] || [0, 0, 0, 0, 0]).forEach((v, i) => { eodWeek[i] += v; }));
+  const booked = eod ? eodWeek[0] : week[CALLS];
+  const showed = eod ? eodWeek[1] : week[LIVE];
+  const source = eod ? 'eod' : 'sales_tracker';
+
   // Booked calls: full week target on Monday, pace-to-date target on Wednesday
   const callsTarget = newHire ? null
     : monday ? TARGETS.callsPerWeek : TARGETS.callsPerWorkday * ed.workdays_elapsed;
   const calls = {
-    value: week[CALLS], target: callsTarget, weekTarget: newHire ? null : TARGETS.callsPerWeek,
-    status: status(week[CALLS], callsTarget),
-    projected: monday ? null : Math.round((week[CALLS] / ed.workdays_elapsed) * 5),
+    value: booked, target: callsTarget, weekTarget: newHire ? null : TARGETS.callsPerWeek,
+    status: status(booked, callsTarget), source,
+    projected: monday ? null : Math.round((booked / ed.workdays_elapsed) * 5),
   };
 
   const showRate = {
-    value: pct(week[LIVE], week[CALLS]), live: week[LIVE], booked: week[CALLS],
-    target: TARGETS.showRate,
+    value: pct(showed, booked), live: showed, booked, target: TARGETS.showRate,
+    noShow: eod ? eodWeek[2] : null, cancel: eod ? eodWeek[3] : null, resched: eod ? eodWeek[4] : null,
+    confirm: data.confirmations?.[edition]?.[closer.key] ?? null,
   };
-  showRate.status = week[CALLS] ? status(showRate.value, TARGETS.showRate) : 'track';
+  showRate.status = booked ? status(showRate.value, TARGETS.showRate) : 'track';
 
   const slotCount = data.slots[edition][closer.key];
   const slots = {
@@ -59,6 +70,8 @@ export function closerMetrics(data, closer, edition) {
   };
 
   const calendar = calendarClose(data.calendar_close_et?.[closer.key]);
+  const away = data.closer_notes?.[closer.key] ?? null;
+  if (calendar && away) calendar.away = away;
 
   const avgRevenue = {
     value: mtd[CLOSES] ? mtd[REV] / mtd[CLOSES] : null, rev: mtd[REV], closes: mtd[CLOSES],
@@ -85,6 +98,7 @@ export function closerMetrics(data, closer, edition) {
   } : null;
 
   const closes = { value: week[CLOSES], rev: week[REV], status: 'track' };
+  const salesTrackerWeek = { booked: week[CALLS], showed: week[LIVE] };
 
   const mom = [
     ['Booked calls', mtd[CALLS], prevSameDay[CALLS], 'n'],
@@ -95,7 +109,8 @@ export function closerMetrics(data, closer, edition) {
 
   const daily = data.slots_daily?.[closer.key] ?? {};
   const days = ed.week_days.map((d, i) => {
-    const a = act.days[d] ?? { booked: 0, showed: 0 };
+    const e = eod?.[d];
+    const a = e ? { booked: e[0], showed: e[1] } : (eod ? { booked: 0, showed: 0 } : (act.days[d] ?? { booked: 0, showed: 0 }));
     const future = !monday && d > ed.through_key;
     // Slots offered contain the booked calls, so never draw fewer slots than bookings
     const slotsOffered = daily[d] == null ? null : Math.max(daily[d], a.booked);
@@ -109,7 +124,7 @@ export function closerMetrics(data, closer, edition) {
     total: scored.length,
   };
 
-  return { closer, edition, ed, calls, showRate, slots, calendar, avgRevenue, cash, revPerCall, pipeline, closes, mom, days, tally, newHire };
+  return { closer, edition, ed, salesTrackerWeek, calls, showRate, slots, calendar, avgRevenue, cash, revPerCall, pipeline, closes, mom, days, tally, newHire };
 }
 
 // "18:00" -> 18, and a short label like "6pm ET (5pm Thu to Fri)"
@@ -130,34 +145,72 @@ function calendarClose(byDay) {
   return { usual, label: `${fmt(usual)} ET${oddText}`, usualText: `${fmt(usual)} ET`, closesEarly: earlyDays >= 3 };
 }
 
+// One or two short bullets each, most important first
 export function winsAndFixes(m) {
   const wins = [], fixes = [];
-  const money = (v) => `$${Math.round(v).toLocaleString('en-US')}`;
+  const money = (v) => fmtMoney(v, true);
   const monday = m.edition === 'monday';
-  const when = monday ? 'last week' : 'so far this week';
 
-  if (m.slots.status === 'hit') wins.push(['Open slots', `${m.slots.value} discovery slots open for the next 7 days.`]);
-  else if (m.slots.status !== 'track') fixes.push(['Open slots', `Only ${m.slots.value} discovery slots open for the next 7 days. Target is 25. Open more time in Calendly.`]);
+  if (m.slots.status === 'hit') wins.push(['Open slots', `${m.slots.value} open, target 25.`]);
+  else if (m.slots.status !== 'track') fixes.push(['Open slots', `${m.slots.value} of 25. Open more Calendly time.`]);
 
-  if (m.calendar?.closesEarly) fixes.push(['Later slots', `Your calendar closes at ${m.calendar.usualText} most days. Try to open up slots later, after 5pm ET, when more prospects can book.`]);
+  if (m.calls.status === 'hit') wins.push(['Booked calls', `${m.calls.value}, target ${m.calls.target}.`]);
+  else if (m.calls.target != null) fixes.push(['Booked calls', monday ? `${m.calls.value} of ${m.calls.target}.` : `${m.calls.value} vs ${m.calls.target} pace by today.`]);
 
-  if (m.calls.status === 'hit') wins.push(['Booked calls', `${m.calls.value} ${when} against a target of ${m.calls.target}.`]);
-  else if (m.calls.target != null) fixes.push(['Booked calls', monday
-    ? `${m.calls.value} of ${m.calls.target} last week. Open more discovery time and work your follow-up list.`
-    : `${m.calls.value} so far, pace is ${m.calls.target} by today. You're on track for about ${m.calls.projected} by Friday.`]);
+  if (m.showRate.status === 'hit') wins.push(['Show rate', `${fmtPct(m.showRate.value)}, target 80%.`]);
+  else if (m.showRate.status !== 'track') fixes.push(['Show rate', `${fmtPct(m.showRate.value)}. Confirm every call the same day.`]);
 
-  if (m.showRate.status === 'hit') wins.push(['Show rate', `${fmtPct(m.showRate.value)} of booked calls showed. Target is 80%.`]);
-  else if (m.showRate.status !== 'track') fixes.push(['Show rate', `${m.showRate.live} of ${m.showRate.booked} booked calls showed (${fmtPct(m.showRate.value)}). Confirm every call the day before and the hour before.`]);
+  if (m.calendar?.closesEarly && !m.calendar.away) fixes.push(['Later slots', `Calendar closes ${m.calendar.usualText}. Open slots after 5pm ET.`]);
 
-  if (m.avgRevenue.status === 'hit') wins.push(['Average revenue', `${money(m.avgRevenue.value)} per close this month, above the $17,500 floor.`]);
-  else if (m.avgRevenue.status === 'missed') fixes.push(['Average revenue', `${money(m.avgRevenue.value)} per close this month, below the $17,500 floor. Hold price before discounting.`]);
+  if (m.avgRevenue.status === 'hit') wins.push(['Average revenue', `${money(m.avgRevenue.value)}, above the $17.5K floor.`]);
+  else if (m.avgRevenue.status === 'missed') fixes.push(['Average revenue', `${money(m.avgRevenue.value)}, below the $17.5K floor.`]);
 
-  if (m.cash.status === 'hit') wins.push(['Cash pace', `${money(m.cash.value)} collected this month, ahead of pace.`]);
-  else if (m.cash.status !== 'track') fixes.push(['Cash pace', `${money(m.cash.value)} collected, pace is ${money(m.cash.expected)} by now. Push your High Confidence deals to sign and pay.`]);
+  if (m.cash.status === 'hit') wins.push(['Cash', `${money(m.cash.value)}, ahead of pace.`]);
+  else if (m.cash.status !== 'track') fixes.push(['Cash', `${money(m.cash.value)} vs ${money(m.cash.expected)} pace.`]);
 
-  if (m.pipeline?.nonstandard) fixes.push(['Pipeline sheet', `${m.pipeline.nonstandard} open leads in your October tab have no standard status. Tag each one High Confidence, Soft Verbal / Reengaged or WIP (Working / Good Call).`]);
+  if (m.pipeline?.nonstandard) fixes.push(['Pipeline sheet', `Tag ${m.pipeline.nonstandard} leads with a status.`]);
 
-  return { wins: wins.slice(0, 4), fixes: fixes.slice(0, 4) };
+  return { wins: wins.slice(0, 2), fixes: fixes.slice(0, 2) };
+}
+
+// Things Sheila should see on every run; never shown to closers
+export function runFlags(data, metrics, edition) {
+  const flags = [];
+  const ed = data.editions[edition];
+  for (const m of metrics) {
+    const k = m.closer.key;
+    const st = m.salesTrackerWeek;
+    if (m.calls.source === 'sales_tracker') flags.push(`${k}: no EOD reports, booked/showed taken from the Sales Tracker.`);
+    else if (st.booked !== m.calls.value || st.showed !== m.showRate.live) {
+      flags.push(`${k}: EOD says ${m.calls.value} booked / ${m.showRate.live} showed, Sales Tracker says ${st.booked} / ${st.showed}.`);
+    }
+    const eod = data.eod?.[k];
+    if (eod) {
+      const missing = ed.week_days.slice(0, 5).filter((d) => d <= ed.through_key && !eod[d] && (data.activity[k].days[d]?.booked ?? 0) > 0);
+      if (missing.length) flags.push(`${k}: no EOD report for ${missing.join(', ')} although the Sales Tracker logged calls.`);
+    }
+    const mine = slotEstimate(data, k, ed.slot_check_date);
+    const messi = data.messi_slots?.[ed.slot_check_date]?.[k];
+    if (mine != null && messi != null && Math.abs(messi - mine) > Math.max(5, 0.3 * messi)) {
+      flags.push(`${k}: Messi shows ${messi} open slots for ${ed.slot_check_date} + 7 days, Google Calendar estimate is ${mine}.`);
+    }
+    const inferred = (data.eod_inferred?.[k] ?? []).filter((d) => ed.week_days.includes(d) && d <= ed.through_key);
+    if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
+    if (m.pipeline?.nonstandard) flags.push(`${k}: ${m.pipeline.nonstandard} open pipeline leads have no standard status.`);
+    if (!m.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
+  }
+  return flags;
+}
+
+// Unbooked slots over the 7 days from `start`, from the Google Calendar rebuild
+function slotEstimate(data, key, start) {
+  const days = data.slots_daily?.[key];
+  const booked = data.slots_daily_booked?.[key];
+  if (!days || !booked || !start) return null;
+  const keys = Object.keys(days).sort();
+  const i = keys.indexOf(start);
+  if (i < 0) return null;
+  return keys.slice(i, i + 7).reduce((a, d) => a + Math.max(days[d] - (booked[d] ?? 0), 0), 0);
 }
 
 export const fmtPct = (v) => (v == null ? '–' : `${Math.round(v * 100)}%`);

@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright';
-import { closerMetrics } from './metrics.mjs';
+import { closerMetrics, runFlags } from './metrics.mjs';
 import { closerCard, leadershipTable } from './render.mjs';
 
 const [dataPath, outDir, edition = 'monday', ...only] = process.argv.slice(2);
@@ -32,3 +32,9 @@ for (const [name, html] of pages) {
   console.log('wrote', name);
 }
 await browser.close();
+
+// Data conflicts for Sheila, written on every run
+const flags = runFlags(data, metrics, edition);
+const flagPath = path.join(outDir, `${edition}-flags.md`);
+fs.writeFileSync(flagPath, `# Scorecard flags: ${data.editions[edition].date}\n\n${flags.map((f) => `- ${f}`).join('\n') || '- None'}\n`);
+console.log(`${flags.length} flags -> ${flagPath}`);
