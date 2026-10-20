@@ -37,13 +37,20 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-.pace{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:150px;position:relative;
+.pace{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:190px;position:relative;
   border-bottom:1px solid var(--line);margin-top:6px}
-.pace .col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
-.pace .b{width:56%;border-radius:6px 6px 0 0;min-height:3px}
-.pace .n{font-size:15px;font-weight:700;margin-bottom:4px}
-.pace .line{position:absolute;left:0;right:0;border-top:2px dashed var(--ink);opacity:.55}
-.pace .line span{position:absolute;right:0;top:-22px;font-size:13px;color:var(--muted);background:var(--bg);padding-left:6px}
+.pace .col{position:relative;height:100%}
+.pace .slotbox{position:absolute;bottom:0;left:16%;right:16%;border:2.5px dashed #8a8f96;border-bottom:none;border-radius:6px 6px 0 0}
+.pace .slotbox.future{border-color:#c9ccd0}
+.pace .booked{position:absolute;bottom:0;left:26%;right:26%;border-radius:4px 4px 0 0;opacity:.45}
+.pace .showed{position:absolute;bottom:0;left:26%;right:26%;border-radius:4px 4px 0 0}
+.pace .hit .booked,.pace .hit .showed{background:var(--hit)} .pace .almost .booked,.pace .almost .showed{background:var(--almost)}
+.pace .missed .booked,.pace .missed .showed{background:var(--missed)} .pace .track .booked,.pace .track .showed{background:var(--track)}
+.daykey{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin-bottom:10px}
+.daykey span{display:inline-block;width:16px;height:12px;border-radius:2px;margin-left:10px}
+.daykey .kbox{border:2px dashed #8a8f96;margin-left:0} .daykey .kbook{background:#999;opacity:.45} .daykey .kshow{background:#555}
+.days .dn{font-size:14px;color:var(--muted)} .days .dv{font-size:14px;font-weight:700;color:var(--ink);margin-top:2px}
+.k-s{color:#6b7076} .k-b{color:var(--ink)} .k-w{color:var(--ink)}
 .days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;text-align:center;font-size:14px;color:var(--muted);margin-top:6px}
 .verdict{display:flex;gap:16px;align-items:center;margin-bottom:12px;font-size:17px}
 .mom{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -73,22 +80,22 @@ tr.total td{background:#f1efea;font-weight:800}
 <div class="lede">You hit 2 of 5 targets · 5 booked calls · 0 closes · $0 revenue</div>
 <div class="wf">
   <div class="box wins"><h3>WINS SO FAR</h3><ol><li><b>Open slots:</b> 31 discovery slots open for the next 7 days.</li><li><b>Average revenue:</b> $18,000 per close this month, above the $17,500 floor.</li></ol></div>
-  <div class="box fixes"><h3>FOCUS FOR THE REST OF THE WEEK</h3><ol><li><b>Booked calls:</b> 5 so far, pace is 10 by today. You're on track for about 13 by Friday.</li><li><b>Show rate:</b> 2 of 5 booked calls showed (40%). Confirm every call the day before and the hour before.</li><li><b>Cash pace:</b> $42,000 collected, pace is $127,273 by now. Push your High Confidence deals to sign and pay.</li></ol></div>
+  <div class="box fixes"><h3>FOCUS FOR THE REST OF THE WEEK</h3><ol><li><b>Booked calls:</b> 5 so far, pace is 8 by today. You're on track for about 13 by Friday.</li><li><b>Show rate:</b> 2 of 5 booked calls showed (40%). Confirm every call the day before and the hour before.</li><li><b>Cash pace:</b> $42,000 collected, pace is $127,273 by now. Push your High Confidence deals to sign and pay.</li><li><b>Pipeline sheet:</b> 8 open leads in your October tab have no standard status. Tag each one High Confidence, Soft Verbal / Reengaged or WIP (Working / Good Call).</li></ol></div>
 </div>
 <div class="section"><h2>YOUR NUMBERS VS TARGET</h2>
 <p class="key">Green: you hit the target. Yellow: almost there (75% of the target or more). Red: you missed it. Blue: a number we track, with no target. The black line on each bar is the target.</p>
-<div class="grid"><div class="tile missed">
+<div class="grid"><div class="tile hit">
+  <div class="l">Open slots</div><div class="v">31</div>
+  <div class="s">Discovery start times open in Calendly over the next 7 days</div><div class="small">Calendar open till <b>8pm ET</b></div>
+  <div class="foot"><div class="bar"><i style="width:85.00000000000001%"></i><b style="left:68.5483870967742%"></b></div><div class="row"><span>Target 25</span><span class="chip">HIT</span></div></div>
+</div><div class="tile missed">
   <div class="l">Booked calls</div><div class="v">5</div>
-  <div class="s">5 booked so far this week</div><div class="small">On pace for about 13 by Friday (target 25)</div>
-  <div class="foot"><div class="bar"><i style="width:42.5%"></i><b style="left:85%"></b></div><div class="row"><span>Pace by today 10</span><span class="chip">MISSED</span></div></div>
+  <div class="s">5 booked so far this week</div><div class="small">On pace for about 13 by Friday (target 20)</div>
+  <div class="foot"><div class="bar"><i style="width:53.125%"></i><b style="left:85%"></b></div><div class="row"><span>Pace by today 8</span><span class="chip">MISSED</span></div></div>
 </div><div class="tile missed">
   <div class="l">Show rate</div><div class="v">40%</div>
   <div class="s">2 of 5 booked calls showed up</div>
   <div class="foot"><div class="bar"><i style="width:42.5%"></i><b style="left:85%"></b></div><div class="row"><span>Target 80%</span><span class="chip">MISSED</span></div></div>
-</div><div class="tile hit">
-  <div class="l">Open slots</div><div class="v">31</div>
-  <div class="s">Discovery start times open in Calendly over the next 7 days</div>
-  <div class="foot"><div class="bar"><i style="width:85.00000000000001%"></i><b style="left:68.5483870967742%"></b></div><div class="row"><span>Target 25</span><span class="chip">HIT</span></div></div>
 </div><div class="tile hit">
   <div class="l">Average revenue</div><div class="v">$18,000</div>
   <div class="s">$36,000 revenue generated over 2 closes this month</div>
@@ -99,7 +106,7 @@ tr.total td{background:#f1efea;font-weight:800}
   <div class="foot"><div class="bar"><i style="width:28.050000000000004%"></i><b style="left:85%"></b></div><div class="row"><span>Pace $127K</span><span class="chip">MISSED</span></div></div>
 </div><div class="tile track">
   <div class="l">Projected closes</div><div class="v">0</div>
-  <div class="s">0 High Confidence + 0 Soft Verbal / Reengaged in your October pipeline</div><div class="small">0 Working / Good Call (not counted)<br>Accuracy vs last week starts Mon Oct 26</div><div class="warn">8 leads need a status</div>
+  <div class="s">0 High Confidence + 0 Soft Verbal / Reengaged in your October pipeline</div><div class="small">0 WIP (not counted)<br>Hit rate on last week’s projections starts Mon Oct 26</div><div class="warn">8 leads need a status</div>
   <div class="foot"><div class="row"><span>No target</span><span class="chip">TRACKING</span></div></div>
 </div><div class="tile track">
   <div class="l">Revenue per call</div><div class="v">$857</div>
@@ -111,10 +118,17 @@ tr.total td{background:#f1efea;font-weight:800}
   <div class="foot"><div class="row"><span>No target</span><span class="chip">TRACKING</span></div></div>
 </div></div></div>
 <div class="section"><h2>THIS WEEK’S PACE</h2>
-<div class="verdict"><span class="chip" style="background:var(--missed)">TRENDING BEHIND</span> 5 booked vs 10 pace by today · on track for 13 of 25</div>
-<div class="pace"><div class="col"><div class="n">5</div><div class="b" style="height:62.5%;background:var(--hit)"></div></div><div class="col"><div class="n">0</div><div class="b" style="height:0%;background:var(--missed)"></div></div><div class="col"><div class="b" style="height:0%;background:#ddd"></div></div><div class="col"><div class="b" style="height:0%;background:#ddd"></div></div><div class="col"><div class="b" style="height:0%;background:#ddd"></div></div><div class="col"><div class="b" style="height:0%;background:#ddd"></div></div><div class="col"><div class="b" style="height:0%;background:#ddd"></div></div><div class="line" style="bottom:62.5%"><span>5 a day</span></div></div>
-<div class="days"><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div></div></div>
+<div class="verdict"><span class="chip" style="background:var(--missed)">TRENDING BEHIND</span> 5 booked vs 8 pace by today · on track for 13 of 20</div>
+<div class="daykey"><span class="kbox"></span>Open slots (goal 5 a day) <span class="kbook"></span>Booked calls (goal 4) <span class="kshow"></span>Showed (goal 3) <em style="margin-left:auto;font-style:normal">Numbers under each day: open · booked · showed</em></div>
+<div class="pace"><div class="col hit">
+      <div class="slotbox" style="height:75%"></div>
+      <div class="booked" style="height:62.5%"></div>
+      <div class="showed" style="height:25%"></div></div><div class="col missed">
+      <div class="slotbox" style="height:75%"></div>
+      <div class="booked" style="height:0%"></div>
+      <div class="showed" style="height:0%"></div></div><div class="col"><div class="slotbox future" style="height:75%"></div></div><div class="col"><div class="slotbox future" style="height:100%"></div></div><div class="col"><div class="slotbox future" style="height:50%"></div></div><div class="col"><div class="slotbox future" style="height:0%"></div></div><div class="col"><div class="slotbox future" style="height:0%"></div></div></div>
+<div class="days"><div><div class="dn">Mon</div><div class="dv"><span class="k-s">6</span> · <span class="k-b">5</span> · <span class="k-w">2</span></div></div><div><div class="dn">Tue</div><div class="dv"><span class="k-s">6</span> · <span class="k-b">0</span> · <span class="k-w">0</span></div></div><div><div class="dn">Wed</div><div class="dv">6 open</div></div><div><div class="dn">Thu</div><div class="dv">8 open</div></div><div><div class="dn">Fri</div><div class="dv">4 open</div></div><div><div class="dn">Sat</div><div class="dv">0 open</div></div><div><div class="dn">Sun</div><div class="dv">0 open</div></div></div></div>
 <div class="section"><h2>MONTH OVER MONTH</h2>
 <p class="key">October 1 to 20 compared with the same days in September.</p>
 <div class="mom"><div><div class="l">Booked calls</div><div class="v">42</div><div class="d down">▼ 9% vs 46</div></div><div><div class="l">Closes</div><div class="v">2</div><div class="d down">▼ 75% vs 8</div></div><div><div class="l">Revenue generated</div><div class="v">$36K</div><div class="d down">▼ 74% vs $137K</div></div><div><div class="l">Cash collected</div><div class="v">$42K</div><div class="d down">▼ 69% vs $137K</div></div></div></div>
-<div class="footer">From the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet and Calendly, times in ET. Booked calls: calls scheduled on your calendar (Sched. calls). Show rate: live calls ÷ booked calls. Open slots: discovery start times Calendly offers over the next 7 days. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; Working / Good Call is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div></div></body></html>
+<div class="footer">From the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet and Calendly, times in ET. Booked calls: calls scheduled on your calendar (Sched. calls). Show rate: live calls ÷ booked calls. Open slots: discovery start times Calendly offers over the next 7 days; day by day, slots offered inside your Calendly hours that your Google Calendar left free (booked discovery calls count as slots). Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div></div></body></html>

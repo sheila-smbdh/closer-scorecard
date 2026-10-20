@@ -1,45 +1,1672 @@
 {
-  "_note": "Sample snapshot pulled 2026-10-20 for sign-off. Activity windows from Sales Tracker 2026 Inputs tab; pipeline from Pipeline Review October sections; slots from Messi's #sales-reports post (Mon 10/19 for the Monday card, Tue 10/20 for the Wednesday preview). Activity arrays are [booked calls, live calls, offers, closes, revenue generated, cash collected].",
-  "month": { "label": "October", "prev_label": "September", "business_days": 22, "business_days_elapsed_mon": 12, "business_days_elapsed_wed": 14 },
-  "editions": {
-    "monday":    { "date": "Monday, Oct 19", "week_label": "Mon Oct 12 to Sun Oct 18", "week_days": ["10-12","10-13","10-14","10-15","10-16","10-17","10-18"], "workdays_elapsed": 5, "through": "Oct 18", "through_key": "10-18" },
-    "wednesday": { "date": "Wednesday, Oct 21", "week_label": "Mon Oct 19 to Tue Oct 20", "week_days": ["10-19","10-20","10-21","10-22","10-23","10-24","10-25"], "workdays_elapsed": 2, "through": "Oct 20", "through_key": "10-20" }
+ "_note": "Sample snapshot pulled 2026-10-20 for sign-off. Activity windows from Sales Tracker 2026 Inputs tab; pipeline from Pipeline Review October sections; slots from Messi's #sales-reports post (Mon 10/19 for the Monday card, Tue 10/20 for the Wednesday preview). Activity arrays are [booked calls, live calls, offers, closes, revenue generated, cash collected].",
+ "month": {
+  "label": "October",
+  "prev_label": "September",
+  "business_days": 22,
+  "business_days_elapsed_mon": 12,
+  "business_days_elapsed_wed": 14
+ },
+ "editions": {
+  "monday": {
+   "date": "Monday, Oct 19",
+   "week_label": "Mon Oct 12 to Sun Oct 18",
+   "week_days": [
+    "10-12",
+    "10-13",
+    "10-14",
+    "10-15",
+    "10-16",
+    "10-17",
+    "10-18"
+   ],
+   "workdays_elapsed": 5,
+   "through": "Oct 18",
+   "through_key": "10-18"
   },
-  "closers": [
-    { "key": "Owen",    "name": "Owen Henderson",     "short": "Owen",    "slack": "U08PHDM1HFE", "new_hire": false },
-    { "key": "Adam",    "name": "Adam Larkins",       "short": "Adam",    "slack": "U09PVSS26GM", "new_hire": false },
-    { "key": "JZ",      "name": "Jordan Zadrozny",    "short": "JZ",      "slack": "U06TMEKK9E1", "new_hire": false },
-    { "key": "VeJohn",  "name": "VeJohn C Heinemann", "short": "VeJohn",  "slack": "U09TW8ZC6HF", "new_hire": false },
-    { "key": "Julien",  "name": "Julien Breteau",     "short": "Julien",  "slack": "U0B01Q061B6", "new_hire": false },
-    { "key": "Nick",    "name": "Nick Vaughan",       "short": "Nick",    "slack": "U0AUK90SG3A", "new_hire": false },
-    { "key": "Omar",    "name": "Omar Kaddoura",      "short": "Omar",    "slack": "U08U0S37C0P", "new_hire": false },
-    { "key": "Harry",   "name": "Harry Whyte",        "short": "Harry",   "slack": "U0BA8C73GK1", "new_hire": false },
-    { "key": "Solomon", "name": "Solomon House",      "short": "Solomon", "slack": "U0BMBFU1UHH", "new_hire": false },
-    { "key": "Daniel",  "name": "Daniel Jenkins",     "short": "Daniel",  "slack": "U0BKT632M9Q", "new_hire": false },
-    { "key": "Kevin",   "name": "Kevin Manuel",       "short": "Kevin",   "slack": "U0BK51SUY8Z", "new_hire": false },
-    { "key": "Oliver",  "name": "Oliver English",     "short": "Oliver",  "slack": "U0C4C8J3N05", "new_hire": true },
-    { "key": "Tyler",   "name": "Tyler Johnson",      "short": "Tyler",   "slack": "U0C4MFY6EBC", "new_hire": true }
-  ],
-  "activity": {"Owen":{"wk":[19,16,12,1,20000,20000],"pwk":[10,4,2,4,77000,77000],"mtd":[34,22,15,5,97000,97000],"sep_sd":[39,32,21,11,206000,225000],"sep":[66,50,32,21,392000,411000],"tw":[3,2,2,0,0,0],"mtd2":[37,24,17,5,97000,97000],"sep_sd2":[41,33,22,11,206000,225000],"days":{"10-12":3,"10-13":4,"10-14":3,"10-15":4,"10-16":5,"10-19":3}},"Adam":{"wk":[6,3,3,1,18000,18000],"pwk":[17,14,11,1,15000,15000],"mtd":[29,22,17,4,68000,68000],"sep_sd":[38,29,21,8,151000,151000],"sep":[61,44,33,11,206000,208000],"tw":[3,3,0,0,0,0],"mtd2":[32,25,17,4,68000,68000],"sep_sd2":[38,29,21,8,151000,151000],"days":{"10-12":0,"10-13":3,"10-14":2,"10-15":1,"10-19":3}},"JZ":{"wk":[4,4,3,2,37500,37500],"pwk":[17,7,5,0,0,0],"mtd":[25,14,10,2,37500,37500],"sep_sd":[46,28,22,3,52000,52000],"sep":[60,38,30,16,269500,269500],"tw":[3,2,2,0,0,0],"mtd2":[28,16,12,2,37500,37500],"sep_sd2":[46,28,22,3,52000,52000],"days":{"10-12":1,"10-13":2,"10-15":1,"10-18":0,"10-19":3}},"VeJohn":{"wk":[14,7,5,2,35000,35000],"pwk":[10,8,5,1,15000,15000],"mtd":[32,21,14,5,81000,81000],"sep_sd":[33,22,16,7,118500,138500],"sep":[53,38,25,17,276000,313500],"tw":[5,3,2,0,0,0],"mtd2":[37,24,16,5,81000,81000],"sep_sd2":[39,27,20,7,118500,138500],"days":{"10-12":4,"10-13":1,"10-14":3,"10-15":2,"10-16":3,"10-17":1,"10-19":5}},"Julien":{"wk":[0,1,0,1,15000,15000],"pwk":[9,5,4,0,0,0],"mtd":[17,13,11,1,15000,15000],"sep_sd":[42,33,26,1,18000,18000],"sep":[65,50,38,4,73000,73000],"tw":[0,0,0,0,0,0],"mtd2":[17,13,11,1,15000,15000],"sep_sd2":[42,33,26,1,18000,18000],"days":{"10-13":0,"10-15":0}},"Nick":{"wk":[13,9,6,2,34000,34000],"pwk":[19,15,9,1,20000,20000],"mtd":[40,30,20,4,69000,69000],"sep_sd":[45,26,20,7,128500,128500],"sep":[75,46,34,15,261500,261500],"tw":[3,2,2,0,0,0],"mtd2":[43,32,22,4,69000,69000],"sep_sd2":[45,26,20,7,128500,128500],"days":{"10-12":2,"10-13":3,"10-14":1,"10-15":4,"10-16":3,"10-19":3}},"Omar":{"wk":[20,12,10,0,0,0],"pwk":[21,17,10,0,0,0],"mtd":[46,34,22,1,15000,15000],"sep_sd":[46,31,22,6,106000,106000],"sep":[74,55,39,16,279500,279500],"tw":[2,2,2,2,40000,40000],"mtd2":[48,36,24,3,55000,55000],"sep_sd2":[46,31,22,6,106000,106000],"days":{"10-12":3,"10-13":4,"10-14":4,"10-15":4,"10-16":4,"10-18":1,"10-19":2,"10-20":0}},"Harry":{"wk":[13,10,8,0,0,0],"pwk":[21,18,17,2,39000,39000],"mtd":[39,31,28,2,39000,39000],"sep_sd":[52,36,25,4,70500,70500],"sep":[79,50,38,15,271000,271000],"tw":[4,2,0,0,0,0],"mtd2":[43,33,28,2,39000,39000],"sep_sd2":[52,36,25,4,70500,70500],"days":{"10-12":2,"10-13":3,"10-14":5,"10-15":3,"10-19":4}},"Solomon":{"wk":[10,7,5,3,56000,56000],"pwk":[22,14,11,0,0,0],"mtd":[46,29,20,3,56000,56000],"sep_sd":[50,32,20,5,88500,88500],"sep":[79,51,35,13,239500,239500],"tw":[4,3,2,0,0,0],"mtd2":[50,32,22,3,56000,56000],"sep_sd2":[50,32,20,5,88500,88500],"days":{"10-13":3,"10-14":1,"10-15":2,"10-16":4,"10-19":4}},"Daniel":{"wk":[8,4,4,0,0,0],"pwk":[9,7,6,0,0,0],"mtd":[21,14,12,0,0,0],"sep_sd":[40,29,25,2,32500,32500],"sep":[58,42,38,11,174500,174500],"tw":[1,1,1,0,0,0],"mtd2":[22,15,13,0,0,0],"sep_sd2":[40,29,25,2,32500,32500],"days":{"10-12":1,"10-14":2,"10-15":2,"10-17":3,"10-19":1}},"Kevin":{"wk":[14,10,9,2,36000,36000],"pwk":[14,7,7,0,0,6000],"mtd":[37,25,23,2,36000,42000],"sep_sd":[46,30,23,8,137000,137000],"sep":[77,48,38,12,209000,203000],"tw":[5,2,1,0,0,0],"mtd2":[42,27,24,2,36000,42000],"sep_sd2":[46,30,23,8,137000,137000],"days":{"10-12":3,"10-13":2,"10-14":2,"10-15":2,"10-16":5,"10-19":5}},"Oliver":{"wk":[3,3,3,0,0,0],"pwk":[0,0,0,0,0,0],"mtd":[3,3,3,0,0,0],"sep_sd":[0,0,0,0,0,0],"sep":[0,0,0,0,0,0],"tw":[3,2,1,0,0,0],"mtd2":[6,5,4,0,0,0],"sep_sd2":[0,0,0,0,0,0],"days":{"10-15":1,"10-18":2,"10-19":3}},"Tyler":{"wk":[9,9,6,0,0,0],"pwk":[0,0,0,0,0,0],"mtd":[9,9,6,0,0,0],"sep_sd":[0,0,0,0,0,0],"sep":[0,0,0,0,0,0],"tw":[3,1,1,0,0,0],"mtd2":[12,10,7,0,0,0],"sep_sd2":[0,0,0,0,0,0],"days":{"10-14":1,"10-16":2,"10-17":1,"10-18":5,"10-19":3}}},
-  "slots": {
-    "monday":    {"Owen":36,"Adam":28,"JZ":27,"VeJohn":12,"Julien":27,"Nick":16,"Omar":27,"Harry":34,"Solomon":35,"Daniel":37,"Kevin":21,"Oliver":null,"Tyler":null},
-    "wednesday": {"Owen":32,"Adam":31,"JZ":34,"VeJohn":13,"Julien":25,"Nick":25,"Omar":22,"Harry":36,"Solomon":34,"Daniel":38,"Kevin":31,"Oliver":null,"Tyler":null}
+  "wednesday": {
+   "date": "Wednesday, Oct 21",
+   "week_label": "Mon Oct 19 to Tue Oct 20",
+   "week_days": [
+    "10-19",
+    "10-20",
+    "10-21",
+    "10-22",
+    "10-23",
+    "10-24",
+    "10-25"
+   ],
+   "workdays_elapsed": 2,
+   "through": "Oct 20",
+   "through_key": "10-20"
+  }
+ },
+ "closers": [
+  {
+   "key": "Owen",
+   "name": "Owen Henderson",
+   "short": "Owen",
+   "slack": "U08PHDM1HFE",
+   "new_hire": false
   },
-  "pipeline": {
-    "_note": "Counts from each closer's October section. hc/sv/working are open leads; closed/signed are October rows already won; nonstandard = open rows whose Status is blank or not one of the three categories.",
-    "Owen":    {"hc":2,"sv":8,"working":3,"closed":5,"signed":0,"nonstandard":0},
-    "Adam":    {"hc":5,"sv":2,"working":6,"closed":2,"signed":1,"nonstandard":0},
-    "JZ":      {"hc":5,"sv":6,"working":4,"closed":0,"signed":0,"nonstandard":0},
-    "VeJohn":  {"hc":3,"sv":1,"working":1,"closed":5,"signed":0,"nonstandard":0},
-    "Julien":  {"hc":2,"sv":10,"working":4,"closed":1,"signed":1,"nonstandard":0},
-    "Nick":    {"hc":0,"sv":0,"working":0,"closed":4,"signed":0,"nonstandard":32},
-    "Omar":    {"hc":2,"sv":5,"working":4,"closed":2,"signed":0,"nonstandard":0},
-    "Harry":   {"hc":5,"sv":1,"working":10,"closed":2,"signed":1,"nonstandard":3},
-    "Solomon": {"hc":0,"sv":0,"working":0,"closed":3,"signed":0,"nonstandard":6},
-    "Daniel":  {"hc":0,"sv":0,"working":0,"closed":0,"signed":0,"nonstandard":11},
-    "Kevin":   {"hc":0,"sv":0,"working":0,"closed":2,"signed":0,"nonstandard":8},
-    "Oliver":  null,
-    "Tyler":   null
+  {
+   "key": "Adam",
+   "name": "Adam Larkins",
+   "short": "Adam",
+   "slack": "U09PVSS26GM",
+   "new_hire": false
   },
-  "pipeline_last_week": null
+  {
+   "key": "JZ",
+   "name": "Jordan Zadrozny",
+   "short": "JZ",
+   "slack": "U06TMEKK9E1",
+   "new_hire": false
+  },
+  {
+   "key": "VeJohn",
+   "name": "VeJohn C Heinemann",
+   "short": "VeJohn",
+   "slack": "U09TW8ZC6HF",
+   "new_hire": false
+  },
+  {
+   "key": "Julien",
+   "name": "Julien Breteau",
+   "short": "Julien",
+   "slack": "U0B01Q061B6",
+   "new_hire": false
+  },
+  {
+   "key": "Nick",
+   "name": "Nick Vaughan",
+   "short": "Nick",
+   "slack": "U0AUK90SG3A",
+   "new_hire": false
+  },
+  {
+   "key": "Omar",
+   "name": "Omar Kaddoura",
+   "short": "Omar",
+   "slack": "U08U0S37C0P",
+   "new_hire": false
+  },
+  {
+   "key": "Harry",
+   "name": "Harry Whyte",
+   "short": "Harry",
+   "slack": "U0BA8C73GK1",
+   "new_hire": false
+  },
+  {
+   "key": "Solomon",
+   "name": "Solomon House",
+   "short": "Solomon",
+   "slack": "U0BMBFU1UHH",
+   "new_hire": false
+  },
+  {
+   "key": "Daniel",
+   "name": "Daniel Jenkins",
+   "short": "Daniel",
+   "slack": "U0BKT632M9Q",
+   "new_hire": false
+  },
+  {
+   "key": "Kevin",
+   "name": "Kevin Manuel",
+   "short": "Kevin",
+   "slack": "U0BK51SUY8Z",
+   "new_hire": false
+  },
+  {
+   "key": "Oliver",
+   "name": "Oliver English",
+   "short": "Oliver",
+   "slack": "U0C4C8J3N05",
+   "new_hire": true
+  },
+  {
+   "key": "Tyler",
+   "name": "Tyler Johnson",
+   "short": "Tyler",
+   "slack": "U0C4MFY6EBC",
+   "new_hire": true
+  }
+ ],
+ "activity": {
+  "Owen": {
+   "wk": [
+    19,
+    16,
+    12,
+    1,
+    20000,
+    20000
+   ],
+   "pwk": [
+    10,
+    4,
+    2,
+    4,
+    77000,
+    77000
+   ],
+   "mtd": [
+    34,
+    22,
+    15,
+    5,
+    97000,
+    97000
+   ],
+   "sep_sd": [
+    39,
+    32,
+    21,
+    11,
+    206000,
+    225000
+   ],
+   "sep": [
+    66,
+    50,
+    32,
+    21,
+    392000,
+    411000
+   ],
+   "tw": [
+    3,
+    2,
+    2,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    37,
+    24,
+    17,
+    5,
+    97000,
+    97000
+   ],
+   "sep_sd2": [
+    41,
+    33,
+    22,
+    11,
+    206000,
+    225000
+   ],
+   "days": {
+    "10-12": {
+     "booked": 3,
+     "showed": 2
+    },
+    "10-13": {
+     "booked": 4,
+     "showed": 4
+    },
+    "10-14": {
+     "booked": 3,
+     "showed": 2
+    },
+    "10-15": {
+     "booked": 4,
+     "showed": 4
+    },
+    "10-16": {
+     "booked": 5,
+     "showed": 4
+    },
+    "10-19": {
+     "booked": 3,
+     "showed": 2
+    }
+   }
+  },
+  "Adam": {
+   "wk": [
+    6,
+    3,
+    3,
+    1,
+    18000,
+    18000
+   ],
+   "pwk": [
+    17,
+    14,
+    11,
+    1,
+    15000,
+    15000
+   ],
+   "mtd": [
+    29,
+    22,
+    17,
+    4,
+    68000,
+    68000
+   ],
+   "sep_sd": [
+    38,
+    29,
+    21,
+    8,
+    151000,
+    151000
+   ],
+   "sep": [
+    61,
+    44,
+    33,
+    11,
+    206000,
+    208000
+   ],
+   "tw": [
+    3,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    32,
+    25,
+    17,
+    4,
+    68000,
+    68000
+   ],
+   "sep_sd2": [
+    38,
+    29,
+    21,
+    8,
+    151000,
+    151000
+   ],
+   "days": {
+    "10-13": {
+     "booked": 3,
+     "showed": 1
+    },
+    "10-14": {
+     "booked": 2,
+     "showed": 1
+    },
+    "10-15": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-19": {
+     "booked": 3,
+     "showed": 3
+    }
+   }
+  },
+  "JZ": {
+   "wk": [
+    4,
+    4,
+    3,
+    2,
+    37500,
+    37500
+   ],
+   "pwk": [
+    17,
+    7,
+    5,
+    0,
+    0,
+    0
+   ],
+   "mtd": [
+    25,
+    14,
+    10,
+    2,
+    37500,
+    37500
+   ],
+   "sep_sd": [
+    46,
+    28,
+    22,
+    3,
+    52000,
+    52000
+   ],
+   "sep": [
+    60,
+    38,
+    30,
+    16,
+    269500,
+    269500
+   ],
+   "tw": [
+    3,
+    2,
+    2,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    28,
+    16,
+    12,
+    2,
+    37500,
+    37500
+   ],
+   "sep_sd2": [
+    46,
+    28,
+    22,
+    3,
+    52000,
+    52000
+   ],
+   "days": {
+    "10-12": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-13": {
+     "booked": 2,
+     "showed": 2
+    },
+    "10-15": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-19": {
+     "booked": 3,
+     "showed": 2
+    }
+   }
+  },
+  "VeJohn": {
+   "wk": [
+    14,
+    7,
+    5,
+    2,
+    35000,
+    35000
+   ],
+   "pwk": [
+    10,
+    8,
+    5,
+    1,
+    15000,
+    15000
+   ],
+   "mtd": [
+    32,
+    21,
+    14,
+    5,
+    81000,
+    81000
+   ],
+   "sep_sd": [
+    33,
+    22,
+    16,
+    7,
+    118500,
+    138500
+   ],
+   "sep": [
+    53,
+    38,
+    25,
+    17,
+    276000,
+    313500
+   ],
+   "tw": [
+    5,
+    3,
+    2,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    37,
+    24,
+    16,
+    5,
+    81000,
+    81000
+   ],
+   "sep_sd2": [
+    39,
+    27,
+    20,
+    7,
+    118500,
+    138500
+   ],
+   "days": {
+    "10-12": {
+     "booked": 4,
+     "showed": 2
+    },
+    "10-13": {
+     "booked": 1,
+     "showed": 0
+    },
+    "10-14": {
+     "booked": 3,
+     "showed": 3
+    },
+    "10-15": {
+     "booked": 2,
+     "showed": 1
+    },
+    "10-16": {
+     "booked": 3,
+     "showed": 1
+    },
+    "10-17": {
+     "booked": 1,
+     "showed": 0
+    },
+    "10-19": {
+     "booked": 5,
+     "showed": 3
+    }
+   }
+  },
+  "Julien": {
+   "wk": [
+    0,
+    1,
+    0,
+    1,
+    15000,
+    15000
+   ],
+   "pwk": [
+    9,
+    5,
+    4,
+    0,
+    0,
+    0
+   ],
+   "mtd": [
+    17,
+    13,
+    11,
+    1,
+    15000,
+    15000
+   ],
+   "sep_sd": [
+    42,
+    33,
+    26,
+    1,
+    18000,
+    18000
+   ],
+   "sep": [
+    65,
+    50,
+    38,
+    4,
+    73000,
+    73000
+   ],
+   "tw": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    17,
+    13,
+    11,
+    1,
+    15000,
+    15000
+   ],
+   "sep_sd2": [
+    42,
+    33,
+    26,
+    1,
+    18000,
+    18000
+   ],
+   "days": {
+    "10-13": {
+     "booked": 0,
+     "showed": 1
+    }
+   }
+  },
+  "Nick": {
+   "wk": [
+    13,
+    9,
+    6,
+    2,
+    34000,
+    34000
+   ],
+   "pwk": [
+    19,
+    15,
+    9,
+    1,
+    20000,
+    20000
+   ],
+   "mtd": [
+    40,
+    30,
+    20,
+    4,
+    69000,
+    69000
+   ],
+   "sep_sd": [
+    45,
+    26,
+    20,
+    7,
+    128500,
+    128500
+   ],
+   "sep": [
+    75,
+    46,
+    34,
+    15,
+    261500,
+    261500
+   ],
+   "tw": [
+    3,
+    2,
+    2,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    43,
+    32,
+    22,
+    4,
+    69000,
+    69000
+   ],
+   "sep_sd2": [
+    45,
+    26,
+    20,
+    7,
+    128500,
+    128500
+   ],
+   "days": {
+    "10-12": {
+     "booked": 2,
+     "showed": 1
+    },
+    "10-13": {
+     "booked": 3,
+     "showed": 2
+    },
+    "10-14": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-15": {
+     "booked": 4,
+     "showed": 2
+    },
+    "10-16": {
+     "booked": 3,
+     "showed": 3
+    },
+    "10-19": {
+     "booked": 3,
+     "showed": 2
+    }
+   }
+  },
+  "Omar": {
+   "wk": [
+    20,
+    12,
+    10,
+    0,
+    0,
+    0
+   ],
+   "pwk": [
+    21,
+    17,
+    10,
+    0,
+    0,
+    0
+   ],
+   "mtd": [
+    46,
+    34,
+    22,
+    1,
+    15000,
+    15000
+   ],
+   "sep_sd": [
+    46,
+    31,
+    22,
+    6,
+    106000,
+    106000
+   ],
+   "sep": [
+    74,
+    55,
+    39,
+    16,
+    279500,
+    279500
+   ],
+   "tw": [
+    2,
+    2,
+    2,
+    2,
+    40000,
+    40000
+   ],
+   "mtd2": [
+    48,
+    36,
+    24,
+    3,
+    55000,
+    55000
+   ],
+   "sep_sd2": [
+    46,
+    31,
+    22,
+    6,
+    106000,
+    106000
+   ],
+   "days": {
+    "10-12": {
+     "booked": 3,
+     "showed": 1
+    },
+    "10-13": {
+     "booked": 4,
+     "showed": 3
+    },
+    "10-14": {
+     "booked": 4,
+     "showed": 1
+    },
+    "10-15": {
+     "booked": 4,
+     "showed": 4
+    },
+    "10-16": {
+     "booked": 4,
+     "showed": 2
+    },
+    "10-18": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-19": {
+     "booked": 2,
+     "showed": 2
+    }
+   }
+  },
+  "Harry": {
+   "wk": [
+    13,
+    10,
+    8,
+    0,
+    0,
+    0
+   ],
+   "pwk": [
+    21,
+    18,
+    17,
+    2,
+    39000,
+    39000
+   ],
+   "mtd": [
+    39,
+    31,
+    28,
+    2,
+    39000,
+    39000
+   ],
+   "sep_sd": [
+    52,
+    36,
+    25,
+    4,
+    70500,
+    70500
+   ],
+   "sep": [
+    79,
+    50,
+    38,
+    15,
+    271000,
+    271000
+   ],
+   "tw": [
+    4,
+    2,
+    0,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    43,
+    33,
+    28,
+    2,
+    39000,
+    39000
+   ],
+   "sep_sd2": [
+    52,
+    36,
+    25,
+    4,
+    70500,
+    70500
+   ],
+   "days": {
+    "10-12": {
+     "booked": 2,
+     "showed": 1
+    },
+    "10-13": {
+     "booked": 3,
+     "showed": 3
+    },
+    "10-14": {
+     "booked": 5,
+     "showed": 5
+    },
+    "10-15": {
+     "booked": 3,
+     "showed": 1
+    },
+    "10-19": {
+     "booked": 4,
+     "showed": 2
+    }
+   }
+  },
+  "Solomon": {
+   "wk": [
+    10,
+    7,
+    5,
+    3,
+    56000,
+    56000
+   ],
+   "pwk": [
+    22,
+    14,
+    11,
+    0,
+    0,
+    0
+   ],
+   "mtd": [
+    46,
+    29,
+    20,
+    3,
+    56000,
+    56000
+   ],
+   "sep_sd": [
+    50,
+    32,
+    20,
+    5,
+    88500,
+    88500
+   ],
+   "sep": [
+    79,
+    51,
+    35,
+    13,
+    239500,
+    239500
+   ],
+   "tw": [
+    4,
+    3,
+    2,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    50,
+    32,
+    22,
+    3,
+    56000,
+    56000
+   ],
+   "sep_sd2": [
+    50,
+    32,
+    20,
+    5,
+    88500,
+    88500
+   ],
+   "days": {
+    "10-13": {
+     "booked": 3,
+     "showed": 3
+    },
+    "10-14": {
+     "booked": 1,
+     "showed": 0
+    },
+    "10-15": {
+     "booked": 2,
+     "showed": 0
+    },
+    "10-16": {
+     "booked": 4,
+     "showed": 4
+    },
+    "10-19": {
+     "booked": 4,
+     "showed": 3
+    }
+   }
+  },
+  "Daniel": {
+   "wk": [
+    8,
+    4,
+    4,
+    0,
+    0,
+    0
+   ],
+   "pwk": [
+    9,
+    7,
+    6,
+    0,
+    0,
+    0
+   ],
+   "mtd": [
+    21,
+    14,
+    12,
+    0,
+    0,
+    0
+   ],
+   "sep_sd": [
+    40,
+    29,
+    25,
+    2,
+    32500,
+    32500
+   ],
+   "sep": [
+    58,
+    42,
+    38,
+    11,
+    174500,
+    174500
+   ],
+   "tw": [
+    1,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    22,
+    15,
+    13,
+    0,
+    0,
+    0
+   ],
+   "sep_sd2": [
+    40,
+    29,
+    25,
+    2,
+    32500,
+    32500
+   ],
+   "days": {
+    "10-12": {
+     "booked": 1,
+     "showed": 0
+    },
+    "10-14": {
+     "booked": 2,
+     "showed": 2
+    },
+    "10-15": {
+     "booked": 2,
+     "showed": 2
+    },
+    "10-17": {
+     "booked": 3,
+     "showed": 0
+    },
+    "10-19": {
+     "booked": 1,
+     "showed": 1
+    }
+   }
+  },
+  "Kevin": {
+   "wk": [
+    14,
+    10,
+    9,
+    2,
+    36000,
+    36000
+   ],
+   "pwk": [
+    14,
+    7,
+    7,
+    0,
+    0,
+    6000
+   ],
+   "mtd": [
+    37,
+    25,
+    23,
+    2,
+    36000,
+    42000
+   ],
+   "sep_sd": [
+    46,
+    30,
+    23,
+    8,
+    137000,
+    137000
+   ],
+   "sep": [
+    77,
+    48,
+    38,
+    12,
+    209000,
+    203000
+   ],
+   "tw": [
+    5,
+    2,
+    1,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    42,
+    27,
+    24,
+    2,
+    36000,
+    42000
+   ],
+   "sep_sd2": [
+    46,
+    30,
+    23,
+    8,
+    137000,
+    137000
+   ],
+   "days": {
+    "10-12": {
+     "booked": 3,
+     "showed": 2
+    },
+    "10-13": {
+     "booked": 2,
+     "showed": 2
+    },
+    "10-14": {
+     "booked": 2,
+     "showed": 1
+    },
+    "10-15": {
+     "booked": 2,
+     "showed": 1
+    },
+    "10-16": {
+     "booked": 5,
+     "showed": 4
+    },
+    "10-19": {
+     "booked": 5,
+     "showed": 2
+    }
+   }
+  },
+  "Oliver": {
+   "wk": [
+    3,
+    3,
+    3,
+    0,
+    0,
+    0
+   ],
+   "pwk": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "mtd": [
+    3,
+    3,
+    3,
+    0,
+    0,
+    0
+   ],
+   "sep_sd": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "sep": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "tw": [
+    3,
+    2,
+    1,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    6,
+    5,
+    4,
+    0,
+    0,
+    0
+   ],
+   "sep_sd2": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "days": {
+    "10-15": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-18": {
+     "booked": 2,
+     "showed": 2
+    },
+    "10-19": {
+     "booked": 3,
+     "showed": 2
+    }
+   }
+  },
+  "Tyler": {
+   "wk": [
+    9,
+    9,
+    6,
+    0,
+    0,
+    0
+   ],
+   "pwk": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "mtd": [
+    9,
+    9,
+    6,
+    0,
+    0,
+    0
+   ],
+   "sep_sd": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "sep": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "tw": [
+    3,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "mtd2": [
+    12,
+    10,
+    7,
+    0,
+    0,
+    0
+   ],
+   "sep_sd2": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "days": {
+    "10-14": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-16": {
+     "booked": 2,
+     "showed": 2
+    },
+    "10-17": {
+     "booked": 1,
+     "showed": 1
+    },
+    "10-18": {
+     "booked": 5,
+     "showed": 5
+    },
+    "10-19": {
+     "booked": 3,
+     "showed": 1
+    }
+   }
+  }
+ },
+ "slots": {
+  "monday": {
+   "Owen": 36,
+   "Adam": 28,
+   "JZ": 27,
+   "VeJohn": 12,
+   "Julien": 27,
+   "Nick": 16,
+   "Omar": 27,
+   "Harry": 34,
+   "Solomon": 35,
+   "Daniel": 37,
+   "Kevin": 21,
+   "Oliver": null,
+   "Tyler": null
+  },
+  "wednesday": {
+   "Owen": 32,
+   "Adam": 31,
+   "JZ": 34,
+   "VeJohn": 13,
+   "Julien": 25,
+   "Nick": 25,
+   "Omar": 22,
+   "Harry": 36,
+   "Solomon": 34,
+   "Daniel": 38,
+   "Kevin": 31,
+   "Oliver": null,
+   "Tyler": null
+  }
+ },
+ "pipeline": {
+  "_note": "Counts from each closer's October section. hc/sv/working are open leads; closed/signed are October rows already won; nonstandard = open rows whose Status is blank or not one of the three categories.",
+  "Owen": {
+   "hc": 2,
+   "sv": 8,
+   "working": 3,
+   "closed": 5,
+   "signed": 0,
+   "nonstandard": 0
+  },
+  "Adam": {
+   "hc": 5,
+   "sv": 2,
+   "working": 6,
+   "closed": 2,
+   "signed": 1,
+   "nonstandard": 0
+  },
+  "JZ": {
+   "hc": 5,
+   "sv": 6,
+   "working": 4,
+   "closed": 0,
+   "signed": 0,
+   "nonstandard": 0
+  },
+  "VeJohn": {
+   "hc": 3,
+   "sv": 1,
+   "working": 1,
+   "closed": 5,
+   "signed": 0,
+   "nonstandard": 0
+  },
+  "Julien": {
+   "hc": 2,
+   "sv": 10,
+   "working": 4,
+   "closed": 1,
+   "signed": 1,
+   "nonstandard": 0
+  },
+  "Nick": {
+   "hc": 0,
+   "sv": 0,
+   "working": 0,
+   "closed": 4,
+   "signed": 0,
+   "nonstandard": 32
+  },
+  "Omar": {
+   "hc": 2,
+   "sv": 5,
+   "working": 4,
+   "closed": 2,
+   "signed": 0,
+   "nonstandard": 0
+  },
+  "Harry": {
+   "hc": 5,
+   "sv": 1,
+   "working": 10,
+   "closed": 2,
+   "signed": 1,
+   "nonstandard": 3
+  },
+  "Solomon": {
+   "hc": 0,
+   "sv": 0,
+   "working": 0,
+   "closed": 3,
+   "signed": 0,
+   "nonstandard": 6
+  },
+  "Daniel": {
+   "hc": 0,
+   "sv": 0,
+   "working": 0,
+   "closed": 0,
+   "signed": 0,
+   "nonstandard": 11
+  },
+  "Kevin": {
+   "hc": 0,
+   "sv": 0,
+   "working": 0,
+   "closed": 2,
+   "signed": 0,
+   "nonstandard": 8
+  },
+  "Oliver": null,
+  "Tyler": null
+ },
+ "pipeline_last_week": null,
+ "slots_daily": {
+  "Owen": {
+   "10-12": 7,
+   "10-13": 4,
+   "10-14": 1,
+   "10-15": 6,
+   "10-16": 5,
+   "10-17": 1,
+   "10-18": 0,
+   "10-19": 6,
+   "10-20": 5,
+   "10-21": 6,
+   "10-22": 8,
+   "10-23": 4,
+   "10-24": 2,
+   "10-25": 0
+  },
+  "Adam": {
+   "10-12": 7,
+   "10-13": 7,
+   "10-14": 6,
+   "10-15": 6,
+   "10-16": 0,
+   "10-17": 0,
+   "10-18": 0,
+   "10-19": 7,
+   "10-20": 6,
+   "10-21": 5,
+   "10-22": 7,
+   "10-23": 5,
+   "10-24": 0,
+   "10-25": 0
+  },
+  "JZ": {
+   "10-12": 4,
+   "10-13": 1,
+   "10-14": 1,
+   "10-15": 5,
+   "10-16": 5,
+   "10-17": 1,
+   "10-18": 0,
+   "10-19": 4,
+   "10-20": 1,
+   "10-21": 6,
+   "10-22": 6,
+   "10-23": 5,
+   "10-24": 2,
+   "10-25": 0
+  },
+  "VeJohn": {
+   "10-12": 6,
+   "10-13": 4,
+   "10-14": 5,
+   "10-15": 3,
+   "10-16": 5,
+   "10-17": 1,
+   "10-18": 0,
+   "10-19": 6,
+   "10-20": 0,
+   "10-21": 6,
+   "10-22": 4,
+   "10-23": 3,
+   "10-24": 5,
+   "10-25": 0
+  },
+  "Julien": {
+   "10-12": 1,
+   "10-13": 3,
+   "10-14": 5,
+   "10-15": 3,
+   "10-16": 5,
+   "10-17": 0,
+   "10-18": 0,
+   "10-19": 2,
+   "10-20": 3,
+   "10-21": 5,
+   "10-22": 3,
+   "10-23": 3,
+   "10-24": 0,
+   "10-25": 0
+  },
+  "Nick": {
+   "10-12": 5,
+   "10-13": 4,
+   "10-14": 6,
+   "10-15": 5,
+   "10-16": 4,
+   "10-17": 0,
+   "10-18": 0,
+   "10-19": 8,
+   "10-20": 2,
+   "10-21": 6,
+   "10-22": 5,
+   "10-23": 2,
+   "10-24": 0,
+   "10-25": 0
+  },
+  "Omar": {
+   "10-12": 9,
+   "10-13": 8,
+   "10-14": 9,
+   "10-15": 9,
+   "10-16": 5,
+   "10-17": 0,
+   "10-18": 0,
+   "10-19": 7,
+   "10-20": 7,
+   "10-21": 7,
+   "10-22": 9,
+   "10-23": 4,
+   "10-24": 0,
+   "10-25": 0
+  },
+  "Harry": {
+   "10-12": 5,
+   "10-13": 5,
+   "10-14": 6,
+   "10-15": 3,
+   "10-16": 5,
+   "10-17": 0,
+   "10-18": 0,
+   "10-19": 6,
+   "10-20": 6,
+   "10-21": 6,
+   "10-22": 6,
+   "10-23": 5,
+   "10-24": 4,
+   "10-25": 0
+  },
+  "Solomon": {
+   "10-12": 7,
+   "10-13": 12,
+   "10-14": 8,
+   "10-15": 12,
+   "10-16": 10,
+   "10-17": 4,
+   "10-18": 0,
+   "10-19": 12,
+   "10-20": 8,
+   "10-21": 10,
+   "10-22": 0,
+   "10-23": 0,
+   "10-24": 0,
+   "10-25": 0
+  },
+  "Daniel": {
+   "10-12": 6,
+   "10-13": 8,
+   "10-14": 5,
+   "10-15": 8,
+   "10-16": 6,
+   "10-17": 4,
+   "10-18": 0,
+   "10-19": 8,
+   "10-20": 6,
+   "10-21": 6,
+   "10-22": 6,
+   "10-23": 5,
+   "10-24": 0,
+   "10-25": 0
+  },
+  "Kevin": {
+   "10-12": 7,
+   "10-13": 7,
+   "10-14": 10,
+   "10-15": 8,
+   "10-16": 8,
+   "10-17": 0,
+   "10-18": 0,
+   "10-19": 6,
+   "10-20": 6,
+   "10-21": 6,
+   "10-22": 8,
+   "10-23": 4,
+   "10-24": 0,
+   "10-25": 0
+  }
+ },
+ "_slots_daily_note": "Open discovery slots per day: 45-minute starts inside the closer's Calendly hours that were not blocked by non-discovery events on their Google Calendar (discovery calls count as open capacity). Rebuilt 2026-10-20 from Google Calendar.",
+ "calendar_close_et": {
+  "Owen": {
+   "mon": "18:00",
+   "tue": "18:00",
+   "wed": "18:00",
+   "thu": "17:00",
+   "fri": "17:00"
+  },
+  "Adam": {
+   "mon": "21:00",
+   "tue": "21:00",
+   "wed": "21:00",
+   "thu": "21:00",
+   "fri": "21:00"
+  },
+  "JZ": {
+   "mon": "17:00",
+   "tue": "17:00",
+   "wed": "17:00",
+   "thu": "17:00",
+   "fri": "16:00"
+  },
+  "VeJohn": {
+   "mon": "21:00",
+   "tue": "21:00",
+   "wed": "21:00",
+   "thu": "20:00",
+   "fri": "20:00"
+  },
+  "Julien": {
+   "mon": "13:00",
+   "tue": "13:00",
+   "wed": "13:00",
+   "thu": "13:00",
+   "fri": "13:00"
+  },
+  "Nick": {
+   "mon": "17:00",
+   "tue": "17:00",
+   "wed": "17:00",
+   "thu": "19:00",
+   "fri": "19:00"
+  },
+  "Omar": {
+   "mon": "16:00",
+   "tue": "16:00",
+   "wed": "16:00",
+   "thu": "16:00",
+   "fri": "14:00"
+  },
+  "Harry": {
+   "mon": "18:00",
+   "tue": "18:00",
+   "wed": "18:00",
+   "thu": "18:00",
+   "fri": "18:00"
+  },
+  "Solomon": {
+   "mon": "22:00",
+   "tue": "22:00",
+   "wed": "22:00",
+   "thu": "22:00",
+   "fri": "22:00"
+  },
+  "Daniel": {
+   "mon": "18:00",
+   "tue": "18:00",
+   "wed": "18:00",
+   "thu": "18:00",
+   "fri": "17:00"
+  },
+  "Kevin": {
+   "mon": "20:00",
+   "tue": "20:00",
+   "wed": "20:00",
+   "thu": "20:00",
+   "fri": "20:00"
+  },
+  "Tyler": {
+   "mon": "21:30",
+   "tue": "22:00",
+   "wed": "22:00",
+   "thu": "22:00",
+   "fri": "18:00"
+  },
+  "Oliver": null
+ },
+ "_calendar_close_note": "Latest end of each closer's Calendly discovery hours on weekdays, converted to ET (from the round-robin Discovery event's host schedules; Julien from his 'Sales Calls' schedule)."
 }

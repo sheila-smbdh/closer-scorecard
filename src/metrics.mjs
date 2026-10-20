@@ -3,9 +3,12 @@
 // docs/METRICS.md; change both together.
 
 export const TARGETS = {
-  callsPerWorkday: 5,      // booked calls, fully ramped closers
-  callsPerWeek: 25,
+  callsPerWorkday: 4,      // booked calls, fully ramped closers
+  callsPerWeek: 20,
   slotsPerWeek: 25,        // open discovery start times, next 7 days
+  slotsPerDay: 5,          // day-by-day chart guides
+  showsPerDay: 3,
+  lateCloseHour: 17,       // calendars that close by 5pm ET most weekdays get a Focus item
   showRate: 0.8,
   avgRevenueFloor: 17500,  // MTD revenue generated / closes
   monthlyCash: 200000,     // PROVISIONAL until per-closer targets come from the tracker DB
@@ -55,6 +58,8 @@ export function closerMetrics(data, closer, edition) {
     status: slotCount == null ? 'track' : status(slotCount, TARGETS.slotsPerWeek),
   };
 
+  const calendar = calendarClose(data.calendar_close_et?.[closer.key]);
+
   const avgRevenue = {
     value: mtd[CLOSES] ? mtd[REV] / mtd[CLOSES] : null, rev: mtd[REV], closes: mtd[CLOSES],
     target: TARGETS.avgRevenueFloor,
@@ -88,7 +93,14 @@ export function closerMetrics(data, closer, edition) {
     ['Cash collected', mtd[CASH], prevSameDay[CASH], '$'],
   ].map(([label, now, prev, kind]) => ({ label, now, prev, kind, delta: prev ? (now - prev) / prev : null }));
 
-  const days = ed.week_days.map((d) => ({ d, calls: act.days[d] ?? 0, future: !monday && d > ed.through_key }));
+  const daily = data.slots_daily?.[closer.key] ?? {};
+  const days = ed.week_days.map((d, i) => {
+    const a = act.days[d] ?? { booked: 0, showed: 0 };
+    const future = !monday && d > ed.through_key;
+    // Slots offered contain the booked calls, so never draw fewer slots than bookings
+    const slotsOffered = daily[d] == null ? null : Math.max(daily[d], a.booked);
+    return { d, weekend: i >= 5, future, slots: slotsOffered, booked: future ? null : a.booked, showed: future ? null : a.showed };
+  });
 
   const scored = [calls, showRate, slots, avgRevenue, cash].filter((m) => m.status !== 'track');
   const tally = {
@@ -97,7 +109,25 @@ export function closerMetrics(data, closer, edition) {
     total: scored.length,
   };
 
-  return { closer, edition, ed, calls, showRate, slots, avgRevenue, cash, revPerCall, pipeline, closes, mom, days, tally, newHire };
+  return { closer, edition, ed, calls, showRate, slots, calendar, avgRevenue, cash, revPerCall, pipeline, closes, mom, days, tally, newHire };
+}
+
+// "18:00" -> 18, and a short label like "6pm ET (5pm Thu to Fri)"
+function calendarClose(byDay) {
+  if (!byDay) return null;
+  const toH = (t) => { const [h, mm] = t.split(':').map(Number); return h + mm / 60; };
+  const fmt = (h) => { const hr = Math.floor(h), mi = Math.round((h - hr) * 60); const h12 = ((hr + 11) % 12) + 1;
+    return `${h12}${mi ? `:${String(mi).padStart(2, '0')}` : ''}${hr >= 12 ? 'pm' : 'am'}`; };
+  const order = ['mon', 'tue', 'wed', 'thu', 'fri'];
+  const names = { mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri' };
+  const hours = order.map((d) => toH(byDay[d]));
+  const counts = {};
+  hours.forEach((h) => { counts[h] = (counts[h] || 0) + 1; });
+  const usual = Number(Object.entries(counts).sort((a, b) => b[1] - a[1] || b[0] - a[0])[0][0]);
+  const odd = order.filter((d, i) => hours[i] !== usual);
+  const oddText = odd.length ? ` (${fmt(toH(byDay[odd[0]]))} ${odd.map((d) => names[d]).join(', ')})` : '';
+  const earlyDays = hours.filter((h) => h <= TARGETS.lateCloseHour).length;
+  return { usual, label: `${fmt(usual)} ET${oddText}`, usualText: `${fmt(usual)} ET`, closesEarly: earlyDays >= 3 };
 }
 
 export function winsAndFixes(m) {
@@ -105,6 +135,11 @@ export function winsAndFixes(m) {
   const money = (v) => `$${Math.round(v).toLocaleString('en-US')}`;
   const monday = m.edition === 'monday';
   const when = monday ? 'last week' : 'so far this week';
+
+  if (m.slots.status === 'hit') wins.push(['Open slots', `${m.slots.value} discovery slots open for the next 7 days.`]);
+  else if (m.slots.status !== 'track') fixes.push(['Open slots', `Only ${m.slots.value} discovery slots open for the next 7 days. Target is 25. Open more time in Calendly.`]);
+
+  if (m.calendar?.closesEarly) fixes.push(['Later slots', `Your calendar closes at ${m.calendar.usualText} most days. Try to open up slots later, after 5pm ET, when more prospects can book.`]);
 
   if (m.calls.status === 'hit') wins.push(['Booked calls', `${m.calls.value} ${when} against a target of ${m.calls.target}.`]);
   else if (m.calls.target != null) fixes.push(['Booked calls', monday
@@ -114,18 +149,15 @@ export function winsAndFixes(m) {
   if (m.showRate.status === 'hit') wins.push(['Show rate', `${fmtPct(m.showRate.value)} of booked calls showed. Target is 80%.`]);
   else if (m.showRate.status !== 'track') fixes.push(['Show rate', `${m.showRate.live} of ${m.showRate.booked} booked calls showed (${fmtPct(m.showRate.value)}). Confirm every call the day before and the hour before.`]);
 
-  if (m.slots.status === 'hit') wins.push(['Open slots', `${m.slots.value} discovery slots open for the next 7 days.`]);
-  else if (m.slots.status !== 'track') fixes.push(['Open slots', `Only ${m.slots.value} discovery slots open for the next 7 days. Target is 25. Open more time in Calendly.`]);
-
   if (m.avgRevenue.status === 'hit') wins.push(['Average revenue', `${money(m.avgRevenue.value)} per close this month, above the $17,500 floor.`]);
   else if (m.avgRevenue.status === 'missed') fixes.push(['Average revenue', `${money(m.avgRevenue.value)} per close this month, below the $17,500 floor. Hold price before discounting.`]);
 
   if (m.cash.status === 'hit') wins.push(['Cash pace', `${money(m.cash.value)} collected this month, ahead of pace.`]);
   else if (m.cash.status !== 'track') fixes.push(['Cash pace', `${money(m.cash.value)} collected, pace is ${money(m.cash.expected)} by now. Push your High Confidence deals to sign and pay.`]);
 
-  if (m.pipeline?.nonstandard) fixes.push(['Pipeline sheet', `${m.pipeline.nonstandard} open leads in your October tab have no standard status. Tag each one High Confidence, Soft Verbal / Reengaged or Working / Good Call.`]);
+  if (m.pipeline?.nonstandard) fixes.push(['Pipeline sheet', `${m.pipeline.nonstandard} open leads in your October tab have no standard status. Tag each one High Confidence, Soft Verbal / Reengaged or WIP (Working / Good Call).`]);
 
-  return { wins: wins.slice(0, 3), fixes: fixes.slice(0, 3) };
+  return { wins: wins.slice(0, 4), fixes: fixes.slice(0, 4) };
 }
 
 export const fmtPct = (v) => (v == null ? '–' : `${Math.round(v * 100)}%`);

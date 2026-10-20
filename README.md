@@ -25,9 +25,10 @@ Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin ar
 
 | Metric | Definition | Target | Source |
 |---|---|---|---|
-| Booked calls | Sched. calls in the week (Mon to Sun) | 25 a week, 5 a workday (fully ramped). New hires: their own targets (pending) | Sales Tracker 2026, `Inputs` |
+| Open slots | Discovery start times Calendly offers over the next 7 days. Tile also shows "Calendar open till X" (latest end of the closer's Calendly discovery hours, ET); if most weekdays close by 5pm ET, Focus says to open later slots | 25 | Calendly, cross-checked against Messi in #sales-reports |
+| Booked calls | Sched. calls in the week (Mon to Sun) | 20 a week, 4 a workday (fully ramped). New hires: their own targets (pending) | Sales Tracker 2026, `Inputs` |
 | Show rate | Live calls ÷ booked calls, same week | 80% | `Inputs` |
-| Open slots | Discovery start times Calendly offers over the next 7 days | 25 | Calendly, cross-checked against Messi in #sales-reports |
+| Day by day | Per day: open slots offered (dotted box: 45-min starts inside Calendly hours left free on Google Calendar, discovery calls included), booked calls (solid), showed (dark) | 5 slots, 4 booked, 3 showed a day | Google Calendar + Calendly hours, `Inputs` |
 | Average revenue | Revenue generated ÷ closes (Close 1), month to date | Floor $17,500 (pass/fail) | `Inputs` / `Leaderboard` |
 | Cash collected pace | Cash collected MTD vs monthly target × business days elapsed ÷ business days in month | $200K a month **provisional** until per-closer targets come from the tracker DB | `Inputs` |
 | Projected closes | Open **High Confidence + Soft Verbal / Reengaged** leads in the closer's current-month section. Working / Good Call shown in small type, not counted | None (tracked) | Pipeline Review, closer tabs |
