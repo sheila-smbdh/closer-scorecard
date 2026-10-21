@@ -5779,5 +5779,512 @@
     "cash_mtd": 0
    }
   }
+ },
+ "close_activity": {
+  "_note": "Close texts and emails, week Mon Oct 12 to Sun Oct 18 (ET), pulled 2026-10-21. reply: minutes from a lead's inbound text/email to the closer's next manual text/email on that lead (sequence and bulk sends excluded; calendar notifications and internal senders excluded). biz = inbound Mon-Fri 9am-6pm ET, after = everything else. Only replies within 72h are timed; later or none counts as unanswered. touches = manual texts + emails the closer sent to their open October pipeline leads (Close link in Pipeline Review), per open lead. Team medians use the 11 ramped closers.",
+  "team": {
+   "reply_biz_median": 63,
+   "reply_after_median": 585,
+   "touches_per_lead_median": 2.75
+  },
+  "closers": {
+   "Owen": {
+    "reply": {
+     "biz": {
+      "n": 26,
+      "median": 448,
+      "mean": 953,
+      "unanswered": 33
+     },
+     "after": {
+      "n": 15,
+      "median": 1360,
+      "mean": 1765,
+      "unanswered": 38
+     }
+    },
+    "inbound_week": 129,
+    "manual_outbound_week": {
+     "sms": 9,
+     "email": 58,
+     "leads": 43
+    },
+    "touches": {
+     "sms": 1,
+     "email": 8,
+     "leads": 12,
+     "per_lead": 0.8
+    }
+   },
+   "Adam": {
+    "reply": {
+     "biz": {
+      "n": 28,
+      "median": 63,
+      "mean": 804,
+      "unanswered": 18
+     },
+     "after": {
+      "n": 8,
+      "median": 44,
+      "mean": 220,
+      "unanswered": 9
+     }
+    },
+    "inbound_week": 82,
+    "manual_outbound_week": {
+     "sms": 59,
+     "email": 15,
+     "leads": 24
+    },
+    "touches": {
+     "sms": 30,
+     "email": 3,
+     "leads": 15,
+     "per_lead": 2.2
+    }
+   },
+   "JZ": {
+    "reply": {
+     "biz": {
+      "n": 48,
+      "median": 175,
+      "mean": 494,
+      "unanswered": 19
+     },
+     "after": {
+      "n": 32,
+      "median": 731,
+      "mean": 664,
+      "unanswered": 15
+     }
+    },
+    "inbound_week": 129,
+    "manual_outbound_week": {
+     "sms": 95,
+     "email": 54,
+     "leads": 91
+    },
+    "touches": {
+     "sms": 6,
+     "email": 17,
+     "leads": 15,
+     "per_lead": 1.5
+    }
+   },
+   "VeJohn": {
+    "reply": {
+     "biz": {
+      "n": 28,
+      "median": 235,
+      "mean": 686,
+      "unanswered": 40
+     },
+     "after": {
+      "n": 14,
+      "median": 99,
+      "mean": 595,
+      "unanswered": 22
+     }
+    },
+    "inbound_week": 119,
+    "manual_outbound_week": {
+     "sms": 41,
+     "email": 58,
+     "leads": 51
+    },
+    "touches": {
+     "sms": 7,
+     "email": 14,
+     "leads": 6,
+     "per_lead": 3.5
+    }
+   },
+   "Julien": {
+    "reply": {
+     "biz": {
+      "n": 65,
+      "median": 19,
+      "mean": 193,
+      "unanswered": 8
+     },
+     "after": {
+      "n": 18,
+      "median": 864,
+      "mean": 749,
+      "unanswered": 2
+     }
+    },
+    "inbound_week": 109,
+    "manual_outbound_week": {
+     "sms": 149,
+     "email": 57,
+     "leads": 88
+    },
+    "touches": {
+     "sms": 66,
+     "email": 30,
+     "leads": 26,
+     "per_lead": 3.7
+    }
+   },
+   "Nick": {
+    "reply": {
+     "biz": {
+      "n": 59,
+      "median": 127,
+      "mean": 539,
+      "unanswered": 14
+     },
+     "after": {
+      "n": 27,
+      "median": 895,
+      "mean": 1089,
+      "unanswered": 8
+     }
+    },
+    "inbound_week": 131,
+    "manual_outbound_week": {
+     "sms": 168,
+     "email": 82,
+     "leads": 90
+    },
+    "touches": {
+     "sms": 77,
+     "email": 36,
+     "leads": 42,
+     "per_lead": 2.7
+    }
+   },
+   "Omar": {
+    "reply": {
+     "biz": {
+      "n": 49,
+      "median": 185,
+      "mean": 550,
+      "unanswered": 14
+     },
+     "after": {
+      "n": 26,
+      "median": 451,
+      "mean": 871,
+      "unanswered": 10
+     }
+    },
+    "inbound_week": 115,
+    "manual_outbound_week": {
+     "sms": 77,
+     "email": 108,
+     "leads": 114
+    },
+    "touches": {
+     "sms": 2,
+     "email": 16,
+     "leads": 11,
+     "per_lead": 1.6
+    }
+   },
+   "Harry": {
+    "reply": {
+     "biz": {
+      "n": 53,
+      "median": 21,
+      "mean": 577,
+      "unanswered": 27
+     },
+     "after": {
+      "n": 20,
+      "median": 684,
+      "mean": 1187,
+      "unanswered": 11
+     }
+    },
+    "inbound_week": 128,
+    "manual_outbound_week": {
+     "sms": 97,
+     "email": 39,
+     "leads": 46
+    },
+    "touches": {
+     "sms": 52,
+     "email": 20,
+     "leads": 26,
+     "per_lead": 2.8
+    }
+   },
+   "Solomon": {
+    "reply": {
+     "biz": {
+      "n": 37,
+      "median": 20,
+      "mean": 101,
+      "unanswered": 5
+     },
+     "after": {
+      "n": 14,
+      "median": 66,
+      "mean": 498,
+      "unanswered": 3
+     }
+    },
+    "inbound_week": 66,
+    "manual_outbound_week": {
+     "sms": 62,
+     "email": 55,
+     "leads": 39
+    },
+    "touches": {
+     "sms": 0,
+     "email": 0,
+     "leads": 0,
+     "per_lead": null
+    }
+   },
+   "Daniel": {
+    "reply": {
+     "biz": {
+      "n": 16,
+      "median": 17,
+      "mean": 109,
+      "unanswered": 3
+     },
+     "after": {
+      "n": 13,
+      "median": 585,
+      "mean": 891,
+      "unanswered": 5
+     }
+    },
+    "inbound_week": 48,
+    "manual_outbound_week": {
+     "sms": 90,
+     "email": 69,
+     "leads": 52
+    },
+    "touches": {
+     "sms": 33,
+     "email": 19,
+     "leads": 16,
+     "per_lead": 3.2
+    }
+   },
+   "Kevin": {
+    "reply": {
+     "biz": {
+      "n": 30,
+      "median": 17,
+      "mean": 258,
+      "unanswered": 5
+     },
+     "after": {
+      "n": 25,
+      "median": 58,
+      "mean": 442,
+      "unanswered": 7
+     }
+    },
+    "inbound_week": 76,
+    "manual_outbound_week": {
+     "sms": 55,
+     "email": 83,
+     "leads": 50
+    },
+    "touches": {
+     "sms": 14,
+     "email": 17,
+     "leads": 10,
+     "per_lead": 3.1
+    }
+   },
+   "Oliver": {
+    "reply": {
+     "biz": {
+      "n": 1,
+      "median": 105,
+      "mean": 105,
+      "unanswered": 0
+     },
+     "after": {
+      "n": 4,
+      "median": 103,
+      "mean": 90,
+      "unanswered": 1
+     }
+    },
+    "inbound_week": 10,
+    "manual_outbound_week": {
+     "sms": 16,
+     "email": 5,
+     "leads": 5
+    },
+    "touches": {
+     "sms": 0,
+     "email": 0,
+     "leads": 0,
+     "per_lead": null
+    }
+   },
+   "Tyler": {
+    "reply": {
+     "biz": {
+      "n": 5,
+      "median": 19,
+      "mean": 374,
+      "unanswered": 0
+     },
+     "after": {
+      "n": 11,
+      "median": 130,
+      "mean": 616,
+      "unanswered": 2
+     }
+    },
+    "inbound_week": 21,
+    "manual_outbound_week": {
+     "sms": 25,
+     "email": 18,
+     "leads": 18
+    },
+    "touches": {
+     "sms": 0,
+     "email": 0,
+     "leads": 0,
+     "per_lead": null
+    }
+   }
+  }
+ },
+ "pipeline_live": {
+  "_note": "Pipeline Review October sections as of 2026-10-21. Open = not marked closed/signed. proj_cash = 80% of each open High Confidence lead's cash amount + 50% of each Soft Verbal / Reengaged lead's; WIP not counted. Rows with no amount use the closer's median amount (amount_estimated counts them).",
+  "Owen": {
+   "hc": 2,
+   "sv": 7,
+   "working": 5,
+   "other_open": 0,
+   "open": 14,
+   "proj_cash": 99900,
+   "amount_estimated": 0,
+   "fallback_amount": 20000.0
+  },
+  "Adam": {
+   "hc": 5,
+   "sv": 2,
+   "working": 3,
+   "other_open": 5,
+   "open": 15,
+   "proj_cash": 86200,
+   "amount_estimated": 0,
+   "fallback_amount": 18000.0
+  },
+  "JZ": {
+   "hc": 6,
+   "sv": 7,
+   "working": 4,
+   "other_open": 1,
+   "open": 18,
+   "proj_cash": 146000,
+   "amount_estimated": 0,
+   "fallback_amount": 19500.0
+  },
+  "VeJohn": {
+   "hc": 0,
+   "sv": 3,
+   "working": 2,
+   "other_open": 2,
+   "open": 7,
+   "proj_cash": 23000,
+   "amount_estimated": 0,
+   "fallback_amount": 16000.0
+  },
+  "Julien": {
+   "hc": 1,
+   "sv": 10,
+   "working": 4,
+   "other_open": 11,
+   "open": 26,
+   "proj_cash": 87000,
+   "amount_estimated": 11,
+   "fallback_amount": 15000.0
+  },
+  "Nick": {
+   "hc": 3,
+   "sv": 8,
+   "working": 21,
+   "other_open": 11,
+   "open": 43,
+   "proj_cash": 108800,
+   "amount_estimated": 11,
+   "fallback_amount": 17000.0
+  },
+  "Omar": {
+   "hc": 4,
+   "sv": 4,
+   "working": 3,
+   "other_open": 0,
+   "open": 11,
+   "proj_cash": 94600,
+   "amount_estimated": 0,
+   "fallback_amount": 18000.0
+  },
+  "Harry": {
+   "hc": 5,
+   "sv": 1,
+   "working": 22,
+   "other_open": 0,
+   "open": 28,
+   "proj_cash": 90000,
+   "amount_estimated": 0,
+   "fallback_amount": 20000.0
+  },
+  "Solomon": {
+   "hc": 1,
+   "sv": 0,
+   "working": 4,
+   "other_open": 6,
+   "open": 11,
+   "proj_cash": 16000,
+   "amount_estimated": 0,
+   "fallback_amount": 20000.0
+  },
+  "Daniel": {
+   "hc": 3,
+   "sv": 9,
+   "working": 4,
+   "other_open": 0,
+   "open": 16,
+   "proj_cash": 128900,
+   "amount_estimated": 0,
+   "fallback_amount": 18000.0
+  },
+  "Kevin": {
+   "hc": 2,
+   "sv": 2,
+   "working": 4,
+   "other_open": 2,
+   "open": 10,
+   "proj_cash": 47800,
+   "amount_estimated": 0,
+   "fallback_amount": 18000.0
+  },
+  "Oliver": {
+   "hc": 0,
+   "sv": 0,
+   "working": 0,
+   "other_open": 0,
+   "open": 0,
+   "proj_cash": 0,
+   "amount_estimated": 0,
+   "fallback_amount": 20000.0
+  },
+  "Tyler": {
+   "hc": 0,
+   "sv": 0,
+   "working": 0,
+   "other_open": 0,
+   "open": 0,
+   "proj_cash": 0,
+   "amount_estimated": 0,
+   "fallback_amount": 20000.0
+  }
  }
 }

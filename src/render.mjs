@@ -27,8 +27,13 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .box .none{font-size:17px;color:var(--muted)}
 .section{margin-top:30px}
 .section h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin-bottom:6px}
-.section p.key{font-size:16px;color:var(--muted);line-height:1.45;margin-bottom:14px}
+.section p.key, p.key{font-size:16px;color:var(--muted);line-height:1.45;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid.five{grid-template-columns:repeat(5,1fr);gap:10px} .grid.five .tile{padding:14px 14px 12px} .grid.five .v{font-size:34px}
+.grid.two{grid-template-columns:1fr 1fr}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.section h2 .when{font-size:13px;letter-spacing:.02em;color:var(--muted);font-weight:500;text-transform:none;margin-left:10px}
+.legendkey{margin-top:22px;margin-bottom:-14px}
 .tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:228px}
 .tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
 .tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
@@ -152,20 +157,32 @@ export function closerCard(m, month) {
   const p = m.pipeline;
   const pipeTile = p ? tile({
     label: 'Projected closes', value: p.projected, statusKey: 'track',
-    sub: `${p.hc} High Confidence + ${p.sv} Soft Verbal / Reengaged in your ${month.label} pipeline`,
+    sub: p.projCash != null
+      ? `<b>${fmtMoney(p.projCash, true)} targeted cash</b><br>${p.hc} High Confidence (80%) + ${p.sv} Soft Verbal / Reengaged (50%) in your ${month.label} pipeline`
+      : `${p.hc} High Confidence + ${p.sv} Soft Verbal / Reengaged in your ${month.label} pipeline`,
     small: `${p.working} WIP (not counted)<br>${p.lastWeek
       ? `Last week: ${p.lastWeek.won} of ${p.lastWeek.projected} projected closed or signed`
       : 'Hit rate on last week’s projections starts Mon Oct 26'}`,
     warn: p.nonstandard ? `${p.nonstandard} leads need a status` : null,
     targetText: 'No target',
   }) : tile({ label: 'Projected closes', value: '–', statusKey: 'track', sub: 'No pipeline tab yet', targetText: 'No target' });
-  const rpc = m.revPerCall;
-  const rpcTile = tile({
-    label: 'Revenue per call', value: rpc.value == null ? '–' : fmtMoney(rpc.value), statusKey: 'track',
-    sub: `${fmtMoney(rpc.rev, true)} revenue generated over ${rpc.calls} booked calls this month`, targetText: 'No target',
-  });
+  const sp = m.speed;
+  const mins = (v) => (v == null ? '–' : `${v} min`);
+  const speedTile = sp ? tile({
+    label: 'Speed to lead', value: mins(sp.biz.median), statusKey: 'track',
+    sub: `Typical time to answer a lead’s text or email, weekdays 9am to 6pm ET (team ${mins(sp.teamBiz)})`,
+    small: `After hours: <b>${mins(sp.after.median)}</b> (team ${mins(sp.teamAfter)})<br>${sp.biz.n + sp.after.n} replies timed`,
+    targetText: `Team ${mins(sp.teamBiz)}`,
+  }) : tile({ label: 'Speed to lead', value: '–', statusKey: 'track', sub: 'No Close data', targetText: 'No target' });
+  const tc = m.touches;
+  const touchTile = tc?.leads ? tile({
+    label: 'Follow-up', value: tc.per_lead, statusKey: 'track',
+    sub: `Texts + emails you sent per open pipeline lead (team ${tc.team.toFixed(1)})`,
+    small: `${tc.sms} texts + ${tc.email} emails to ${tc.leads} open leads`,
+    targetText: `Team ${tc.team.toFixed(1)}`,
+  }) : tile({ label: 'Follow-up', value: '–', statusKey: 'track', sub: 'No open pipeline leads linked to Close', targetText: 'No target' });
   const closesTile = tile({
-    label: monday ? 'Closes last week' : 'Closes this week', value: m.closes.value, statusKey: 'track',
+    label: 'Closes', value: m.closes.value, statusKey: 'track',
     sub: m.closes.value ? `${fmtMoney(m.closes.rev)} revenue generated` : 'No closes logged yet',
     targetText: 'No target',
   });
@@ -188,13 +205,19 @@ export function closerCard(m, month) {
   <div class="box wins"><h3>WINS ${monday ? 'LAST WEEK' : 'SO FAR'}</h3>${ol(wins, 'No targets hit yet. Let’s change that this week.')}</div>
   <div class="box fixes"><h3>FOCUS ${monday ? 'THIS WEEK' : 'FOR THE REST OF THE WEEK'}</h3>${ol(fixes, 'Nothing flagged. Keep it going.')}</div>
 </div>
-<div class="section"><h2>YOUR NUMBERS VS TARGET</h2>
-<p class="key">Green: you hit the target. Yellow: almost there (75% of the target or more). Red: you missed it. Blue: a number we track, with no target. The black line on each bar is the target.</p>
-<div class="grid">${slotTile}${callsTile}${showTile}${avgTile}${cashTile}${pipeTile}${rpcTile}${closesTile}</div></div>
+<p class="key legendkey">Green: you hit the target. Yellow: almost there (75% of the target or more). Red: you missed it. Blue: a number we track, with no target. The black line on each bar is the target.</p>
+<div class="section"><h2>${monday ? 'LAST WEEK' : 'THIS WEEK SO FAR'}<span class="when">${m.ed.week_label} · looking back</span></h2>
+<div class="grid five">${callsTile}${showTile}${closesTile}${speedTile}${touchTile}</div></div>
+<div class="split">
+<div class="section"><h2>MONTH TO DATE<span class="when">${month.label} 1 to ${m.ed.through.split(' ')[1]} · looking back</span></h2>
+<div class="grid two">${avgTile}${cashTile}</div></div>
+<div class="section"><h2>COMING UP<span class="when">next 7 days and your ${month.label} pipeline · looking ahead</span></h2>
+<div class="grid two">${slotTile}${pipeTile}</div></div>
+</div>
 <div class="section"><h2>MONTH OVER MONTH</h2>
 <p class="key">${month.label} 1 to ${m.ed.through.split(' ')[1]} compared with the same days in ${month.prev_label}.</p>
 <div class="mom">${momCells}</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports (Sales Tracker for any day without one), also used for month to date and revenue per call. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days. Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. ${m.cash.source === 'tracker' ? 'Cash pace: what the 2M tracker expects you to have collected by this day on its month curve, which is back-loaded (more cash lands late in the month), against your month target.' : 'Cash pace: month target × business days so far ÷ business days in the month.'} Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports (Sales Tracker for any day without one), also used for month to date. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days. Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. ${m.cash.source === 'tracker' ? 'Cash pace: what the 2M tracker expects you to have collected by this day on its month curve, which is back-loaded (more cash lands late in the month), against your month target.' : 'Cash pace: month target × business days so far ÷ business days in the month.'} Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Targeted cash: 80% of each High Confidence lead’s cash amount plus 50% of each Soft Verbal / Reengaged lead’s. Speed to lead: the median minutes from a lead’s text or email to your next text or email to that lead (Close; automated sequences and bulk sends don’t count), split into weekdays 9am to 6pm ET and after hours. Follow-up: texts and emails you sent last week to your open pipeline leads, divided by the number of open leads. Team figures are the median across ramped closers.</div>`;
   return page(body);
 }
 

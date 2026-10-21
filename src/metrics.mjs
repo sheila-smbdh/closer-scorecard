@@ -132,11 +132,22 @@ export function closerMetrics(data, closer, edition) {
 
   const revPerCall = { value: mtdBS.booked ? mtd[REV] / mtdBS.booked : null, rev: mtd[REV], calls: mtdBS.booked, status: 'track' };
 
-  const p = data.pipeline[closer.key];
+  // Pipeline: the live pull (with targeted cash) when the snapshot has it, else the Monday counts
+  const live = data.pipeline_live?.[closer.key];
+  const p = live?.open ? live : data.pipeline[closer.key];
   const pipeline = p ? {
-    projected: p.hc + p.sv, hc: p.hc, sv: p.sv, working: p.working, nonstandard: p.nonstandard,
+    projected: p.hc + p.sv, hc: p.hc, sv: p.sv, working: p.working, nonstandard: p.nonstandard ?? 0,
+    projCash: live?.open ? live.proj_cash : null, amountEstimated: live?.amount_estimated ?? 0,
     lastWeek: data.pipeline_last_week?.[closer.key] ?? null, status: 'track',
   } : null;
+
+  // Speed to lead and touches from Close (tracked against the team median, no target yet)
+  const ca = data.close_activity?.closers?.[closer.key];
+  const team = data.close_activity?.team;
+  const speed = ca ? {
+    biz: ca.reply.biz, after: ca.reply.after, teamBiz: team.reply_biz_median, teamAfter: team.reply_after_median, status: 'track',
+  } : null;
+  const touches = ca?.touches ? { ...ca.touches, team: team.touches_per_lead_median, status: 'track' } : null;
 
   const closes = { value: week[CLOSES], rev: week[REV], status: 'track' };
   const salesTrackerWeek = { booked: week[CALLS], showed: week[LIVE] };
@@ -156,7 +167,7 @@ export function closerMetrics(data, closer, edition) {
   };
 
   const filled = { week: wk.filled, mtd: mtdBS.filled, prev: prevBS.filled };
-  return { closer, edition, ed, salesTrackerWeek, filled, calls, showRate, slots, calendar, avgRevenue, cash, revPerCall, pipeline, closes, mom, tally, newHire };
+  return { closer, edition, ed, salesTrackerWeek, filled, calls, showRate, slots, calendar, avgRevenue, cash, revPerCall, pipeline, speed, touches, closes, mom, tally, newHire };
 }
 
 // "18:00" -> 18, and a short label like "6pm ET (5pm Thu to Fri)"
@@ -225,6 +236,13 @@ export function runFlags(data, metrics, edition) {
     if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
     if (m.pipeline?.nonstandard) flags.push(`${k}: ${m.pipeline.nonstandard} open pipeline leads have no standard status.`);
     if (!m.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
+    if (m.pipeline?.amountEstimated) flags.push(`${k}: ${m.pipeline.amountEstimated} projected leads have no cash amount in Pipeline Review; targeted cash uses their median deal.`);
+    const ca = data.close_activity?.closers?.[k];
+    if (ca) {
+      const un = ca.reply.biz.unanswered + ca.reply.after.unanswered;
+      if (un) flags.push(`${k}: ${un} inbound texts/emails last week got no reply within 3 days (many are replies to sequence blasts such as "who is this" or "thanks").`);
+      if (ca.touches?.leads === 0 && data.pipeline_live?.[k]?.open) flags.push(`${k}: open pipeline leads have no Close link, so touches per lead can't be counted.`);
+    }
     if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {
       flags.push(`${k}: cash through ${ed.through} is $${m.cash.value?.toLocaleString('en-US')} in the tracker, $${m.cash.salesTrackerCash?.toLocaleString('en-US')} in the Sales Tracker snapshot.`);
     }
