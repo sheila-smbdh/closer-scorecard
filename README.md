@@ -2,6 +2,8 @@
 
 Weekly scorecard image for each closer, plus a Monday leadership table.
 
+**Friday pipeline report (live):** every Friday 1:00pm ET, one image of all 13 closers by pod to #sales-strategy. See `docs/PIPELINE_ROUTINE.md`; build with `node src/pipeline-report.mjs data/pipeline-<date>.json out`. All sources are read-only.
+
 - **Monday 8:00am ET**: last week's final numbers (Mon to Sun) to each closer, and the leadership table.
 - **Wednesday 8:00am ET**: this week so far, with pace against target.
 
