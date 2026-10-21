@@ -98,7 +98,8 @@ export function closerRow(data, c) {
   }
   const closeCash = paid.reduce((a, p) => a + p.cash, 0);
   if (paid.length !== trCloses) r.flags.push(`Sales Tracker has ${trCloses} closes, Close has ${paid.length} paid deals this month`);
-  if (closeCash !== trCash) r.flags.push(`Sales Tracker cash $${trCash.toLocaleString()} vs $${closeCash.toLocaleString()} on the closer's paid Close deals`);
+  if (closeCash !== trCash) r.flags.push(`Sales Tracker cash $${trCash.toLocaleString()} vs $${closeCash.toLocaleString()} on the closer's paid Close deals` +
+    (data.cash_notes?.[c.key] ? `. ${data.cash_notes[c.key]}` : ''));
   if (paid.length < trCloses) r.src['not in Close'] = trCloses - paid.length;
   const month = data.month;
   // Projection accuracy on a paid close: the closer's column D amount vs Close cash collected
@@ -200,7 +201,7 @@ tr.tot td{background:#f1f0ec;font-weight:700}
 .ok{display:block;font-size:12.5px;color:var(--hc);font-weight:600;margin-top:2px}
 .warn{display:block;font-size:12.5px;color:var(--red);font-weight:600;margin-top:2px}
 .na{color:var(--muted);font-weight:500;font-size:14px}
-.pct{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 8px;margin-left:6px}
+.pct{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 8px;margin-top:2px}
 .p-hit{background:var(--hc-bg);color:var(--hc)} .p-mid{background:var(--sv-bg);color:var(--sv)} .p-low{background:var(--red-bg);color:var(--red)}
 .footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
 `;
@@ -209,7 +210,7 @@ function pctChip(actual, projected) {
   if (!projected || actual == null) return '';
   const p = actual / projected;
   const cls = p >= 0.8 ? 'p-hit' : p >= 0.5 ? 'p-mid' : 'p-low';
-  return `<span class="pct ${cls}">${Math.round(p * 100)}%</span>`;
+  return `<span class="pct ${cls}">${Math.round(p * 100)}% of projected</span>`;
 }
 
 const goalText = (g, won, pct) => (g.total ? `${won} closed · ${g.need ? `${g.need} more for ${pct}` : `${pct} hit`}` : '&nbsp;');
@@ -244,7 +245,7 @@ function cells(r) {
     <td><span class="n${r.signedUnpaid ? ' sv' : ''}">${r.signedUnpaid}</span><span class="sub">${r.signedUnpaid ? `${fmt$(r.cashSigned)} expected` : '&nbsp;'}</span></td>
     ${accuracyCell(r)}
     <td><span class="n">${fmt$(r.projected)}</span><span class="sub">if KPIs hit ${fmt$(r.ifKpi)}</span></td>
-    <td><span class="n">${fmt$(r.actual)}</span>${pctChip(r.actual, r.projected)}<span class="sub">Sales Tracker</span></td>`;
+    <td><span class="n">${fmt$(r.actual)}</span><span class="sub">${pctChip(r.actual, r.projected) || '&nbsp;'}</span></td>`;
 }
 
 function total(rows) {

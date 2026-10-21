@@ -11,7 +11,7 @@
 - JZ: Neal Simpson: paid $17,500 in Close on 10-19, not on Pipeline Review
 - VeJohn: Jack Walsh: projected $16,000, collected $15,000 in Close
 - VeJohn: Shawn O'Donnell: projected $16,000, collected $15,000 in Close
-- Julien: Sales Tracker cash $22,500 vs $30,000 on the closer's paid Close deals
+- Julien: Sales Tracker cash $22,500 vs $30,000 on the closer's paid Close deals. #cash-collected: one Whop payment for Brian Carvajal, $7,500 on Oct 20, and no earlier payment. The Sales Tracker's $7,500 matches; Close records $15,000 collected (PIF), so Close is ahead of the actual payment.
 - Julien: Brian Carvajal: no projected amount on the sheet; Close shows $15,000 collected
 - Julien: 12 open High Confidence / Soft Verbal leads have no cash amount
 - Nick: 10 open High Confidence / Soft Verbal leads have no cash amount
@@ -20,7 +20,7 @@
 - Harry: Christopher Cheung: paid $15,000 in Close on 10-01; Sales Tracker counts it in the prior month, so it is left out
 - Harry: Robert Kolansky: paid $18,000 in Close on 10-01; Sales Tracker counts it in the prior month, so it is left out
 - Solomon: status labels to fix: blank status, "Verbal" (counted as High Confidence)
-- Kevin: Sales Tracker cash $42,000 vs $36,000 on the closer's paid Close deals
+- Kevin: Sales Tracker cash $42,000 vs $36,000 on the closer's paid Close deals. #cash-collected: Dmitry Kopylovsky paid $12,000 on Sep 29 and $6,000 on Oct 8 (split payment). The $6K in October is the balance of a September close, so it is October cash with no October close.
 - Oliver: no Pipeline Review tab
 - Tyler: no Pipeline Review tab
 - Yobani (not a closer): paid $20,000 in Close on 10-09

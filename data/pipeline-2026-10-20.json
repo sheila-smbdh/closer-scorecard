@@ -1,5 +1,5 @@
 {
- "_note": "Friday pipeline report sample, pulled 2026-10-20 (Tue). pipeline_leads: each closer's October section of Pipeline Review as [name, status (col B), expected cash (col D), outcome (col F: Closed/Signed/Delayed, or TRUE/FALSE under the old convention), Close lead id]. close_won: Close opportunities won with a close date this month that carry a Cash Collected value, as [closer, contact, lead id, cash collected, paid date]. pipeline_index: where a close_won lead sits on Pipeline Review when it is outside this month's section, as [section, name, status, cash]. sales_tracker: Sales Tracker 2026 Inputs, this month's rows with a close or cash, as [date, Close 1, cash collected] per closer; it is the source of truth for the closed count and actual cash (Close names the deals).",
+ "_note": "Friday pipeline report sample, pulled 2026-10-20 (Tue). pipeline_leads: each closer's October section of Pipeline Review as [name, status (col B), expected cash (col D), outcome (col F: Closed/Signed/Delayed, or TRUE/FALSE under the old convention), Close lead id]. close_won: Close opportunities won with a close date this month that carry a Cash Collected value, as [closer, contact, lead id, cash collected, paid date]. pipeline_index: where a close_won lead sits on Pipeline Review when it is outside this month's section, as [section, name, status, cash]. sales_tracker: Sales Tracker 2026 Inputs, this month's rows with a close or cash, as [date, Close 1, cash collected] per closer; it is the source of truth for the closed count and actual cash (Close names the deals). cash_notes: verified explanations for Sales Tracker vs Close differences (from #cash-collected), shown in the flags.",
  "report_date": "2026-10-20",
  "month": "October",
  "month_key": "2026-10",
@@ -2348,5 +2348,9 @@
   "Oliver": [],
   "Tyler": []
  },
- "sales_tracker_pulled_at": "2026-10-20 8:15pm ET"
+ "sales_tracker_pulled_at": "2026-10-20 8:15pm ET",
+ "cash_notes": {
+  "Kevin": "#cash-collected: Dmitry Kopylovsky paid $12,000 on Sep 29 and $6,000 on Oct 8 (split payment). The $6K in October is the balance of a September close, so it is October cash with no October close.",
+  "Julien": "#cash-collected: one Whop payment for Brian Carvajal, $7,500 on Oct 20, and no earlier payment. The Sales Tracker's $7,500 matches; Close records $15,000 collected (PIF), so Close is ahead of the actual payment."
+ }
 }
