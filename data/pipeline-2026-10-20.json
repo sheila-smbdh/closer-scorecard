@@ -1,5 +1,5 @@
 {
- "_note": "Friday pipeline report sample, pulled 2026-10-20 (Tue). pipeline_leads: each closer's October section of Pipeline Review as [name, status (col B), expected cash (col D), outcome (col F: Closed/Signed/Delayed, or TRUE/FALSE under the old convention), Close lead id]. close_won: Close opportunities won with a close date this month that carry a Cash Collected value, as [closer, contact, lead id, cash collected, paid date]. pipeline_index: where a close_won lead sits on Pipeline Review when it is outside this month's section, as [section, name, status, cash].",
+ "_note": "Friday pipeline report sample, pulled 2026-10-20 (Tue). pipeline_leads: each closer's October section of Pipeline Review as [name, status (col B), expected cash (col D), outcome (col F: Closed/Signed/Delayed, or TRUE/FALSE under the old convention), Close lead id]. close_won: Close opportunities won with a close date this month that carry a Cash Collected value, as [closer, contact, lead id, cash collected, paid date]. pipeline_index: where a close_won lead sits on Pipeline Review when it is outside this month's section, as [section, name, status, cash]. sales_tracker: Sales Tracker 2026 Inputs, this month's rows with a close or cash, as [date, Close 1, cash collected] per closer; it is the source of truth for the closed count and actual cash (Close names the deals).",
  "report_date": "2026-10-20",
  "month": "October",
  "month_key": "2026-10",
@@ -2177,5 +2177,176 @@
    "$19,000.00"
   ]
  },
- "close_pulled_at": "2026-10-20 7:30pm ET"
+ "close_pulled_at": "2026-10-20 7:30pm ET",
+ "sales_tracker": {
+  "Owen": [
+   [
+    "10-06",
+    2,
+    38000
+   ],
+   [
+    "10-07",
+    2,
+    39000
+   ],
+   [
+    "10-14",
+    1,
+    20000
+   ]
+  ],
+  "JZ": [
+   [
+    "10-13",
+    1,
+    20000
+   ],
+   [
+    "10-18",
+    1,
+    17500
+   ]
+  ],
+  "Adam": [
+   [
+    "10-02",
+    2,
+    35000
+   ],
+   [
+    "10-07",
+    1,
+    15000
+   ],
+   [
+    "10-12",
+    1,
+    18000
+   ]
+  ],
+  "VeJohn": [
+   [
+    "10-01",
+    1,
+    16000
+   ],
+   [
+    "10-03",
+    1,
+    15000
+   ],
+   [
+    "10-07",
+    1,
+    15000
+   ],
+   [
+    "10-14",
+    1,
+    20000
+   ],
+   [
+    "10-15",
+    1,
+    15000
+   ]
+  ],
+  "Julien": [
+   [
+    "10-15",
+    1,
+    15000
+   ],
+   [
+    "10-20",
+    1,
+    7500
+   ]
+  ],
+  "Nick": [
+   [
+    "10-01",
+    1,
+    15000
+   ],
+   [
+    "10-06",
+    1,
+    20000
+   ],
+   [
+    "10-14",
+    2,
+    34000
+   ]
+  ],
+  "Omar": [
+   [
+    "10-04",
+    1,
+    15000
+   ],
+   [
+    "10-19",
+    1,
+    20000
+   ],
+   [
+    "10-20",
+    1,
+    20000
+   ]
+  ],
+  "Harry": [
+   [
+    "10-08",
+    1,
+    20000
+   ],
+   [
+    "10-11",
+    1,
+    19000
+   ],
+   [
+    "10-20",
+    1,
+    19000
+   ]
+  ],
+  "Kevin": [
+   [
+    "10-08",
+    0,
+    6000
+   ],
+   [
+    "10-14",
+    1,
+    18000
+   ],
+   [
+    "10-16",
+    1,
+    18000
+   ]
+  ],
+  "Solomon": [
+   [
+    "10-13",
+    2,
+    36000
+   ],
+   [
+    "10-16",
+    1,
+    20000
+   ]
+  ],
+  "Daniel": [],
+  "Oliver": [],
+  "Tyler": []
+ },
+ "sales_tracker_pulled_at": "2026-10-20 8:15pm ET"
 }

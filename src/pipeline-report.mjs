@@ -78,12 +78,28 @@ const prior = priorCategories();
 export function closerRow(data, c) {
   const raw = data.pipeline_leads[c.key];
   const leads = Array.isArray(raw) ? raw : raw?.leads;
-  const paid = data.close_won.filter(([k]) => k === c.key).map(([, contact, lead_id, cash, date]) => ({ contact, lead_id, cash, date, used: false }));
+  // Sales Tracker is the source of truth for the closed count and cash; Close names the deals.
+  // Deals Close dates to the 1st-2nd that the Sales Tracker counted in the prior month are set aside.
+  const st = data.sales_tracker?.[c.key] ?? [];
+  const trCloses = st.reduce((a, [, n]) => a + n, 0);
+  const trCash = st.reduce((a, [, , cash]) => a + cash, 0);
+  let paid = data.close_won.filter(([k]) => k === c.key).map(([, contact, lead_id, cash, date]) => ({ contact, lead_id, cash, date, used: false }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const priorMonth = [];
+  while (paid.length > trCloses && paid[0].date <= `${data.report_date.slice(5, 7)}-02`) priorMonth.push(paid.shift());
   const r = { closer: c, hasTab: !!leads, leads: [], flags: [],
     open: { hc: 0, sv: 0, working: 0 }, won: { hc: 0, sv: 0, working: 0, unknown: 0 }, delayed: 0,
     src: {}, signedUnpaid: 0, cashSigned: 0, accProj: 0, accPaid: 0, accDeals: 0, accOff: 0,
     cashHc: 0, cashSv: 0, noAmount: 0, labels: new Set(),
-    actual: paid.reduce((a, p) => a + p.cash, 0), deals: paid.length };
+    actual: trCash, deals: trCloses };
+  for (const p of priorMonth) {
+    const where = data.pipeline_index?.[p.lead_id];
+    r.flags.push(`${p.contact || where?.[1] || p.lead_id}: paid $${p.cash.toLocaleString()} in Close on ${p.date}; Sales Tracker counts it in the prior month, so it is left out`);
+  }
+  const closeCash = paid.reduce((a, p) => a + p.cash, 0);
+  if (paid.length !== trCloses) r.flags.push(`Sales Tracker has ${trCloses} closes, Close has ${paid.length} paid deals this month`);
+  if (closeCash !== trCash) r.flags.push(`Sales Tracker cash $${trCash.toLocaleString()} vs $${closeCash.toLocaleString()} on the closer's paid Close deals`);
+  if (paid.length < trCloses) r.src['not in Close'] = trCloses - paid.length;
   const month = data.month;
   // Projection accuracy on a paid close: the closer's column D amount vs Close cash collected
   const accuracy = (name, amt, p) => {
@@ -198,12 +214,12 @@ function pctChip(actual, projected) {
 
 const goalText = (g, won, pct) => (g.total ? `${won} closed · ${g.need ? `${g.need} more for ${pct}` : `${pct} hit`}` : '&nbsp;');
 
-const SHORT = (m) => (m === 'not on sheet' ? 'not on sheet' : `${m.slice(0, 3)} pipeline`);
+const SHORT = (m) => (m.startsWith('not ') ? m : `${m.slice(0, 3)} pipeline`);
 const fmtK = (n) => `$${(n / 1000).toFixed(n % 1000 ? 1 : 0)}K`;
 
 function closedCell(r) {
   // Every close counted here is a paid, won opportunity in Close; the sub line says where it sat on Pipeline Review
-  const order = [data.month, ...Object.keys(r.src).filter((k) => k !== data.month && k !== 'not on sheet'), 'not on sheet'];
+  const order = [data.month, ...Object.keys(r.src).filter((k) => ![data.month, 'not on sheet', 'not in Close'].includes(k)), 'not on sheet', 'not in Close'];
   const parts = order.filter((k) => r.src[k]).map((k) => `${r.src[k]} ${SHORT(k)}`);
   return `<td><span class="n">${r.deals}</span><span class="sub">${parts.join(' · ') || '&nbsp;'}</span>${r.delayed != null ? `<span class="sub">${r.delayed} delayed</span>` : ''}</td>`;
 }
@@ -228,7 +244,7 @@ function cells(r) {
     <td><span class="n${r.signedUnpaid ? ' sv' : ''}">${r.signedUnpaid}</span><span class="sub">${r.signedUnpaid ? `${fmt$(r.cashSigned)} expected` : '&nbsp;'}</span></td>
     ${accuracyCell(r)}
     <td><span class="n">${fmt$(r.projected)}</span><span class="sub">if KPIs hit ${fmt$(r.ifKpi)}</span></td>
-    <td><span class="n">${fmt$(r.actual)}</span>${pctChip(r.actual, r.projected)}<span class="sub">from ${r.deals} closes</span></td>`;
+    <td><span class="n">${fmt$(r.actual)}</span>${pctChip(r.actual, r.projected)}<span class="sub">Sales Tracker</span></td>`;
 }
 
 function total(rows) {
@@ -254,7 +270,7 @@ export function reportHtml(data, rows) {
   return `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head><body><div class="card">
   <div class="eyebrow">Pipeline review · ${esc(data.month)} · as of ${esc(data.as_of_label)}</div>
   <h1>Where every closer's ${esc(data.month)} pipeline stands</h1>
-  <div class="lede">Open leads by status from each closer's ${esc(data.month)} section of Pipeline Review. Closes and cash checked against Close.</div>
+  <div class="lede">Open leads by status from each closer's ${esc(data.month)} section of Pipeline Review. Closes and cash from the Sales Tracker, matched to Close.</div>
   <div class="kpis">
     <div class="k-hc"><b>High Confidence</b>80% should close by month end</div>
     <div class="k-sv"><b>Soft Verbal / Reengaged</b>50% should close by month end</div>
@@ -262,12 +278,12 @@ export function reportHtml(data, rows) {
     <div class="k-cash"><b>Cash</b>Projected = collected + signed + every open HC and SV lead. If KPIs hit = collected + signed + 80% of HC + 50% of SV</div>
   </div>
   <table>
-    <tr><th>Closer</th><th>High Confidence<br>open</th><th>Soft Verbal /<br>Reengaged open</th><th>Working<br>open</th><th>Closed<br>(paid in Close)</th><th>Signed,<br>not paid yet</th><th>Cash projected vs<br>collected on closes</th><th>Projected cash</th><th>Actual cash<br>collected</th></tr>
+    <tr><th>Closer</th><th>High Confidence<br>open</th><th>Soft Verbal /<br>Reengaged open</th><th>Working<br>open</th><th>Closed<br>this month</th><th>Signed,<br>not paid yet</th><th>Cash projected vs<br>collected on closes</th><th>Projected cash</th><th>Actual cash<br>collected</th></tr>
     ${body}
     <tr class="tot"><td>All closers</td>${cells(total(rows))}</tr>
   </table>
   <div class="footer">
-    Closed = a won opportunity in Close with cash collected this month (pulled ${esc(data.close_pulled_at)}), so it always matches actual cash; the line under it says which Pipeline Review section the lead was in.
+    Closed and actual cash = Sales Tracker (Close 1 and Cash Collected, this month), so the two always match. Each close is tied to its paid Close deal (pulled ${esc(data.close_pulled_at)}); the line under it says which Pipeline Review section the lead was in. Deals Close dates to the 1st–2nd that the Sales Tracker counted last month are left out.
     Signed, not paid yet = Closed or Signed on the sheet with no payment in Close. Delayed and Lost are neither open nor closed.
     Cash projected vs collected compares each closed lead's column D amount with what Close collected.
     Projected cash = collected + signed-not-paid + every open HC and SV lead (column D). The % chip is actual ÷ projected.
