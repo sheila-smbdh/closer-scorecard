@@ -154,14 +154,16 @@ export function closerMetrics(data, closer, edition) {
     lastWeek: data.pipeline_last_week?.[k] ?? null,
   };
   closes.projected = p ? Math.round(mtd[CLOSES] + PIPELINE_KPI.hc * p.hc + PIPELINE_KPI.sv * p.sv) : null;
-  closes.status = closes.projected == null || closes.needed == null ? 'track' : status(closes.projected, closes.needed);
+  // Tracked, no target: projected = closes so far + 80% of open High Confidence + 50% of open Soft Verbal
+  closes.projectedExact = p ? mtd[CLOSES] + PIPELINE_KPI.hc * p.hc + PIPELINE_KPI.sv * p.sv : null;
+  closes.status = 'track';
 
   // Month-to-date conversion: booked calls that showed, and live calls that closed
   const rates = { show: mtdBS.booked ? mtdBS.showed / mtdBS.booked : null, close: mtdBS.showed ? mtd[CLOSES] / mtdBS.showed : null };
 
   const salesTrackerWeek = { booked: act[monday ? 'wk' : 'tw'][CALLS], showed: act[monday ? 'wk' : 'tw'][LIVE] };
   const filled = { week: wk.filled, mtd: mtdBS.filled };
-  return { closer, edition, ed, salesTrackerWeek, filled, live, slotsWeek, slots, calendar, avgRevenue, cash, closes, rates, newHire };
+  return { closer, edition, ed, salesTrackerWeek, filled, live, slotsWeek, slots, calendar, avgRevenue, cash, closes, rates, bdElapsed, newHire };
 }
 
 // Open leads in the closer's current-month Pipeline Review section, counted and valued (column D cash;
@@ -171,8 +173,8 @@ export function pipelineFor(data, k) {
   const raw = data.pipeline_leads?.[k];
   const leads = Array.isArray(raw) ? raw : raw?.leads;
   if (!leads) return null;
-  const p = { hc: 0, sv: 0, working: 0, cash: { hc: 0, sv: 0, working: 0 }, noAmount: 0, nonstandard: 0 };
-  for (const [, b, amount, f] of leads) {
+  const p = { hc: 0, sv: 0, working: 0, cash: { hc: 0, sv: 0, working: 0 }, leads: { hc: [], sv: [], working: [] }, noAmount: 0, nonstandard: 0 };
+  for (const [name, b, amount, f] of leads) {
     const out = outcome(b, f);
     if (out) continue; // closed, signed, delayed or lost
     const cat = category(b);
@@ -181,35 +183,47 @@ export function pipelineFor(data, k) {
     if (v == null) p.noAmount++;
     p[cat]++;
     p.cash[cat] += v ?? TARGETS.avgRevenueFloor;
+    p.leads[cat].push({ name: name.trim(), cash: v });
   }
+  for (const list of Object.values(p.leads)) list.sort((x, y) => (y.cash ?? 0) - (x.cash ?? 0));
   return p;
 }
 
-// Working backwards from the month target: the gap, the closes it takes, what the pipeline covers, the new
-// closes and calls still needed, and what the next 7 days of calendar can deliver. Two pipeline cases:
-// every open HC / SV / Working lead closes, or the usual rates (80% HC, 50% SV, Working not counted).
+// Working backwards from the month target: the gap and the closes it takes, what the pipeline is worth
+// (every lead closes / usual rates), which leads have to be pulled forward, how many new calls the rest of
+// the month realistically holds and how many of those can still pay this month (the rest are next month's
+// pipeline), and a realistic month end.
 function pathToTarget(m, team) {
   const c = m.cash, pl = m.closes.pipeline;
   if (!c.monthTarget) return null;
   const per = TARGETS.avgRevenueFloor, gap = c.remaining;
   const own = m.avgRevenue.value;
   const range = { floor: Math.ceil(gap / per), own: own ? Math.ceil(gap / own) : null, high: Math.ceil(gap / 20000) };
-  const pipe = pl
-    ? { n: pl.hc + pl.sv + pl.working, all: pl.cash.hc + pl.cash.sv + pl.cash.working,
-      likely: PIPELINE_KPI.hc * pl.cash.hc + PIPELINE_KPI.sv * pl.cash.sv }
-    : { n: 0, all: 0, likely: 0 };
-  // Own month-to-date rates; the team median stands in until a closer has a close (or a booked call)
-  const ownRates = m.rates.close > 0 && m.rates.show > 0;
-  const show = ownRates ? m.rates.show : team.show, close = ownRates ? m.rates.close : team.close;
-  const scenario = (covered) => {
-    const left = Math.max(0, gap - covered);
-    const closes = Math.ceil(left / per);
-    const live = close ? Math.ceil(closes / close) : null;
-    return { covered, left, closes, live, booked: live != null && show ? Math.ceil(live / show) : null };
-  };
+  const pipe = pl ? {
+    n: pl.hc + pl.sv + pl.working, all: pl.cash.hc + pl.cash.sv + pl.cash.working,
+    likely: PIPELINE_KPI.hc * pl.cash.hc + PIPELINE_KPI.sv * pl.cash.sv,
+    hcsv: pl.cash.hc + pl.cash.sv,
+  } : null;
+  // Pull forward: every High Confidence and Soft Verbal lead, then as many Working leads as the rest needs
+  let pull = null;
+  if (pl) {
+    const left = Math.max(0, gap - pipe.hcsv);
+    const avgWorking = pl.working ? pl.cash.working / pl.working : per;
+    pull = { left, avgWorking, working: Math.min(pl.working, Math.ceil(left / avgWorking)), beyond: Math.max(0, left - pl.cash.working) };
+  }
+  // New calls to month end at this month's live-call pace; the close rate is closes ÷ live calls month to date
+  // (team median until the closer has a close). Most calls late in the month close next month.
+  const ownClose = m.rates.close > 0;
+  const close = ownClose ? m.rates.close : team.close;
+  const perDay = m.bdElapsed ? m.live.value / m.bdElapsed : null;
+  const liveLeft = perDay != null ? Math.round(perDay * c.daysLeft) : null;
+  const closes = liveLeft != null && close ? liveLeft * close : null;
+  const calls = { perDay, liveLeft, close, ownClose, closes, nextMonth: liveLeft != null ? liveLeft - Math.round(closes ?? 0) : null };
   const next = { booked: m.slots.booked, open: m.slots.open };
-  next.closes = next.booked != null && show && close ? next.booked * show * close : null;
-  return { gap, range, pipe, show, close, ownRates, all: scenario(pipe.all), likely: scenario(pipe.likely), next };
+  // Realistic month end: cash so far + pipeline at usual rates + new-call closes at $17.5K each
+  const realistic = (c.value ?? 0) + (pipe?.likely ?? 0) + (closes ?? 0) * per;
+  return { gap, range, pipe, pull, calls, next, realistic, ratio: realistic / c.monthTarget,
+    status: status(realistic, c.monthTarget) };
 }
 
 // The tracker pull for an edition's window (keyed by its last day, "MM-DD")

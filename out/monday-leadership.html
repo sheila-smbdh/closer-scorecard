@@ -65,6 +65,13 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
 .cases span{font-size:13.5px;color:#3d4248}
+.rows{margin-top:6px}
+.rows>div{display:flex;align-items:baseline;gap:12px;padding:5px 0}
+.rows>div+div{border-top:1px dashed var(--line)}
+.rl{flex:none;width:150px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.rt{flex:1;font-size:15px;color:#3d4248}
+.rows b{font-size:24px;font-weight:800;white-space:nowrap}
+.names{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
 .verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
 .verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
 .verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
@@ -92,95 +99,95 @@ tr.total td{background:#f1efea;font-weight:800}
 <div class="legend"><span style="--c:var(--hit)">On target / on pace</span><span style="--c:var(--almost)">Close (75%+) / slightly behind</span><span style="--c:var(--missed)">Below / off pace</span><span style="--c:var(--track)">Tracked, no target</span></div>
 <table><thead>
 <tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp" colspan="2">Where we're headed</th></tr>
-<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>New closes needed<br>all pipeline / usual</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
+<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Realistic<br>month end</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
 <tbody><tr><td>Owen</td>
 <td class="missed">61%<small>$97K vs $160K</small></td>
 <td class="missed">$253K<small>of $417K</small></td>
 <td class="hit">48<small>10 booked + 39 open</small></td>
 <td class="hit">26<small>18 last week</small></td>
 <td class="hit">$19,400<small>5 closes MTD</small></td>
-<td class="missed">5 / 11<small>3 HC · 7 SV · 3 W · need 24</small></td>
-<td class="almost">4 / 12<small>34 / 102 booked calls</small></td>
+<td class="track">5 / 11<small>3 HC · 7 SV · 3 W · need 24</small></td>
+<td class="missed">$286K<small>69% of target</small></td>
 <td class="hit">47<small>11 booked + 36 open · till 6pm ET</small></td></tr><tr><td>Adam</td>
 <td class="missed">62%<small>$68K vs $109K</small></td>
 <td class="missed">$177K<small>of $285K</small></td>
 <td class="hit">32<small>2 booked + 31 open</small></td>
 <td class="almost">23<small>4 last week</small></td>
 <td class="missed">$17,000<small>4 closes MTD</small></td>
-<td class="missed">4 / 9<small>5 HC · 2 SV · 3 W · need 17</small></td>
-<td class="almost">3 / 8<small>25 / 62 booked calls</small></td>
+<td class="track">4 / 9<small>5 HC · 2 SV · 3 W · need 17</small></td>
+<td class="missed">$212K<small>74% of target</small></td>
 <td class="hit">32<small>4 booked + 28 open · till 9pm ET</small></td></tr><tr><td>JZ</td>
 <td class="missed">27%<small>$37.5K vs $139K</small></td>
 <td class="missed">$97.9K<small>of $363K</small></td>
 <td class="hit">35<small>8 booked + 27 open</small></td>
 <td class="missed">16<small>6 last week</small></td>
 <td class="hit">$18,750<small>2 closes MTD</small></td>
-<td class="missed">2 / 10<small>6 HC · 7 SV · 4 W · need 21</small></td>
-<td class="almost">2 / 11<small>29 / 160 booked calls</small></td>
+<td class="track">2 / 10<small>6 HC · 7 SV · 4 W · need 21</small></td>
+<td class="missed">$212K<small>58% of target</small></td>
 <td class="hit">39<small>12 booked + 27 open · till 5pm ET</small></td></tr><tr><td>VeJohn</td>
 <td class="missed">80%<small>$81K vs $102K</small></td>
 <td class="missed">$211K<small>of $266K</small></td>
 <td class="almost">20<small>7 booked + 13 open</small></td>
 <td class="hit">27<small>13 last week</small></td>
 <td class="missed">$16,200<small>5 closes MTD</small></td>
-<td class="missed">5 / 8<small>3 HC · 1 SV · 1 W · need 16</small></td>
-<td class="missed">6 / 8<small>43 / 58 booked calls</small></td>
+<td class="track">5 / 8<small>3 HC · 1 SV · 1 W · need 16</small></td>
+<td class="almost">$204K<small>77% of target</small></td>
 <td class="almost">20<small>8 booked + 12 open · till 9pm ET</small></td></tr><tr><td>Julien</td>
 <td class="missed">20%<small>$15K vs $74.8K</small></td>
 <td class="missed">$39.2K<small>of $195K</small></td>
 <td class="hit">30<small>0 booked + 29 open</small></td>
 <td class="missed">13<small>1 last week</small></td>
 <td class="missed">$15,000<small>1 close MTD</small></td>
-<td class="missed">1 / 8<small>2 HC · 10 SV · 4 W · need 12</small></td>
-<td class="almost">0 / 4<small>0 / 68 booked calls</small></td>
+<td class="track">1 / 8<small>2 HC · 10 SV · 4 W · need 12</small></td>
+<td class="missed">$145K<small>74% of target</small></td>
 <td class="hit">27<small>0 booked + 27 open · till 1pm ET</small></td></tr><tr><td>Nick</td>
 <td class="missed">63%<small>$69K vs $110K</small></td>
 <td class="missed">$180K<small>of $286K</small></td>
 <td class="hit">35<small>6 booked + 29 open</small></td>
 <td class="hit">30<small>9 last week</small></td>
 <td class="missed">$17,250<small>4 closes MTD</small></td>
-<td class="missed">4 / 10<small>2 HC · 8 SV · 19 W · need 17</small></td>
-<td class="almost">0 / 7<small>0 / 76 booked calls</small></td>
+<td class="track">4 / 10<small>2 HC · 8 SV · 19 W · need 17</small></td>
+<td class="almost">$225K<small>79% of target</small></td>
 <td class="almost">21<small>5 booked + 16 open · till 5pm ET</small></td></tr><tr><td>Omar</td>
 <td class="missed">14%<small>$15K vs $106K</small></td>
 <td class="missed">$39.2K<small>of $276K</small></td>
 <td class="hit">43<small>11 booked + 32 open</small></td>
 <td class="hit">36<small>14 last week</small></td>
 <td class="missed">$15,000<small>1 close MTD</small></td>
-<td class="missed">1 / 5<small>2 HC · 5 SV · 4 W · need 16</small></td>
-<td class="missed">4 / 11<small>204 / 561 booked calls</small></td>
+<td class="track">1 / 5<small>2 HC · 5 SV · 4 W · need 16</small></td>
+<td class="missed">$104K<small>38% of target</small></td>
 <td class="hit">39<small>12 booked + 27 open · till 4pm ET</small></td></tr><tr><td>Harry</td>
 <td class="missed">39%<small>$39K vs $99.9K</small></td>
 <td class="missed">$102K<small>of $261K</small></td>
 <td class="hit">33<small>8 booked + 25 open</small></td>
 <td class="hit">30<small>10 last week</small></td>
 <td class="hit">$19,500<small>2 closes MTD</small></td>
-<td class="missed">2 / 7<small>5 HC · 1 SV · 12 W · 3 untagged · need 15</small></td>
-<td class="almost">0 / 8<small>0 / 152 booked calls</small></td>
+<td class="track">2 / 7<small>5 HC · 1 SV · 12 W · 3 untagged · need 15</small></td>
+<td class="missed">$158K<small>61% of target</small></td>
 <td class="hit">42<small>8 booked + 34 open · till 6pm ET</small></td></tr><tr><td>Solomon</td>
 <td class="missed">73%<small>$56K vs $76.6K</small></td>
 <td class="missed">$146K<small>of $200K</small></td>
 <td class="hit">66<small>4 booked + 62 open</small></td>
 <td class="hit">31<small>8 last week</small></td>
 <td class="hit">$18,667<small>3 closes MTD</small></td>
-<td class="missed">3 / 4<small>1 HC · 0 SV · 0 W · 5 untagged · need 12</small></td>
-<td class="missed">8 / 8<small>134 / 134 booked calls</small></td>
+<td class="track">3 / 4<small>1 HC · 0 SV · 0 W · 5 untagged · need 12</small></td>
+<td class="missed">$116K<small>58% of target</small></td>
 <td class="hit">40<small>5 booked + 35 open · till 10pm ET</small></td></tr><tr><td>Daniel</td>
 <td class="missed">0%<small>$0 vs $76.6K</small></td>
 <td class="missed">$0<small>of $200K</small></td>
 <td class="hit">48<small>2 booked + 46 open</small></td>
 <td class="missed">15<small>5 last week</small></td>
 <td class="track">–<small>0 closes MTD</small></td>
-<td class="missed">0 / 7<small>3 HC · 9 SV · 4 W · need 12</small></td>
-<td class="almost">0 / 5<small>0 / 74 booked calls</small></td>
+<td class="track">0 / 7<small>3 HC · 9 SV · 4 W · need 12</small></td>
+<td class="almost">$151K<small>75% of target</small></td>
 <td class="hit">40<small>3 booked + 37 open · till 6pm ET</small></td></tr><tr><td>Kevin</td>
 <td class="missed">55%<small>$42K vs $76.6K</small></td>
 <td class="missed">$110K<small>of $200K</small></td>
 <td class="hit">43<small>7 booked + 36 open</small></td>
 <td class="hit">26<small>10 last week</small></td>
 <td class="hit">$18,000<small>2 closes MTD</small></td>
-<td class="missed">2 / 5<small>2 HC · 2 SV · 4 W · need 12</small></td>
-<td class="almost">1 / 7<small>21 / 144 booked calls</small></td>
+<td class="track">2 / 5<small>2 HC · 2 SV · 4 W · need 12</small></td>
+<td class="missed">$119K<small>60% of target</small></td>
 <td class="hit">33<small>12 booked + 21 open · till 8pm ET</small></td></tr><tr><td>Oliver<small>new hire</small></td>
 <td class="missed">0%<small>$0 vs $19.8K</small></td>
 <td class="missed">$0<small>of $51.6K</small></td>
@@ -188,7 +195,7 @@ tr.total td{background:#f1efea;font-weight:800}
 <td class="track">3<small>3 last week</small></td>
 <td class="track">–<small>0 closes MTD</small></td>
 <td class="track">0<small>no tab</small></td>
-<td class="missed">3 / 3<small>44 / 44 booked calls</small></td>
+<td class="missed">$5.1K<small>10% of target</small></td>
 <td class="track">–<small>not a host</small></td></tr><tr><td>Tyler<small>new hire</small></td>
 <td class="track">–<small>no target yet</small></td>
 <td class="track">–</td>
@@ -198,4 +205,4 @@ tr.total td{background:#f1efea;font-weight:800}
 <td class="track">0<small>no tab</small></td>
 <td class="track">–<small>no target</small></td>
 <td class="track">–<small>not a host</small></td></tr><tr class="total"><td>Team median<small>fully ramped</small></td><td>55%</td><td>–</td><td>35</td><td>26</td><td>$17,625</td><td>2<small>closes MTD</small></td><td>–</td><td>39</td></tr></tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to Oct 18. Pace comes from the 2M tracker: each closer's month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target. Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's October pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status. New closes needed = closes at $17.5K still needed after the pipeline, if every open lead closes / at the usual 80% HC, 50% SV rates, with the booked calls that takes at the closer's month-to-date rates; green = the pipeline covers the gap at usual rates; yellow = covered only if every lead closes, or the next 7 days' booked + open slots can hold the calls.</div></div></body></html>
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to Oct 18. Pace comes from the 2M tracker: each closer's month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target. Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's October pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status. Realistic month end = cash so far + pipeline at usual rates (80% HC, 50% SV, Working 0) + new-call closes (live calls at this month's pace to month end × close rate × $17.5K); green at target, yellow 75%+.</div></div></body></html>

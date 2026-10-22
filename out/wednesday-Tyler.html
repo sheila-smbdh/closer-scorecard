@@ -65,6 +65,13 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
 .cases span{font-size:13.5px;color:#3d4248}
+.rows{margin-top:6px}
+.rows>div{display:flex;align-items:baseline;gap:12px;padding:5px 0}
+.rows>div+div{border-top:1px dashed var(--line)}
+.rl{flex:none;width:150px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.rt{flex:1;font-size:15px;color:#3d4248}
+.rows b{font-size:24px;font-weight:800;white-space:nowrap}
+.names{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
 .verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
 .verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
 .verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
@@ -110,9 +117,9 @@ tr.total td{background:#f1efea;font-weight:800}
 </div><div class="tile track">
   <div class="l">Closes: actual vs projected</div><div class="v">0</div>
   <div class="s">0 closes so far. No pipeline tab yet</div>
-  <div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div>
+  <div class="foot"><div class="row"><span>Tracked, no target</span><span class="chip">TRACKING</span></div></div>
 </div></div>
 </div>
 <div class="section"><h2>WHERE WE'RE HEADED</h2>
 <p class="key">Your month target is coming. Until then: get set up as a discovery host in Calendly.</p></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target. Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500 average per close. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new closes at $17.5K each; calls needed use your month-to-date show rate (live ÷ booked) and close rate (closes ÷ live calls), or the team median until you have a close.</div></div></body></html>
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target. Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes (tracked, no target): closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new calls to month end = your live calls per business day this month × business days left; close rate = closes ÷ live calls this month (team median until you have a close); realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K.</div></div></body></html>

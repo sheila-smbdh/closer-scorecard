@@ -34,11 +34,14 @@ Title: "<Closer>'s month to date: Sunday, October 18th" (the last day of the win
 3. **Where we're headed: the path to target**, worked backwards:
    1. Gap to target = month target − cash collected.
    2. Closes that takes: at $17.5K, at the closer's own average, at $20K (shown as a range).
-   3. Pipeline: open High Confidence / Soft Verbal / Working leads and their column D cash (blank amount = $17.5K, flagged); value at usual rates (80% HC, 50% SV, Working 0).
-   4. Gap left after the pipeline and the new closes that takes, two cases: every open lead closes / usual rates.
-   5. New calls that takes: booked and live calls at the closer's month-to-date show rate (live ÷ booked) and close rate (closes ÷ live); team median rates until the closer has a close.
-   6. Next 7 days: calls already booked (and the closes they should bring) + open slots.
-   Verdict: whether the booked calls cover it, how many open slots to fill, or that the calendar cannot hold it.
+   3. Pipeline, two lines: if they all close (High Confidence + Soft Verbal + Working at their column D amounts; blank amount = $17.5K, flagged) and at usual rates (80% HC + 50% SV, Working not counted).
+   4. Pull forward from the pipeline: every High Confidence and Soft Verbal lead (listed by name), then how many Working leads have to move to a yes to cover the rest.
+   5. New calls to month end: live calls per business day this month × business days left, and how many can still close this month at the closer's close rate (closes ÷ live calls; team median until they have a close).
+   6. Build next month's pipeline: the rest of those calls, logged with a status and a next step.
+   7. Next 7 days: calls already booked + open slots (the calls that can still close this month).
+   Verdict: realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K, against the target.
+
+The closes tile in "How the week went" is tracked (blue), with the projection math written out: closes so far + 80% of HC + 50% of SV.
 
 Removed in the Oct 22 revamp: show rate, revenue per call, the Wins / Focus boxes, month over month.
 

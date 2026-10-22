@@ -83,6 +83,13 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
 .cases span{font-size:13.5px;color:#3d4248}
+.rows{margin-top:6px}
+.rows>div{display:flex;align-items:baseline;gap:12px;padding:5px 0}
+.rows>div+div{border-top:1px dashed var(--line)}
+.rl{flex:none;width:150px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.rt{flex:1;font-size:15px;color:#3d4248}
+.rows b{font-size:24px;font-weight:800;white-space:nowrap}
+.names{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
 .verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
 .verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
 .verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
@@ -181,7 +188,8 @@ const rangeText = (r) => {
   return lo === hi ? `${lo}` : `${lo} to ${hi}`;
 };
 
-// "Where we're headed": work back from the month target to the calls the next 7 days have to deliver
+// "Where we're headed": from the gap to target, through the pipeline leads to pull forward and the new calls the
+// rest of the month realistically holds, to a realistic month end. Calls late in the month build next month.
 function pathSection(m, month) {
   const p = m.path, c = m.cash, pl = m.closes.pipeline;
   if (!p) {
@@ -189,43 +197,65 @@ function pathSection(m, month) {
 <p class="key">Your month target is coming. Until then: ${m.slots.value == null ? 'get set up as a discovery host in Calendly.' : `${m.slots.booked ?? 0} calls booked and ${m.slots.open} open slots in the next 7 days.`}</p></div>`;
   }
   const $ = (v) => fmtMoney(v, true);
-  const step = (n, label, value, text) => `<div class="step"><span class="sn">${n}</span><div class="sw"><div class="sl">${label}</div><div class="st">${text}</div></div><div class="sv">${value}</div></div>`;
-  const cases = (n, label, f, text) => `<div class="step"><span class="sn">${n}</span><div class="sw"><div class="sl">${label}</div>${text ? `<div class="st">${text}</div>` : ''}</div>
-<div class="cases"><div><small>If all ${p.pipe.n} close</small>${f(p.all)}</div><div><small>At usual rates</small>${f(p.likely)}</div></div></div>`;
-  const rateText = `${p.ownRates ? 'Your' : 'Team median'} month-to-date rates: ${fmtPct(p.show)} of booked calls show, ${fmtPct(p.close)} of live calls close${p.ownRates ? '' : ' (you have no closes yet)'}.`;
-  const nx = p.next;
-  const cal = m.calendar;
+  const step = (n, label, value, text) => `<div class="step"><span class="sn">${n}</span><div class="sw"><div class="sl">${label}</div><div class="st">${text}</div></div>${value != null ? `<div class="sv">${value}</div>` : ''}</div>`;
+  const names = (list, max = 6) => list.slice(0, max).map((l) => `${esc(l.name)}${l.cash != null ? ` ${$(l.cash)}` : ''}`).join(', ') + (list.length > max ? `, +${list.length - max} more` : '');
+  const nextMonth = new Date(Date.UTC(2026, (m.ed.through_key.slice(0, 2) * 1) % 12, 1)).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' });
+  const cl = p.calls, nx = p.next, cal = m.calendar;
 
-  let verdict, cls;
-  if (p.gap <= 0) { verdict = 'Target reached. Everything from here is upside.'; cls = 'hit'; }
-  else if (p.all.closes === 0 && p.likely.closes === 0) { verdict = 'Your pipeline covers the gap at the usual close rates. Close it out.'; cls = 'hit'; }
-  else if (p.all.closes === 0) {
-    verdict = `If every pipeline lead closes, you hit target with no new closes. At the usual rates you still need ${p.likely.closes} new closes, so keep your calendar full.`;
-    cls = 'almost';
-  } else {
-    const short = nx.booked == null ? null : p.all.booked - nx.booked;
-    verdict = `Even if all ${p.pipe.n} pipeline leads close, you need <b>${p.all.closes} new closes</b>, about <b>${p.all.booked} booked calls</b> at your rates. `;
-    if (short == null) { verdict += 'Your Calendly booked calls are not in this snapshot.'; cls = 'track'; }
-    else if (short <= 0) { verdict += `Your ${nx.booked} booked calls this week cover that if they convert like your month so far.`; cls = 'hit'; }
-    else if (short <= nx.open) { verdict += `Your ${nx.booked} booked calls should bring about ${nx.closes.toFixed(1)} closes. Fill <b>${short} more</b> of your ${nx.open} open slots this week to get there.`; cls = 'almost'; }
-    else { verdict += `That is ${short} more than your ${nx.booked} booked, and you only have ${nx.open} open slots this week: open more time and push every pipeline lead to close.`; cls = 'missed'; }
-    verdict += ` At the usual pipeline rates it is ${p.likely.closes} new closes (${p.likely.booked} booked calls).`;
+  // 3: the pipeline, two ways
+  const pipeRows = pl ? `<div class="rows">
+<div><span class="rl">If they all close</span><span class="rt">${pl.hc} High Confidence ${$(pl.cash.hc)} + ${pl.sv} Soft Verbal ${$(pl.cash.sv)} + ${pl.working} Working ${$(pl.cash.working)}</span><b>${$(p.pipe.all)}</b></div>
+<div><span class="rl">At usual rates</span><span class="rt">80% of High Confidence + 50% of Soft Verbal + Working not counted</span><b>${$(p.pipe.likely)}</b></div>
+</div>${pl.noAmount ? `<div class="st">${pl.noAmount} leads have no amount on your pipeline tab and are counted at $17.5K: fill them in.</div>` : ''}` : '<div class="st">No pipeline tab yet.</div>';
+
+  // 4: who to pull forward
+  let pullText = 'No pipeline tab yet, so every close has to come from new calls.';
+  let pullValue = null;
+  if (pl) {
+    const hcsv = pl.hc + pl.sv;
+    const lists = [pl.hc ? `High Confidence: ${names(pl.leads.hc)}` : null, pl.sv ? `Soft Verbal: ${names(pl.leads.sv)}` : null].filter(Boolean).join('<br>');
+    if (p.pull.left === 0) {
+      pullValue = plural(hcsv, 'lead');
+      pullText = `Your ${hcsv} High Confidence and Soft Verbal leads (${$(p.pipe.hcsv)}) cover the gap if they close this month. Get each one to a signed yes, and book the follow-up before it slips.`;
+    } else {
+      pullValue = pl.working ? `${hcsv} + ${p.pull.working} Working` : `${hcsv}`;
+      pullText = `Closing every High Confidence and Soft Verbal lead brings ${$(p.pipe.hcsv)}, leaving ${$(p.pull.left)}. `
+        + (pl.working ? `That means moving about <b>${p.pull.working} of your ${pl.working} Working leads</b> (about ${$(p.pull.avgWorking)} each) to a yes this month: pick the ones closest to a decision and book their next call now.` : '')
+        + (p.pull.beyond ? ` Even all of them leave ${$(p.pull.beyond)}, which has to come from new calls.` : '');
+    }
+    if (lists) pullText += `<div class="names">${lists}</div>`;
   }
 
+  // 5: new calls to month end, and what can still close in time
+  const callsValue = cl.liveLeft != null ? `~${cl.liveLeft} → ${cl.closes < 1 ? 'under 1' : `~${Math.round(cl.closes)}`}` : '–';
+  const callsText = cl.liveLeft == null ? 'No live calls logged yet this month.'
+    : `At your pace this month (${cl.perDay.toFixed(1)} live calls a business day) that is about <b>${cl.liveLeft} more live calls</b> by ${month.label} 31. At ${cl.ownClose ? 'your' : 'the team median'} ${fmtPct(cl.close)} close rate, about <b>${cl.closes.toFixed(1)}</b> of them close this month at most: calls this week have the best shot, since a call in the last days rarely pays before the 1st.`;
+
+  // 6: next month's pipeline
+  const nextText = cl.liveLeft == null ? `Calls you take from here on are ${nextMonth}'s pipeline.`
+    : `The other ~${cl.nextMonth} calls are ${nextMonth}'s pipeline. Log each one as High Confidence, Soft Verbal or Working the same day and book the next step before you hang up, so you start ${nextMonth} with deals already in motion (this month's target takes ${m.closes.needed} closes).`;
+
+  // 7: next 7 days
+  const weekText = m.slots.value == null ? 'Not set up as a discovery host in Calendly yet.'
+    : `${nx.booked != null ? `${nx.booked} calls already booked + ${nx.open} open slots` : `${nx.open} open slots`}: fill them this week, since these are the calls that can still close in ${month.label}.${cal ? ` Calendar open till ${cal.label}.` : ''}${cal?.away ? ` Away (${esc(cal.away.away)}); open evening slots when back in ${esc(cal.away.back_label)}.` : cal?.closesEarly ? ' Most days close by 5pm ET: open later slots.' : ''}`;
+
+  const verdict = p.gap <= 0 ? 'Target reached. Everything from here is upside and next month\'s pipeline.'
+    : `<b>Realistic ${month.label}:</b> ${$(c.value ?? 0)} collected + ${$(p.pipe?.likely ?? 0)} from your pipeline at usual rates + about ${(cl.closes ?? 0).toFixed(1)} new-call closes (${$((cl.closes ?? 0) * 17500)}) ≈ <b>${$(p.realistic)}</b>, ${fmtPct(p.ratio)} of ${$(c.monthTarget)}. `
+      + (p.ratio >= 1 ? 'You are on track: protect the pipeline and keep the calendar full.'
+        : pl ? `The biggest lever is your pipeline: every Working or Soft Verbal lead you pull forward to a close adds about ${$(p.pull.avgWorking)}.` : 'Get a pipeline tab set up so your follow-ups count.');
+
   return `<div class="section"><h2>WHERE WE'RE HEADED: THE PATH TO ${$(c.monthTarget)}</h2>
-<p class="key">Working backwards from your month target: what is left, what your pipeline covers, and what your calendar has to deliver.</p>
+<p class="key">Working backwards from your month target: what is left, what your pipeline can cover, and what new calls can realistically add.</p>
 <div class="path">
 ${step(1, 'Gap to target', $(p.gap), `${$(c.value ?? 0)} collected of ${$(c.monthTarget)}, ${plural(c.daysLeft, 'business day')} left.`)}
 ${step(2, 'Closes that takes', rangeText(p.range), `${p.range.floor} at $17.5K each${p.range.own ? ` · ${p.range.own} at your ${fmtMoney(m.avgRevenue.value)} average` : ''} · ${p.range.high} at $20K each.`)}
-${step(3, 'Your pipeline', pl ? `${p.pipe.n} · ${$(p.pipe.all)}` : '–', pl
-    ? `${pl.hc} High Confidence ${$(pl.cash.hc)} · ${pl.sv} Soft Verbal ${$(pl.cash.sv)} · ${pl.working} Working ${$(pl.cash.working)}${pl.noAmount ? ` (${pl.noAmount} with no amount, counted at $17.5K)` : ''}. Usual rates: 80% of High Confidence and 50% of Soft Verbal close, Working not counted = ${$(p.pipe.likely)}.`
-    : 'No pipeline tab yet.')}
-${cases(4, 'Gap left after the pipeline', (s) => `<b>${$(s.left)}</b><span>${plural(s.closes, 'new close')}</span>`)}
-${cases(5, 'New calls that takes', (s) => `<b>${s.booked ?? '–'}</b><span>booked calls (${s.live ?? '–'} live)</span>`, rateText)}
-${step(6, 'Your next 7 days', nx.booked == null ? (m.slots.value ?? '–') : `${nx.booked} + ${nx.open}`, m.slots.value == null ? 'Not set up as a discovery host in Calendly yet.'
-    : `${nx.booked != null ? `${nx.booked} calls already booked${nx.booked ? ` (about ${nx.closes.toFixed(1)} closes at your rates)` : ''} + ${nx.open} open slots` : `${nx.open} open slots`}; target 25 booked + open.${cal ? ` Calendar open till ${cal.label}.` : ''}${cal?.away ? ` Away (${esc(cal.away.away)}); open evening slots when back in ${esc(cal.away.back_label)}.` : cal?.closesEarly ? ' Most days close by 5pm ET: open later slots.' : ''}`)}
+<div class="step"><span class="sn">3</span><div class="sw"><div class="sl">Your pipeline</div>${pipeRows}</div></div>
+${step(4, 'Pull forward from your pipeline', pullValue, pullText)}
+${step(5, 'New calls to month end', callsValue, callsText)}
+${step(6, `Build ${nextMonth}'s pipeline`, cl.nextMonth != null ? `~${cl.nextMonth}` : null, nextText)}
+${step(7, 'Your next 7 days', nx.booked == null ? (m.slots.value ?? '–') : `${nx.booked} + ${nx.open}`, weekText)}
 </div>
-<div class="verdict ${cls}">${verdict}</div></div>`;
+<div class="verdict ${p.gap <= 0 ? 'hit' : p.status}">${verdict}</div></div>`;
 }
 
 // What to change, from the week's inputs; "nothing" when every scored input hit
@@ -285,13 +315,12 @@ export function closerCard(m, month) {
   const pl = cl.pipeline;
   const closesTile = tile({
     label: 'Closes: actual vs projected', value: cl.projected == null ? `${cl.actual}` : `${cl.actual} <span class="of">/ ${cl.projected}</span>`,
-    statusKey: cl.status,
+    statusKey: 'track',
     sub: pl ? `${plural(cl.actual, 'close')} so far, ${cl.projected} projected by month end` : `${plural(cl.actual, 'close')} so far. No pipeline tab yet`,
-    small: pl ? `Pipeline: <b>${pl.hc}</b> High Confidence · <b>${pl.sv}</b> Soft Verbal · <b>${pl.working}</b> Working${cl.lastWeek
+    small: pl ? `Projected = ${cl.actual} closed + 80% of ${pl.hc} High Confidence + 50% of ${pl.sv} Soft Verbal = ${num(Math.round(cl.projectedExact * 10) / 10)}. ${pl.working} Working not counted.${cl.lastWeek
       ? `<br>Last week: ${cl.lastWeek.won} of ${cl.lastWeek.projected} projected closed or signed` : ''}` : null,
     warn: pl?.nonstandard ? `${pl.nonstandard} leads need a status` : null,
-    bar: bar(cl.projected, cl.needed),
-    targetText: cl.needed == null ? 'No target yet' : `Need ${cl.needed} for ${fmtMoney(m.cash.monthTarget, true)}`,
+    targetText: 'Tracked, no target',
   });
 
   const c = m.cash;
@@ -307,14 +336,9 @@ ${paceTracker(m, month)}
 <div class="grid">${slotsWeekTile}${liveTile}${avgTile}${closesTile}</div>
 ${weekVerdict(m)}</div>
 ${pathSection(m, month)}
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500 average per close. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new closes at $17.5K each; calls needed use your month-to-date show rate (live ÷ booked) and close rate (closes ÷ live calls), or the team median until you have a close.</div>`;
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes (tracked, no target): closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new calls to month end = your live calls per business day this month × business days left; close rate = closes ÷ live calls this month (team median until you have a close); realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K.</div>`;
   return page(body);
 }
-
-// Green: the pipeline covers the gap at usual rates. Yellow: covered only if every lead closes, or the next
-// 7 days' booked + open slots can hold the calls still needed. Red: neither.
-const pathStatus = (p) => (!p ? 'track' : p.likely.closes === 0 ? 'hit'
-  : p.all.closes === 0 || (p.next.booked != null && p.all.booked <= p.next.booked + p.next.open) ? 'almost' : 'missed');
 
 export function leadershipTable(rows, data, team) {
   const ed = data.editions.monday;
@@ -328,7 +352,7 @@ ${cell(m.slotsWeek.status, m.slotsWeek.value ?? '–', m.slotsWeek.value == null
 ${cell(m.live.status, m.live.value, `${m.live.week} last week`)}
 ${cell(m.avgRevenue.status, m.avgRevenue.value == null ? '–' : fmtMoney(m.avgRevenue.value), `${plural(m.avgRevenue.closes, 'close')} MTD`)}
 ${cell(cl.status, cl.projected == null ? cl.actual : `${cl.actual} / ${cl.projected}`, pl ? `${pl.hc} HC · ${pl.sv} SV · ${pl.working} W${pl.nonstandard ? ` · ${pl.nonstandard} untagged` : ''}${cl.needed ? ` · need ${cl.needed}` : ''}` : 'no tab')}
-${cell(pathStatus(m.path), m.path ? `${m.path.all.closes} / ${m.path.likely.closes}` : '–', m.path ? `${m.path.all.booked ?? '–'} / ${m.path.likely.booked ?? '–'} booked calls` : 'no target')}
+${cell(m.path ? m.path.status : 'track', m.path ? fmtMoney(m.path.realistic, true) : '–', m.path ? `${fmtPct(m.path.ratio)} of target` : 'no target')}
 ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : `${m.slots.booked != null ? `${m.slots.booked} booked + ${m.slots.open} open` : 'open'}${m.calendar ? ` · till ${m.calendar.usualText}` : ''}`)}</tr>`;
   }).join('');
 
@@ -341,8 +365,8 @@ ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a ho
 <div class="legend"><span style="--c:var(--hit)">On target / on pace</span><span style="--c:var(--almost)">Close (75%+) / slightly behind</span><span style="--c:var(--missed)">Below / off pace</span><span style="--c:var(--track)">Tracked, no target</span></div>
 <table><thead>
 <tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp" colspan="2">Where we're headed</th></tr>
-<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>New closes needed<br>all pipeline / usual</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
+<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Realistic<br>month end</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
 <tbody>${body}${median}</tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status. New closes needed = closes at $17.5K still needed after the pipeline, if every open lead closes / at the usual 80% HC, 50% SV rates, with the booked calls that takes at the closer's month-to-date rates; green = the pipeline covers the gap at usual rates; yellow = covered only if every lead closes, or the next 7 days' booked + open slots can hold the calls.</div>`;
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status. Realistic month end = cash so far + pipeline at usual rates (80% HC, 50% SV, Working 0) + new-call closes (live calls at this month's pace to month end × close rate × $17.5K); green at target, yellow 75%+.</div>`;
   return page(html, 'wide');
 }
