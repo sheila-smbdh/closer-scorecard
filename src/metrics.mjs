@@ -68,7 +68,7 @@ export function closerMetrics(data, closer, edition) {
   const source = wk.hasEod ? 'eod' : 'sales_tracker';
 
   // Live calls: showed, month to date (EOD + Sales Tracker fills). Scored against the team median in withTeam().
-  const live = { value: mtdBS.showed, week: wk.showed, booked: wk.booked, source, status: 'track' };
+  const live = { value: mtdBS.showed, mtdBooked: mtdBS.booked, week: wk.showed, booked: wk.booked, source, status: 'track' };
 
   // Slots = discovery capacity: open start times (Messi's next-7-days count) + discovery calls already
   // booked in those 7 days (Calendly, as of the post). The 25 target is on the sum.
@@ -78,16 +78,20 @@ export function closerMetrics(data, closer, edition) {
     const booked = data.slots_booked?.[day]?.[k] ?? null;
     return { open, booked, value: open + (booked ?? 0) };
   };
-  // During the week: average over Messi's daily posts that week
-  const posts = Object.keys(data.messi_slots ?? {})
-    .filter((d) => d >= ed.week_days[0] && d <= ed.through_key).map(capacity).filter(Boolean);
-  const avg = (f) => Math.round(posts.reduce((a, p) => a + f(p), 0) / posts.length);
-  const hasBooked = posts.length > 0 && posts.every((p) => p.booked != null);
-  const slotsWeek = posts.length ? {
-    value: avg((p) => p.value), open: avg((p) => p.open), booked: hasBooked ? avg((p) => p.booked) : null,
-    low: Math.min(...posts.map((p) => p.value)), posts: posts.length, target: TARGETS.slotsPerWeek,
-  } : { value: null, target: TARGETS.slotsPerWeek };
-  slotsWeek.status = slotsWeek.value == null ? 'track' : status(slotsWeek.value, TARGETS.slotsPerWeek);
+  // Average over Messi's daily posts in a window (his count starts Oct 9, so month to date = since then)
+  const slotAvg = (from, to) => {
+    const posts = Object.keys(data.messi_slots ?? {}).filter((d) => d >= from && d <= to).sort().map(capacity).filter(Boolean);
+    if (!posts.length) return { value: null, target: TARGETS.slotsPerWeek, status: 'track' };
+    const avg = (f) => Math.round(posts.reduce((a, p) => a + f(p), 0) / posts.length);
+    const hasBooked = posts.every((p) => p.booked != null);
+    const value = avg((p) => p.value);
+    return { value, open: avg((p) => p.open), booked: hasBooked ? avg((p) => p.booked) : null,
+      low: Math.min(...posts.map((p) => p.value)), posts: posts.length, target: TARGETS.slotsPerWeek,
+      status: status(value, TARGETS.slotsPerWeek) };
+  };
+  const slotsMtd = slotAvg(monthStart, ed.through_key);
+  slotsMtd.since = Object.keys(data.messi_slots ?? {}).filter((d) => d >= monthStart).sort()[0] ?? null;
+  const slotsWeek = slotAvg(ed.week_days[0], ed.through_key);
   // Upcoming: the edition-day post, next 7 days
   const up = capacity(ed.slots_post_day) ?? (data.slots[edition][k] == null ? null : { open: data.slots[edition][k], booked: null, value: data.slots[edition][k] });
   const slots = up ? { ...up, target: TARGETS.slotsPerWeek, status: status(up.value, TARGETS.slotsPerWeek) }
@@ -161,9 +165,12 @@ export function closerMetrics(data, closer, edition) {
   // Month-to-date conversion: booked calls that showed, and live calls that closed
   const rates = { show: mtdBS.booked ? mtdBS.showed / mtdBS.booked : null, close: mtdBS.showed ? mtd[CLOSES] / mtdBS.showed : null };
 
-  const salesTrackerWeek = { booked: act[monday ? 'wk' : 'tw'][CALLS], showed: act[monday ? 'wk' : 'tw'][LIVE] };
+  const wkAct = act[monday ? 'wk' : 'tw'];
+  const salesTrackerWeek = { booked: wkAct[CALLS], showed: wkAct[LIVE] };
+  // This past week (or this week so far on Wednesday), for the line under each month-to-date tile
+  const week = { closes: wkAct[CLOSES], rev: wkAct[REV] };
   const filled = { week: wk.filled, mtd: mtdBS.filled };
-  return { closer, edition, ed, salesTrackerWeek, filled, live, slotsWeek, slots, calendar, avgRevenue, cash, closes, rates, bdElapsed, newHire };
+  return { closer, edition, ed, salesTrackerWeek, week, filled, live, slotsMtd, slotsWeek, slots, calendar, avgRevenue, cash, closes, rates, bdElapsed, newHire };
 }
 
 // Open leads in the closer's current-month Pipeline Review section, counted and valued (column D cash;
@@ -241,7 +248,7 @@ export function withTeam(metrics) {
     pace: median(ramped.map((m) => m.cash.paceRatio)),
     cash: median(ramped.map((m) => m.cash.value)),
     live: median(ramped.map((m) => m.live.value)),
-    slotsWeek: median(ramped.map((m) => m.slotsWeek.value)),
+    slotsMtd: median(ramped.map((m) => m.slotsMtd.value)),
     slots: median(ramped.map((m) => m.slots.value)),
     avgRevenue: median(ramped.map((m) => m.avgRevenue.value)),
     closes: median(ramped.map((m) => m.closes.actual)),

@@ -1410,6 +1410,58 @@
  },
  "_closer_notes_note": "Manual context from Sheila. While a closer is away, the late-slot Focus item is replaced by a reminder to open evening slots when they are back.",
  "messi_slots": {
+  "10-09": {
+   "VeJohn": 15,
+   "Harry": 23,
+   "JZ": 25,
+   "Julien": 27,
+   "Kevin": 28,
+   "Nick": 36,
+   "Adam": 38,
+   "Owen": 40,
+   "Daniel": 46,
+   "Omar": 46,
+   "Solomon": 59
+  },
+  "10-10": {
+   "VeJohn": 14,
+   "Harry": 28,
+   "JZ": 33,
+   "Julien": 36,
+   "Nick": 39,
+   "Kevin": 42,
+   "Owen": 43,
+   "Adam": 46,
+   "Omar": 47,
+   "Daniel": 50,
+   "Solomon": 53
+  },
+  "10-11": {
+   "VeJohn": 12,
+   "Harry": 29,
+   "JZ": 31,
+   "Nick": 35,
+   "Julien": 36,
+   "Omar": 37,
+   "Kevin": 40,
+   "Owen": 43,
+   "Adam": 46,
+   "Daniel": 52,
+   "Solomon": 78
+  },
+  "10-12": {
+   "VeJohn": 13,
+   "Harry": 23,
+   "JZ": 27,
+   "Nick": 28,
+   "Adam": 30,
+   "Omar": 33,
+   "Julien": 35,
+   "Kevin": 38,
+   "Owen": 41,
+   "Daniel": 51,
+   "Solomon": 71
+  },
   "10-13": {
    "JZ": 19,
    "Adam": 26,
@@ -1515,7 +1567,7 @@
    "Daniel": 38
   }
  },
- "_messi_note": "Messi's 8am #sales-reports post: Calendly discovery start times over the next 7 days, keyed by post date. No post on Oct 12. 10-20 is Tue's post (same as slots.wednesday).",
+ "_messi_note": "Messi's 8am #sales-reports post: Calendly discovery start times over the next 7 days, keyed by post date. The count starts Oct 9 (Oct 7-8 posts used a different definition, earlier days have no count). 10-20 is Tue's post (same as slots.wednesday).",
  "eod_inferred": {
   "VeJohn": [
    "09-23",

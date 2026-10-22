@@ -44,6 +44,7 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .tile .small{font-size:13px;color:var(--muted);line-height:1.35;margin-top:6px}
 .tile .warn{font-size:13px;color:var(--missed);font-weight:600;margin-top:6px}
 .tile .foot{margin-top:auto;padding-top:10px}
+.tile .wk{font-size:13.5px;color:var(--ink);line-height:1.35;border-top:1px solid rgba(0,0,0,.08);padding-top:8px;margin-bottom:10px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
@@ -119,11 +120,11 @@ function bar(value, target) {
   return `<div class="bar"><i style="width:${Math.min(100, (value / max) * 100)}%"></i><b style="left:${(target / max) * 100}%"></b></div>`;
 }
 
-function tile({ label, value, sub, small, warn, statusKey, bar: barHtml = '', targetText, chip }) {
+function tile({ label, value, sub, small, warn, statusKey, bar: barHtml = '', targetText, chip, week }) {
   return `<div class="tile ${statusKey}">
   <div class="l">${label}</div><div class="v">${value}</div>
   ${sub ? `<div class="s">${sub}</div>` : ''}${small ? `<div class="small">${small}</div>` : ''}${warn ? `<div class="warn">${warn}</div>` : ''}
-  <div class="foot">${barHtml}<div class="row"><span>${targetText}</span><span class="chip">${chip ?? CHIP[statusKey]}</span></div></div>
+  <div class="foot">${week ? `<div class="wk">${week}</div>` : ''}${barHtml}<div class="row"><span>${targetText}</span><span class="chip">${chip ?? CHIP[statusKey]}</span></div></div>
 </div>`;
 }
 
@@ -263,8 +264,8 @@ ${step(7, 'Your next 7 days', nx.booked == null ? (m.slots.value ?? '–') : `${
 // What to change, from the week's inputs; "nothing" when every scored input hit
 function weekVerdict(m) {
   const fixes = [];
-  const sw = m.slotsWeek, lv = m.live, ar = m.avgRevenue;
-  if (sw.status === 'missed' || sw.status === 'almost') fixes.push(`slots averaged ${sw.value} booked + open, under 25: open more Calendly time`);
+  const sw = m.slotsMtd, lv = m.live, ar = m.avgRevenue;
+  if (sw.status === 'missed' || sw.status === 'almost') fixes.push(`slots have averaged ${sw.value} booked + open this month, under 25: open more Calendly time`);
   if (lv.status === 'missed' || lv.status === 'almost') fixes.push(`${lv.value} live calls this month vs a team median of ${num(lv.target)}: book and confirm more calls`);
   if (ar.status === 'missed') fixes.push(`average revenue ${fmtMoney(ar.value)}, under $17.5K: hold price on the next closes`);
   const scored = [sw, lv, ar].filter((x) => x.status !== 'track').length;
@@ -289,39 +290,45 @@ export function closerCard(m, month) {
   const t = m.team;
   const when = monday ? 'last week' : 'this week so far';
 
-  // How the week went: the inputs behind the pace
-  const sw = m.slotsWeek;
-  const slotsWeekTile = tile({
-    label: 'Discovery slots', value: sw.value ?? '–', statusKey: sw.status,
-    sub: sw.value == null ? 'Not set up as a discovery host in Calendly yet' : sw.booked == null
-      ? `Average open discovery slots over the next 7 days, ${when}`
-      : `Average day ${when}: <b>${sw.booked}</b> booked + <b>${sw.open}</b> still open over the next 7 days`,
-    small: sw.value == null ? null : `Lowest day ${sw.low}${t.slotsWeek != null ? ` · team median ${Math.round(t.slotsWeek)}` : ''}`,
-    bar: bar(sw.value, sw.target), targetText: 'Target 25 (booked + open)',
+  // How the week went: month-to-date inputs, with this past week underneath each
+  const wkLabel = monday ? 'This past week' : 'This week so far';
+  const sm = m.slotsMtd, sw = m.slotsWeek;
+  const since = sm.since ? `since ${month.label.slice(0, 3)} ${Number(sm.since.slice(3))}` : 'this month';
+  const slotsTile = tile({
+    label: 'Discovery slots, month to date', value: sm.value ?? '–', statusKey: sm.status,
+    sub: sm.value == null ? 'Not set up as a discovery host in Calendly yet' : sm.booked == null
+      ? `Average open discovery slots over the next 7 days, each day ${since}`
+      : `Average day ${since}: <b>${sm.booked}</b> booked + <b>${sm.open}</b> still open over the next 7 days`,
+    small: sm.value == null ? null : `Lowest day ${sm.low}${t.slotsMtd != null ? ` · team median ${Math.round(t.slotsMtd)}` : ''}`,
+    week: sw.value == null ? null : `<b>${wkLabel}:</b> ${sw.value} a day${sw.booked != null ? ` (${sw.booked} booked + ${sw.open} open)` : ''}`,
+    bar: bar(sm.value, sm.target), targetText: 'Target 25 (booked + open)',
   });
   const lv = m.live;
   const liveTile = tile({
     label: 'Live calls, month to date', value: lv.value, statusKey: lv.status,
-    sub: `${plural(lv.week, 'live call')} ${when}, out of ${lv.booked} booked`,
+    sub: `${lv.value} of ${lv.mtdBooked} booked calls showed this month`,
     small: m.newHire ? 'Compared with the team once you are ramped' : null,
+    week: `<b>${wkLabel}:</b> ${lv.week} live of ${lv.booked} booked`,
     bar: bar(lv.value, lv.target), targetText: lv.target == null ? 'No target yet' : `Team median ${num(lv.target)}`,
   });
-  const ar = m.avgRevenue;
+  const ar = m.avgRevenue, wk = m.week;
   const avgTile = tile({
-    label: 'Average revenue', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
+    label: 'Average revenue, month to date', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
     sub: ar.closes ? `${fmtMoney(ar.rev)} revenue generated over ${plural(ar.closes, 'close')} this month` : 'No closes yet this month',
     small: t.avgRevenue != null ? `Team median ${fmtMoney(t.avgRevenue)}` : null,
+    week: `<b>${wkLabel}:</b> ${wk.closes ? `${fmtMoney(wk.rev)} over ${plural(wk.closes, 'close')} (${fmtMoney(wk.rev / wk.closes)} each)` : 'no closes'}`,
     bar: bar(ar.value, ar.target), targetText: 'Target $17,500',
   });
   const cl = m.closes;
   const pl = cl.pipeline;
   const closesTile = tile({
-    label: 'Closes: actual vs projected', value: cl.projected == null ? `${cl.actual}` : `${cl.actual} <span class="of">/ ${cl.projected}</span>`,
+    label: 'Closes, month to date: actual vs projected', value: cl.projected == null ? `${cl.actual}` : `${cl.actual} <span class="of">/ ${cl.projected}</span>`,
     statusKey: 'track',
     sub: pl ? `${plural(cl.actual, 'close')} so far, ${cl.projected} projected by month end` : `${plural(cl.actual, 'close')} so far. No pipeline tab yet`,
     small: pl ? `Projected = ${cl.actual} closed + 80% of ${pl.hc} High Confidence + 50% of ${pl.sv} Soft Verbal = ${num(Math.round(cl.projectedExact * 10) / 10)}. ${pl.working} Working not counted.${cl.lastWeek
       ? `<br>Last week: ${cl.lastWeek.won} of ${cl.lastWeek.projected} projected closed or signed` : ''}` : null,
     warn: pl?.nonstandard ? `${pl.nonstandard} leads need a status` : null,
+    week: `<b>${wkLabel}:</b> ${plural(wk.closes, 'close')}`,
     targetText: 'Tracked, no target',
   });
 
@@ -334,11 +341,11 @@ export function closerCard(m, month) {
 <div class="lede">${lede}</div>
 ${paceTracker(m, month)}
 <div class="section"><h2>HOW THE WEEK WENT</h2>
-<p class="key">${monday ? m.ed.week_label : `This week so far (${m.ed.week_label})`}: the inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
-<div class="grid">${slotsWeekTile}${liveTile}${avgTile}${closesTile}</div>
+<p class="key">Month to date, with ${monday ? `this past week (${m.ed.week_label})` : `this week so far (${m.ed.week_label})`} under each tile: the inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
+<div class="grid">${slotsTile}${liveTile}${avgTile}${closesTile}</div>
 ${weekVerdict(m)}</div>
 ${pathSection(m, month)}
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes (tracked, no target): closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new calls to month end = your live calls per business day this month × business days left; close rate = closes ÷ live calls this month (team median until you have a close); realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K.</div>`;
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the month figure averages each day since Messi's daily count started (Oct 9). The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes (tracked, no target): closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new calls to month end = your live calls per business day this month × business days left; close rate = closes ÷ live calls this month (team median until you have a close); realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K.</div>`;
   return page(body);
 }
 
@@ -350,7 +357,7 @@ export function leadershipTable(rows, data, team) {
     return `<tr><td>${esc(m.closer.short)}${m.newHire ? '<small>new hire</small>' : ''}</td>
 ${cell(c.status, c.monthTarget ? fmtPct(c.paceRatio) : '–', c.monthTarget ? `${fmtMoney(c.value, true)} vs ${fmtMoney(c.expected, true)}` : 'no target yet')}
 ${cell(c.status, c.monthTarget ? fmtMoney(c.projectedFinish, true) : '–', c.monthTarget ? `of ${fmtMoney(c.monthTarget, true)}` : '')}
-${cell(m.slotsWeek.status, m.slotsWeek.value ?? '–', m.slotsWeek.value == null ? 'not a host' : m.slotsWeek.booked == null ? 'open, daily avg' : `${m.slotsWeek.booked} booked + ${m.slotsWeek.open} open`)}
+${cell(m.slotsMtd.status, m.slotsMtd.value ?? '–', m.slotsMtd.value == null ? 'not a host' : m.slotsMtd.booked == null ? 'open, daily avg' : `${m.slotsMtd.booked} booked + ${m.slotsMtd.open} open`)}
 ${cell(m.live.status, m.live.value, `${m.live.week} last week`)}
 ${cell(m.avgRevenue.status, m.avgRevenue.value == null ? '–' : fmtMoney(m.avgRevenue.value), `${plural(m.avgRevenue.closes, 'close')} MTD`)}
 ${cell(cl.status, cl.projected == null ? cl.actual : `${cl.actual} / ${cl.projected}`, pl ? `${pl.hc} HC · ${pl.sv} SV · ${pl.working} W${pl.nonstandard ? ` · ${pl.nonstandard} untagged` : ''}${cl.needed ? ` · need ${cl.needed}` : ''}` : 'no tab')}
@@ -358,7 +365,7 @@ ${cell(m.path ? m.path.status : 'track', m.path ? fmtMoney(m.path.realistic, tru
 ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : `${m.slots.booked != null ? `${m.slots.booked} booked + ${m.slots.open} open` : 'open'}${m.calendar ? ` · till ${m.calendar.usualText}` : ''}`)}</tr>`;
   }).join('');
 
-  const median = `<tr class="total"><td>Team median<small>fully ramped</small></td><td>${fmtPct(team.pace)}</td><td>–</td><td>${num(team.slotsWeek)}</td><td>${num(team.live)}</td><td>${fmtMoney(team.avgRevenue)}</td><td>${num(team.closes)}<small>closes MTD</small></td><td>–</td><td>${num(team.slots)}</td></tr>`;
+  const median = `<tr class="total"><td>Team median<small>fully ramped</small></td><td>${fmtPct(team.pace)}</td><td>–</td><td>${num(team.slotsMtd)}</td><td>${num(team.live)}</td><td>${fmtMoney(team.avgRevenue)}</td><td>${num(team.closes)}<small>closes MTD</small></td><td>–</td><td>${num(team.slots)}</td></tr>`;
 
   const html = `
 <div class="eyebrow">Closer scorecard · Leadership view</div>
@@ -367,8 +374,8 @@ ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a ho
 <div class="legend"><span style="--c:var(--hit)">On target / on pace</span><span style="--c:var(--almost)">Close (75%+) / slightly behind</span><span style="--c:var(--missed)">Below / off pace</span><span style="--c:var(--track)">Tracked, no target</span></div>
 <table><thead>
 <tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp" colspan="2">Where we're headed</th></tr>
-<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Realistic<br>month end</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
+<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots MTD<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Realistic<br>month end</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
 <tbody>${body}${median}</tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status. Realistic month end = cash so far + pipeline at usual rates (80% HC, 50% SV, Working 0) + new-call closes (live calls at this month's pace to month end × close rate × $17.5K); green at target, yellow 75%+.</div>`;
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the month figure averages each day since Messi's count started (Oct 9), upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status. Realistic month end = cash so far + pipeline at usual rates (80% HC, 50% SV, Working 0) + new-call closes (live calls at this month's pace to month end × close rate × $17.5K); green at target, yellow 75%+.</div>`;
   return page(html, 'wide');
 }
