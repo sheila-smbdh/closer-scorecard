@@ -31,3 +31,4 @@
 - Oliver: no Pipeline Review tab.
 - Tyler: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: no Pipeline Review tab.
+- Tyler: cash through Oct 18 is $undefined in the tracker, $0 in the Sales Tracker snapshot.

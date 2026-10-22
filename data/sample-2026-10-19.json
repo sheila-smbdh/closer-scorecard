@@ -1591,9 +1591,22 @@
    "Solomon": 35,
    "Owen": 36,
    "Daniel": 37
+  },
+  "10-20": {
+   "VeJohn": 13,
+   "Omar": 22,
+   "Julien": 25,
+   "Nick": 25,
+   "Adam": 31,
+   "Kevin": 31,
+   "Owen": 32,
+   "JZ": 34,
+   "Solomon": 34,
+   "Harry": 36,
+   "Daniel": 38
   }
  },
- "_messi_note": "Messi's 8am #sales-reports post: Calendly discovery start times over the next 7 days, keyed by post date. No post on Oct 12.",
+ "_messi_note": "Messi's 8am #sales-reports post: Calendly discovery start times over the next 7 days, keyed by post date. No post on Oct 12. 10-20 is Tue's post (same as slots.wednesday).",
  "eod_inferred": {
   "VeJohn": [
    "09-23",

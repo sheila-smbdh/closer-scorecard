@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright';
-import { closerMetrics, runFlags } from './metrics.mjs';
+import { closerMetrics, withTeam, runFlags } from './metrics.mjs';
 import { closerCard, leadershipTable } from './render.mjs';
 
 const [dataPath, outDir, edition = 'monday', ...only] = process.argv.slice(2);
@@ -15,11 +15,13 @@ if (!dataPath || !outDir) {
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 fs.mkdirSync(outDir, { recursive: true });
 
-const closers = data.closers.filter((c) => !only.length || only.includes(c.key));
-const metrics = closers.map((c) => closerMetrics(data, c, edition));
+// Team medians always come from the whole roster, even when rendering a few closers
+const all = data.closers.map((c) => closerMetrics(data, c, edition));
+const team = withTeam(all);
+const metrics = all.filter((m) => !only.length || only.includes(m.closer.key));
 
 const pages = metrics.map((m) => [`${edition}-${m.closer.key}`, closerCard(m, data.month)]);
-if (edition === 'monday' && !only.length) pages.push(['monday-leadership', leadershipTable(metrics, data)]);
+if (edition === 'monday' && !only.length) pages.push(['monday-leadership', leadershipTable(metrics, data, team)]);
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
 const page = await browser.newPage({ deviceScaleFactor: 2 });

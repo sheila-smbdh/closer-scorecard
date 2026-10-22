@@ -21,3 +21,4 @@
 - Oliver: no Pipeline Review tab.
 - Tyler: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: no Pipeline Review tab.
+- Cash pace: no tracker pull through Oct 20; used the provisional $200K straight-line pace.

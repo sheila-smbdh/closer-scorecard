@@ -32,7 +32,7 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 
 **Delivery (not live yet):** image of each card by Slack DM, 8:00am ET. Monday = last week's final numbers (Mon-Sun) + a leadership table (one row per closer). Wednesday = this week so far.
 
-**Tile order:** Open slots, Booked calls, Show rate, Average revenue / Cash pace, Projected closes, Revenue per call, Closes. Month over month below. **Day-by-day section removed.**
+**Layout (Oct 22 revamp, centered on pacing):** pace tracker on top (cash vs pace by today vs team median; Sheila is sharing a screenshot of the exact pace-tracker look to match), then "How the week went" (open slots, live calls MTD, average revenue, closes actual vs projected with HC / SV / Working) and "Where we're headed" (upcoming slots, monthly target on track / off pace). **Removed:** show rate, revenue per call, Wins / Focus, month over month, day-by-day.
 
 **Targets:** open slots 25 / 7 days; booked calls 20 a week (4 a workday) for ramped closers, Oliver/Tyler have new-hire targets (still pending from Sheila); show rate 80%; average revenue floor $17,500 (MTD revenue generated / closes, pass/fail); revenue per call and pipeline are tracking only (blue).
 
@@ -42,15 +42,13 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 - Open slots: Messi's 8am post in #sales-reports (C0C5CGGGE1M) = Calendly discovery start times next 7 days. Pull Calendly/Google Calendar directly and cross-check against Messi; flag conflicts to Sheila every run. Google Calendar alone undercounts badly (see flags history), so do not use it as the number.
 - Pipeline: Pipeline Review (`1pX0nlLTJkQ-cAzgUk0QLQrhX6xjfaviAFoQIc_NaHVc`), each closer's tab, **current month section only**. Projected closes = count of open **High Confidence + Soft Verbal / Reengaged**; **WIP** (Working / Good Call) shown small, not counted. The Numbers tab is a reference check only. Accuracy = of last Monday's projected leads, how many are Closed/Signed by Sunday; needs a saved Monday snapshot (starts the first Monday after launch). A separate pipeline-review routine will come later with its own brief.
 
-**Show rate tile small text** (keep it this short):
+**Show rate tile (removed Oct 22; kept for reference if it comes back)** small text:
 ```
 No-show: 8 · 6 pre-call confirmation sent by closer
 Cancel: 2
 Rescheduled: 1
 ```
 With a setter: "No-show: 3 · 2 pre-call confirmation sent by setter, 1 by closer". Confirmation = a text or email to the no-show lead the day before or the day of the call, before it started (Close). Setter if any setter (Quinn Donelan, Jose Rodriguez, Jabali Dumas) sent one, else closer. Responsibility sits with setters; the card only reports it.
-
-**Wins / Focus:** at most 2 bullets each, one short line.
 
 **Calendar close time** on the slots tile ("Calendar open till 6pm ET (5pm Thu, Fri)") from each closer's Calendly discovery hours. If most weekdays close by 5pm ET, Focus says to open slots after 5pm. **Exception:** Omar is in Dubai until about early November; show "Open evening slots when back" instead of the Focus item (`closer_notes` in the data file).
 

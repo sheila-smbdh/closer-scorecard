@@ -25,20 +25,26 @@ npm run wednesday   # out/wednesday-<closer>.png
 Owen Henderson, Adam Larkins, Jordan Zadrozny (JZ), VeJohn C Heinemann, Julien Breteau, Nick Vaughan, Omar Kaddoura, Harry Whyte, Solomon House, Daniel Jenkins, Kevin Manuel, Oliver English (new hire), Tyler Johnson (new hire).
 Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin are setters on track for promotion: add them when promoted.
 
+## Layout (pacing first)
+
+1. **Pace tracker** (top): cash collected month to date vs pace by today (2M tracker curve) vs the team median, on a $0 to month-target track, plus "month end at this pace".
+2. **How the week went** (the inputs a closer controls): open slots, live calls month to date, average revenue, closes actual vs projected (High Confidence / Soft Verbal / Working).
+3. **Where we're headed**: upcoming slot availability (next 7 days) and the monthly target, on track or off pace, with what is left and how many closes that takes.
+
+Removed in the Oct 22 revamp: show rate, revenue per call, the Wins / Focus boxes, month over month.
+
 ## Metrics
 
 | Metric | Definition | Target | Source |
 |---|---|---|---|
-| Open slots | Discovery start times Calendly offers over the next 7 days. Tile also shows "Calendar open till X" (latest end of the closer's Calendly discovery hours, ET); if most weekdays close by 5pm ET, Focus says to open later slots | 25 | Calendly, cross-checked against Messi in #sales-reports |
-| Booked calls | Scheduled calls in the week (Mon to Sun) | 20 a week, 4 a workday (fully ramped). New hires: their own targets (pending) | EOD Tracker; any day without an EOD report is filled from Sales Tracker `Inputs`, and that merged total is the source of truth (also for month to date, revenue per call and month over month) |
-| Show rate | Showed ÷ booked, same week. Small text: No-show (with how many got a text/email confirmation the day before or same day, split setter vs closer), Cancel, Rescheduled | 80% | EOD Tracker (+ Sales Tracker fills); confirmations from Close |
-| Average revenue | Revenue generated ÷ closes (Close 1), month to date | Floor $17,500 (pass/fail) | `Inputs` / `Leaderboard` |
-| Cash collected pace | Samples: cash MTD vs $200K × business days elapsed ÷ business days (provisional). Next: tracker read API `pace.expected_cash` on the tracker's back-loaded curve and each closer's real `month_target` | Per-closer target from the tracker | `/api/read/closers` (`TRACKER_READ_TOKEN`) |
-| Projected closes | Open **High Confidence + Soft Verbal / Reengaged** leads in the closer's current-month section. WIP (Working / Good Call) shown in small type, not counted | None (tracked) | Pipeline Review, closer tabs |
-| Pipeline accuracy | Of last Monday's projected leads, how many are Closed or Signed by Sunday | None (tracked) | Weekly pipeline snapshot (starts first Monday after launch) |
-| Revenue per call | Revenue generated ÷ booked calls (EOD + fills), month to date | None (tracked) | `Inputs` + EOD Tracker |
-| Closes | Close 1 in the week, with revenue generated | None (tracked) | `Inputs` |
-| Month over month | MTD booked calls, closes, revenue generated, cash vs the same days last month | None | `Inputs` |
+| Pace | Cash collected MTD ÷ the tracker's `expected_cash` by the last day of the window (back-loaded month curve). Month end at this pace = % of pace × month target. Chip: On pace (ahead / on_pace), Slightly behind, Off pace | Per-closer `month_target` | `/api/read/closers` (`TRACKER_READ_TOKEN`); provisional $200K straight line if the snapshot has no tracker pull |
+| Team median | Middle value across fully ramped closers (new hires excluded) for pace, live calls, slots, average revenue | – | Computed per run |
+| Open slots (week) | Average of Messi's daily next-7-days counts posted during the week, with the lowest day | 25 | Messi in #sales-reports (`messi_slots`) |
+| Live calls | Showed calls month to date (EOD + Sales Tracker fills), with the week's live / booked | Team median | EOD Tracker + Sales Tracker `Inputs` |
+| Average revenue | Revenue generated ÷ closes (Close 1), month to date | $17,500 (pass/fail) | `Inputs` |
+| Closes: actual vs projected | Actual = Close 1 MTD. Projected month end = actual + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged (Friday pipeline KPI). Working shown, not counted. Needed = month target ÷ $17,500 | Needed for target | `Inputs`, Pipeline Review closer tabs |
+| Upcoming slots | Discovery start times Calendly offers over the next 7 days, plus "Calendar open till X" (ET); warns if most weekdays close by 5pm ET | 25 | Calendly, cross-checked against Messi |
+| Monthly target | Month target, what is left, business days left, closes still needed at $17.5K vs what the pipeline should yield | – | Tracker + Pipeline Review |
 
 Colors: green hit, yellow 75%+ of target, red below, blue tracked with no target.
 Revenue generated is contract value booked at close; cash collected is money actually received (installments included). They are never mixed.

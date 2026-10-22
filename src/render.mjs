@@ -1,12 +1,16 @@
 // HTML templates for the closer card and the Monday leadership table.
-// Layout follows the setter "day card" sample: header, Wins / Fixes, a grid of
-// target tiles (green hit, yellow 75%+, red missed, blue tracked), then pace,
-// month over month and a definitions footer.
+// The card is built around pacing: the pace tracker on top (cash vs pace by today vs the team
+// median), then "How the week went" (the inputs a closer controls: open slots, live calls,
+// average revenue, projected vs actual closes) and "Where we're headed" (upcoming slots and
+// on track / off pace against the month target). Tiles: green hit, yellow 75%+, red missed, blue tracked.
 
-import { winsAndFixes, fmtPct, fmtMoney, TARGETS, TARGET_SOURCE } from './metrics.mjs';
+import { fmtPct, fmtMoney } from './metrics.mjs';
 
 const CHIP = { hit: 'HIT', almost: 'ALMOST', missed: 'MISSED', track: 'TRACKING' };
+const PACE_CHIP = { hit: 'ON PACE', almost: 'SLIGHTLY BEHIND', missed: 'OFF PACE', track: 'NO TARGET YET' };
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+const num = (v) => (v == null ? '–' : Number.isInteger(v) ? String(v) : v.toFixed(1));
 
 const CSS = `
 :root{--ink:#1d1f23;--muted:#5c6168;--line:#e3e1dc;--bg:#fafaf8;
@@ -18,24 +22,20 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg
 .eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
 h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .lede{font-size:19px;color:var(--muted)}
-.wf{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
-.box{border-radius:14px;padding:22px 24px}
-.box h3{font-size:15px;letter-spacing:.1em;font-weight:700;margin-bottom:12px}
-.wins{background:var(--hit-bg)} .wins h3{color:var(--hit)}
-.fixes{background:var(--missed-bg)} .fixes h3{color:var(--missed)}
-.box ol{padding-left:22px;font-size:17px;line-height:1.45} .box li{margin-bottom:8px}
-.box .none{font-size:17px;color:var(--muted)}
 .section{margin-top:30px}
 .section h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin-bottom:6px}
 .section p.key{font-size:16px;color:var(--muted);line-height:1.45;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid.two{grid-template-columns:repeat(2,1fr)}
 .tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:228px}
+.grid.two .tile{min-height:190px}
 .tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
 .tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
 .tile.missed{background:var(--missed-bg);border-color:var(--missed)} .tile.missed .v{color:var(--missed)}
 .tile.track{background:var(--track-bg);border-color:var(--track)} .tile.track .v{color:var(--track)}
 .tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
 .tile .v{font-size:38px;font-weight:800;margin:6px 0 4px;letter-spacing:-.01em}
+.tile .v .of{font-size:24px;font-weight:700;opacity:.75}
 .tile .s{font-size:15px;color:#3d4248;line-height:1.35}
 .tile .small{font-size:13px;color:var(--muted);line-height:1.35;margin-top:6px}
 .tile .warn{font-size:13px;color:var(--missed);font-weight:600;margin-top:6px}
@@ -43,20 +43,40 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
-.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)}
+.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
-.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
+.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px;white-space:nowrap}
 .hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-.mom{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.mom>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.mom .l{font-size:14px;color:var(--muted);font-weight:600}
-.mom .v{font-size:26px;font-weight:800;margin:4px 0}
-.mom .d{font-size:14px;font-weight:700} .up{color:var(--hit)} .down{color:var(--missed)} .flat{color:var(--muted)}
+/* pace tracker */
+.pace{margin-top:26px;background:#fff;border:1px solid var(--line);border-top:6px solid;border-radius:14px;padding:22px 26px 20px}
+.pace.hit{border-top-color:var(--hit)} .pace.almost{border-top-color:var(--almost)} .pace.missed{border-top-color:var(--missed)} .pace.track{border-top-color:var(--track)}
+.pace-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.pace .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;color:var(--muted)}
+.pace .big{font-size:52px;font-weight:800;letter-spacing:-.02em;margin:4px 0 2px}
+.pace .big span{font-size:22px;font-weight:700;color:var(--muted)}
+.pace.hit .big{color:var(--hit)} .pace.almost .big{color:var(--almost-ink)} .pace.missed .big{color:var(--missed)} .pace.track .big{color:var(--track)}
+.pace .s{font-size:16px;color:#3d4248;line-height:1.4;max-width:720px}
+.pace .chip{font-size:14px;padding:6px 14px;margin-top:4px}
+.ptrack{position:relative;height:22px;background:#eeece7;border-radius:11px;margin:26px 0 0}
+.ptrack i{position:absolute;left:0;top:0;bottom:0;border-radius:11px}
+.pace.hit .ptrack i{background:var(--hit)} .pace.almost .ptrack i{background:var(--almost)} .pace.missed .ptrack i{background:var(--missed)} .pace.track .ptrack i{background:var(--track)}
+.ptrack b{position:absolute;top:-7px;width:4px;height:36px;margin-left:-2px;border-radius:2px}
+.ptrack b.mk-pace{background:var(--ink)} .ptrack b.mk-team{background:var(--track)}
+.plabels{position:relative;height:46px;margin-top:6px;font-size:13px;color:var(--muted)}
+.plabels span{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap;line-height:1.3}
+.plabels span b{display:block;font-size:15px;color:var(--ink)}
+.plabels span.mk-team b{color:var(--track)}
+.plabels span.end{right:0;transform:none;text-align:right}
+.pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;padding-top:16px;border-top:1px solid var(--line)}
+.pstats .l{font-size:12.5px}
+.pstats .v{font-size:28px;font-weight:800;margin:4px 0 2px}
+.pstats .s{font-size:14px;color:var(--muted)}
 .footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
 /* leadership table */
 .wide{width:1500px}
 table{border-collapse:separate;border-spacing:0 6px;width:100%;font-size:15px}
 th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 10px;font-weight:700;vertical-align:bottom}
+th.grp{color:var(--track);border-bottom:2px solid var(--track);padding-bottom:6px}
 td{padding:11px 10px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 td:first-child{border-left:1px solid var(--line);border-radius:10px 0 0 10px;font-weight:700}
 td:last-child{border-right:1px solid var(--line);border-radius:0 10px 10px 0}
@@ -76,11 +96,11 @@ function bar(value, target) {
   return `<div class="bar"><i style="width:${Math.min(100, (value / max) * 100)}%"></i><b style="left:${(target / max) * 100}%"></b></div>`;
 }
 
-function tile({ label, value, sub, small, warn, statusKey, bar: barHtml = '', targetText }) {
+function tile({ label, value, sub, small, warn, statusKey, bar: barHtml = '', targetText, chip }) {
   return `<div class="tile ${statusKey}">
   <div class="l">${label}</div><div class="v">${value}</div>
   ${sub ? `<div class="s">${sub}</div>` : ''}${small ? `<div class="small">${small}</div>` : ''}${warn ? `<div class="warn">${warn}</div>` : ''}
-  <div class="foot">${barHtml}<div class="row"><span>${targetText}</span><span class="chip">${CHIP[statusKey]}</span></div></div>
+  <div class="foot">${barHtml}<div class="row"><span>${targetText}</span><span class="chip">${chip ?? CHIP[statusKey]}</span></div></div>
 </div>`;
 }
 
@@ -88,150 +108,146 @@ function page(body, width) {
   return `<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><style>${CSS}</style></head><body><div class="card ${width === 'wide' ? 'wide' : ''}">${body}</div></body></html>`;
 }
 
-// No-show: 8 · 6 pre-call confirmation sent by closer / Cancel: 2 / Rescheduled: 1
-function showBreakdown(sr) {
-  if (sr.noShow == null) return null;
-  const c = sr.confirm;
-  let ns = `No-show: <b>${sr.noShow}</b>`;
-  if (c && sr.noShow) {
-    // "6 pre-call confirmation sent by closer", or "2 pre-call confirmation sent by setter, 1 by closer"
-    const parts = [[c.setter, 'setter'], [c.closer, 'closer']].filter(([n]) => n);
-    ns += parts.length
-      ? ` · ${parts.map(([n, who], i) => (i ? `${n} by ${who}` : `${n} pre-call confirmation sent by ${who}`)).join(', ')}`
-      : ' · 0 pre-call confirmation sent';
+// Month track from $0 to the month target: cash so far (fill), pace by today and the team median (markers)
+function paceTracker(m, month) {
+  const c = m.cash;
+  if (!c.monthTarget) {
+    return `<div class="pace track"><div class="pace-head"><div><div class="l">Pace tracker · ${month.label} cash collected</div>
+<div class="big">${fmtMoney(c.value, true)}</div><div class="s">Collected this month. Your month target is coming.</div></div>
+<span class="chip">${PACE_CHIP.track}</span></div></div>`;
   }
-  return `${ns}<br>Cancel: <b>${sr.cancel}</b><br>Rescheduled: <b>${sr.resched}</b>`;
+  const max = Math.max(c.monthTarget, c.value ?? 0);
+  const at = (v) => `${Math.min(100, (v / max) * 100).toFixed(2)}%`;
+  // Team median as cash on this closer's curve: median % of pace × this closer's pace by today
+  const teamCash = m.team.pace != null ? m.team.pace * c.expected : null;
+  const marks = [
+    [c.expected, 'mk-pace', `Pace by ${m.ed.through}<b>${fmtMoney(c.expected, true)}</b>`],
+    teamCash != null ? [teamCash, 'mk-team', `Team median<b>${fmtMoney(teamCash, true)}</b>`] : null,
+  ].filter(Boolean);
+  const gap = (c.value ?? 0) - c.expected;
+  return `<div class="pace ${c.status}">
+<div class="pace-head">
+  <div><div class="l">Pace tracker · ${month.label} cash collected</div>
+  <div class="big">${fmtPct(c.paceRatio)} <span>of pace</span></div>
+  <div class="s">${fmtMoney(c.value, true)} collected vs ${fmtMoney(c.expected, true)} expected by ${m.ed.through}: ${gap >= 0 ? `${fmtMoney(gap, true)} ahead` : `${fmtMoney(-gap, true)} behind`}. The team median is ${fmtPct(m.team.pace)} of pace.</div></div>
+  <span class="chip">${PACE_CHIP[c.status]}</span>
+</div>
+<div class="ptrack"><i style="width:${at(c.value ?? 0)}"></i>${marks.map(([v, cls]) => `<b class="${cls}" style="left:${at(v)}"></b>`).join('')}</div>
+<div class="plabels">${marks.map(([v, cls, t]) => `<span class="${cls}" style="left:${at(v)}">${t}</span>`).join('')}<span class="end">Month target<b>${fmtMoney(c.monthTarget, true)}</b></span></div>
+<div class="pstats">
+  <div><div class="l">Where you are</div><div class="v">${fmtMoney(c.value, true)}</div><div class="s">${fmtPct((c.value ?? 0) / c.monthTarget)} of your month target</div></div>
+  <div><div class="l">Where you should be</div><div class="v">${fmtMoney(c.expected, true)}</div><div class="s">Expected by ${m.ed.through}</div></div>
+  <div><div class="l">Team median</div><div class="v">${fmtPct(m.team.pace)}</div><div class="s">of pace, fully ramped closers</div></div>
+  <div><div class="l">Month end at this pace</div><div class="v">${fmtMoney(c.projectedFinish, true)}</div><div class="s">${fmtPct(c.projectedFinish / c.monthTarget)} of ${fmtMoney(c.monthTarget, true)}</div></div>
+</div></div>`;
 }
 
 export function closerCard(m, month) {
   const monday = m.edition === 'monday';
   const name = m.closer.short;
-  const { wins, fixes } = winsAndFixes(m);
-  const ol = (items, empty) => (items.length
-    ? `<ol>${items.map(([k, t]) => `<li><b>${esc(k)}:</b> ${esc(t)}</li>`).join('')}</ol>`
-    : `<div class="none">${empty}</div>`);
+  const t = m.team;
+  const when = monday ? 'last week' : 'this week so far';
 
-  const calls = m.calls;
-  const callsTile = tile({
-    label: 'Booked calls', value: calls.value, statusKey: calls.status,
-    sub: monday ? `${calls.value} calls booked on your calendar last week` : `${calls.value} booked so far this week`,
-    small: monday ? null : (calls.weekTarget ? `On pace for about ${calls.projected} by Friday (target ${calls.weekTarget})` : null),
-    bar: bar(calls.value, calls.target),
-    targetText: calls.target == null ? 'New-hire target coming' : monday ? `Target ${calls.target}` : `Pace by today ${calls.target}`,
+  // How the week went: the inputs behind the pace
+  const sw = m.slotsWeek;
+  const slotsWeekTile = tile({
+    label: 'Open slots', value: sw.value ?? '–', statusKey: sw.status,
+    sub: sw.value == null ? 'Not set up as a discovery host in Calendly yet' : `Average open discovery slots ${when} (lowest day ${sw.low})`,
+    small: t.slotsWeek != null ? `Team median ${Math.round(t.slotsWeek)}` : null,
+    bar: bar(sw.value, sw.target), targetText: 'Target 25',
   });
-  const sr = m.showRate;
-  const showTile = tile({
-    label: 'Show rate', value: fmtPct(sr.value), statusKey: sr.status,
-    sub: `${sr.live} of ${sr.booked} booked calls showed up`,
-    small: showBreakdown(sr), bar: bar(sr.value, sr.target), targetText: 'Target 80%',
-  });
-  const sl = m.slots;
-  const cal = m.calendar;
-  const slotTile = tile({
-    label: 'Open slots', value: sl.value ?? '–', statusKey: sl.status,
-    sub: sl.value == null ? 'Not set up as a discovery host in Calendly yet' : 'Discovery start times open in Calendly over the next 7 days',
-    small: cal ? `Calendar open till <b>${cal.label}</b>${cal.away ? `<br>Away (${esc(cal.away.away)}). Open evening slots when back in ${esc(cal.away.back_label)}.` : ''}` : null,
-    warn: cal?.closesEarly && !cal.away ? 'Closes by 5pm ET most days' : null,
-    bar: bar(sl.value, sl.target), targetText: 'Target 25',
+  const lv = m.live;
+  const liveTile = tile({
+    label: 'Live calls, month to date', value: lv.value, statusKey: lv.status,
+    sub: `${plural(lv.week, 'live call')} ${when}, out of ${lv.booked} booked`,
+    small: m.newHire ? 'Compared with the team once you are ramped' : null,
+    bar: bar(lv.value, lv.target), targetText: lv.target == null ? 'No target yet' : `Team median ${num(lv.target)}`,
   });
   const ar = m.avgRevenue;
   const avgTile = tile({
     label: 'Average revenue', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
-    sub: ar.closes ? `${fmtMoney(ar.rev)} revenue generated over ${ar.closes} close${ar.closes > 1 ? 's' : ''} this month` : 'No closes yet this month',
-    bar: bar(ar.value, ar.target), targetText: 'Floor $17,500',
+    sub: ar.closes ? `${fmtMoney(ar.rev)} revenue generated over ${plural(ar.closes, 'close')} this month` : 'No closes yet this month',
+    small: t.avgRevenue != null ? `Team median ${fmtMoney(t.avgRevenue)}` : null,
+    bar: bar(ar.value, ar.target), targetText: 'Target $17,500',
+  });
+  const cl = m.closes;
+  const pl = cl.pipeline;
+  const closesTile = tile({
+    label: 'Closes: actual vs projected', value: cl.projected == null ? `${cl.actual}` : `${cl.actual} <span class="of">/ ${cl.projected}</span>`,
+    statusKey: cl.status,
+    sub: pl ? `${plural(cl.actual, 'close')} so far, ${cl.projected} projected by month end` : `${plural(cl.actual, 'close')} so far. No pipeline tab yet`,
+    small: pl ? `Pipeline: <b>${pl.hc}</b> High Confidence · <b>${pl.sv}</b> Soft Verbal · <b>${pl.working}</b> Working${cl.lastWeek
+      ? `<br>Last week: ${cl.lastWeek.won} of ${cl.lastWeek.projected} projected closed or signed` : ''}` : null,
+    warn: pl?.nonstandard ? `${pl.nonstandard} leads need a status` : null,
+    bar: bar(cl.projected, cl.needed),
+    targetText: cl.needed == null ? 'No target yet' : `${cl.needed} needed for target`,
+  });
+
+  // Where we're headed: next 7 days of slots, and on track / off pace against the month target
+  const sl = m.slots;
+  const cal = m.calendar;
+  const upcomingTile = tile({
+    label: 'Upcoming slot availability', value: sl.value ?? '–', statusKey: sl.status,
+    sub: sl.value == null ? 'Not set up as a discovery host in Calendly yet' : 'Open discovery slots in Calendly over the next 7 days',
+    small: cal ? `Calendar open till <b>${cal.label}</b>${cal.away ? `<br>Away (${esc(cal.away.away)}). Open evening slots when back in ${esc(cal.away.back_label)}.` : ''}` : null,
+    warn: cal?.closesEarly && !cal.away ? 'Closes by 5pm ET most days: open later slots' : null,
+    bar: bar(sl.value, sl.target), targetText: 'Target 25',
   });
   const c = m.cash;
-  const cashTile = tile({
-    label: 'Cash collected pace', value: fmtMoney(c.value, true), statusKey: c.status,
-    sub: c.expected ? `Pace by ${m.ed.through} is ${fmtMoney(c.expected, true)} (${fmtPct(c.paceRatio)} of pace)` : 'Collected this month',
-    small: !c.monthTarget ? null : c.source === 'tracker'
-      ? `Month target ${fmtMoney(c.monthTarget, true)} (${TARGET_SOURCE[c.targetSource] ?? c.targetSource})`
-      : `Month target ${fmtMoney(c.monthTarget, true)} (provisional)`,
-    bar: bar(c.value, c.expected), targetText: c.expected ? `Pace ${fmtMoney(c.expected, true)}` : 'New-hire target coming',
-  });
-  const p = m.pipeline;
-  const pipeTile = p ? tile({
-    label: 'Projected closes', value: p.projected, statusKey: 'track',
-    sub: `${p.hc} High Confidence + ${p.sv} Soft Verbal / Reengaged in your ${month.label} pipeline`,
-    small: `${p.working} WIP (not counted)<br>${p.lastWeek
-      ? `Last week: ${p.lastWeek.won} of ${p.lastWeek.projected} projected closed or signed`
-      : 'Hit rate on last week’s projections starts Mon Oct 26'}`,
-    warn: p.nonstandard ? `${p.nonstandard} leads need a status` : null,
-    targetText: 'No target',
-  }) : tile({ label: 'Projected closes', value: '–', statusKey: 'track', sub: 'No pipeline tab yet', targetText: 'No target' });
-  const rpc = m.revPerCall;
-  const rpcTile = tile({
-    label: 'Revenue per call', value: rpc.value == null ? '–' : fmtMoney(rpc.value), statusKey: 'track',
-    sub: `${fmtMoney(rpc.rev, true)} revenue generated over ${rpc.calls} booked calls this month`, targetText: 'No target',
-  });
-  const closesTile = tile({
-    label: monday ? 'Closes last week' : 'Closes this week', value: m.closes.value, statusKey: 'track',
-    sub: m.closes.value ? `${fmtMoney(m.closes.rev)} revenue generated` : 'No closes logged yet',
-    targetText: 'No target',
+  const targetTile = !c.monthTarget ? tile({
+    label: 'Monthly target', value: '–', statusKey: 'track', sub: 'Your month target is coming', targetText: '', chip: PACE_CHIP.track,
+  }) : tile({
+    label: 'Monthly target', value: fmtMoney(c.monthTarget, true), statusKey: c.status,
+    sub: c.remaining ? `${fmtMoney(c.remaining, true)} to go in ${plural(c.daysLeft, 'business day')}` : 'Target reached',
+    small: c.remaining ? `About <b>${cl.stillNeeded}</b> more closes at $17.5K each. ${pl
+      ? `Your pipeline has <b>${pl.hc + pl.sv}</b> High Confidence + Soft Verbal leads; at 80% / 50% that is about <b>${cl.projected - cl.actual}</b> closes.`
+      : 'No pipeline tab yet.'}` : null,
+    targetText: `Month end at this pace: ${fmtMoney(c.projectedFinish, true)}`, chip: PACE_CHIP[c.status],
   });
 
-  const momCells = m.mom.map((r) => {
-    const d = r.delta;
-    const cls = d == null ? 'flat' : d > 0.02 ? 'up' : d < -0.02 ? 'down' : 'flat';
-    const arrow = d == null ? 'no September data' : `${d > 0 ? '▲' : d < 0 ? '▼' : '■'} ${Math.abs(Math.round(d * 100))}% vs ${r.kind === '$' ? fmtMoney(r.prev, true) : r.prev}`;
-    return `<div><div class="l">${r.label}</div><div class="v">${r.kind === '$' ? fmtMoney(r.now, true) : r.now}</div><div class="d ${cls}">${arrow}</div></div>`;
-  }).join('');
-
-  const t = m.tally;
-  const lede = `You hit ${t.hit} of ${t.total} targets${t.almost ? `, ${t.almost} almost` : ''} · ${m.calls.value} booked calls · ${m.closes.value} close${m.closes.value === 1 ? '' : 's'} · ${fmtMoney(m.closes.rev, true)} revenue`;
+  const lede = `${c.monthTarget ? `${fmtPct(c.paceRatio)} of pace (team median ${fmtPct(t.pace)})` : `${fmtMoney(c.value, true)} collected`} · ${plural(lv.value, 'live call')} this month · ${plural(cl.actual, 'close')}${cl.projected != null ? `, ${cl.projected} projected` : ''}`;
 
   const body = `
 <div class="eyebrow">Closer scorecard · ${monday ? 'Week in review' : 'Midweek check-in'}</div>
 <h1>${esc(name)}'s ${monday ? 'week' : 'week so far'}: ${m.ed.week_label}</h1>
 <div class="lede">${lede}</div>
-<div class="wf">
-  <div class="box wins"><h3>WINS ${monday ? 'LAST WEEK' : 'SO FAR'}</h3>${ol(wins, 'No targets hit yet. Let’s change that this week.')}</div>
-  <div class="box fixes"><h3>FOCUS ${monday ? 'THIS WEEK' : 'FOR THE REST OF THE WEEK'}</h3>${ol(fixes, 'Nothing flagged. Keep it going.')}</div>
-</div>
-<div class="section"><h2>YOUR NUMBERS VS TARGET</h2>
-<p class="key">Green: you hit the target. Yellow: almost there (75% of the target or more). Red: you missed it. Blue: a number we track, with no target. The black line on each bar is the target.</p>
-<div class="grid">${slotTile}${callsTile}${showTile}${avgTile}${cashTile}${pipeTile}${rpcTile}${closesTile}</div></div>
-<div class="section"><h2>MONTH OVER MONTH</h2>
-<p class="key">${month.label} 1 to ${m.ed.through.split(' ')[1]} compared with the same days in ${month.prev_label}.</p>
-<div class="mom">${momCells}</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports (Sales Tracker for any day without one), also used for month to date and revenue per call. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days. Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. ${m.cash.source === 'tracker' ? 'Cash pace: what the 2M tracker expects you to have collected by this day on its month curve, which is back-loaded (more cash lands late in the month), against your month target.' : 'Cash pace: month target × business days so far ÷ business days in the month.'} Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div>`;
+${paceTracker(m, month)}
+<div class="section"><h2>HOW THE WEEK WENT</h2>
+<p class="key">The inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
+<div class="grid">${slotsWeekTile}${liveTile}${avgTile}${closesTile}</div></div>
+<div class="section"><h2>WHERE WE'RE HEADED</h2>
+<p class="key">What the rest of ${month.label} needs from you.</p>
+<div class="grid two">${upcomingTile}${targetTile}</div></div>
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Open slots: discovery start times Calendly offers over the next 7 days; the week figure averages each day's count. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500.</div>`;
   return page(body);
 }
 
-export function leadershipTable(rows, data) {
+export function leadershipTable(rows, data, team) {
   const ed = data.editions.monday;
   const cell = (st, main, sub) => `<td class="${st}">${main}${sub ? `<small>${sub}</small>` : ''}</td>`;
   const body = rows.map((m) => {
-    const p = m.pipeline;
-    const mom = m.mom.find((r) => r.label === 'Revenue generated');
-    const momTxt = mom.delta == null ? '–' : `${mom.delta > 0 ? '▲' : '▼'} ${Math.abs(Math.round(mom.delta * 100))}%`;
+    const c = m.cash, cl = m.closes, pl = cl.pipeline;
     return `<tr><td>${esc(m.closer.short)}${m.newHire ? '<small>new hire</small>' : ''}</td>
-${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : m.calendar ? `till ${m.calendar.usualText}` : 'next 7 days')}
-${cell(m.calls.status, m.calls.value, m.calls.target ? `of ${m.calls.target}` : 'target pending')}
-${cell(m.showRate.status, fmtPct(m.showRate.value), `${m.showRate.live}/${m.showRate.booked}${m.showRate.noShow != null ? ` · ${m.showRate.noShow} NS · ${m.showRate.cancel} C · ${m.showRate.resched} R` : ''}${m.showRate.confirm?.total ? ` · ${m.showRate.confirm.confirmed}/${m.showRate.noShow} NS confirmed` : ''}`)}
-${cell('track', m.closes.value, fmtMoney(m.closes.rev, true))}
-${cell('track', p ? p.projected : '–', p ? `${p.hc} HC · ${p.sv} SV · ${p.working} W${p.nonstandard ? ` · ${p.nonstandard} untagged` : ''}` : 'no tab')}
-${cell(m.cash.status, fmtMoney(m.cash.value, true), m.cash.expected ? `${fmtPct(m.cash.paceRatio)} of pace` : 'target pending')}
-${cell(m.avgRevenue.status, m.avgRevenue.value == null ? '–' : fmtMoney(m.avgRevenue.value), `${m.avgRevenue.closes} closes MTD`)}
-${cell('track', m.revPerCall.value == null ? '–' : fmtMoney(m.revPerCall.value), 'MTD')}
-${cell('track', momTxt, `${fmtMoney(mom.now, true)} vs ${fmtMoney(mom.prev, true)}`)}</tr>`;
+${cell(c.status, c.monthTarget ? fmtPct(c.paceRatio) : '–', c.monthTarget ? `${fmtMoney(c.value, true)} vs ${fmtMoney(c.expected, true)}` : 'no target yet')}
+${cell(c.status, c.monthTarget ? fmtMoney(c.projectedFinish, true) : '–', c.monthTarget ? `of ${fmtMoney(c.monthTarget, true)}` : '')}
+${cell(m.slotsWeek.status, m.slotsWeek.value ?? '–', m.slotsWeek.value == null ? 'not a host' : 'daily avg last week')}
+${cell(m.live.status, m.live.value, `${m.live.week} last week`)}
+${cell(m.avgRevenue.status, m.avgRevenue.value == null ? '–' : fmtMoney(m.avgRevenue.value), `${plural(m.avgRevenue.closes, 'close')} MTD`)}
+${cell(cl.status, cl.projected == null ? cl.actual : `${cl.actual} / ${cl.projected}`, pl ? `${pl.hc} HC · ${pl.sv} SV · ${pl.working} W${pl.nonstandard ? ` · ${pl.nonstandard} untagged` : ''}${cl.needed ? ` · ${cl.needed} needed` : ''}` : 'no tab')}
+${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : m.calendar ? `till ${m.calendar.usualText}` : 'next 7 days')}</tr>`;
   }).join('');
 
-  const sum = (f) => rows.reduce((a, m) => a + (f(m) || 0), 0);
-  const tCalls = sum((m) => m.calls.value), tLive = sum((m) => m.showRate.live), tBooked = sum((m) => m.showRate.booked);
-  const tCloses = sum((m) => m.closes.value), tRevWk = sum((m) => m.closes.rev);
-  const tProj = sum((m) => m.pipeline?.projected), tCash = sum((m) => m.cash.value);
-  const tRev = sum((m) => m.avgRevenue.rev), tMtdCloses = sum((m) => m.avgRevenue.closes);
-  const hitCalls = rows.filter((m) => m.calls.status === 'hit').length, scoredCalls = rows.filter((m) => m.calls.target != null).length;
-  const total = `<tr class="total"><td>Team</td><td>–</td><td>${tCalls}<small>${hitCalls} of ${scoredCalls} hit 20</small></td><td>${fmtPct(tLive / tBooked)}<small>${tLive}/${tBooked}</small></td><td>${tCloses}<small>${fmtMoney(tRevWk, true)}</small></td><td>${tProj}</td><td>${fmtMoney(tCash, true)}</td><td>${fmtMoney(tRev / tMtdCloses)}<small>${tMtdCloses} closes MTD</small></td><td>–</td><td>–</td></tr>`;
+  const median = `<tr class="total"><td>Team median<small>fully ramped</small></td><td>${fmtPct(team.pace)}</td><td>–</td><td>${num(team.slotsWeek)}</td><td>${num(team.live)}</td><td>${fmtMoney(team.avgRevenue)}</td><td>${num(team.closes)}<small>closes MTD</small></td><td>${num(team.slots)}</td></tr>`;
 
   const html = `
 <div class="eyebrow">Closer scorecard · Leadership view</div>
-<h1>Team week: ${ed.week_label}</h1>
+<h1>Team pace: ${ed.week_label}</h1>
 <div class="lede">What each closer sees on their card, in one table. Sent ${ed.date}, 8:00am ET.</div>
-<div class="legend"><span style="--c:var(--hit)">Hit</span><span style="--c:var(--almost)">Almost (75%+)</span><span style="--c:var(--missed)">Missed</span><span style="--c:var(--track)">Tracked, no target</span></div>
-<table><thead><tr><th>Closer</th><th>Open slots<br>target 25</th><th>Booked calls<br>target 20</th><th>Show rate<br>target 80%</th><th>Closes<br>last week</th><th>Projected closes<br>HC + SV</th><th>Cash MTD<br>vs pace</th><th>Avg revenue<br>floor $17.5K</th><th>Revenue<br>per call</th><th>Revenue MoM<br>same days</th></tr></thead>
-<tbody>${body}${total}</tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}; month over month compares with the same days in September. ${data.tracker?.through?.slice(5) === ed.through_key ? 'Cash pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve.' : 'Cash pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots are Calendly discovery start times over the next 7 days, with the time each closer's calendar closes (ET). Projected closes count open High Confidence and Soft Verbal / Reengaged leads in each closer's October pipeline tab; "untagged" = open leads with a blank or non-standard status.</div>`;
+<div class="legend"><span style="--c:var(--hit)">On target / on pace</span><span style="--c:var(--almost)">Close (75%+) / slightly behind</span><span style="--c:var(--missed)">Below / off pace</span><span style="--c:var(--track)">Tracked, no target</span></div>
+<table><thead>
+<tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp">Where we're headed</th></tr>
+<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Open slots<br>target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Upcoming slots<br>next 7 days</th></tr></thead>
+<tbody>${body}${median}</tbody></table>
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${data.tracker?.through?.slice(5) === ed.through_key ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Open slots (week) average Messi's daily next-7-days Calendly counts posted that week; upcoming slots are today's count. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status.</div>`;
   return page(html, 'wide');
 }

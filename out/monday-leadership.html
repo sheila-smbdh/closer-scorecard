@@ -8,24 +8,20 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg
 .eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
 h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .lede{font-size:19px;color:var(--muted)}
-.wf{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
-.box{border-radius:14px;padding:22px 24px}
-.box h3{font-size:15px;letter-spacing:.1em;font-weight:700;margin-bottom:12px}
-.wins{background:var(--hit-bg)} .wins h3{color:var(--hit)}
-.fixes{background:var(--missed-bg)} .fixes h3{color:var(--missed)}
-.box ol{padding-left:22px;font-size:17px;line-height:1.45} .box li{margin-bottom:8px}
-.box .none{font-size:17px;color:var(--muted)}
 .section{margin-top:30px}
 .section h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin-bottom:6px}
 .section p.key{font-size:16px;color:var(--muted);line-height:1.45;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid.two{grid-template-columns:repeat(2,1fr)}
 .tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:228px}
+.grid.two .tile{min-height:190px}
 .tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
 .tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
 .tile.missed{background:var(--missed-bg);border-color:var(--missed)} .tile.missed .v{color:var(--missed)}
 .tile.track{background:var(--track-bg);border-color:var(--track)} .tile.track .v{color:var(--track)}
 .tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
 .tile .v{font-size:38px;font-weight:800;margin:6px 0 4px;letter-spacing:-.01em}
+.tile .v .of{font-size:24px;font-weight:700;opacity:.75}
 .tile .s{font-size:15px;color:#3d4248;line-height:1.35}
 .tile .small{font-size:13px;color:var(--muted);line-height:1.35;margin-top:6px}
 .tile .warn{font-size:13px;color:var(--missed);font-weight:600;margin-top:6px}
@@ -33,20 +29,40 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
-.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)}
+.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
-.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
+.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px;white-space:nowrap}
 .hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-.mom{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.mom>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.mom .l{font-size:14px;color:var(--muted);font-weight:600}
-.mom .v{font-size:26px;font-weight:800;margin:4px 0}
-.mom .d{font-size:14px;font-weight:700} .up{color:var(--hit)} .down{color:var(--missed)} .flat{color:var(--muted)}
+/* pace tracker */
+.pace{margin-top:26px;background:#fff;border:1px solid var(--line);border-top:6px solid;border-radius:14px;padding:22px 26px 20px}
+.pace.hit{border-top-color:var(--hit)} .pace.almost{border-top-color:var(--almost)} .pace.missed{border-top-color:var(--missed)} .pace.track{border-top-color:var(--track)}
+.pace-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.pace .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;color:var(--muted)}
+.pace .big{font-size:52px;font-weight:800;letter-spacing:-.02em;margin:4px 0 2px}
+.pace .big span{font-size:22px;font-weight:700;color:var(--muted)}
+.pace.hit .big{color:var(--hit)} .pace.almost .big{color:var(--almost-ink)} .pace.missed .big{color:var(--missed)} .pace.track .big{color:var(--track)}
+.pace .s{font-size:16px;color:#3d4248;line-height:1.4;max-width:720px}
+.pace .chip{font-size:14px;padding:6px 14px;margin-top:4px}
+.ptrack{position:relative;height:22px;background:#eeece7;border-radius:11px;margin:26px 0 0}
+.ptrack i{position:absolute;left:0;top:0;bottom:0;border-radius:11px}
+.pace.hit .ptrack i{background:var(--hit)} .pace.almost .ptrack i{background:var(--almost)} .pace.missed .ptrack i{background:var(--missed)} .pace.track .ptrack i{background:var(--track)}
+.ptrack b{position:absolute;top:-7px;width:4px;height:36px;margin-left:-2px;border-radius:2px}
+.ptrack b.mk-pace{background:var(--ink)} .ptrack b.mk-team{background:var(--track)}
+.plabels{position:relative;height:46px;margin-top:6px;font-size:13px;color:var(--muted)}
+.plabels span{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap;line-height:1.3}
+.plabels span b{display:block;font-size:15px;color:var(--ink)}
+.plabels span.mk-team b{color:var(--track)}
+.plabels span.end{right:0;transform:none;text-align:right}
+.pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;padding-top:16px;border-top:1px solid var(--line)}
+.pstats .l{font-size:12.5px}
+.pstats .v{font-size:28px;font-weight:800;margin:4px 0 2px}
+.pstats .s{font-size:14px;color:var(--muted)}
 .footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
 /* leadership table */
 .wide{width:1500px}
 table{border-collapse:separate;border-spacing:0 6px;width:100%;font-size:15px}
 th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 10px;font-weight:700;vertical-align:bottom}
+th.grp{color:var(--track);border-bottom:2px solid var(--track);padding-bottom:6px}
 td{padding:11px 10px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 td:first-child{border-left:1px solid var(--line);border-radius:10px 0 0 10px;font-weight:700}
 td:last-child{border-right:1px solid var(--line);border-radius:0 10px 10px 0}
@@ -60,126 +76,102 @@ tr.total td{background:#f1efea;font-weight:800}
 .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
 </style></head><body><div class="card wide">
 <div class="eyebrow">Closer scorecard · Leadership view</div>
-<h1>Team week: Mon Oct 12 to Sun Oct 18</h1>
+<h1>Team pace: Mon Oct 12 to Sun Oct 18</h1>
 <div class="lede">What each closer sees on their card, in one table. Sent Monday, Oct 19, 8:00am ET.</div>
-<div class="legend"><span style="--c:var(--hit)">Hit</span><span style="--c:var(--almost)">Almost (75%+)</span><span style="--c:var(--missed)">Missed</span><span style="--c:var(--track)">Tracked, no target</span></div>
-<table><thead><tr><th>Closer</th><th>Open slots<br>target 25</th><th>Booked calls<br>target 20</th><th>Show rate<br>target 80%</th><th>Closes<br>last week</th><th>Projected closes<br>HC + SV</th><th>Cash MTD<br>vs pace</th><th>Avg revenue<br>floor $17.5K</th><th>Revenue<br>per call</th><th>Revenue MoM<br>same days</th></tr></thead>
+<div class="legend"><span style="--c:var(--hit)">On target / on pace</span><span style="--c:var(--almost)">Close (75%+) / slightly behind</span><span style="--c:var(--missed)">Below / off pace</span><span style="--c:var(--track)">Tracked, no target</span></div>
+<table><thead>
+<tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp">Where we're headed</th></tr>
+<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Open slots<br>target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Upcoming slots<br>next 7 days</th></tr></thead>
 <tbody><tr><td>Owen</td>
-<td class="hit">36<small>till 6pm ET</small></td>
-<td class="hit">23<small>of 20</small></td>
-<td class="almost">78%<small>18/23 · 3 NS · 1 C · 1 R · 1/3 NS confirmed</small></td>
-<td class="track">1<small>$20K</small></td>
-<td class="track">10<small>2 HC · 8 SV · 3 W</small></td>
-<td class="almost">$97K<small>89% of pace</small></td>
+<td class="missed">61%<small>$97K vs $160K</small></td>
+<td class="missed">$253K<small>of $417K</small></td>
+<td class="hit">39<small>daily avg last week</small></td>
+<td class="hit">26<small>18 last week</small></td>
 <td class="hit">$19,400<small>5 closes MTD</small></td>
-<td class="track">$2,310<small>MTD</small></td>
-<td class="track">▼ 53%<small>$97K vs $206K</small></td></tr><tr><td>Adam</td>
-<td class="hit">28<small>till 9pm ET</small></td>
-<td class="missed">6<small>of 20</small></td>
-<td class="almost">67%<small>4/6 · 2 NS · 0 C · 0 R · 2/2 NS confirmed</small></td>
-<td class="track">1<small>$18K</small></td>
-<td class="track">7<small>5 HC · 2 SV · 6 W</small></td>
-<td class="missed">$68K<small>62% of pace</small></td>
+<td class="missed">5 / 11<small>2 HC · 8 SV · 3 W · 24 needed</small></td>
+<td class="hit">36<small>till 6pm ET</small></td></tr><tr><td>Adam</td>
+<td class="missed">62%<small>$68K vs $109K</small></td>
+<td class="missed">$177K<small>of $285K</small></td>
+<td class="hit">31<small>daily avg last week</small></td>
+<td class="almost">23<small>4 last week</small></td>
 <td class="missed">$17,000<small>4 closes MTD</small></td>
-<td class="track">$2,194<small>MTD</small></td>
-<td class="track">▼ 55%<small>$68K vs $151K</small></td></tr><tr><td>JZ</td>
-<td class="hit">27<small>till 5pm ET</small></td>
-<td class="missed">8<small>of 20</small></td>
-<td class="almost">75%<small>6/8 · 1 NS · 1 C · 0 R · 1/1 NS confirmed</small></td>
-<td class="track">2<small>$37.5K</small></td>
-<td class="track">11<small>5 HC · 6 SV · 4 W</small></td>
-<td class="missed">$37.5K<small>34% of pace</small></td>
+<td class="missed">4 / 9<small>5 HC · 2 SV · 6 W · 17 needed</small></td>
+<td class="hit">28<small>till 9pm ET</small></td></tr><tr><td>JZ</td>
+<td class="missed">27%<small>$37.5K vs $139K</small></td>
+<td class="missed">$97.9K<small>of $363K</small></td>
+<td class="hit">27<small>daily avg last week</small></td>
+<td class="missed">16<small>6 last week</small></td>
 <td class="hit">$18,750<small>2 closes MTD</small></td>
-<td class="track">$1,293<small>MTD</small></td>
-<td class="track">▼ 28%<small>$37.5K vs $52K</small></td></tr><tr><td>VeJohn</td>
-<td class="missed">12<small>till 9pm ET</small></td>
-<td class="almost">17<small>of 20</small></td>
-<td class="almost">76%<small>13/17 · 2 NS · 2 C · 0 R · 2/2 NS confirmed</small></td>
-<td class="track">2<small>$35K</small></td>
-<td class="track">4<small>3 HC · 1 SV · 1 W</small></td>
-<td class="missed">$81K<small>74% of pace</small></td>
+<td class="missed">2 / 9<small>5 HC · 6 SV · 4 W · 21 needed</small></td>
+<td class="hit">27<small>till 5pm ET</small></td></tr><tr><td>VeJohn</td>
+<td class="missed">80%<small>$81K vs $102K</small></td>
+<td class="missed">$211K<small>of $266K</small></td>
+<td class="missed">13<small>daily avg last week</small></td>
+<td class="hit">27<small>13 last week</small></td>
 <td class="missed">$16,200<small>5 closes MTD</small></td>
-<td class="track">$2,314<small>MTD</small></td>
-<td class="track">▼ 32%<small>$81K vs $119K</small></td></tr><tr><td>Julien</td>
-<td class="hit">27<small>till 1pm ET</small></td>
-<td class="missed">1<small>of 20</small></td>
-<td class="hit">100%<small>1/1 · 0 NS · 0 C · 0 R</small></td>
-<td class="track">1<small>$15K</small></td>
-<td class="track">12<small>2 HC · 10 SV · 4 W</small></td>
-<td class="missed">$15K<small>14% of pace</small></td>
-<td class="missed">$15,000<small>1 closes MTD</small></td>
-<td class="track">$882<small>MTD</small></td>
-<td class="track">▼ 17%<small>$15K vs $18K</small></td></tr><tr><td>Nick</td>
-<td class="missed">16<small>till 5pm ET</small></td>
-<td class="almost">16<small>of 20</small></td>
-<td class="missed">56%<small>9/16 · 7 NS · 0 C · 0 R · 6/7 NS confirmed</small></td>
-<td class="track">2<small>$34K</small></td>
-<td class="track">0<small>0 HC · 0 SV · 0 W · 32 untagged</small></td>
-<td class="missed">$69K<small>63% of pace</small></td>
+<td class="missed">5 / 8<small>3 HC · 1 SV · 1 W · 16 needed</small></td>
+<td class="missed">12<small>till 9pm ET</small></td></tr><tr><td>Julien</td>
+<td class="missed">20%<small>$15K vs $74.8K</small></td>
+<td class="missed">$39.2K<small>of $195K</small></td>
+<td class="hit">29<small>daily avg last week</small></td>
+<td class="missed">13<small>1 last week</small></td>
+<td class="missed">$15,000<small>1 close MTD</small></td>
+<td class="missed">1 / 8<small>2 HC · 10 SV · 4 W · 12 needed</small></td>
+<td class="hit">27<small>till 1pm ET</small></td></tr><tr><td>Nick</td>
+<td class="missed">63%<small>$69K vs $110K</small></td>
+<td class="missed">$180K<small>of $286K</small></td>
+<td class="hit">29<small>daily avg last week</small></td>
+<td class="hit">30<small>9 last week</small></td>
 <td class="missed">$17,250<small>4 closes MTD</small></td>
-<td class="track">$1,605<small>MTD</small></td>
-<td class="track">▼ 46%<small>$69K vs $129K</small></td></tr><tr><td>Omar</td>
-<td class="hit">27<small>till 4pm ET</small></td>
-<td class="hit">25<small>of 20</small></td>
-<td class="missed">56%<small>14/25 · 8 NS · 2 C · 1 R · 6/8 NS confirmed</small></td>
-<td class="track">0<small>$0</small></td>
-<td class="track">7<small>2 HC · 5 SV · 4 W</small></td>
-<td class="missed">$15K<small>14% of pace</small></td>
-<td class="missed">$15,000<small>1 closes MTD</small></td>
-<td class="track">$294<small>MTD</small></td>
-<td class="track">▼ 86%<small>$15K vs $106K</small></td></tr><tr><td>Harry</td>
-<td class="hit">34<small>till 6pm ET</small></td>
-<td class="missed">14<small>of 20</small></td>
-<td class="almost">71%<small>10/14 · 2 NS · 2 C · 0 R · 1/2 NS confirmed</small></td>
-<td class="track">0<small>$0</small></td>
-<td class="track">6<small>5 HC · 1 SV · 10 W · 3 untagged</small></td>
-<td class="missed">$39K<small>36% of pace</small></td>
+<td class="missed">4 / 4<small>0 HC · 0 SV · 0 W · 32 untagged · 17 needed</small></td>
+<td class="missed">16<small>till 5pm ET</small></td></tr><tr><td>Omar</td>
+<td class="missed">14%<small>$15K vs $106K</small></td>
+<td class="missed">$39.2K<small>of $276K</small></td>
+<td class="hit">32<small>daily avg last week</small></td>
+<td class="hit">36<small>14 last week</small></td>
+<td class="missed">$15,000<small>1 close MTD</small></td>
+<td class="missed">1 / 5<small>2 HC · 5 SV · 4 W · 16 needed</small></td>
+<td class="hit">27<small>till 4pm ET</small></td></tr><tr><td>Harry</td>
+<td class="missed">39%<small>$39K vs $99.9K</small></td>
+<td class="missed">$102K<small>of $261K</small></td>
+<td class="hit">25<small>daily avg last week</small></td>
+<td class="hit">30<small>10 last week</small></td>
 <td class="hit">$19,500<small>2 closes MTD</small></td>
-<td class="track">$1,026<small>MTD</small></td>
-<td class="track">▼ 45%<small>$39K vs $70.5K</small></td></tr><tr><td>Solomon</td>
-<td class="hit">35<small>till 10pm ET</small></td>
-<td class="missed">12<small>of 20</small></td>
-<td class="almost">67%<small>8/12 · 4 NS · 0 C · 0 R · 3/4 NS confirmed</small></td>
-<td class="track">3<small>$56K</small></td>
-<td class="track">0<small>0 HC · 0 SV · 0 W · 6 untagged</small></td>
-<td class="missed">$56K<small>51% of pace</small></td>
+<td class="missed">2 / 7<small>5 HC · 1 SV · 10 W · 3 untagged · 15 needed</small></td>
+<td class="hit">34<small>till 6pm ET</small></td></tr><tr><td>Solomon</td>
+<td class="missed">73%<small>$56K vs $76.6K</small></td>
+<td class="missed">$146K<small>of $200K</small></td>
+<td class="hit">62<small>daily avg last week</small></td>
+<td class="hit">31<small>8 last week</small></td>
 <td class="hit">$18,667<small>3 closes MTD</small></td>
-<td class="track">$1,120<small>MTD</small></td>
-<td class="track">▼ 37%<small>$56K vs $88.5K</small></td></tr><tr><td>Daniel</td>
-<td class="hit">37<small>till 6pm ET</small></td>
-<td class="missed">8<small>of 20</small></td>
-<td class="almost">63%<small>5/8 · 2 NS · 0 C · 1 R · 1/2 NS confirmed</small></td>
-<td class="track">0<small>$0</small></td>
-<td class="track">0<small>0 HC · 0 SV · 0 W · 11 untagged</small></td>
-<td class="missed">$0<small>0% of pace</small></td>
+<td class="missed">3 / 3<small>0 HC · 0 SV · 0 W · 6 untagged · 12 needed</small></td>
+<td class="hit">35<small>till 10pm ET</small></td></tr><tr><td>Daniel</td>
+<td class="missed">0%<small>$0 vs $76.6K</small></td>
+<td class="missed">$0<small>of $200K</small></td>
+<td class="hit">46<small>daily avg last week</small></td>
+<td class="missed">15<small>5 last week</small></td>
 <td class="track">–<small>0 closes MTD</small></td>
-<td class="track">$0<small>MTD</small></td>
-<td class="track">▼ 100%<small>$0 vs $32.5K</small></td></tr><tr><td>Kevin</td>
-<td class="almost">21<small>till 8pm ET</small></td>
-<td class="almost">15<small>of 20</small></td>
-<td class="almost">67%<small>10/15 · 3 NS · 2 C · 0 R · 3/3 NS confirmed</small></td>
-<td class="track">2<small>$36K</small></td>
-<td class="track">0<small>0 HC · 0 SV · 0 W · 8 untagged</small></td>
-<td class="missed">$42K<small>39% of pace</small></td>
+<td class="missed">0 / 0<small>0 HC · 0 SV · 0 W · 11 untagged · 12 needed</small></td>
+<td class="hit">37<small>till 6pm ET</small></td></tr><tr><td>Kevin</td>
+<td class="missed">55%<small>$42K vs $76.6K</small></td>
+<td class="missed">$110K<small>of $200K</small></td>
+<td class="hit">36<small>daily avg last week</small></td>
+<td class="hit">26<small>10 last week</small></td>
 <td class="hit">$18,000<small>2 closes MTD</small></td>
-<td class="track">$878<small>MTD</small></td>
-<td class="track">▼ 74%<small>$36K vs $137K</small></td></tr><tr><td>Oliver<small>new hire</small></td>
+<td class="missed">2 / 2<small>0 HC · 0 SV · 0 W · 8 untagged · 12 needed</small></td>
+<td class="almost">21<small>till 8pm ET</small></td></tr><tr><td>Oliver<small>new hire</small></td>
+<td class="missed">0%<small>$0 vs $19.8K</small></td>
+<td class="missed">$0<small>of $51.6K</small></td>
 <td class="track">–<small>not a host</small></td>
-<td class="track">3<small>target pending</small></td>
-<td class="hit">100%<small>3/3</small></td>
-<td class="track">0<small>$0</small></td>
-<td class="track">–<small>no tab</small></td>
-<td class="track">$0<small>target pending</small></td>
+<td class="track">3<small>3 last week</small></td>
 <td class="track">–<small>0 closes MTD</small></td>
-<td class="track">$0<small>MTD</small></td>
-<td class="track">–<small>$0 vs $0</small></td></tr><tr><td>Tyler<small>new hire</small></td>
+<td class="track">0<small>no tab</small></td>
+<td class="track">–<small>not a host</small></td></tr><tr><td>Tyler<small>new hire</small></td>
+<td class="track">–<small>no target yet</small></td>
+<td class="track">–</td>
 <td class="track">–<small>not a host</small></td>
-<td class="track">9<small>target pending</small></td>
-<td class="hit">100%<small>9/9</small></td>
-<td class="track">0<small>$0</small></td>
-<td class="track">–<small>no tab</small></td>
-<td class="track">$0<small>target pending</small></td>
+<td class="track">9<small>9 last week</small></td>
 <td class="track">–<small>0 closes MTD</small></td>
-<td class="track">$0<small>MTD</small></td>
-<td class="track">–<small>$0 vs $0</small></td></tr><tr class="total"><td>Team</td><td>–</td><td>157<small>2 of 11 hit 20</small></td><td>70%<small>110/157</small></td><td>14<small>$252K</small></td><td>57</td><td>$520K</td><td>$17,707<small>29 closes MTD</small></td><td>–</td><td>–</td></tr></tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to Oct 18; month over month compares with the same days in September. Cash pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker. Slots are Calendly discovery start times over the next 7 days, with the time each closer's calendar closes (ET). Projected closes count open High Confidence and Soft Verbal / Reengaged leads in each closer's October pipeline tab; "untagged" = open leads with a blank or non-standard status.</div></div></body></html>
+<td class="track">0<small>no tab</small></td>
+<td class="track">–<small>not a host</small></td></tr><tr class="total"><td>Team median<small>fully ramped</small></td><td>55%</td><td>–</td><td>31</td><td>26</td><td>$17,625</td><td>2<small>closes MTD</small></td><td>27</td></tr></tbody></table>
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to Oct 18. Pace comes from the 2M tracker: each closer's month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target. Open slots (week) average Messi's daily next-7-days Calendly counts posted that week; upcoming slots are today's count. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's October pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status.</div></div></body></html>

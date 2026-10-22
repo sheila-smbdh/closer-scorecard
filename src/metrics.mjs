@@ -1,13 +1,10 @@
 // Turns the raw pulls (activity windows, pipeline counts, slots) into scorecard
 // metrics with a status per tile. Every definition here is mirrored in
-// docs/METRICS.md; change both together.
+// the README metric table; change both together.
 
 export const TARGETS = {
-  callsPerWorkday: 4,      // booked calls, fully ramped closers
-  callsPerWeek: 20,
   slotsPerWeek: 25,        // open discovery start times, next 7 days
-  lateCloseHour: 17,       // calendars that close by 5pm ET most weekdays get a Focus item
-  showRate: 0.8,
+  lateCloseHour: 17,       // calendars that close by 5pm ET most weekdays get a warning on the slots tile
   avgRevenueFloor: 17500,  // MTD revenue generated / closes
   monthlyCash: 200000,     // fallback straight-line pace, only when the snapshot has no tracker pull
 };
@@ -23,7 +20,8 @@ export function status(value, target) {
   return 'missed';
 }
 
-const pct = (a, b) => (b ? a / b : null);
+// Share of open pipeline leads expected to close by month end (Friday pipeline report KPI)
+export const PIPELINE_KPI = { hc: 0.8, sv: 0.5 };
 
 // Tracker pace.status -> tile color
 const TRACKER_STATUS = { ahead: 'hit', on_pace: 'hit', slightly_behind: 'almost', behind: 'missed' };
@@ -53,16 +51,11 @@ export function bookedShowed(data, key, from, to) {
   return t;
 }
 
-// Same day-of-month last month: "10-18" -> "09-18"
-const prevMonth = (d) => `${String(Number(d.slice(0, 2)) - 1).padStart(2, '0')}${d.slice(2)}`;
-
 export function closerMetrics(data, closer, edition) {
   const ed = data.editions[edition];
   const act = data.activity[closer.key];
   const monday = edition === 'monday';
-  const week = monday ? act.wk : act.tw;
   const mtd = monday ? act.mtd : act.mtd2;
-  const prevSameDay = monday ? act.sep_sd : act.sep_sd2;
   const bdElapsed = monday ? data.month.business_days_elapsed_mon : data.month.business_days_elapsed_wed;
   const newHire = closer.new_hire;
 
@@ -70,35 +63,29 @@ export function closerMetrics(data, closer, edition) {
   const wk = bookedShowed(data, k, ed.week_days[0], ed.through_key);
   const monthStart = `${ed.through_key.slice(0, 2)}-01`;
   const mtdBS = bookedShowed(data, k, monthStart, ed.through_key);
-  const prevBS = bookedShowed(data, k, prevMonth(monthStart), prevMonth(ed.through_key));
-  const booked = wk.booked, showed = wk.showed;
   const source = wk.hasEod ? 'eod' : 'sales_tracker';
 
-  // Booked calls: full week target on Monday, pace-to-date target on Wednesday
-  const callsTarget = newHire ? null
-    : monday ? TARGETS.callsPerWeek : TARGETS.callsPerWorkday * ed.workdays_elapsed;
-  const calls = {
-    value: booked, target: callsTarget, weekTarget: newHire ? null : TARGETS.callsPerWeek,
-    status: status(booked, callsTarget), source,
-    projected: monday ? null : Math.round((booked / ed.workdays_elapsed) * 5),
-  };
+  // Live calls: showed, month to date (EOD + Sales Tracker fills). Scored against the team median in withTeam().
+  const live = { value: mtdBS.showed, week: wk.showed, booked: wk.booked, source, status: 'track' };
 
-  const showRate = {
-    value: pct(showed, booked), live: showed, booked, target: TARGETS.showRate,
-    noShow: wk.hasEod ? wk.noShow : null, cancel: wk.hasEod ? wk.cancel : null, resched: wk.hasEod ? wk.resched : null,
-    filled: wk.filled,
-    confirm: data.noshow_confirm?.[edition]?.[closer.key] ?? null,
+  // Open slots during the week: average of Messi's daily next-7-days counts posted that week
+  const posts = Object.entries(data.messi_slots ?? {})
+    .filter(([d]) => d >= ed.week_days[0] && d <= ed.through_key)
+    .map(([, byCloser]) => byCloser[k]).filter((v) => v != null);
+  const weekAvg = posts.length ? Math.round(posts.reduce((a, v) => a + v, 0) / posts.length) : null;
+  const slotsWeek = {
+    value: weekAvg, posts: posts.length, low: posts.length ? Math.min(...posts) : null, target: TARGETS.slotsPerWeek,
+    status: weekAvg == null ? 'track' : status(weekAvg, TARGETS.slotsPerWeek),
   };
-  showRate.status = booked ? status(showRate.value, TARGETS.showRate) : 'track';
-
-  const slotCount = data.slots[edition][closer.key];
+  // Upcoming: the edition-day post, next 7 days
+  const slotCount = data.slots[edition][k];
   const slots = {
     value: slotCount, target: TARGETS.slotsPerWeek,
     status: slotCount == null ? 'track' : status(slotCount, TARGETS.slotsPerWeek),
   };
 
-  const calendar = calendarClose(data.calendar_close_et?.[closer.key]);
-  const away = data.closer_notes?.[closer.key] ?? null;
+  const calendar = calendarClose(data.calendar_close_et?.[k]);
+  const away = data.closer_notes?.[k] ?? null;
   if (calendar && away) calendar.away = away;
 
   const avgRevenue = {
@@ -110,7 +97,7 @@ export function closerMetrics(data, closer, edition) {
     : avgRevenue.value >= TARGETS.avgRevenueFloor ? 'hit' : 'missed';
 
   // Cash pace: the tracker read API (back-loaded month curve, per-closer targets) when the snapshot has it
-  const tp = data.tracker?.through?.slice(5) === ed.through_key ? data.tracker.closers?.[closer.key] : null;
+  const tp = data.tracker?.through?.slice(5) === ed.through_key ? data.tracker.closers?.[k] : null;
   let cash;
   if (tp) {
     const hasPace = tp.expected_cash != null && tp.target_source !== 'ramping_no_target';
@@ -129,34 +116,51 @@ export function closerMetrics(data, closer, edition) {
       paceRatio: cashExpected ? mtd[CASH] / cashExpected : null,
     };
   }
+  // Month-end at the current pace: % of pace carries through the curve, so it lands on % of the month target
+  cash.projectedFinish = cash.paceRatio != null && cash.monthTarget ? cash.paceRatio * cash.monthTarget : null;
+  cash.remaining = cash.monthTarget ? Math.max(0, cash.monthTarget - (cash.value ?? 0)) : null;
+  cash.daysLeft = data.month.business_days - bdElapsed;
 
-  const revPerCall = { value: mtdBS.booked ? mtd[REV] / mtdBS.booked : null, rev: mtd[REV], calls: mtdBS.booked, status: 'track' };
-
-  const p = data.pipeline[closer.key];
-  const pipeline = p ? {
-    projected: p.hc + p.sv, hc: p.hc, sv: p.sv, working: p.working, nonstandard: p.nonstandard,
-    lastWeek: data.pipeline_last_week?.[closer.key] ?? null, status: 'track',
-  } : null;
-
-  const closes = { value: week[CLOSES], rev: week[REV], status: 'track' };
-  const salesTrackerWeek = { booked: week[CALLS], showed: week[LIVE] };
-
-  const mom = [
-    ['Booked calls', mtdBS.booked, prevBS.booked, 'n'],
-    ['Closes', mtd[CLOSES], prevSameDay[CLOSES], 'n'],
-    ['Revenue generated', mtd[REV], prevSameDay[REV], '$'],
-    ['Cash collected', mtd[CASH], prevSameDay[CASH], '$'],
-  ].map(([label, now, prev, kind]) => ({ label, now, prev, kind, delta: prev ? (now - prev) / prev : null }));
-
-  const scored = [calls, showRate, slots, avgRevenue, cash].filter((m) => m.status !== 'track');
-  const tally = {
-    hit: scored.filter((m) => m.status === 'hit').length,
-    almost: scored.filter((m) => m.status === 'almost').length,
-    total: scored.length,
+  // Closes: actual (Close 1, month to date) vs projected month-end = actual + KPI share of open HC and SV
+  const p = data.pipeline[k];
+  const closes = {
+    actual: mtd[CLOSES],
+    needed: cash.monthTarget ? Math.ceil(cash.monthTarget / TARGETS.avgRevenueFloor) : null,
+    stillNeeded: cash.remaining != null ? Math.ceil(cash.remaining / TARGETS.avgRevenueFloor) : null,
+    pipeline: p ? { hc: p.hc, sv: p.sv, working: p.working, nonstandard: p.nonstandard } : null,
+    lastWeek: data.pipeline_last_week?.[k] ?? null,
   };
+  closes.projected = p ? Math.round(mtd[CLOSES] + PIPELINE_KPI.hc * p.hc + PIPELINE_KPI.sv * p.sv) : null;
+  closes.status = closes.projected == null || closes.needed == null ? 'track' : status(closes.projected, closes.needed);
 
-  const filled = { week: wk.filled, mtd: mtdBS.filled, prev: prevBS.filled };
-  return { closer, edition, ed, salesTrackerWeek, filled, calls, showRate, slots, calendar, avgRevenue, cash, revPerCall, pipeline, closes, mom, tally, newHire };
+  const salesTrackerWeek = { booked: act[monday ? 'wk' : 'tw'][CALLS], showed: act[monday ? 'wk' : 'tw'][LIVE] };
+  const filled = { week: wk.filled, mtd: mtdBS.filled };
+  return { closer, edition, ed, salesTrackerWeek, filled, live, slotsWeek, slots, calendar, avgRevenue, cash, closes, newHire };
+}
+
+// Team medians over fully ramped closers; live calls are scored against the median (no fixed target)
+export function withTeam(metrics) {
+  const ramped = metrics.filter((m) => !m.newHire);
+  const team = {
+    pace: median(ramped.map((m) => m.cash.paceRatio)),
+    live: median(ramped.map((m) => m.live.value)),
+    slotsWeek: median(ramped.map((m) => m.slotsWeek.value)),
+    slots: median(ramped.map((m) => m.slots.value)),
+    avgRevenue: median(ramped.map((m) => m.avgRevenue.value)),
+    closes: median(ramped.map((m) => m.closes.actual)),
+  };
+  for (const m of metrics) {
+    m.team = team;
+    m.live.target = m.newHire ? null : team.live;
+    m.live.status = status(m.live.value, m.live.target);
+  }
+  return team;
+}
+
+export function median(values) {
+  const v = values.filter((x) => x != null).sort((a, b) => a - b);
+  if (!v.length) return null;
+  return v.length % 2 ? v[(v.length - 1) / 2] : (v[v.length / 2 - 1] + v[v.length / 2]) / 2;
 }
 
 // "18:00" -> 18, and a short label like "6pm ET (5pm Thu to Fri)"
@@ -177,36 +181,6 @@ function calendarClose(byDay) {
   return { usual, label: `${fmt(usual)} ET${oddText}`, usualText: `${fmt(usual)} ET`, closesEarly: earlyDays >= 3 };
 }
 
-// One or two short bullets each, most important first
-export function winsAndFixes(m) {
-  const wins = [], fixes = [];
-  const money = (v) => fmtMoney(v, true);
-  const monday = m.edition === 'monday';
-
-  if (m.slots.status === 'hit') wins.push(['Open slots', `${m.slots.value} open, target 25.`]);
-  else if (m.slots.status !== 'track') fixes.push(['Open slots', `${m.slots.value} of 25. Open more Calendly time.`]);
-
-  if (m.calls.status === 'hit') wins.push(['Booked calls', `${m.calls.value}, target ${m.calls.target}.`]);
-  else if (m.calls.target != null) fixes.push(['Booked calls', monday ? `${m.calls.value} of ${m.calls.target}.` : `${m.calls.value} vs ${m.calls.target} pace by today.`]);
-
-  if (m.showRate.status === 'hit') wins.push(['Show rate', `${fmtPct(m.showRate.value)}, target 80%.`]);
-  else if (m.showRate.status !== 'track') fixes.push(['Show rate', m.showRate.confirm?.total
-    ? `${fmtPct(m.showRate.value)}. ${m.showRate.confirm.confirmed} of ${m.showRate.noShow} no-shows were confirmed.`
-    : `${fmtPct(m.showRate.value)}, target 80%.`]);
-
-  if (m.calendar?.closesEarly && !m.calendar.away) fixes.push(['Later slots', `Calendar closes ${m.calendar.usualText}. Open slots after 5pm ET.`]);
-
-  if (m.avgRevenue.status === 'hit') wins.push(['Average revenue', `${money(m.avgRevenue.value)}, above the $17.5K floor.`]);
-  else if (m.avgRevenue.status === 'missed') fixes.push(['Average revenue', `${money(m.avgRevenue.value)}, below the $17.5K floor.`]);
-
-  if (m.cash.status === 'hit') wins.push(['Cash', `${money(m.cash.value)}, ahead of pace.`]);
-  else if (m.cash.status !== 'track') fixes.push(['Cash', `${money(m.cash.value)} vs ${money(m.cash.expected)} pace.`]);
-
-  if (m.pipeline?.nonstandard) fixes.push(['Pipeline sheet', `Tag ${m.pipeline.nonstandard} leads with a status.`]);
-
-  return { wins: wins.slice(0, 2), fixes: fixes.slice(0, 2) };
-}
-
 // Things Sheila should see on every run; never shown to closers
 export function runFlags(data, metrics, edition) {
   const flags = [];
@@ -214,17 +188,17 @@ export function runFlags(data, metrics, edition) {
   for (const m of metrics) {
     const k = m.closer.key;
     const st = m.salesTrackerWeek;
-    if (m.calls.source === 'sales_tracker') flags.push(`${k}: no EOD reports at all, booked/showed taken from the Sales Tracker.`);
+    if (m.live.source === 'sales_tracker') flags.push(`${k}: no EOD reports at all, booked/showed taken from the Sales Tracker.`);
     else if (m.filled.week.length) flags.push(`${k}: no EOD report for ${m.filled.week.join(', ')}; filled from the Sales Tracker.`);
-    if (m.calls.source === 'eod' && (st.booked !== m.calls.value || st.showed !== m.showRate.live)) {
-      flags.push(`${k}: week totals (EOD + fills) ${m.calls.value} booked / ${m.showRate.live} showed, Sales Tracker alone ${st.booked} / ${st.showed}.`);
+    if (m.live.source === 'eod' && (st.booked !== m.live.booked || st.showed !== m.live.week)) {
+      flags.push(`${k}: week totals (EOD + fills) ${m.live.booked} booked / ${m.live.week} showed, Sales Tracker alone ${st.booked} / ${st.showed}.`);
     }
     const mtdFills = m.filled.mtd.filter((d) => !m.filled.week.includes(d));
-    if (m.calls.source === 'eod' && mtdFills.length) flags.push(`${k}: month to date also filled from the Sales Tracker on ${mtdFills.join(', ')}.`);
+    if (m.live.source === 'eod' && mtdFills.length) flags.push(`${k}: month to date also filled from the Sales Tracker on ${mtdFills.join(', ')}.`);
     const inferred = (data.eod_inferred?.[k] ?? []).filter((d) => d >= ed.week_days[0] && d <= ed.through_key);
     if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
-    if (m.pipeline?.nonstandard) flags.push(`${k}: ${m.pipeline.nonstandard} open pipeline leads have no standard status.`);
-    if (!m.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
+    if (m.closes.pipeline?.nonstandard) flags.push(`${k}: ${m.closes.pipeline.nonstandard} open pipeline leads have no standard status.`);
+    if (!m.closes.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
     if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {
       flags.push(`${k}: cash through ${ed.through} is $${m.cash.value?.toLocaleString('en-US')} in the tracker, $${m.cash.salesTrackerCash?.toLocaleString('en-US')} in the Sales Tracker snapshot.`);
     }
