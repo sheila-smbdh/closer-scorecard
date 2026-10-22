@@ -167,10 +167,12 @@ export function closerCard(m, month) {
   // How the week went: the inputs behind the pace
   const sw = m.slotsWeek;
   const slotsWeekTile = tile({
-    label: 'Open slots', value: sw.value ?? '–', statusKey: sw.status,
-    sub: sw.value == null ? 'Not set up as a discovery host in Calendly yet' : `Average open discovery slots ${when} (lowest day ${sw.low})`,
-    small: t.slotsWeek != null ? `Team median ${Math.round(t.slotsWeek)}` : null,
-    bar: bar(sw.value, sw.target), targetText: 'Target 25',
+    label: 'Discovery slots', value: sw.value ?? '–', statusKey: sw.status,
+    sub: sw.value == null ? 'Not set up as a discovery host in Calendly yet' : sw.booked == null
+      ? `Average open discovery slots over the next 7 days, ${when}`
+      : `Average day ${when}: <b>${sw.booked}</b> booked + <b>${sw.open}</b> still open over the next 7 days`,
+    small: sw.value == null ? null : `Lowest day ${sw.low}${t.slotsWeek != null ? ` · team median ${Math.round(t.slotsWeek)}` : ''}`,
+    bar: bar(sw.value, sw.target), targetText: 'Target 25 (booked + open)',
   });
   const lv = m.live;
   const liveTile = tile({
@@ -196,7 +198,7 @@ export function closerCard(m, month) {
       ? `<br>Last week: ${cl.lastWeek.won} of ${cl.lastWeek.projected} projected closed or signed` : ''}` : null,
     warn: pl?.nonstandard ? `${pl.nonstandard} leads need a status` : null,
     bar: bar(cl.projected, cl.needed),
-    targetText: cl.needed == null ? 'No target yet' : `${cl.needed} needed for target`,
+    targetText: cl.needed == null ? 'No target yet' : `Need ${cl.needed} for ${fmtMoney(m.cash.monthTarget, true)}`,
   });
 
   // Where we're headed: next 7 days of slots, and on track / off pace against the month target
@@ -204,10 +206,12 @@ export function closerCard(m, month) {
   const cal = m.calendar;
   const upcomingTile = tile({
     label: 'Upcoming slot availability', value: sl.value ?? '–', statusKey: sl.status,
-    sub: sl.value == null ? 'Not set up as a discovery host in Calendly yet' : 'Open discovery slots in Calendly over the next 7 days',
+    sub: sl.value == null ? 'Not set up as a discovery host in Calendly yet' : sl.booked == null
+      ? 'Open discovery slots in Calendly over the next 7 days'
+      : `Discovery slots in the next 7 days: <b>${sl.booked}</b> already booked, <b>${sl.open}</b> real openings left`,
     small: cal ? `Calendar open till <b>${cal.label}</b>${cal.away ? `<br>Away (${esc(cal.away.away)}). Open evening slots when back in ${esc(cal.away.back_label)}.` : ''}` : null,
     warn: cal?.closesEarly && !cal.away ? 'Closes by 5pm ET most days: open later slots' : null,
-    bar: bar(sl.value, sl.target), targetText: 'Target 25',
+    bar: bar(sl.value, sl.target), targetText: 'Target 25 (booked + open)',
   });
   const c = m.cash;
   const targetTile = !c.monthTarget ? tile({
@@ -234,7 +238,7 @@ ${paceTracker(m, month)}
 <div class="section"><h2>WHERE WE'RE HEADED</h2>
 <p class="key">What the rest of ${month.label} needs from you.</p>
 <div class="grid two">${upcomingTile}${targetTile}</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Open slots: discovery start times Calendly offers over the next 7 days; the week figure averages each day's count. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500.</div>`;
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Slots: discovery calls already booked + start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500 average per close.</div>`;
   return page(body);
 }
 
@@ -246,11 +250,11 @@ export function leadershipTable(rows, data, team) {
     return `<tr><td>${esc(m.closer.short)}${m.newHire ? '<small>new hire</small>' : ''}</td>
 ${cell(c.status, c.monthTarget ? fmtPct(c.paceRatio) : '–', c.monthTarget ? `${fmtMoney(c.value, true)} vs ${fmtMoney(c.expected, true)}` : 'no target yet')}
 ${cell(c.status, c.monthTarget ? fmtMoney(c.projectedFinish, true) : '–', c.monthTarget ? `of ${fmtMoney(c.monthTarget, true)}` : '')}
-${cell(m.slotsWeek.status, m.slotsWeek.value ?? '–', m.slotsWeek.value == null ? 'not a host' : 'daily avg last week')}
+${cell(m.slotsWeek.status, m.slotsWeek.value ?? '–', m.slotsWeek.value == null ? 'not a host' : m.slotsWeek.booked == null ? 'open, daily avg' : `${m.slotsWeek.booked} booked + ${m.slotsWeek.open} open`)}
 ${cell(m.live.status, m.live.value, `${m.live.week} last week`)}
 ${cell(m.avgRevenue.status, m.avgRevenue.value == null ? '–' : fmtMoney(m.avgRevenue.value), `${plural(m.avgRevenue.closes, 'close')} MTD`)}
-${cell(cl.status, cl.projected == null ? cl.actual : `${cl.actual} / ${cl.projected}`, pl ? `${pl.hc} HC · ${pl.sv} SV · ${pl.working} W${pl.nonstandard ? ` · ${pl.nonstandard} untagged` : ''}${cl.needed ? ` · ${cl.needed} needed` : ''}` : 'no tab')}
-${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : m.calendar ? `till ${m.calendar.usualText}` : 'next 7 days')}</tr>`;
+${cell(cl.status, cl.projected == null ? cl.actual : `${cl.actual} / ${cl.projected}`, pl ? `${pl.hc} HC · ${pl.sv} SV · ${pl.working} W${pl.nonstandard ? ` · ${pl.nonstandard} untagged` : ''}${cl.needed ? ` · need ${cl.needed}` : ''}` : 'no tab')}
+${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : `${m.slots.booked != null ? `${m.slots.booked} booked + ${m.slots.open} open` : 'open'}${m.calendar ? ` · till ${m.calendar.usualText}` : ''}`)}</tr>`;
   }).join('');
 
   const median = `<tr class="total"><td>Team median<small>fully ramped</small></td><td>${fmtPct(team.pace)}</td><td>–</td><td>${num(team.slotsWeek)}</td><td>${num(team.live)}</td><td>${fmtMoney(team.avgRevenue)}</td><td>${num(team.closes)}<small>closes MTD</small></td><td>${num(team.slots)}</td></tr>`;
@@ -262,8 +266,8 @@ ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a ho
 <div class="legend"><span style="--c:var(--hit)">On target / on pace</span><span style="--c:var(--almost)">Close (75%+) / slightly behind</span><span style="--c:var(--missed)">Below / off pace</span><span style="--c:var(--track)">Tracked, no target</span></div>
 <table><thead>
 <tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp">Where we're headed</th></tr>
-<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Open slots<br>target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Upcoming slots<br>next 7 days</th></tr></thead>
+<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
 <tbody>${body}${median}</tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Open slots (week) average Messi's daily next-7-days Calendly counts posted that week; upcoming slots are today's count. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status.</div>`;
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots = discovery calls already booked + start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status.</div>`;
   return page(html, 'wide');
 }

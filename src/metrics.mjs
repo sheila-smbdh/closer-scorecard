@@ -3,7 +3,7 @@
 // the README metric table; change both together.
 
 export const TARGETS = {
-  slotsPerWeek: 25,        // open discovery start times, next 7 days
+  slotsPerWeek: 25,        // discovery capacity over the next 7 days: open start times + booked discovery calls
   lateCloseHour: 17,       // calendars that close by 5pm ET most weekdays get a warning on the slots tile
   avgRevenueFloor: 17500,  // MTD revenue generated / closes
   monthlyCash: 200000,     // fallback straight-line pace, only when the snapshot has no tracker pull
@@ -68,21 +68,28 @@ export function closerMetrics(data, closer, edition) {
   // Live calls: showed, month to date (EOD + Sales Tracker fills). Scored against the team median in withTeam().
   const live = { value: mtdBS.showed, week: wk.showed, booked: wk.booked, source, status: 'track' };
 
-  // Open slots during the week: average of Messi's daily next-7-days counts posted that week
-  const posts = Object.entries(data.messi_slots ?? {})
-    .filter(([d]) => d >= ed.week_days[0] && d <= ed.through_key)
-    .map(([, byCloser]) => byCloser[k]).filter((v) => v != null);
-  const weekAvg = posts.length ? Math.round(posts.reduce((a, v) => a + v, 0) / posts.length) : null;
-  const slotsWeek = {
-    value: weekAvg, posts: posts.length, low: posts.length ? Math.min(...posts) : null, target: TARGETS.slotsPerWeek,
-    status: weekAvg == null ? 'track' : status(weekAvg, TARGETS.slotsPerWeek),
+  // Slots = discovery capacity: open start times (Messi's next-7-days count) + discovery calls already
+  // booked in those 7 days (Calendly, as of the post). The 25 target is on the sum.
+  const capacity = (day) => {
+    const open = data.messi_slots?.[day]?.[k];
+    if (open == null) return null;
+    const booked = data.slots_booked?.[day]?.[k] ?? null;
+    return { open, booked, value: open + (booked ?? 0) };
   };
+  // During the week: average over Messi's daily posts that week
+  const posts = Object.keys(data.messi_slots ?? {})
+    .filter((d) => d >= ed.week_days[0] && d <= ed.through_key).map(capacity).filter(Boolean);
+  const avg = (f) => Math.round(posts.reduce((a, p) => a + f(p), 0) / posts.length);
+  const hasBooked = posts.length > 0 && posts.every((p) => p.booked != null);
+  const slotsWeek = posts.length ? {
+    value: avg((p) => p.value), open: avg((p) => p.open), booked: hasBooked ? avg((p) => p.booked) : null,
+    low: Math.min(...posts.map((p) => p.value)), posts: posts.length, target: TARGETS.slotsPerWeek,
+  } : { value: null, target: TARGETS.slotsPerWeek };
+  slotsWeek.status = slotsWeek.value == null ? 'track' : status(slotsWeek.value, TARGETS.slotsPerWeek);
   // Upcoming: the edition-day post, next 7 days
-  const slotCount = data.slots[edition][k];
-  const slots = {
-    value: slotCount, target: TARGETS.slotsPerWeek,
-    status: slotCount == null ? 'track' : status(slotCount, TARGETS.slotsPerWeek),
-  };
+  const up = capacity(ed.slots_post_day) ?? (data.slots[edition][k] == null ? null : { open: data.slots[edition][k], booked: null, value: data.slots[edition][k] });
+  const slots = up ? { ...up, target: TARGETS.slotsPerWeek, status: status(up.value, TARGETS.slotsPerWeek) }
+    : { value: null, target: TARGETS.slotsPerWeek, status: 'track' };
 
   const calendar = calendarClose(data.calendar_close_et?.[k]);
   const away = data.closer_notes?.[k] ?? null;
@@ -221,6 +228,7 @@ export function runFlags(data, metrics, edition) {
     if (m.live.source === 'eod' && mtdFills.length) flags.push(`${k}: month to date also filled from the Sales Tracker on ${mtdFills.join(', ')}.`);
     const inferred = (data.eod_inferred?.[k] ?? []).filter((d) => d >= ed.week_days[0] && d <= ed.through_key);
     if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
+    if (m.slots.value != null && m.slots.booked == null) flags.push(`${k}: no Calendly booked-call count for ${ed.slots_post_day}; slots show open start times only.`);
     if (m.closes.pipeline?.nonstandard) flags.push(`${k}: ${m.closes.pipeline.nonstandard} open pipeline leads have no standard status.`);
     if (!m.closes.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
     if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {

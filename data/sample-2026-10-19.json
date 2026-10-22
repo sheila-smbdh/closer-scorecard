@@ -24,7 +24,8 @@
    ],
    "workdays_elapsed": 5,
    "through": "Oct 18",
-   "through_key": "10-18"
+   "through_key": "10-18",
+   "slots_post_day": "10-19"
   },
   "wednesday": {
    "date": "Wednesday, Oct 21",
@@ -40,7 +41,8 @@
    ],
    "workdays_elapsed": 2,
    "through": "Oct 20",
-   "through_key": "10-20"
+   "through_key": "10-20",
+   "slots_post_day": "10-20"
   }
  },
  "closers": [
