@@ -89,6 +89,7 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .rl{flex:none;width:150px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .rt{flex:1;font-size:15px;color:#3d4248}
 .rows b{font-size:24px;font-weight:800;white-space:nowrap}
+.warnt{color:var(--missed);font-weight:600}
 .names{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
 .verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
 .verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
@@ -221,9 +222,10 @@ function pathSection(m, month) {
       pullValue = pl.working ? `${hcsv} + ${p.pull.working} Working` : `${hcsv}`;
       pullText = `Closing every High Confidence and Soft Verbal lead brings ${$(p.pipe.hcsv)}, leaving ${$(p.pull.left)}. `
         + (pl.working ? `That means moving about <b>${p.pull.working} of your ${pl.working} Working leads</b> (about ${$(p.pull.avgWorking)} each) to a yes this month: pick the ones closest to a decision and book their next call now.` : '')
-        + (p.pull.beyond ? ` Even all of them leave ${$(p.pull.beyond)}, which has to come from new calls.` : '');
+        + (p.pull.beyond ? (pl.working ? ` Even all of them leave ${$(p.pull.beyond)}, which has to come from new calls.` : ` You have no Working leads, so that has to come from new calls.`) : '');
     }
     if (lists) pullText += `<div class="names">${lists}</div>`;
+    if (pl.nonstandard) pullText += `<div class="names warnt">${plural(pl.nonstandard, 'lead')} on your tab ${pl.nonstandard === 1 ? 'has' : 'have'} no status: tag them, they may be leads to pull forward.</div>`;
   }
 
   // 5: new calls to month end, and what can still close in time
