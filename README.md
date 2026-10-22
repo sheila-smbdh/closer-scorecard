@@ -27,7 +27,7 @@ Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin ar
 
 ## Layout (pacing first)
 
-1. **Pace tracker** (top): cash collected month to date vs pace by today (2M tracker curve) vs the team median, on a $0 to month-target track, plus "month end at this pace".
+1. **Pace chart** (top), drawn like the 2M tracker's closer view: cumulative cash by day (actual MTD, gold dot today), the goal-pace curve × month target (dashed), and last month's curve on the same normalized day (blue), with W1-W4 end lines. Header: cash MTD, same-day MoM %, vs pace and vs the team median (MED); caption ends with month end at this pace.
 2. **How the week went** (the inputs a closer controls): open slots, live calls month to date, average revenue, closes actual vs projected (High Confidence / Soft Verbal / Working).
 3. **Where we're headed**: upcoming slot availability (next 7 days) and the monthly target, on track or off pace, with what is left and how many closes that takes.
 
@@ -37,6 +37,7 @@ Removed in the Oct 22 revamp: show rate, revenue per call, the Wins / Focus boxe
 
 | Metric | Definition | Target | Source |
 |---|---|---|---|
+| Pace chart data | `daily_cumulative_cash` per closer this month and last month (`/api/read/closers`, `/api/read/closers?month=<prior>`); goal-pace curve = `/api/read/month?through=<each day>` `pace.expected_cash` ÷ `goal`, × the closer's month target | – | Tracker read API, written to `trackers["MM-DD"]` by `npm run tracker -- <through>` |
 | Pace | Cash collected MTD ÷ the tracker's `expected_cash` by the last day of the window (back-loaded month curve). Month end at this pace = % of pace × month target. Chip: On pace (ahead / on_pace), Slightly behind, Off pace | Per-closer `month_target` | `/api/read/closers` (`TRACKER_READ_TOKEN`); provisional $200K straight line if the snapshot has no tracker pull |
 | Team median | Middle value across fully ramped closers (new hires excluded) for pace, live calls, slots, average revenue | – | Computed per run |
 | Open slots (week) | Average of Messi's daily next-7-days counts posted during the week, with the lowest day | 25 | Messi in #sales-reports (`messi_slots`) |

@@ -32,7 +32,7 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 
 **Delivery (not live yet):** image of each card by Slack DM, 8:00am ET. Monday = last week's final numbers (Mon-Sun) + a leadership table (one row per closer). Wednesday = this week so far.
 
-**Layout (Oct 22 revamp, centered on pacing):** pace tracker on top (cash vs pace by today vs team median; Sheila is sharing a screenshot of the exact pace-tracker look to match), then "How the week went" (open slots, live calls MTD, average revenue, closes actual vs projected with HC / SV / Working) and "Where we're headed" (upcoming slots, monthly target on track / off pace). **Removed:** show rate, revenue per call, Wins / Focus, month over month, day-by-day.
+**Layout (Oct 22 revamp, centered on pacing):** pace tracker on top (a copy of the 2M tracker's closer pace chart, `IndividualView.tsx` RepRampChart in zain-smbdh/smbdh-2m-tracker: actual MTD vs goal pace vs last month same-day, header vs pace and vs team median), then "How the week went" (open slots, live calls MTD, average revenue, closes actual vs projected with HC / SV / Working) and "Where we're headed" (upcoming slots, monthly target on track / off pace). **Removed:** show rate, revenue per call, Wins / Focus, month over month, day-by-day.
 
 **Targets:** open slots 25 / 7 days; booked calls 20 a week (4 a workday) for ramped closers, Oliver/Tyler have new-hire targets (still pending from Sheila); show rate 80%; average revenue floor $17,500 (MTD revenue generated / closes, pass/fail); revenue per call and pipeline are tracking only (blue).
 

@@ -4,12 +4,16 @@
 // average revenue, projected vs actual closes) and "Where we're headed" (upcoming slots and
 // on track / off pace against the month target). Tiles: green hit, yellow 75%+, red missed, blue tracked.
 
-import { fmtPct, fmtMoney } from './metrics.mjs';
+import { fmtPct, fmtMoney, trackerFor } from './metrics.mjs';
 
 const CHIP = { hit: 'HIT', almost: 'ALMOST', missed: 'MISSED', track: 'TRACKING' };
 const PACE_CHIP = { hit: 'ON PACE', almost: 'SLIGHTLY BEHIND', missed: 'OFF PACE', track: 'NO TARGET YET' };
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+const delta = (a, b) => (b ? `${a >= b ? '+' : '−'}${Math.abs(Math.round(((a - b) / b) * 100))}%` : '–');
+const monthShort = (ym) => new Date(`${ym}-01T00:00:00Z`).toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+const monthLong = (ym) => new Date(`${ym}-01T00:00:00Z`).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' });
+const normDay = (day, dim, pdim) => Math.min(pdim, Math.max(1, Math.round((day * pdim) / dim)));
 const num = (v) => (v == null ? '–' : Number.isInteger(v) ? String(v) : v.toFixed(1));
 
 const CSS = `
@@ -47,30 +51,24 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px;white-space:nowrap}
 .hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-/* pace tracker */
-.pace{margin-top:26px;background:#fff;border:1px solid var(--line);border-top:6px solid;border-radius:14px;padding:22px 26px 20px}
-.pace.hit{border-top-color:var(--hit)} .pace.almost{border-top-color:var(--almost)} .pace.missed{border-top-color:var(--missed)} .pace.track{border-top-color:var(--track)}
-.pace-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
-.pace .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;color:var(--muted)}
-.pace .big{font-size:52px;font-weight:800;letter-spacing:-.02em;margin:4px 0 2px}
-.pace .big span{font-size:22px;font-weight:700;color:var(--muted)}
-.pace.hit .big{color:var(--hit)} .pace.almost .big{color:var(--almost-ink)} .pace.missed .big{color:var(--missed)} .pace.track .big{color:var(--track)}
-.pace .s{font-size:16px;color:#3d4248;line-height:1.4;max-width:720px}
-.pace .chip{font-size:14px;padding:6px 14px;margin-top:4px}
-.ptrack{position:relative;height:22px;background:#eeece7;border-radius:11px;margin:26px 0 0}
-.ptrack i{position:absolute;left:0;top:0;bottom:0;border-radius:11px}
-.pace.hit .ptrack i{background:var(--hit)} .pace.almost .ptrack i{background:var(--almost)} .pace.missed .ptrack i{background:var(--missed)} .pace.track .ptrack i{background:var(--track)}
-.ptrack b{position:absolute;top:-7px;width:4px;height:36px;margin-left:-2px;border-radius:2px}
-.ptrack b.mk-pace{background:var(--ink)} .ptrack b.mk-team{background:var(--track)}
-.plabels{position:relative;height:46px;margin-top:6px;font-size:13px;color:var(--muted)}
-.plabels span{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap;line-height:1.3}
-.plabels span b{display:block;font-size:15px;color:var(--ink)}
-.plabels span.mk-team b{color:var(--track)}
-.plabels span.end{right:0;transform:none;text-align:right}
-.pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;padding-top:16px;border-top:1px solid var(--line)}
-.pstats .l{font-size:12.5px}
-.pstats .v{font-size:28px;font-weight:800;margin:4px 0 2px}
-.pstats .s{font-size:14px;color:var(--muted)}
+/* pace chart: same look as the 2M tracker's closer view */
+.pt{margin-top:26px;background:#0f0f0e;border-radius:14px;padding:22px 24px 18px;color:#fcf6e2}
+.pt-head{display:flex;justify-content:space-between;align-items:center}
+.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
+.pt-pill{font-size:12px;font-weight:800;letter-spacing:.08em;border:1.5px solid;border-radius:6px;padding:5px 10px}
+.pt-pill.hit{color:#6fd08a} .pt-pill.almost{color:#f0cd2b} .pt-pill.missed{color:#ff7a58} .pt-pill.track{color:#9fb0ff}
+.pt-numrow{display:flex;align-items:baseline;gap:16px;margin-top:14px}
+.pt-num{font-family:Fraunces,Georgia,serif;font-size:56px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1}
+.pt-mom{font-size:20px;font-weight:700} .pt-mom.down{color:#ff7a58} .pt-mom.up{color:#6fd08a}
+.pt-ctx{font-size:16px;margin-top:10px;color:rgba(252,246,226,.85)}
+.pt-foot{font-size:13.5px;font-style:italic;margin-top:4px;color:rgba(252,246,226,.55)}
+.pt-chart{margin-top:14px}
+.pt-chart svg{display:block}
+.pt-legend{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:6px}
+.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
+.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
+.pt-day{margin-left:auto;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(252,246,226,.55)}
+.pt-cap{font-size:15px;line-height:1.5;margin-top:12px;color:rgba(252,246,226,.9)}
 .footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
 /* leadership table */
 .wide{width:1500px}
@@ -105,41 +103,59 @@ function tile({ label, value, sub, small, warn, statusKey, bar: barHtml = '', ta
 }
 
 function page(body, width) {
-  return `<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><style>${CSS}</style></head><body><div class="card ${width === 'wide' ? 'wide' : ''}">${body}</div></body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&display=block"><style>${CSS}</style></head><body><div class="card ${width === 'wide' ? 'wide' : ''}">${body}</div></body></html>`;
 }
 
-// Month track from $0 to the month target: cash so far (fill), pace by today and the team median (markers)
+// Pace chart, drawn like the 2M tracker's closer view: cumulative cash by day against the goal-pace curve
+// and last month's same-day curve, scaled to the closer's month target
 function paceTracker(m, month) {
   const c = m.cash;
-  if (!c.monthTarget) {
-    return `<div class="pace track"><div class="pace-head"><div><div class="l">Pace tracker · ${month.label} cash collected</div>
-<div class="big">${fmtMoney(c.value, true)}</div><div class="s">Collected this month. Your month target is coming.</div></div>
-<span class="chip">${PACE_CHIP.track}</span></div></div>`;
+  const ch = c.chart;
+  const pill = `<span class="pt-pill ${c.status}">${PACE_CHIP[c.status]}</span>`;
+  if (!ch) {
+    return `<div class="pt"><div class="pt-head"><span class="pt-caps">Cash collected · ${month.label} pace</span>${pill}</div>
+<div class="pt-numrow"><span class="pt-num">${fmtMoney(c.value ?? 0, true)}</span></div>
+<div class="pt-ctx">${c.monthTarget ? `vs pace ${fmtMoney(c.expected, true)} (${delta(c.value ?? 0, c.expected)}) · team median ` : 'Team median '}${fmtMoney(m.team.cash, true)}</div>
+<p class="pt-cap">${c.monthTarget ? 'The daily pace chart appears once the tracker has your daily cash for this month.' : 'Your month target is coming, so there is no pace line yet.'}</p></div>`;
   }
-  const max = Math.max(c.monthTarget, c.value ?? 0);
-  const at = (v) => `${Math.min(100, (v / max) * 100).toFixed(2)}%`;
-  // Team median as cash on this closer's curve: median % of pace × this closer's pace by today
-  const teamCash = m.team.pace != null ? m.team.pace * c.expected : null;
-  const marks = [
-    [c.expected, 'mk-pace', `Pace by ${m.ed.through}<b>${fmtMoney(c.expected, true)}</b>`],
-    teamCash != null ? [teamCash, 'mk-team', `Team median<b>${fmtMoney(teamCash, true)}</b>`] : null,
-  ].filter(Boolean);
-  const gap = (c.value ?? 0) - c.expected;
-  return `<div class="pace ${c.status}">
-<div class="pace-head">
-  <div><div class="l">Pace tracker · ${month.label} cash collected</div>
-  <div class="big">${fmtPct(c.paceRatio)} <span>of pace</span></div>
-  <div class="s">${fmtMoney(c.value, true)} collected vs ${fmtMoney(c.expected, true)} expected by ${m.ed.through}: ${gap >= 0 ? `${fmtMoney(gap, true)} ahead` : `${fmtMoney(-gap, true)} behind`}. The team median is ${fmtPct(m.team.pace)} of pace.</div></div>
-  <span class="chip">${PACE_CHIP[c.status]}</span>
-</div>
-<div class="ptrack"><i style="width:${at(c.value ?? 0)}"></i>${marks.map(([v, cls]) => `<b class="${cls}" style="left:${at(v)}"></b>`).join('')}</div>
-<div class="plabels">${marks.map(([v, cls, t]) => `<span class="${cls}" style="left:${at(v)}">${t}</span>`).join('')}<span class="end">Month target<b>${fmtMoney(c.monthTarget, true)}</b></span></div>
-<div class="pstats">
-  <div><div class="l">Where you are</div><div class="v">${fmtMoney(c.value, true)}</div><div class="s">${fmtPct((c.value ?? 0) / c.monthTarget)} of your month target</div></div>
-  <div><div class="l">Where you should be</div><div class="v">${fmtMoney(c.expected, true)}</div><div class="s">Expected by ${m.ed.through}</div></div>
-  <div><div class="l">Team median</div><div class="v">${fmtPct(m.team.pace)}</div><div class="s">of pace, fully ramped closers</div></div>
-  <div><div class="l">Month end at this pace</div><div class="v">${fmtMoney(c.projectedFinish, true)}</div><div class="s">${fmtPct(c.projectedFinish / c.monthTarget)} of ${fmtMoney(c.monthTarget, true)}</div></div>
-</div></div>`;
+  const W = 944, H = 370, P = { l: 64, r: 30, t: 34, b: 34 };
+  const iw = W - P.l - P.r, ih = H - P.t - P.b;
+  const top = Math.max(c.monthTarget, ...ch.daily, ...(ch.prior ?? []));
+  const x = (d) => P.l + ((d - 1) * iw) / (ch.dim - 1);
+  const y = (v) => P.t + (1 - Math.max(0, v) / top) * ih;
+  const pts = (arr) => arr.map((v, i) => `${x(i + 1).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const axis = (v) => (v === 0 ? '$0' : `$${Math.round(v / 1000)}K`);
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => f * top);
+  const xDays = [...new Set([1, 5, 10, 15, 20, 25, ch.dim])];
+  const weeks = [7, 14, 21, 28].filter((d) => d < ch.dim);
+  const last = ch.daily.length;
+  const area = `M ${x(1)},${y(0)} ${ch.daily.map((v, i) => `L ${x(i + 1).toFixed(1)},${y(v).toFixed(1)}`).join(' ')} L ${x(last)},${y(0)} Z`;
+  const priorLabel = monthShort(ch.priorMonth);
+
+  const svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="Inter, sans-serif">
+${ticks.map((v) => `<line x1="${P.l}" x2="${W - P.r}" y1="${y(v)}" y2="${y(v)}" stroke="rgba(252,246,226,.10)"/><text x="${P.l - 10}" y="${y(v) + 4}" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">${axis(v)}</text>`).join('')}
+${weeks.map((d, i) => `<line x1="${x(d)}" x2="${x(d)}" y1="${P.t}" y2="${H - P.b}" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="${x(d)}" y="${P.t - 12}" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W${i + 1} end</text>`).join('')}
+<path d="${area}" fill="rgba(252,208,64,.22)"/>
+${ch.prior ? `<polyline points="${pts(ch.prior)}" fill="none" stroke="#7d92ff" stroke-width="2.5" opacity=".85"/>` : ''}
+<polyline points="${pts(ch.goal)}" fill="none" stroke="#ff7a58" stroke-width="2.5" stroke-dasharray="7 5"/>
+<polyline points="${pts(ch.daily)}" fill="none" stroke="#fcf6e2" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="${x(last)}" cy="${y(ch.daily[last - 1])}" r="8" fill="#f0cd2b" stroke="#0a0a0a" stroke-width="2.5"/>
+${xDays.map((d) => `<text x="${x(d)}" y="${H - P.b + 22}" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D${d}</text>`).join('')}
+</svg>`;
+
+  const mom = ch.priorSameDay ? delta(c.value, ch.priorSameDay) : null;
+  const ahead = c.value - c.expected;
+  const caption = `${fmtMoney(c.value)} collected through day ${ch.day}, ${ahead >= 0 ? `${fmtMoney(ahead, true)} ahead of` : `${fmtMoney(-ahead, true)} behind`} the ${fmtMoney(c.expected, true)} goal pace${ch.priorSameDay != null ? `, against ${fmtMoney(ch.priorSameDay)} by the same day in ${monthLong(ch.priorMonth)}` : ''}. The team median is ${fmtMoney(m.team.cash, true)} (${fmtPct(m.team.pace)} of pace). At this pace ${month.label} ends near ${fmtMoney(c.projectedFinish, true)} of your ${fmtMoney(c.monthTarget, true)} target.`;
+
+  return `<div class="pt">
+<div class="pt-head"><span class="pt-caps">Cash collected · ${month.label} pace</span>${pill}</div>
+<div class="pt-numrow"><span class="pt-num">${fmtMoney(c.value, true)}</span>${mom ? `<span class="pt-mom ${c.value >= ch.priorSameDay ? 'up' : 'down'}">${mom} MoM</span>` : ''}</div>
+<div class="pt-ctx">vs pace ${fmtMoney(c.expected, true)} (${delta(c.value, c.expected)}) · vs MED ${fmtMoney(m.team.cash, true)} (${delta(c.value, m.team.cash)})</div>
+${ch.priorSameDay != null ? `<div class="pt-foot">vs ${priorLabel} D${normDay(ch.day, ch.dim, ch.priorDim)}, same-day, normalized for month length</div>` : ''}
+<div class="pt-chart">${svg}</div>
+<div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal pace</span>${ch.prior ? `<span><i style="background:#7d92ff"></i>${priorLabel} · same-day</span>` : ''}<span><i class="dot"></i>Actual MTD</span><span class="pt-day">Day ${ch.day} of ${ch.dim}</span></div>
+<p class="pt-cap">${caption}</p>
+</div>`;
 }
 
 export function closerCard(m, month) {
@@ -248,6 +264,6 @@ ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a ho
 <tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp">Where we're headed</th></tr>
 <tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Open slots<br>target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Upcoming slots<br>next 7 days</th></tr></thead>
 <tbody>${body}${median}</tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${data.tracker?.through?.slice(5) === ed.through_key ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Open slots (week) average Messi's daily next-7-days Calendly counts posted that week; upcoming slots are today's count. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status.</div>`;
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Open slots (week) average Messi's daily next-7-days Calendly counts posted that week; upcoming slots are today's count. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status.</div>`;
   return page(html, 'wide');
 }

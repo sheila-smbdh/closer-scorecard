@@ -97,7 +97,8 @@ export function closerMetrics(data, closer, edition) {
     : avgRevenue.value >= TARGETS.avgRevenueFloor ? 'hit' : 'missed';
 
   // Cash pace: the tracker read API (back-loaded month curve, per-closer targets) when the snapshot has it
-  const tp = data.tracker?.through?.slice(5) === ed.through_key ? data.tracker.closers?.[k] : null;
+  const tr = trackerFor(data, ed);
+  const tp = tr?.closers?.[k] ?? null;
   let cash;
   if (tp) {
     const hasPace = tp.expected_cash != null && tp.target_source !== 'ramping_no_target';
@@ -120,6 +121,20 @@ export function closerMetrics(data, closer, edition) {
   cash.projectedFinish = cash.paceRatio != null && cash.monthTarget ? cash.paceRatio * cash.monthTarget : null;
   cash.remaining = cash.monthTarget ? Math.max(0, cash.monthTarget - (cash.value ?? 0)) : null;
   cash.daysLeft = data.month.business_days - bdElapsed;
+  // Pace chart (same as the tracker's closer view): daily cumulative cash, last month's curve on this
+  // month's day axis (normalized for month length), and the goal-pace curve × month target
+  if (tp?.daily_cash?.length && cash.monthTarget) {
+    const dim = tr.days_in_month, pdim = tr.prior_days_in_month;
+    const prior = tp.prior_daily_cash?.length
+      ? Array.from({ length: dim }, (_, i) => tp.prior_daily_cash[Math.min(normalizedPriorDay(i + 1, dim, pdim), tp.prior_daily_cash.length) - 1])
+      : null;
+    const day = tp.daily_cash.length;
+    cash.chart = {
+      dim, day, daily: tp.daily_cash, prior, priorMonth: tr.prior_month, priorDim: pdim,
+      goal: tr.goal_shape.map((g) => g * cash.monthTarget),
+      priorSameDay: prior ? prior[day - 1] : null,
+    };
+  }
 
   // Closes: actual (Close 1, month to date) vs projected month-end = actual + KPI share of open HC and SV
   const p = data.pipeline[k];
@@ -138,11 +153,20 @@ export function closerMetrics(data, closer, edition) {
   return { closer, edition, ed, salesTrackerWeek, filled, live, slotsWeek, slots, calendar, avgRevenue, cash, closes, newHire };
 }
 
+// The tracker pull for an edition's window (keyed by its last day, "MM-DD")
+export function trackerFor(data, ed) {
+  return data.trackers?.[ed.through_key] ?? null;
+}
+
+// Last month's day that matches `day` this month, scaled for month length (the tracker's same-day MoM)
+const normalizedPriorDay = (day, dim, pdim) => Math.min(pdim, Math.max(1, Math.round((day * pdim) / dim)));
+
 // Team medians over fully ramped closers; live calls are scored against the median (no fixed target)
 export function withTeam(metrics) {
   const ramped = metrics.filter((m) => !m.newHire);
   const team = {
     pace: median(ramped.map((m) => m.cash.paceRatio)),
+    cash: median(ramped.map((m) => m.cash.value)),
     live: median(ramped.map((m) => m.live.value)),
     slotsWeek: median(ramped.map((m) => m.slotsWeek.value)),
     slots: median(ramped.map((m) => m.slots.value)),
@@ -204,8 +228,8 @@ export function runFlags(data, metrics, edition) {
     }
     if (m.cash.source === 'tracker' && m.cash.status === 'track' && !m.newHire) flags.push(`${k}: tracker has no cash target (${m.cash.targetSource ?? 'unknown'}).`);
   }
-  const t = data.tracker;
-  if (!t || t.through?.slice(5) !== ed.through_key) flags.push(`Cash pace: no tracker pull through ${ed.through}; used the provisional $200K straight-line pace.`);
+  const t = trackerFor(data, ed);
+  if (!t) flags.push(`Cash pace: no tracker pull through ${ed.through}; used the provisional $200K straight-line pace.`);
   else {
     if (t.all_checks_pass === false) flags.push(`Tracker checks failed: ${t.failed_checks.join('; ') || 'see /api/read/closers'}.`);
     if (t.unmatched?.length) flags.push(`Tracker has no row for ${t.unmatched.join(', ')}; their cash pace is provisional.`);
