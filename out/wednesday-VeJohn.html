@@ -51,6 +51,23 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
 .pt-day{margin-left:auto;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(252,246,226,.55)}
 .pt-cap{font-size:15px;line-height:1.5;margin-top:12px;color:rgba(252,246,226,.9)}
+/* path to target */
+.path{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 22px}
+.step{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.sw{flex:1}
+.sl{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+.st{font-size:15px;color:#3d4248;line-height:1.4;margin-top:3px}
+.step>.sv{font-size:30px;font-weight:800;white-space:nowrap;text-align:right}
+.cases{display:flex;gap:10px}
+.cases>div{width:190px;background:#f4f2ee;border-radius:10px;padding:8px 12px}
+.cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
+.cases span{font-size:13.5px;color:#3d4248}
+.verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
+.verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
+.verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
 .footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
 /* leadership table */
 .wide{width:1500px}
@@ -69,8 +86,8 @@ tr.total td{background:#f1efea;font-weight:800}
 .legend{display:flex;gap:18px;font-size:14px;color:var(--muted);margin:14px 0 4px}
 .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
 </style></head><body><div class="card ">
-<div class="eyebrow">Closer scorecard · Midweek check-in</div>
-<h1>VeJohn's week so far: Mon Oct 19 to Tue Oct 20</h1>
+<div class="eyebrow">Closer scorecard · Month-to-date roundup</div>
+<h1>VeJohn's month to date: Tuesday, October 20th</h1>
 <div class="lede">73% of pace (team median 56%) · 27 live calls this month · 5 closes, 8 projected</div>
 <div class="pt">
 <div class="pt-head"><span class="pt-caps">Cash collected · October pace</span><span class="pt-pill missed">OFF PACE</span></div>
@@ -91,7 +108,7 @@ tr.total td{background:#f1efea;font-weight:800}
 <p class="pt-cap">$81,000 collected through day 20, $30.3K behind the $111K goal pace, against $138,500 by the same day in September. The team median is $56K (56% of pace). At this pace October ends near $193K of your $266K target.</p>
 </div>
 <div class="section"><h2>HOW THE WEEK WENT</h2>
-<p class="key">The inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
+<p class="key">This week so far (Mon Oct 19 to Tue Oct 20): the inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
 <div class="grid"><div class="tile almost">
   <div class="l">Discovery slots</div><div class="v">20</div>
   <div class="s">Average day this week so far: <b>8</b> booked + <b>13</b> still open over the next 7 days</div><div class="small">Lowest day 20 · team median 37</div>
@@ -108,16 +125,19 @@ tr.total td{background:#f1efea;font-weight:800}
   <div class="l">Closes: actual vs projected</div><div class="v">5 <span class="of">/ 8</span></div>
   <div class="s">5 closes so far, 8 projected by month end</div><div class="small">Pipeline: <b>3</b> High Confidence · <b>1</b> Soft Verbal · <b>1</b> Working</div>
   <div class="foot"><div class="bar"><i style="width:42.5%"></i><b style="left:85%"></b></div><div class="row"><span>Need 16 for $266K</span><span class="chip">MISSED</span></div></div>
-</div></div></div>
-<div class="section"><h2>WHERE WE'RE HEADED</h2>
-<p class="key">What the rest of October needs from you.</p>
-<div class="grid two"><div class="tile almost">
-  <div class="l">Upcoming slot availability</div><div class="v">20</div>
-  <div class="s">Discovery slots in the next 7 days: <b>7</b> already booked, <b>13</b> real openings left</div><div class="small">Calendar open till <b>9pm ET (8pm Thu, Fri)</b></div>
-  <div class="foot"><div class="bar"><i style="width:68%"></i><b style="left:85%"></b></div><div class="row"><span>Target 25 (booked + open)</span><span class="chip">ALMOST</span></div></div>
-</div><div class="tile missed">
-  <div class="l">Monthly target</div><div class="v">$266K</div>
-  <div class="s">$185K to go in 8 business days</div><div class="small">About <b>11</b> more closes at $17.5K each. Your pipeline has <b>4</b> High Confidence + Soft Verbal leads; at 80% / 50% that is about <b>3</b> closes.</div>
-  <div class="foot"><div class="row"><span>Month end at this pace: $193K</span><span class="chip">OFF PACE</span></div></div>
-</div></div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target. Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500 average per close.</div></div></body></html>
+</div></div>
+<div class="verdict missed"><b>To change:</b> slots averaged 20 booked + open, under 25: open more Calendly time; 27 live calls this month vs a team median of 28: book and confirm more calls; average revenue $16,200, under $17.5K: hold price on the next closes.</div></div>
+<div class="section"><h2>WHERE WE'RE HEADED: THE PATH TO $266K</h2>
+<p class="key">Working backwards from your month target: what is left, what your pipeline covers, and what your calendar has to deliver.</p>
+<div class="path">
+<div class="step"><span class="sn">1</span><div class="sw"><div class="sl">Gap to target</div><div class="st">$81K collected of $266K, 8 business days left.</div></div><div class="sv">$185K</div></div>
+<div class="step"><span class="sn">2</span><div class="sw"><div class="sl">Closes that takes</div><div class="st">11 at $17.5K each · 12 at your $16,200 average · 10 at $20K each.</div></div><div class="sv">10 to 12</div></div>
+<div class="step"><span class="sn">3</span><div class="sw"><div class="sl">Your pipeline</div><div class="st">3 High Confidence $50K · 1 Soft Verbal $16K · 1 Working $20K. Usual rates: 80% of High Confidence and 50% of Soft Verbal close, Working not counted = $48K.</div></div><div class="sv">5 · $86K</div></div>
+<div class="step"><span class="sn">4</span><div class="sw"><div class="sl">Gap left after the pipeline</div></div>
+<div class="cases"><div><small>If all 5 close</small><b>$98.6K</b><span>6 new closes</span></div><div><small>At usual rates</small><b>$137K</b><span>8 new closes</span></div></div></div>
+<div class="step"><span class="sn">5</span><div class="sw"><div class="sl">New calls that takes</div><div class="st">Your month-to-date rates: 77% of booked calls show, 19% of live calls close.</div></div>
+<div class="cases"><div><small>If all 5 close</small><b>43</b><span>booked calls (33 live)</span></div><div><small>At usual rates</small><b>58</b><span>booked calls (44 live)</span></div></div></div>
+<div class="step"><span class="sn">6</span><div class="sw"><div class="sl">Your next 7 days</div><div class="st">7 calls already booked (about 1.0 closes at your rates) + 13 open slots; target 25 booked + open. Calendar open till 9pm ET (8pm Thu, Fri).</div></div><div class="sv">7 + 13</div></div>
+</div>
+<div class="verdict missed">Even if all 5 pipeline leads close, you need <b>6 new closes</b>, about <b>43 booked calls</b> at your rates. That is 36 more than your 7 booked, and you only have 13 open slots this week: open more time and push every pipeline lead to close. At the usual pipeline rates it is 8 new closes (58 booked calls).</div></div>
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target. Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500 average per close. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new closes at $17.5K each; calls needed use your month-to-date show rate (live ÷ booked) and close rate (closes ÷ live calls), or the team median until you have a close.</div></div></body></html>

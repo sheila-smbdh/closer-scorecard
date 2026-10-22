@@ -2,6 +2,8 @@
 // metrics with a status per tile. Every definition here is mirrored in
 // the README metric table; change both together.
 
+import { category, outcome, money } from './pipeline-labels.mjs';
+
 export const TARGETS = {
   slotsPerWeek: 25,        // discovery capacity over the next 7 days: open start times + booked discovery calls
   lateCloseHour: 17,       // calendars that close by 5pm ET most weekdays get a warning on the slots tile
@@ -144,20 +146,70 @@ export function closerMetrics(data, closer, edition) {
   }
 
   // Closes: actual (Close 1, month to date) vs projected month-end = actual + KPI share of open HC and SV
-  const p = data.pipeline[k];
+  const p = pipelineFor(data, k);
   const closes = {
     actual: mtd[CLOSES],
     needed: cash.monthTarget ? Math.ceil(cash.monthTarget / TARGETS.avgRevenueFloor) : null,
-    stillNeeded: cash.remaining != null ? Math.ceil(cash.remaining / TARGETS.avgRevenueFloor) : null,
-    pipeline: p ? { hc: p.hc, sv: p.sv, working: p.working, nonstandard: p.nonstandard } : null,
+    pipeline: p,
     lastWeek: data.pipeline_last_week?.[k] ?? null,
   };
   closes.projected = p ? Math.round(mtd[CLOSES] + PIPELINE_KPI.hc * p.hc + PIPELINE_KPI.sv * p.sv) : null;
   closes.status = closes.projected == null || closes.needed == null ? 'track' : status(closes.projected, closes.needed);
 
+  // Month-to-date conversion: booked calls that showed, and live calls that closed
+  const rates = { show: mtdBS.booked ? mtdBS.showed / mtdBS.booked : null, close: mtdBS.showed ? mtd[CLOSES] / mtdBS.showed : null };
+
   const salesTrackerWeek = { booked: act[monday ? 'wk' : 'tw'][CALLS], showed: act[monday ? 'wk' : 'tw'][LIVE] };
   const filled = { week: wk.filled, mtd: mtdBS.filled };
-  return { closer, edition, ed, salesTrackerWeek, filled, live, slotsWeek, slots, calendar, avgRevenue, cash, closes, newHire };
+  return { closer, edition, ed, salesTrackerWeek, filled, live, slotsWeek, slots, calendar, avgRevenue, cash, closes, rates, newHire };
+}
+
+// Open leads in the closer's current-month Pipeline Review section, counted and valued (column D cash;
+// a lead with no amount is valued at the $17.5K average and counted in noAmount). Same labels as the
+// Friday pipeline report.
+export function pipelineFor(data, k) {
+  const raw = data.pipeline_leads?.[k];
+  const leads = Array.isArray(raw) ? raw : raw?.leads;
+  if (!leads) return null;
+  const p = { hc: 0, sv: 0, working: 0, cash: { hc: 0, sv: 0, working: 0 }, noAmount: 0, nonstandard: 0 };
+  for (const [, b, amount, f] of leads) {
+    const out = outcome(b, f);
+    if (out) continue; // closed, signed, delayed or lost
+    const cat = category(b);
+    if (!cat) { p.nonstandard++; continue; }
+    const v = money(amount);
+    if (v == null) p.noAmount++;
+    p[cat]++;
+    p.cash[cat] += v ?? TARGETS.avgRevenueFloor;
+  }
+  return p;
+}
+
+// Working backwards from the month target: the gap, the closes it takes, what the pipeline covers, the new
+// closes and calls still needed, and what the next 7 days of calendar can deliver. Two pipeline cases:
+// every open HC / SV / Working lead closes, or the usual rates (80% HC, 50% SV, Working not counted).
+function pathToTarget(m, team) {
+  const c = m.cash, pl = m.closes.pipeline;
+  if (!c.monthTarget) return null;
+  const per = TARGETS.avgRevenueFloor, gap = c.remaining;
+  const own = m.avgRevenue.value;
+  const range = { floor: Math.ceil(gap / per), own: own ? Math.ceil(gap / own) : null, high: Math.ceil(gap / 20000) };
+  const pipe = pl
+    ? { n: pl.hc + pl.sv + pl.working, all: pl.cash.hc + pl.cash.sv + pl.cash.working,
+      likely: PIPELINE_KPI.hc * pl.cash.hc + PIPELINE_KPI.sv * pl.cash.sv }
+    : { n: 0, all: 0, likely: 0 };
+  // Own month-to-date rates; the team median stands in until a closer has a close (or a booked call)
+  const ownRates = m.rates.close > 0 && m.rates.show > 0;
+  const show = ownRates ? m.rates.show : team.show, close = ownRates ? m.rates.close : team.close;
+  const scenario = (covered) => {
+    const left = Math.max(0, gap - covered);
+    const closes = Math.ceil(left / per);
+    const live = close ? Math.ceil(closes / close) : null;
+    return { covered, left, closes, live, booked: live != null && show ? Math.ceil(live / show) : null };
+  };
+  const next = { booked: m.slots.booked, open: m.slots.open };
+  next.closes = next.booked != null && show && close ? next.booked * show * close : null;
+  return { gap, range, pipe, show, close, ownRates, all: scenario(pipe.all), likely: scenario(pipe.likely), next };
 }
 
 // The tracker pull for an edition's window (keyed by its last day, "MM-DD")
@@ -179,11 +231,14 @@ export function withTeam(metrics) {
     slots: median(ramped.map((m) => m.slots.value)),
     avgRevenue: median(ramped.map((m) => m.avgRevenue.value)),
     closes: median(ramped.map((m) => m.closes.actual)),
+    show: median(ramped.map((m) => m.rates.show)),
+    close: median(ramped.map((m) => m.rates.close)),
   };
   for (const m of metrics) {
     m.team = team;
     m.live.target = m.newHire ? null : team.live;
     m.live.status = status(m.live.value, m.live.target);
+    m.path = pathToTarget(m, team);
   }
   return team;
 }
@@ -229,6 +284,7 @@ export function runFlags(data, metrics, edition) {
     const inferred = (data.eod_inferred?.[k] ?? []).filter((d) => d >= ed.week_days[0] && d <= ed.through_key);
     if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
     if (m.slots.value != null && m.slots.booked == null) flags.push(`${k}: no Calendly booked-call count for ${ed.slots_post_day}; slots show open start times only.`);
+    if (m.closes.pipeline?.noAmount) flags.push(`${k}: ${m.closes.pipeline.noAmount} open pipeline leads have no cash amount (column D); valued at $17,500 each.`);
     if (m.closes.pipeline?.nonstandard) flags.push(`${k}: ${m.closes.pipeline.nonstandard} open pipeline leads have no standard status.`);
     if (!m.closes.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
     if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {

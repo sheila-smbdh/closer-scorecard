@@ -27,9 +27,18 @@ Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin ar
 
 ## Layout (pacing first)
 
+Title: "<Closer>'s month to date: Sunday, October 18th" (the last day of the window). A month-to-date roundup.
+
 1. **Pace chart** (top), drawn like the 2M tracker's closer view: cumulative cash by day (actual MTD, gold dot today), the goal-pace curve × month target (dashed), and last month's curve on the same normalized day (blue), with W1-W4 end lines. Header: cash MTD, same-day MoM %, vs pace and vs the team median (MED); caption ends with month end at this pace.
-2. **How the week went** (the inputs a closer controls): open slots, live calls month to date, average revenue, closes actual vs projected (High Confidence / Soft Verbal / Working).
-3. **Where we're headed**: upcoming slot availability (next 7 days) and the monthly target, on track or off pace, with what is left and how many closes that takes.
+2. **How the week went** (the inputs a closer controls): slots (booked + open), live calls month to date, average revenue, closes actual vs projected (High Confidence / Soft Verbal / Working). A verdict line underneath: "You did the inputs right ... nothing to change", or what to change.
+3. **Where we're headed: the path to target**, worked backwards:
+   1. Gap to target = month target − cash collected.
+   2. Closes that takes: at $17.5K, at the closer's own average, at $20K (shown as a range).
+   3. Pipeline: open High Confidence / Soft Verbal / Working leads and their column D cash (blank amount = $17.5K, flagged); value at usual rates (80% HC, 50% SV, Working 0).
+   4. Gap left after the pipeline and the new closes that takes, two cases: every open lead closes / usual rates.
+   5. New calls that takes: booked and live calls at the closer's month-to-date show rate (live ÷ booked) and close rate (closes ÷ live); team median rates until the closer has a close.
+   6. Next 7 days: calls already booked (and the closes they should bring) + open slots.
+   Verdict: whether the booked calls cover it, how many open slots to fill, or that the calendar cannot hold it.
 
 Removed in the Oct 22 revamp: show rate, revenue per call, the Wins / Focus boxes, month over month.
 
@@ -43,7 +52,7 @@ Removed in the Oct 22 revamp: show rate, revenue per call, the Wins / Focus boxe
 | Discovery slots (week) | For each of Messi's daily posts that week: open start times over the next 7 days + client calls already booked in those 7 days (as Calendly stood at 8am). Card shows the daily average, its booked / open split and the lowest day | 25 on booked + open | Messi in #sales-reports (`messi_slots`) + Calendly (`slots_booked`, via `node src/booked-slots.mjs <snapshot> <calendly-events.json>`) |
 | Live calls | Showed calls month to date (EOD + Sales Tracker fills), with the week's live / booked | Team median | EOD Tracker + Sales Tracker `Inputs` |
 | Average revenue | Revenue generated ÷ closes (Close 1), month to date | $17,500 (pass/fail) | `Inputs` |
-| Closes: actual vs projected | Actual = Close 1 MTD. Projected month end = actual + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged (Friday pipeline KPI). Working shown, not counted. Needed = month target ÷ $17,500, shown as "Need 24 for $417K" | Needed for target | `Inputs`, Pipeline Review closer tabs |
+| Closes: actual vs projected | Open leads from `pipeline_leads` (same pull, format and labels as the Friday pipeline report, `src/pipeline-labels.mjs`). Actual = Close 1 MTD. Projected month end = actual + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged (Friday pipeline KPI). Working shown, not counted. Needed = month target ÷ $17,500, shown as "Need 24 for $417K" | Needed for target | `Inputs`, Pipeline Review closer tabs |
 | Upcoming slots | Same as above for the edition day's post: booked + open over the next 7 days, shown as "N already booked, M real openings left", plus "Calendar open till X" (ET); warns if most weekdays close by 5pm ET | 25 on booked + open | Messi + Calendly |
 | Monthly target | Month target, what is left, business days left, closes still needed at $17.5K vs what the pipeline should yield | – | Tracker + Pipeline Review |
 

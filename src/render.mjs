@@ -69,6 +69,23 @@ h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
 .pt-day{margin-left:auto;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(252,246,226,.55)}
 .pt-cap{font-size:15px;line-height:1.5;margin-top:12px;color:rgba(252,246,226,.9)}
+/* path to target */
+.path{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 22px}
+.step{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.sw{flex:1}
+.sl{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+.st{font-size:15px;color:#3d4248;line-height:1.4;margin-top:3px}
+.step>.sv{font-size:30px;font-weight:800;white-space:nowrap;text-align:right}
+.cases{display:flex;gap:10px}
+.cases>div{width:190px;background:#f4f2ee;border-radius:10px;padding:8px 12px}
+.cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
+.cases span{font-size:13.5px;color:#3d4248}
+.verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
+.verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
+.verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
 .footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
 /* leadership table */
 .wide{width:1500px}
@@ -158,6 +175,82 @@ ${ch.priorSameDay != null ? `<div class="pt-foot">vs ${priorLabel} D${normDay(ch
 </div>`;
 }
 
+const rangeText = (r) => {
+  const v = [r.floor, r.own, r.high].filter((x) => x != null);
+  const lo = Math.min(...v), hi = Math.max(...v);
+  return lo === hi ? `${lo}` : `${lo} to ${hi}`;
+};
+
+// "Where we're headed": work back from the month target to the calls the next 7 days have to deliver
+function pathSection(m, month) {
+  const p = m.path, c = m.cash, pl = m.closes.pipeline;
+  if (!p) {
+    return `<div class="section"><h2>WHERE WE'RE HEADED</h2>
+<p class="key">Your month target is coming. Until then: ${m.slots.value == null ? 'get set up as a discovery host in Calendly.' : `${m.slots.booked ?? 0} calls booked and ${m.slots.open} open slots in the next 7 days.`}</p></div>`;
+  }
+  const $ = (v) => fmtMoney(v, true);
+  const step = (n, label, value, text) => `<div class="step"><span class="sn">${n}</span><div class="sw"><div class="sl">${label}</div><div class="st">${text}</div></div><div class="sv">${value}</div></div>`;
+  const cases = (n, label, f, text) => `<div class="step"><span class="sn">${n}</span><div class="sw"><div class="sl">${label}</div>${text ? `<div class="st">${text}</div>` : ''}</div>
+<div class="cases"><div><small>If all ${p.pipe.n} close</small>${f(p.all)}</div><div><small>At usual rates</small>${f(p.likely)}</div></div></div>`;
+  const rateText = `${p.ownRates ? 'Your' : 'Team median'} month-to-date rates: ${fmtPct(p.show)} of booked calls show, ${fmtPct(p.close)} of live calls close${p.ownRates ? '' : ' (you have no closes yet)'}.`;
+  const nx = p.next;
+  const cal = m.calendar;
+
+  let verdict, cls;
+  if (p.gap <= 0) { verdict = 'Target reached. Everything from here is upside.'; cls = 'hit'; }
+  else if (p.all.closes === 0 && p.likely.closes === 0) { verdict = 'Your pipeline covers the gap at the usual close rates. Close it out.'; cls = 'hit'; }
+  else if (p.all.closes === 0) {
+    verdict = `If every pipeline lead closes, you hit target with no new closes. At the usual rates you still need ${p.likely.closes} new closes, so keep your calendar full.`;
+    cls = 'almost';
+  } else {
+    const short = nx.booked == null ? null : p.all.booked - nx.booked;
+    verdict = `Even if all ${p.pipe.n} pipeline leads close, you need <b>${p.all.closes} new closes</b>, about <b>${p.all.booked} booked calls</b> at your rates. `;
+    if (short == null) { verdict += 'Your Calendly booked calls are not in this snapshot.'; cls = 'track'; }
+    else if (short <= 0) { verdict += `Your ${nx.booked} booked calls this week cover that if they convert like your month so far.`; cls = 'hit'; }
+    else if (short <= nx.open) { verdict += `Your ${nx.booked} booked calls should bring about ${nx.closes.toFixed(1)} closes. Fill <b>${short} more</b> of your ${nx.open} open slots this week to get there.`; cls = 'almost'; }
+    else { verdict += `That is ${short} more than your ${nx.booked} booked, and you only have ${nx.open} open slots this week: open more time and push every pipeline lead to close.`; cls = 'missed'; }
+    verdict += ` At the usual pipeline rates it is ${p.likely.closes} new closes (${p.likely.booked} booked calls).`;
+  }
+
+  return `<div class="section"><h2>WHERE WE'RE HEADED: THE PATH TO ${$(c.monthTarget)}</h2>
+<p class="key">Working backwards from your month target: what is left, what your pipeline covers, and what your calendar has to deliver.</p>
+<div class="path">
+${step(1, 'Gap to target', $(p.gap), `${$(c.value ?? 0)} collected of ${$(c.monthTarget)}, ${plural(c.daysLeft, 'business day')} left.`)}
+${step(2, 'Closes that takes', rangeText(p.range), `${p.range.floor} at $17.5K each${p.range.own ? ` · ${p.range.own} at your ${fmtMoney(m.avgRevenue.value)} average` : ''} · ${p.range.high} at $20K each.`)}
+${step(3, 'Your pipeline', pl ? `${p.pipe.n} · ${$(p.pipe.all)}` : '–', pl
+    ? `${pl.hc} High Confidence ${$(pl.cash.hc)} · ${pl.sv} Soft Verbal ${$(pl.cash.sv)} · ${pl.working} Working ${$(pl.cash.working)}${pl.noAmount ? ` (${pl.noAmount} with no amount, counted at $17.5K)` : ''}. Usual rates: 80% of High Confidence and 50% of Soft Verbal close, Working not counted = ${$(p.pipe.likely)}.`
+    : 'No pipeline tab yet.')}
+${cases(4, 'Gap left after the pipeline', (s) => `<b>${$(s.left)}</b><span>${plural(s.closes, 'new close')}</span>`)}
+${cases(5, 'New calls that takes', (s) => `<b>${s.booked ?? '–'}</b><span>booked calls (${s.live ?? '–'} live)</span>`, rateText)}
+${step(6, 'Your next 7 days', nx.booked == null ? (m.slots.value ?? '–') : `${nx.booked} + ${nx.open}`, m.slots.value == null ? 'Not set up as a discovery host in Calendly yet.'
+    : `${nx.booked != null ? `${nx.booked} calls already booked${nx.booked ? ` (about ${nx.closes.toFixed(1)} closes at your rates)` : ''} + ${nx.open} open slots` : `${nx.open} open slots`}; target 25 booked + open.${cal ? ` Calendar open till ${cal.label}.` : ''}${cal?.away ? ` Away (${esc(cal.away.away)}); open evening slots when back in ${esc(cal.away.back_label)}.` : cal?.closesEarly ? ' Most days close by 5pm ET: open later slots.' : ''}`)}
+</div>
+<div class="verdict ${cls}">${verdict}</div></div>`;
+}
+
+// What to change, from the week's inputs; "nothing" when every scored input hit
+function weekVerdict(m) {
+  const fixes = [];
+  const sw = m.slotsWeek, lv = m.live, ar = m.avgRevenue;
+  if (sw.status === 'missed' || sw.status === 'almost') fixes.push(`slots averaged ${sw.value} booked + open, under 25: open more Calendly time`);
+  if (lv.status === 'missed' || lv.status === 'almost') fixes.push(`${lv.value} live calls this month vs a team median of ${num(lv.target)}: book and confirm more calls`);
+  if (ar.status === 'missed') fixes.push(`average revenue ${fmtMoney(ar.value)}, under $17.5K: hold price on the next closes`);
+  const scored = [sw, lv, ar].filter((x) => x.status !== 'track').length;
+  if (!scored) return '';
+  return fixes.length
+    ? `<div class="verdict missed"><b>To change:</b> ${fixes.join('; ')}.</div>`
+    : '<div class="verdict hit"><b>You did the inputs right:</b> enough slots, enough live calls, average revenue at or above $17.5K. Nothing to change here; the path below is about converting.</div>';
+}
+
+// "Sunday, October 18th" from the window's last day
+function longDate(m) {
+  const [mm, dd] = m.ed.through_key.split('-').map(Number);
+  const year = Number(m.cash.chart?.priorMonth?.slice(0, 4) ?? 2026) + (mm === 1 ? 1 : 0);
+  const d = new Date(Date.UTC(year, mm - 1, dd));
+  const sfx = dd % 10 === 1 && dd !== 11 ? 'st' : dd % 10 === 2 && dd !== 12 ? 'nd' : dd % 10 === 3 && dd !== 13 ? 'rd' : 'th';
+  return `${d.toLocaleString('en-US', { weekday: 'long', timeZone: 'UTC' })}, ${d.toLocaleString('en-US', { month: 'long', timeZone: 'UTC' })} ${dd}${sfx}`;
+}
+
 export function closerCard(m, month) {
   const monday = m.edition === 'monday';
   const name = m.closer.short;
@@ -201,46 +294,27 @@ export function closerCard(m, month) {
     targetText: cl.needed == null ? 'No target yet' : `Need ${cl.needed} for ${fmtMoney(m.cash.monthTarget, true)}`,
   });
 
-  // Where we're headed: next 7 days of slots, and on track / off pace against the month target
-  const sl = m.slots;
-  const cal = m.calendar;
-  const upcomingTile = tile({
-    label: 'Upcoming slot availability', value: sl.value ?? '–', statusKey: sl.status,
-    sub: sl.value == null ? 'Not set up as a discovery host in Calendly yet' : sl.booked == null
-      ? 'Open discovery slots in Calendly over the next 7 days'
-      : `Discovery slots in the next 7 days: <b>${sl.booked}</b> already booked, <b>${sl.open}</b> real openings left`,
-    small: cal ? `Calendar open till <b>${cal.label}</b>${cal.away ? `<br>Away (${esc(cal.away.away)}). Open evening slots when back in ${esc(cal.away.back_label)}.` : ''}` : null,
-    warn: cal?.closesEarly && !cal.away ? 'Closes by 5pm ET most days: open later slots' : null,
-    bar: bar(sl.value, sl.target), targetText: 'Target 25 (booked + open)',
-  });
   const c = m.cash;
-  const targetTile = !c.monthTarget ? tile({
-    label: 'Monthly target', value: '–', statusKey: 'track', sub: 'Your month target is coming', targetText: '', chip: PACE_CHIP.track,
-  }) : tile({
-    label: 'Monthly target', value: fmtMoney(c.monthTarget, true), statusKey: c.status,
-    sub: c.remaining ? `${fmtMoney(c.remaining, true)} to go in ${plural(c.daysLeft, 'business day')}` : 'Target reached',
-    small: c.remaining ? `About <b>${cl.stillNeeded}</b> more closes at $17.5K each. ${pl
-      ? `Your pipeline has <b>${pl.hc + pl.sv}</b> High Confidence + Soft Verbal leads; at 80% / 50% that is about <b>${cl.projected - cl.actual}</b> closes.`
-      : 'No pipeline tab yet.'}` : null,
-    targetText: `Month end at this pace: ${fmtMoney(c.projectedFinish, true)}`, chip: PACE_CHIP[c.status],
-  });
-
   const lede = `${c.monthTarget ? `${fmtPct(c.paceRatio)} of pace (team median ${fmtPct(t.pace)})` : `${fmtMoney(c.value, true)} collected`} · ${plural(lv.value, 'live call')} this month · ${plural(cl.actual, 'close')}${cl.projected != null ? `, ${cl.projected} projected` : ''}`;
 
   const body = `
-<div class="eyebrow">Closer scorecard · ${monday ? 'Week in review' : 'Midweek check-in'}</div>
-<h1>${esc(name)}'s ${monday ? 'week' : 'week so far'}: ${m.ed.week_label}</h1>
+<div class="eyebrow">Closer scorecard · Month-to-date roundup</div>
+<h1>${esc(name)}'s month to date: ${longDate(m)}</h1>
 <div class="lede">${lede}</div>
 ${paceTracker(m, month)}
 <div class="section"><h2>HOW THE WEEK WENT</h2>
-<p class="key">The inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
-<div class="grid">${slotsWeekTile}${liveTile}${avgTile}${closesTile}</div></div>
-<div class="section"><h2>WHERE WE'RE HEADED</h2>
-<p class="key">What the rest of ${month.label} needs from you.</p>
-<div class="grid two">${upcomingTile}${targetTile}</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500 average per close.</div>`;
+<p class="key">${monday ? m.ed.week_label : `This week so far (${m.ed.week_label})`}: the inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
+<div class="grid">${slotsWeekTile}${liveTile}${avgTile}${closesTile}</div>
+${weekVerdict(m)}</div>
+${pathSection(m, month)}
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. ${c.source === 'tracker' ? 'Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target.' : 'Pace: month target × business days so far ÷ business days in the month (provisional).'} Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the week figure averages each day. The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes: closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Closes needed: month target ÷ $17,500 average per close. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new closes at $17.5K each; calls needed use your month-to-date show rate (live ÷ booked) and close rate (closes ÷ live calls), or the team median until you have a close.</div>`;
   return page(body);
 }
+
+// Green: the pipeline covers the gap at usual rates. Yellow: covered only if every lead closes, or the next
+// 7 days' booked + open slots can hold the calls still needed. Red: neither.
+const pathStatus = (p) => (!p ? 'track' : p.likely.closes === 0 ? 'hit'
+  : p.all.closes === 0 || (p.next.booked != null && p.all.booked <= p.next.booked + p.next.open) ? 'almost' : 'missed');
 
 export function leadershipTable(rows, data, team) {
   const ed = data.editions.monday;
@@ -254,20 +328,21 @@ ${cell(m.slotsWeek.status, m.slotsWeek.value ?? '–', m.slotsWeek.value == null
 ${cell(m.live.status, m.live.value, `${m.live.week} last week`)}
 ${cell(m.avgRevenue.status, m.avgRevenue.value == null ? '–' : fmtMoney(m.avgRevenue.value), `${plural(m.avgRevenue.closes, 'close')} MTD`)}
 ${cell(cl.status, cl.projected == null ? cl.actual : `${cl.actual} / ${cl.projected}`, pl ? `${pl.hc} HC · ${pl.sv} SV · ${pl.working} W${pl.nonstandard ? ` · ${pl.nonstandard} untagged` : ''}${cl.needed ? ` · need ${cl.needed}` : ''}` : 'no tab')}
+${cell(pathStatus(m.path), m.path ? `${m.path.all.closes} / ${m.path.likely.closes}` : '–', m.path ? `${m.path.all.booked ?? '–'} / ${m.path.likely.booked ?? '–'} booked calls` : 'no target')}
 ${cell(m.slots.status, m.slots.value ?? '–', m.slots.value == null ? 'not a host' : `${m.slots.booked != null ? `${m.slots.booked} booked + ${m.slots.open} open` : 'open'}${m.calendar ? ` · till ${m.calendar.usualText}` : ''}`)}</tr>`;
   }).join('');
 
-  const median = `<tr class="total"><td>Team median<small>fully ramped</small></td><td>${fmtPct(team.pace)}</td><td>–</td><td>${num(team.slotsWeek)}</td><td>${num(team.live)}</td><td>${fmtMoney(team.avgRevenue)}</td><td>${num(team.closes)}<small>closes MTD</small></td><td>${num(team.slots)}</td></tr>`;
+  const median = `<tr class="total"><td>Team median<small>fully ramped</small></td><td>${fmtPct(team.pace)}</td><td>–</td><td>${num(team.slotsWeek)}</td><td>${num(team.live)}</td><td>${fmtMoney(team.avgRevenue)}</td><td>${num(team.closes)}<small>closes MTD</small></td><td>–</td><td>${num(team.slots)}</td></tr>`;
 
   const html = `
 <div class="eyebrow">Closer scorecard · Leadership view</div>
-<h1>Team pace: ${ed.week_label}</h1>
+<h1>Team month to date: ${longDate(rows[0])}</h1>
 <div class="lede">What each closer sees on their card, in one table. Sent ${ed.date}, 8:00am ET.</div>
 <div class="legend"><span style="--c:var(--hit)">On target / on pace</span><span style="--c:var(--almost)">Close (75%+) / slightly behind</span><span style="--c:var(--missed)">Below / off pace</span><span style="--c:var(--track)">Tracked, no target</span></div>
 <table><thead>
-<tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp">Where we're headed</th></tr>
-<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
+<tr><th></th><th class="grp" colspan="2">Pace</th><th class="grp" colspan="4">How the week went</th><th class="grp" colspan="2">Where we're headed</th></tr>
+<tr><th>Closer</th><th>% of pace<br>cash vs pace</th><th>Month end<br>at this pace</th><th>Discovery slots<br>booked + open, target 25</th><th>Live calls MTD<br>vs team median</th><th>Avg revenue<br>target $17.5K</th><th>Closes<br>actual / projected</th><th>New closes needed<br>all pipeline / usual</th><th>Upcoming slots<br>booked + open, target 25</th></tr></thead>
 <tbody>${body}${median}</tbody></table>
-<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status.</div>`;
+<div class="footer">Week = Monday to Sunday. Month to date runs Oct 1 to ${ed.through}. ${trackerFor(data, ed) ? 'Pace comes from the 2M tracker: each closer\'s month target and expected cash by this day on its back-loaded month curve; month end at this pace = % of pace × month target.' : 'Pace uses a provisional $200K monthly target for every fully ramped closer until per-closer targets are connected from the tracker.'} Slots = client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days (open from Messi's 8am post, booked from Calendly as of that post); the week figure averages each day, upcoming is today's. Projected closes = closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in each closer's ${data.month.label} pipeline tab; "needed" = month target ÷ $17,500; "untagged" = open leads with a blank or non-standard status. New closes needed = closes at $17.5K still needed after the pipeline, if every open lead closes / at the usual 80% HC, 50% SV rates, with the booked calls that takes at the closer's month-to-date rates; green = the pipeline covers the gap at usual rates; yellow = covered only if every lead closes, or the next 7 days' booked + open slots can hold the calls.</div>`;
   return page(html, 'wide');
 }
