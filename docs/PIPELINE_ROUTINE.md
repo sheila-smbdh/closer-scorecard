@@ -1,6 +1,6 @@
 # Friday pipeline report (routine)
 
-Runs every Friday at 1:00pm ET (`CRON_TZ=America/New_York 0 13 * * 5`). Posts one PNG to **#sales-strategy** (`C0C8TGWKLTD`) and DMs the flags file to Sheila (Slack `U0BM6J8KM32`).
+Runs every Friday at 11:30am ET (`CRON_TZ=America/New_York 30 11 * * 5`), ahead of the 1pm ET review call. Posts one PNG to **#sales-strategy** (`C0C8TGWKLTD`) and DMs the flags file to Sheila (Slack `U0BM6J8KM32`).
 
 **Read-only rule (Sheila):** never write to or change anything in Google Sheets, Close, Calendly, the tracker, Slack history or any other source. Only read. The only outputs are the report image in #sales-strategy and the flags DM to Sheila. Never message closers.
 
