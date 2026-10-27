@@ -31,10 +31,13 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .pt-right{text-align:right}
 .pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
 .pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
-.pt-num span{font-size:34px;color:#fcf6e2;margin-left:6px}
-.pt-goal{margin-top:16px}
-.pt-goal b{display:block;font-family:Fraunces,Georgia,serif;font-size:52px;font-weight:800;color:#fcf6e2;line-height:1.05;margin-top:6px}
-.pt-goal b span{font-size:30px;color:rgba(252,246,226,.75)}
+.pt-stats{display:grid;grid-template-columns:repeat(2,auto);justify-content:start;column-gap:72px;margin-top:14px}
+.pt-stats .pt-caps{color:rgba(252,246,226,.6)}
+.pt-stats .pt-num{margin-top:8px}
+.pt-stats .goal{color:#fcf6e2}
+.pt-cl{font-family:Fraunces,Georgia,serif;font-size:34px;font-weight:800;color:#f0cd2b;margin-top:6px}
+.pt-cl.goal{color:#fcf6e2}
+.pt-cl small{font-family:Inter,sans-serif;font-size:16px;font-weight:600;color:rgba(252,246,226,.6);margin-left:8px}
 .pt-chart{margin-top:18px}
 .pt-chart svg{display:block}
 .pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
@@ -53,11 +56,12 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .tile .s{font-size:15px;color:#3d4248;line-height:1.4}
 .tile .s small{font-size:13px;color:var(--muted)}
 .tile .foot{margin-top:auto;padding-top:12px}
+.tile .foot>.chip{display:inline-block;margin-bottom:10px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
 .hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
-.row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:26px;font-size:14px;color:#3d4248}
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
 .missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
@@ -83,9 +87,11 @@ function bar(value, target) {
   return `<div class="bar"><i style="width:${Math.min(100, (value / max) * 100)}%"></i><b style="left:${(target / max) * 100}%"></b></div>`;
 }
 
-function tile({ label, value, sub, statusKey, target, barHtml = '', chipText = CHIP[statusKey] }) {
+// chipAbove: the chip sits above the bar (for a long chip label), leaving the bottom row to the target
+function tile({ label, value, sub, statusKey, target, barHtml = '', chipText = CHIP[statusKey], chipAbove = false }) {
+  const chip = `<span class="chip">${chipText}</span>`;
   return `<div class="tile ${statusKey}"><div class="l">${label}</div><div class="v">${value}</div>${sub ? `<div class="s">${sub}</div>` : ''}
-<div class="foot">${barHtml}<div class="row"><span>${target}</span><span class="chip">${chipText}</span></div></div></div>`;
+<div class="foot">${chipAbove ? chip : ''}${barHtml}<div class="row"><span>${target}</span>${chipAbove ? '' : chip}</div></div></div>`;
 }
 
 function chart(ch, target) {
@@ -120,11 +126,14 @@ export function closerCard(m, p, month, title) {
   const pace = `<div class="pt">
 <div class="pt-top">
   <div><div class="pt-caps">Cash collected · ${month.label}</div>
-  <div class="pt-num">${$(c.value ?? 0)}<span>· ${p.closes.actual} close${p.closes.actual === 1 ? '' : 's'}</span></div>
+  <div class="pt-stats">
+    <div class="pt-caps">Month to date</div>${c.monthTarget ? `<div class="pt-caps">Goal for the whole month</div>` : '<div></div>'}
+    <div class="pt-num">${$(c.value ?? 0)}</div>${c.monthTarget ? `<div class="pt-num goal">${$(c.monthTarget)}</div>` : '<div></div>'}
+    <div class="pt-cl">${p.closes.actual}<small>close${p.closes.actual === 1 ? '' : 's'}</small></div>${p.closes.target ? `<div class="pt-cl goal">${p.closes.target}<small>closes</small></div>` : '<div></div>'}
+  </div>
   ${c.monthTarget ? `<div class="pt-deltas"><span class="${c.value >= goalNow ? 'up' : 'down'}">${delta(c.value ?? 0, goalNow)}<small>vs goal ${$(goalNow)}</small></span>${ch?.priorSameDay
     ? `<span class="${c.value >= ch.priorSameDay ? 'up' : 'down'}">${delta(c.value ?? 0, ch.priorSameDay)}<small>vs ${monthShort(ch.priorMonth)} same day</small></span>` : ''}</div>` : ''}</div>
-  <div class="pt-right"><span class="pill ${c.status}">${c.pace ? PACE_LABEL[c.pace].toUpperCase() : 'NO TARGET YET'}</span>
-  ${c.monthTarget ? `<div class="pt-goal"><div class="pt-caps">${month.label} goal</div><b>${$(c.monthTarget)} <span>· ${p.closes.target} closes</span></b></div>` : ''}</div>
+  <div class="pt-right"><span class="pill ${c.status}">${c.pace ? PACE_LABEL[c.pace].toUpperCase() : 'NO TARGET YET'}</span></div>
 </div>
 ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
 <div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal</span>${ch.prior ? `<span><i style="background:#7d92ff"></i>${monthShort(ch.priorMonth)}, same day</span>` : ''}<span><i class="dot"></i>${month.label} to date</span></div>` : ''}
@@ -140,8 +149,8 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
     tile({ label: 'Average revenue', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
       target: 'Target $17,500', barHtml: bar(ar.value, ar.target) }),
     // Pacing: cash collected month to date vs where the 2M tracker's curve says it should be today
-    c.monthTarget ? tile({ label: 'Pacing', value: `${$(c.value ?? 0)} <span>/ ${$(goalNow)}</span>`, statusKey: c.status,
-      target: 'Goal to date', barHtml: bar(c.value ?? 0, goalNow), chipText: PACE_LABEL[c.pace].toUpperCase() })
+    c.monthTarget ? tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: c.status,
+      target: `Goal to date ${$(goalNow)}`, barHtml: bar(c.value ?? 0, goalNow), chipText: PACE_LABEL[c.pace].toUpperCase(), chipAbove: true })
       : tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: 'track', target: 'No target yet' }),
   ].join('');
 

@@ -19,10 +19,13 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .pt-right{text-align:right}
 .pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
 .pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
-.pt-num span{font-size:34px;color:#fcf6e2;margin-left:6px}
-.pt-goal{margin-top:16px}
-.pt-goal b{display:block;font-family:Fraunces,Georgia,serif;font-size:52px;font-weight:800;color:#fcf6e2;line-height:1.05;margin-top:6px}
-.pt-goal b span{font-size:30px;color:rgba(252,246,226,.75)}
+.pt-stats{display:grid;grid-template-columns:repeat(2,auto);justify-content:start;column-gap:72px;margin-top:14px}
+.pt-stats .pt-caps{color:rgba(252,246,226,.6)}
+.pt-stats .pt-num{margin-top:8px}
+.pt-stats .goal{color:#fcf6e2}
+.pt-cl{font-family:Fraunces,Georgia,serif;font-size:34px;font-weight:800;color:#f0cd2b;margin-top:6px}
+.pt-cl.goal{color:#fcf6e2}
+.pt-cl small{font-family:Inter,sans-serif;font-size:16px;font-weight:600;color:rgba(252,246,226,.6);margin-left:8px}
 .pt-chart{margin-top:18px}
 .pt-chart svg{display:block}
 .pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
@@ -41,11 +44,12 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .tile .s{font-size:15px;color:#3d4248;line-height:1.4}
 .tile .s small{font-size:13px;color:var(--muted)}
 .tile .foot{margin-top:auto;padding-top:12px}
+.tile .foot>.chip{display:inline-block;margin-bottom:10px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
 .hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
-.row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:26px;font-size:14px;color:#3d4248}
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
 .missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
@@ -68,10 +72,13 @@ tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
 <div class="pt">
 <div class="pt-top">
   <div><div class="pt-caps">Cash collected · October</div>
-  <div class="pt-num">$42K<span>· 2 closes</span></div>
+  <div class="pt-stats">
+    <div class="pt-caps">Month to date</div><div class="pt-caps">Goal for the whole month</div>
+    <div class="pt-num">$42K</div><div class="pt-num goal">$200K</div>
+    <div class="pt-cl">2<small>closes</small></div><div class="pt-cl goal">12<small>closes</small></div>
+  </div>
   <div class="pt-deltas"><span class="down">−50%<small>vs goal $84K</small></span><span class="down">−69%<small>vs Sep same day</small></span></div></div>
-  <div class="pt-right"><span class="pill missed">BEHIND PACE</span>
-  <div class="pt-goal"><div class="pt-caps">October goal</div><b>$200K <span>· 12 closes</span></b></div></div>
+  <div class="pt-right"><span class="pill missed">BEHIND PACE</span></div>
 </div>
 <div class="pt-chart"><svg viewBox="0 0 940 340" width="940" height="340" font-family="Inter, sans-serif">
 <line x1="60" x2="910" y1="310" y2="310" stroke="rgba(252,246,226,.10)"/><text x="50" y="314" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$0</text><line x1="60" x2="910" y1="162" y2="162" stroke="rgba(252,246,226,.10)"/><text x="50" y="166" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$102K</text><line x1="60" x2="910" y1="14" y2="14" stroke="rgba(252,246,226,.10)"/><text x="50" y="18" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$203K</text>
@@ -88,8 +95,8 @@ tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
 <div class="grid"><div class="tile hit"><div class="l">Average weekly slots</div><div class="v">41</div><div class="s">6 booked · 35 open</div>
 <div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:72.5609756097561%"></b></div><div class="row"><span>Target 35</span><span class="chip">HIT</span></div></div></div><div class="tile hit"><div class="l">Live calls</div><div class="v">28</div>
 <div class="foot"><div class="bar"><i style="width:84.99999999999999%"></i><b style="left:84.99999999999999%"></b></div><div class="row"><span>Target 28</span><span class="chip">HIT</span></div></div></div><div class="tile hit"><div class="l">Average revenue</div><div class="v">$18,000</div>
-<div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:82.6388888888889%"></b></div><div class="row"><span>Target $17,500</span><span class="chip">HIT</span></div></div></div><div class="tile missed"><div class="l">Pacing</div><div class="v">$42K <span>/ $84K</span></div>
-<div class="foot"><div class="bar"><i style="width:42.609567459180745%"></i><b style="left:85%"></b></div><div class="row"><span>Goal to date</span><span class="chip">BEHIND PACE</span></div></div></div></div>
+<div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:82.6388888888889%"></b></div><div class="row"><span>Target $17,500</span><span class="chip">HIT</span></div></div></div><div class="tile missed"><div class="l">Pacing</div><div class="v">$42K</div>
+<div class="foot"><span class="chip">BEHIND PACE</span><div class="bar"><i style="width:42.609567459180745%"></i><b style="left:85%"></b></div><div class="row"><span>Goal to date $84K</span></div></div></div></div>
 <h2>WEEKS AHEAD</h2>
 <table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
 <tr class="done"><td><div class="wk">Week 1</div><small>Oct 1 → 10 · Sun-Sat + 3-day lead-in</small></td><td><b>$6K</b> <span class="of">/ $38K</span><br><span class="chip missed">MISSED</span></td><td><b>0</b> <span class="of">/ 2</span><br><span class="chip missed">MISSED</span></td><td><b>38</b> <span class="of">/ 35</span><br><span class="chip hit">HIT</span></td></tr>
