@@ -106,7 +106,7 @@ function todayMarker(ch, x, y, top, bottom, value, mo) {
     labels[up].y = mid - 20; labels[1 - up].y = mid + 20;
   }
   const txt = (l) => `<text x="${tx}" y="${(l.y + 7).toFixed(1)}" text-anchor="${anchor}" font-size="20" font-weight="800" fill="${l.color}" paint-order="stroke" stroke="#0f0f0e" stroke-width="8" stroke-linejoin="round">${delta(value, l.v)}<tspan font-size="14" font-weight="600" fill="rgba(252,246,226,.75)" dx="6">${l.text} ${$(l.v)}</tspan></text>`;
-  return `<line x1="${xt}" x2="${xt}" y1="${top}" y2="${bottom}" stroke="rgba(252,246,226,.35)" stroke-dasharray="3 4"/>
+  return `<line x1="${xt}" x2="${xt}" y1="${top}" y2="${bottom}" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 4"/>
 <text x="${xt}" y="${top - 2}" text-anchor="middle" font-size="13" font-weight="700" fill="#f0cd2b">TODAY · ${mo} ${ch.day}</text>
 ${labels.map((l) => `<circle cx="${xt}" cy="${y(l.v).toFixed(1)}" r="5" fill="${l.color}" stroke="#0f0f0e" stroke-width="2"/>`).join('')}
 ${labels.map(txt).join('')}`;
