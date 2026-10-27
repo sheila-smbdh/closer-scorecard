@@ -139,7 +139,7 @@ export function closerMetrics(data, closer, edition) {
   // This past week (or this week so far on Wednesday), for the line under each month-to-date tile
   const week = { closes: wkAct[CLOSES], rev: wkAct[REV] };
   const filled = { week: wk.filled, mtd: mtdBS.filled };
-  // slotAvg is kept for the Weeks Ahead table (each week's average slots)
+  // slotAvg is kept for the Weekly Scorecard table (each week's average slots)
   return { closer, edition, ed, salesTrackerWeek, week, filled, live, slotsMtd, slotAvg, slots, avgRevenue, cash, closes, newHire };
 }
 

@@ -1,5 +1,5 @@
 // Closer card: pace chart with the headline numbers, month-to-date inputs (ending on Pacing: cash vs the
-// goal for today), and Weeks Ahead (every week of the month: cash, closes and slots, target vs actual).
+// goal for today), and Weekly Scorecard (every week of the month: cash, closes and slots, target vs actual).
 
 import { fmtMoney, PACE_LABEL } from './metrics.mjs';
 import { SLOTS_TARGET } from './plan.mjs';
@@ -188,7 +188,7 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget, c.value ?? 0, month.lab
       return `<b>${n.value}</b> <span class="of">/ ${SLOTS_TARGET}</span><small>Next 7 days${n.booked != null ? `: ${n.booked} booked · ${n.open} open` : ''}</small>`
         + (n.toOpen ? `<span class="chip missed">OPEN ${n.toOpen} MORE</span>` : chip('hit'));
     };
-    weekly = `<h2>WEEKS AHEAD</h2>
+    weekly = `<h2>WEEKLY SCORECARD</h2>
 <table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
 ${p.weeks.map((w) => `<tr class="${w.phase}"><td><div class="wk">${w.label}</div><small>${w.dates} · ${w.span}</small></td><td>${cell(w, 'cash', $)}${w.carried ? `<small>Includes ${$(w.carried)} carried from earlier weeks</small>` : ''}</td><td>${cell(w, 'closes', String)}</td><td>${slotCell(w)}</td></tr>`).join('\n')}
 <tr class="month"><td><div class="wk">${month.label} total</div><small>Month to date vs month goal</small></td>${['cash', 'closes', 'slots'].map((k) => {

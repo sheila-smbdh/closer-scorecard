@@ -1,5 +1,5 @@
 // Numbers for the card beyond src/metrics.mjs: closes vs the month's closes target (month cash target ÷
-// $17.5K) and the Weeks Ahead table. Weeks follow the 2M tracker (Sun-Sat, leading partial days folded
+// $17.5K) and the Weekly Scorecard table. Weeks follow the 2M tracker (Sun-Sat, leading partial days folded
 // into Week 1, a trailing remnant under 7 days is the "Final stretch"). Targets carry misses forward like
 // the tracker's week cards: a week's target is the goal curve at the week's end minus what was banked
 // before the week started, so a finished week is hit only if the closer is back on the pace line by its
@@ -40,7 +40,7 @@ export function plan(data, m) {
   const target = c.monthTarget ? Math.ceil(c.monthTarget / TARGETS.avgRevenueFloor) : null;
   out.closes = { actual: m.closes.actual, target };
 
-  // Weeks Ahead: every week of the month, target vs actual for cash, closes and slots
+  // Weekly Scorecard: every week of the month, target vs actual for cash, closes and slots
   const tr = trackerFor(data, m.ed);
   if (!c.chart || target == null) return out;
   const goal = tr.goal_shape, dim = tr.days_in_month;
