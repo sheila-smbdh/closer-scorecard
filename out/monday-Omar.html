@@ -13,9 +13,7 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .pt-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
 .pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
 .pt-num{font-family:Fraunces,Georgia,serif;font-size:64px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1;margin-top:12px}
-.pt-deltas{display:flex;gap:18px;margin-top:12px;font-size:19px;font-weight:700}
 .down{color:#ff7a58} .up{color:#6fd08a}
-.pt-deltas span small{font-size:14px;font-weight:600;color:rgba(252,246,226,.6);margin-left:4px}
 .pt-right{text-align:right}
 .pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
 .pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
@@ -26,7 +24,7 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .pt-cl{font-family:Fraunces,Georgia,serif;font-size:34px;font-weight:800;color:#f0cd2b;margin-top:6px}
 .pt-cl.goal{color:#fcf6e2}
 .pt-cl small{font-family:Inter,sans-serif;font-size:16px;font-weight:600;color:rgba(252,246,226,.6);margin-left:8px}
-.pt-chart{margin-top:18px}
+.pt-chart{margin-top:4px}
 .pt-chart svg{display:block}
 .pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
 .pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
@@ -77,17 +75,21 @@ tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
     <div class="pt-num">$15K</div><div class="pt-num goal">$276K</div>
     <div class="pt-cl">1<small>close</small></div><div class="pt-cl goal">16<small>closes</small></div>
   </div>
-  <div class="pt-deltas"><span class="down">−86%<small>vs goal $106K</small></span><span class="down">−83%<small>vs Sep same day</small></span></div></div>
+  </div>
   <div class="pt-right"><span class="pill missed">BEHIND PACE</span></div>
 </div>
-<div class="pt-chart"><svg viewBox="0 0 940 340" width="940" height="340" font-family="Inter, sans-serif">
-<line x1="60" x2="910" y1="310" y2="310" stroke="rgba(252,246,226,.10)"/><text x="50" y="314" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$0</text><line x1="60" x2="910" y1="162" y2="162" stroke="rgba(252,246,226,.10)"/><text x="50" y="166" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$140K</text><line x1="60" x2="910" y1="14" y2="14" stroke="rgba(252,246,226,.10)"/><text x="50" y="18" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$280K</text>
-<path d="M 60,310 L 60.0,310.0 L 88.3,310.0 L 116.7,310.0 L 145.0,294.1 L 173.3,294.1 L 201.7,294.1 L 230.0,294.1 L 258.3,294.1 L 286.7,294.1 L 315.0,294.1 L 343.3,294.1 L 371.7,294.1 L 400.0,294.1 L 428.3,294.1 L 456.7,294.1 L 485.0,294.1 L 513.3,294.1 L 541.7,294.1 L 541.6666666666667,310 Z" fill="rgba(252,208,64,.20)"/>
-<polyline points="60.0,310.0 88.3,310.0 116.7,310.0 145.0,289.9 173.3,289.9 201.7,289.9 230.0,289.9 258.3,249.6 286.7,249.6 315.0,249.6 343.3,249.6 371.7,249.6 400.0,249.6 428.3,249.6 456.7,233.7 485.0,233.7 513.3,217.9 541.7,217.9 570.0,197.7 598.3,197.7 626.7,197.7 655.0,197.7 683.3,178.7 711.7,159.6 740.0,159.6 768.3,159.6 796.7,159.6 825.0,159.6 853.3,140.6 881.7,102.4 910.0,14.0" fill="none" stroke="#7d92ff" stroke-width="2.5" opacity=".85"/>
-<polyline points="60.0,304.5 88.3,297.9 116.7,293.7 145.0,288.0 173.3,283.4 201.7,282.9 230.0,277.5 258.3,271.3 286.7,263.1 315.0,255.2 343.3,247.3 371.7,241.7 400.0,236.7 428.3,227.2 456.7,221.4 485.0,212.4 513.3,204.6 541.7,198.0 570.0,191.6 598.3,187.6 626.7,181.0 655.0,173.3 683.3,167.4 711.7,156.2 740.0,149.5 768.3,138.7 796.7,127.1 825.0,113.3 853.3,99.5 881.7,17.8 910.0,17.8" fill="none" stroke="#ff7a58" stroke-width="2.5" stroke-dasharray="7 5"/>
-<polyline points="60.0,310.0 88.3,310.0 116.7,310.0 145.0,294.1 173.3,294.1 201.7,294.1 230.0,294.1 258.3,294.1 286.7,294.1 315.0,294.1 343.3,294.1 371.7,294.1 400.0,294.1 428.3,294.1 456.7,294.1 485.0,294.1 513.3,294.1 541.7,294.1" fill="none" stroke="#fcf6e2" stroke-width="3.5" stroke-linejoin="round"/>
-<circle cx="541.6666666666667" cy="294.1144901610018" r="8" fill="#f0cd2b" stroke="#0a0a0a" stroke-width="2.5"/>
-<text x="60" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D1</text><text x="258.33333333333337" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D8</text><text x="456.6666666666667" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D15</text><text x="655" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D22</text><text x="910" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D31</text>
+<div class="pt-chart"><svg viewBox="0 0 940 360" width="940" height="360" font-family="Inter, sans-serif">
+<line x1="60" x2="910" y1="330" y2="330" stroke="rgba(252,246,226,.10)"/><text x="50" y="334" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$0</text><line x1="60" x2="910" y1="182" y2="182" stroke="rgba(252,246,226,.10)"/><text x="50" y="186" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$140K</text><line x1="60" x2="910" y1="34" y2="34" stroke="rgba(252,246,226,.10)"/><text x="50" y="38" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$280K</text>
+<path d="M 60,330 L 60.0,330.0 L 88.3,330.0 L 116.7,330.0 L 145.0,314.1 L 173.3,314.1 L 201.7,314.1 L 230.0,314.1 L 258.3,314.1 L 286.7,314.1 L 315.0,314.1 L 343.3,314.1 L 371.7,314.1 L 400.0,314.1 L 428.3,314.1 L 456.7,314.1 L 485.0,314.1 L 513.3,314.1 L 541.7,314.1 L 541.6666666666667,330 Z" fill="rgba(252,208,64,.20)"/>
+<polyline points="60.0,330.0 88.3,330.0 116.7,330.0 145.0,309.9 173.3,309.9 201.7,309.9 230.0,309.9 258.3,269.6 286.7,269.6 315.0,269.6 343.3,269.6 371.7,269.6 400.0,269.6 428.3,269.6 456.7,253.7 485.0,253.7 513.3,237.9 541.7,237.9 570.0,217.7 598.3,217.7 626.7,217.7 655.0,217.7 683.3,198.7 711.7,179.6 740.0,179.6 768.3,179.6 796.7,179.6 825.0,179.6 853.3,160.6 881.7,122.4 910.0,34.0" fill="none" stroke="#7d92ff" stroke-width="2.5" opacity=".85"/>
+<polyline points="60.0,324.5 88.3,317.9 116.7,313.7 145.0,308.0 173.3,303.4 201.7,302.9 230.0,297.5 258.3,291.3 286.7,283.1 315.0,275.2 343.3,267.3 371.7,261.7 400.0,256.7 428.3,247.2 456.7,241.4 485.0,232.4 513.3,224.6 541.7,218.0 570.0,211.6 598.3,207.6 626.7,201.0 655.0,193.3 683.3,187.4 711.7,176.2 740.0,169.5 768.3,158.7 796.7,147.1 825.0,133.3 853.3,119.5 881.7,37.8 910.0,37.8" fill="none" stroke="#ff7a58" stroke-width="2.5" stroke-dasharray="7 5"/>
+<polyline points="60.0,330.0 88.3,330.0 116.7,330.0 145.0,314.1 173.3,314.1 201.7,314.1 230.0,314.1 258.3,314.1 286.7,314.1 315.0,314.1 343.3,314.1 371.7,314.1 400.0,314.1 428.3,314.1 456.7,314.1 485.0,314.1 513.3,314.1 541.7,314.1" fill="none" stroke="#fcf6e2" stroke-width="3.5" stroke-linejoin="round"/>
+<line x1="541.6666666666667" x2="541.6666666666667" y1="34" y2="330" stroke="rgba(252,246,226,.35)" stroke-dasharray="3 4"/>
+<text x="541.6666666666667" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#f0cd2b">TODAY · Oct 18</text>
+<circle cx="541.6666666666667" cy="218.0" r="5" fill="#ff7a58" stroke="#0f0f0e" stroke-width="2"/><circle cx="541.6666666666667" cy="237.9" r="5" fill="#9fb0ff" stroke="#0f0f0e" stroke-width="2"/>
+<text x="557.6666666666667" y="214.9" text-anchor="start" font-size="20" font-weight="800" fill="#ff7a58" paint-order="stroke" stroke="#0f0f0e" stroke-width="8" stroke-linejoin="round">−86%<tspan font-size="14" font-weight="600" fill="rgba(252,246,226,.75)" dx="6">vs goal $106K</tspan></text><text x="557.6666666666667" y="254.9" text-anchor="start" font-size="20" font-weight="800" fill="#9fb0ff" paint-order="stroke" stroke="#0f0f0e" stroke-width="8" stroke-linejoin="round">−83%<tspan font-size="14" font-weight="600" fill="rgba(252,246,226,.75)" dx="6">vs Sep same day $87K</tspan></text>
+<circle cx="541.6666666666667" cy="314.1144901610018" r="8" fill="#f0cd2b" stroke="#0a0a0a" stroke-width="2.5"/>
+<text x="60" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D1</text><text x="258.33333333333337" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D8</text><text x="456.6666666666667" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D15</text><text x="655" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D22</text><text x="910" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D31</text>
 </svg></div>
 <div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal</span><span><i style="background:#7d92ff"></i>Sep, same day</span><span><i class="dot"></i>October to date</span></div>
 </div>
