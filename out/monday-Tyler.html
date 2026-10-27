@@ -19,9 +19,10 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .pt-right{text-align:right}
 .pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
 .pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
-.pt-closes{margin-top:16px;font-size:15px;color:rgba(252,246,226,.7)}
-.pt-closes b{display:block;font-family:Fraunces,Georgia,serif;font-size:40px;font-weight:800;color:#fcf6e2;line-height:1.1}
-.pt-closes b span{font-size:22px;color:rgba(252,246,226,.6)}
+.pt-num span{font-size:34px;color:#fcf6e2;margin-left:6px}
+.pt-goal{margin-top:16px}
+.pt-goal b{display:block;font-family:Fraunces,Georgia,serif;font-size:52px;font-weight:800;color:#fcf6e2;line-height:1.05;margin-top:6px}
+.pt-goal b span{font-size:30px;color:rgba(252,246,226,.75)}
 .pt-chart{margin-top:18px}
 .pt-chart svg{display:block}
 .pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
@@ -61,12 +62,13 @@ td .chip{display:inline-block;margin-top:8px}
 .chip.next{background:#d9d6cf;color:#3d4248}
 tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
 tr.next td{color:var(--muted)}
+tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
 </style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
 <h1>Tyler's month to date: Sunday, October 18th</h1>
 <div class="pt">
 <div class="pt-top">
   <div><div class="pt-caps">Cash collected · October</div>
-  <div class="pt-num">$0</div>
+  <div class="pt-num">$0<span>· 0 closes</span></div>
   </div>
   <div class="pt-right"><span class="pill track">NO TARGET YET</span>
   </div>
@@ -77,6 +79,6 @@ tr.next td{color:var(--muted)}
 <div class="grid"><div class="tile track"><div class="l">Average weekly slots</div><div class="v">–</div><div class="s">Not a Calendly host yet</div>
 <div class="foot"><div class="row"><span>Target 35</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Live calls</div><div class="v">9</div>
 <div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Average revenue</div><div class="v">–</div>
-<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Pacing</div><div class="v">$0</div><div class="s">Cash collected month to date</div>
+<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Pacing</div><div class="v">$0</div>
 <div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div></div>
 </div></body></html>

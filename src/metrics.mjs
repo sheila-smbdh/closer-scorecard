@@ -20,6 +20,9 @@ export function status(value, target) {
 
 // Tracker pace.status -> tile color
 const TRACKER_STATUS = { ahead: 'hit', on_pace: 'hit', slightly_behind: 'almost', behind: 'missed' };
+// The 2M tracker's pace words (pace_label / week pills), used for the badge and the Pacing tile
+export const PACE_LABEL = { ahead: 'Ahead of pace', on_pace: 'On pace', slightly_behind: 'Slightly behind', behind: 'Behind pace' };
+const PACE_FROM_STATUS = { hit: 'on_pace', almost: 'slightly_behind', missed: 'behind' };
 
 // Booked/showed for one closer over [from, to] ("MM-DD"). EOD Tracker is the source of truth; a day the
 // closer has no EOD report for is filled from the Sales Tracker. No-show/cancel/reschedule only exist in EOD.
@@ -112,6 +115,7 @@ export function closerMetrics(data, closer, edition) {
       paceRatio: cashExpected ? mtd[CASH] / cashExpected : null,
     };
   }
+  cash.pace = cash.status === 'track' ? null : (cash.source === 'tracker' && tp.status in PACE_LABEL ? tp.status : PACE_FROM_STATUS[cash.status]);
   // Pace chart (same as the tracker's closer view): daily cumulative cash, last month's curve on this
   // month's day axis (normalized for month length), and the goal-pace curve × month target
   if (tp?.daily_cash?.length && cash.monthTarget) {

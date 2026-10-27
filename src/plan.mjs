@@ -1,8 +1,9 @@
 // Numbers for the card beyond src/metrics.mjs: closes vs the month's closes target (month cash target ÷
 // $17.5K) and the Weeks Ahead table. Weeks follow the 2M tracker (Sun-Sat, leading partial days folded
-// into Week 1, a trailing remnant under 7 days is the "Final stretch"). Each week's cash and closes target
-// is the slice of the month target that the tracker's goal curve puts in that week, so the weeks add up
-// to the month target and match the Pacing tile.
+// into Week 1, a trailing remnant under 7 days is the "Final stretch"). Targets carry misses forward like
+// the tracker's week cards: a week's target is the goal curve at the week's end minus what was banked
+// before the week started, so a finished week is hit only if the closer is back on the pace line by its
+// end. The first unfinished week carries any deficit; weeks after it show their plain slice of the curve.
 
 import { TARGETS, trackerFor } from './metrics.mjs';
 
@@ -51,16 +52,27 @@ export function plan(data, m) {
   const closesIn = (from, to) => Object.entries(dailyCloses)
     .filter(([d]) => day(d) >= from && day(d) <= Math.min(to, through)).reduce((a, [, n]) => a + n, 0);
 
-  let slotsRowSet = false;
+  const closesBefore = (d) => closesIn(1, d - 1);
+  let carried = false;
   out.weeks = monthWeeks(year, mo - 1, dim).map((w) => {
     const phase = w.end <= through ? 'done' : w.start <= through ? 'now' : 'next';
+    const cashLine = (d) => c.monthTarget * curveAt(d), closesLine = (d) => Math.round(target * curveAt(d));
+    // Finished weeks and the first unfinished one start from what was actually banked; later weeks
+    // start from the pace line
+    const fromActual = phase === 'done' || !carried;
     const tgt = {
-      cash: c.monthTarget * (curveAt(w.end) - curveAt(w.start - 1)),
-      // cumulative rounding so the weeks add up to the month's closes target
-      closes: Math.round(target * curveAt(w.end)) - Math.round(target * curveAt(w.start - 1)),
+      cash: Math.max(0, cashLine(w.end) - (fromActual ? cashAt(w.start - 1) : cashLine(w.start - 1))),
+      closes: Math.max(0, closesLine(w.end) - (fromActual ? closesBefore(w.start) : closesLine(w.start - 1))),
       slots: SLOTS_TARGET,
     };
     const row = { ...w, phase, target: tgt };
+    if (phase !== 'done' && !carried) {
+      carried = true;
+      row.carried = Math.max(0, cashLine(w.start - 1) - cashAt(w.start - 1));
+      // The next 7 days of slots (latest Messi post) against the target
+      const s = m.slots;
+      row.next7 = s.value == null ? null : { ...s, toOpen: Math.max(0, SLOTS_TARGET - s.value) };
+    }
     if (phase !== 'next') {
       row.actual = { cash: cashAt(w.end) - cashAt(w.start - 1), closes: closesIn(w.start, w.end) };
       if (phase === 'done') {
@@ -71,13 +83,12 @@ export function plan(data, m) {
         };
       }
     }
-    // The first week not yet finished shows the next 7 days of slots (latest Messi post) against the target
-    if (phase !== 'done' && !slotsRowSet) {
-      slotsRowSet = true;
-      const s = m.slots;
-      row.next7 = s.value == null ? null : { ...s, toOpen: Math.max(0, SLOTS_TARGET - s.value) };
-    }
     return row;
   });
+  // Month row: month to date against the month's targets
+  out.month = {
+    target: { cash: c.monthTarget, closes: target, slots: SLOTS_TARGET },
+    actual: { cash: c.value ?? 0, closes: m.closes.actual, slots: m.slotsMtd.value },
+  };
   return out;
 }

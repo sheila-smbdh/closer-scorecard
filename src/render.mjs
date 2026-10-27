@@ -1,13 +1,12 @@
 // Closer card: pace chart with the headline numbers, month-to-date inputs (ending on Pacing: cash vs the
 // goal for today), and Weeks Ahead (every week of the month: cash, closes and slots, target vs actual).
 
-import { fmtMoney } from './metrics.mjs';
+import { fmtMoney, PACE_LABEL } from './metrics.mjs';
 import { SLOTS_TARGET } from './plan.mjs';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const $ = (v) => (v != null && Math.abs(v) >= 1000 ? `$${Math.round(v / 1000)}K` : fmtMoney(v, true));
 const delta = (a, b) => (b ? `${a >= b ? '+' : '−'}${Math.abs(Math.round(((a - b) / b) * 100))}%` : '–');
-const PACE = { hit: 'ON PACE', almost: 'SLIGHTLY BEHIND', missed: 'OFF PACE', track: 'NO TARGET YET' };
 const CHIP = { hit: 'HIT', almost: 'ALMOST', missed: 'MISSED', track: 'TRACKING' };
 const CHIP_TEXT = { hit: 'HIT', missed: 'MISSED', track: 'SO FAR', next: 'UPCOMING' };
 
@@ -32,9 +31,10 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .pt-right{text-align:right}
 .pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
 .pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
-.pt-closes{margin-top:16px;font-size:15px;color:rgba(252,246,226,.7)}
-.pt-closes b{display:block;font-family:Fraunces,Georgia,serif;font-size:40px;font-weight:800;color:#fcf6e2;line-height:1.1}
-.pt-closes b span{font-size:22px;color:rgba(252,246,226,.6)}
+.pt-num span{font-size:34px;color:#fcf6e2;margin-left:6px}
+.pt-goal{margin-top:16px}
+.pt-goal b{display:block;font-family:Fraunces,Georgia,serif;font-size:52px;font-weight:800;color:#fcf6e2;line-height:1.05;margin-top:6px}
+.pt-goal b span{font-size:30px;color:rgba(252,246,226,.75)}
 .pt-chart{margin-top:18px}
 .pt-chart svg{display:block}
 .pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
@@ -74,6 +74,7 @@ td .chip{display:inline-block;margin-top:8px}
 .chip.next{background:#d9d6cf;color:#3d4248}
 tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
 tr.next td{color:var(--muted)}
+tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
 `;
 
 function bar(value, target) {
@@ -82,9 +83,9 @@ function bar(value, target) {
   return `<div class="bar"><i style="width:${Math.min(100, (value / max) * 100)}%"></i><b style="left:${(target / max) * 100}%"></b></div>`;
 }
 
-function tile({ label, value, sub, statusKey, target, barHtml = '' }) {
+function tile({ label, value, sub, statusKey, target, barHtml = '', chipText = CHIP[statusKey] }) {
   return `<div class="tile ${statusKey}"><div class="l">${label}</div><div class="v">${value}</div>${sub ? `<div class="s">${sub}</div>` : ''}
-<div class="foot">${barHtml}<div class="row"><span>${target}</span><span class="chip">${CHIP[statusKey]}</span></div></div></div>`;
+<div class="foot">${barHtml}<div class="row"><span>${target}</span><span class="chip">${chipText}</span></div></div></div>`;
 }
 
 function chart(ch, target) {
@@ -119,11 +120,11 @@ export function closerCard(m, p, month, title) {
   const pace = `<div class="pt">
 <div class="pt-top">
   <div><div class="pt-caps">Cash collected · ${month.label}</div>
-  <div class="pt-num">${$(c.value ?? 0)}</div>
+  <div class="pt-num">${$(c.value ?? 0)}<span>· ${p.closes.actual} close${p.closes.actual === 1 ? '' : 's'}</span></div>
   ${c.monthTarget ? `<div class="pt-deltas"><span class="${c.value >= goalNow ? 'up' : 'down'}">${delta(c.value ?? 0, goalNow)}<small>vs goal ${$(goalNow)}</small></span>${ch?.priorSameDay
     ? `<span class="${c.value >= ch.priorSameDay ? 'up' : 'down'}">${delta(c.value ?? 0, ch.priorSameDay)}<small>vs ${monthShort(ch.priorMonth)} same day</small></span>` : ''}</div>` : ''}</div>
-  <div class="pt-right"><span class="pill ${c.status}">${PACE[c.status]}</span>
-  ${p.closes.target ? `<div class="pt-closes">Closes this month<b>${p.closes.actual} <span>/ ${p.closes.target} target</span></b></div>` : ''}</div>
+  <div class="pt-right"><span class="pill ${c.status}">${c.pace ? PACE_LABEL[c.pace].toUpperCase() : 'NO TARGET YET'}</span>
+  ${c.monthTarget ? `<div class="pt-goal"><div class="pt-caps">${month.label} goal</div><b>${$(c.monthTarget)} <span>· ${p.closes.target} closes</span></b></div>` : ''}</div>
 </div>
 ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
 <div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal</span>${ch.prior ? `<span><i style="background:#7d92ff"></i>${monthShort(ch.priorMonth)}, same day</span>` : ''}<span><i class="dot"></i>${month.label} to date</span></div>` : ''}
@@ -139,10 +140,9 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
     tile({ label: 'Average revenue', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
       target: 'Target $17,500', barHtml: bar(ar.value, ar.target) }),
     // Pacing: cash collected month to date vs where the 2M tracker's curve says it should be today
-    c.monthTarget ? tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: c.status,
-      sub: `Cash collected vs goal for today<br><small>${$(Math.abs((c.value ?? 0) - goalNow))} ${(c.value ?? 0) >= goalNow ? 'ahead' : 'behind'} · month goal ${$(c.monthTarget)}</small>`,
-      target: `Goal to date ${$(goalNow)}`, barHtml: bar(c.value ?? 0, goalNow) })
-      : tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: 'track', sub: 'Cash collected month to date', target: 'No target yet' }),
+    c.monthTarget ? tile({ label: 'Pacing', value: `${$(c.value ?? 0)} <span>/ ${$(goalNow)}</span>`, statusKey: c.status,
+      target: 'Goal to date', barHtml: bar(c.value ?? 0, goalNow), chipText: PACE_LABEL[c.pace].toUpperCase() })
+      : tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: 'track', target: 'No target yet' }),
   ].join('');
 
   let weekly = '';
@@ -163,7 +163,11 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
     };
     weekly = `<h2>WEEKS AHEAD</h2>
 <table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
-${p.weeks.map((w) => `<tr class="${w.phase}"><td><div class="wk">${w.label}</div><small>${w.dates} · ${w.span}</small></td><td>${cell(w, 'cash', $)}</td><td>${cell(w, 'closes', String)}</td><td>${slotCell(w)}</td></tr>`).join('\n')}
+${p.weeks.map((w) => `<tr class="${w.phase}"><td><div class="wk">${w.label}</div><small>${w.dates} · ${w.span}</small></td><td>${cell(w, 'cash', $)}${w.carried ? `<small>Includes ${$(w.carried)} carried from earlier weeks</small>` : ''}</td><td>${cell(w, 'closes', String)}</td><td>${slotCell(w)}</td></tr>`).join('\n')}
+<tr class="month"><td><div class="wk">${month.label} total</div><small>Month to date vs month goal</small></td>${['cash', 'closes', 'slots'].map((k) => {
+      const fmt = k === 'cash' ? $ : String, v = p.month.actual[k];
+      return `<td><b>${v == null ? '–' : fmt(v)}</b> <span class="of">/ ${fmt(p.month.target[k])}</span>${k === 'slots' ? '<small>Average per week</small>' : ''}</td>`;
+    }).join('')}</tr>
 </tbody></table>`;
   }
 
