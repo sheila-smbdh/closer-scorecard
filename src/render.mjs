@@ -77,6 +77,7 @@ td .chip{display:inline-block;margin-top:8px}
 tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
 tr.next td{color:var(--muted)}
 tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
+.note{font-size:16px;color:#3d4248;margin:-4px 0 12px}
 `;
 
 function bar(value, target) {
@@ -198,11 +199,23 @@ ${p.weeks.map((w) => `<tr class="${w.phase}"><td><div class="wk">${w.label}</div
 </tbody></table>`;
   }
 
+  let nextPlan = '';
+  if (p.next) {
+    const n = p.next, label = new Date(`${n.month}-01T00:00:00Z`).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' });
+    nextPlan = `<h2>${label.toUpperCase()} PLAN</h2>
+<p class="note">Starting point: ${$(n.cash)} and ${n.closes} closes${n.fromThisMonth ? ` (this month's goal; ${label}'s isn't set yet)` : ` (${label} goal in the tracker)`}. Each week keeps its share of the month if you change the goal.</p>
+<table><thead><tr><th>Week</th><th>Share of month</th><th>Cash collected<small>target</small></th><th>Closes<small>target</small></th><th>Slots (booked + open)<small>target</small></th></tr></thead><tbody>
+${n.weeks.map((w) => `<tr><td><div class="wk">${w.label}</div><small>${w.dates} · ${w.span}</small></td><td><b>${Math.round(w.share * 100)}%</b></td><td><b>${$(w.cash)}</b></td><td><b>${w.closes}</b></td><td><b>${w.slots}</b></td></tr>`).join('\n')}
+<tr class="month"><td><div class="wk">${label} total</div></td><td><b>100%</b></td><td><b>${$(n.cash)}</b></td><td><b>${n.closes}</b></td><td><b>${SLOTS_TARGET}</b><small>Every week</small></td></tr>
+</tbody></table>`;
+  }
+
   const body = `<div class="eyebrow">Closer scorecard · Month to date</div>
 <h1>${esc(title)}</h1>
 ${pace}
 <h2>YOUR INPUTS, MONTH TO DATE</h2>
 <div class="grid">${tiles}</div>
-${weekly}`;
+${weekly}
+${nextPlan}`;
   return `<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&display=block"><style>${CSS}</style></head><body><div class="card">${body}</div></body></html>`;
 }

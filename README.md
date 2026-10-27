@@ -35,6 +35,8 @@ Title: "<Closer>'s month to date: Sunday, October 18th" (the last day of the win
 2. **Your inputs, month to date**: average weekly slots (booked · open), live calls, average revenue, Pacing (cash collected month to date / the goal for today on the 2M tracker's curve, with the tracker's pace badge).
 3. **Weekly Scorecard**: one table, one row per week of the month (the 2M tracker's weeks: Sun-Sat, leading partial days folded into Week 1, a trailing remnant under 7 days is the "Final stretch"). Cash collected, closes and slots per week: actual / target with Hit / Missed for finished weeks, "so far" for the week in progress, target only for upcoming weeks. Misses carry forward like the tracker's week cards (see Weekly Scorecard below). The first unfinished week's slots cell shows the next 7 days (booked + open) against 35 and how many more slots to open. A last row gives the month: month to date vs the month goal.
 
+4. **<Month> plan** (1st-of-month edition only, `node src/build.mjs <snapshot> out monthly`): the new month's weeks with share of the month, cash, closes and slots targets, for Jay to set the month's goal with each closer. Target: the tracker's new-month target when it has a fresh one, else the month just ended's. Curve: the tracker's for the new month, else the month just ended's resampled to the new month's length.
+
 No pipeline on the card: pipeline is self-reported by closers, so it stays out of the targets.
 
 Everything about closes is anchored on the month's closes target = month cash target ÷ $17,500 (Owen: $417K → 24).

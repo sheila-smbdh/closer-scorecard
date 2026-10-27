@@ -43,6 +43,23 @@
    "through": "Oct 20",
    "through_key": "10-20",
    "slots_post_day": "10-20"
+  },
+  "monthly": {
+   "date": "Sunday, Nov 1 (sample: October through the 18th)",
+   "week_label": "Mon Oct 12 to Sun Oct 18",
+   "week_days": [
+    "10-12",
+    "10-13",
+    "10-14",
+    "10-15",
+    "10-16",
+    "10-17",
+    "10-18"
+   ],
+   "workdays_elapsed": 5,
+   "through": "Oct 18",
+   "through_key": "10-18",
+   "slots_post_day": "10-19"
   }
  },
  "closers": [
@@ -1308,6 +1325,21 @@
    "Solomon": 34,
    "Daniel": 38,
    "Kevin": 31,
+   "Oliver": null,
+   "Tyler": null
+  },
+  "monthly": {
+   "Owen": 36,
+   "Adam": 28,
+   "JZ": 27,
+   "VeJohn": 12,
+   "Julien": 27,
+   "Nick": 16,
+   "Omar": 27,
+   "Harry": 34,
+   "Solomon": 35,
+   "Daniel": 37,
+   "Kevin": 21,
    "Oliver": null,
    "Tyler": null
   }
@@ -6403,6 +6435,44 @@
      ],
      "prior_daily_cash": []
     }
+   },
+   "next": {
+    "month": "2026-11",
+    "days_in_month": 30,
+    "goal_shape": [
+     0.01887,
+     0.04143,
+     0.05563,
+     0.0754,
+     0.09094,
+     0.09279,
+     0.11126,
+     0.13254,
+     0.16041,
+     0.18751,
+     0.21446,
+     0.2338,
+     0.25098,
+     0.28333,
+     0.33404,
+     0.36061,
+     0.38319,
+     0.40532,
+     0.41892,
+     0.44153,
+     0.46772,
+     0.48801,
+     0.52636,
+     0.54919,
+     0.58607,
+     0.62584,
+     0.67328,
+     0.72054,
+     1,
+     1
+    ],
+    "goal_source": "resampled",
+    "targets": {}
    }
   },
   "10-20": {

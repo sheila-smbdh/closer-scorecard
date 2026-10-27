@@ -1,0 +1,27 @@
+# Scorecard flags: Sunday, Nov 1 (sample: October through the 18th)
+
+- Owen: week totals (EOD + fills) 23 booked / 18 showed, Sales Tracker alone 19 / 16.
+- Owen: month to date also filled from the Sales Tracker on 10-02, 10-05, 10-08, 10-09.
+- Adam: week totals (EOD + fills) 6 booked / 4 showed, Sales Tracker alone 6 / 3.
+- Adam: EOD "showed" left blank on 10-13; filled in as booked minus no-shows, cancels and reschedules.
+- JZ: no EOD report for 10-13, 10-15; filled from the Sales Tracker.
+- JZ: week totals (EOD + fills) 8 booked / 6 showed, Sales Tracker alone 4 / 4.
+- JZ: month to date also filled from the Sales Tracker on 10-01, 10-02, 10-07.
+- VeJohn: week totals (EOD + fills) 17 booked / 13 showed, Sales Tracker alone 14 / 7.
+- VeJohn: EOD "showed" left blank on 10-12, 10-13, 10-14, 10-15, 10-16, 10-17; filled in as booked minus no-shows, cancels and reschedules.
+- Julien: week totals (EOD + fills) 1 booked / 1 showed, Sales Tracker alone 0 / 1.
+- Nick: no EOD report for 10-16; filled from the Sales Tracker.
+- Nick: week totals (EOD + fills) 16 booked / 9 showed, Sales Tracker alone 13 / 9.
+- Omar: week totals (EOD + fills) 25 booked / 14 showed, Sales Tracker alone 20 / 12.
+- Omar: EOD "showed" left blank on 10-14; filled in as booked minus no-shows, cancels and reschedules.
+- Harry: week totals (EOD + fills) 14 booked / 10 showed, Sales Tracker alone 13 / 10.
+- Harry: month to date also filled from the Sales Tracker on 10-05.
+- Harry: EOD "showed" left blank on 10-15; filled in as booked minus no-shows, cancels and reschedules.
+- Solomon: week totals (EOD + fills) 12 booked / 8 showed, Sales Tracker alone 10 / 7.
+- Solomon: month to date also filled from the Sales Tracker on 10-09.
+- Daniel: week totals (EOD + fills) 8 booked / 5 showed, Sales Tracker alone 8 / 4.
+- Kevin: week totals (EOD + fills) 15 booked / 10 showed, Sales Tracker alone 14 / 10.
+- Kevin: month to date also filled from the Sales Tracker on 10-05.
+- Oliver: no EOD reports at all, booked/showed taken from the Sales Tracker.
+- Tyler: no EOD reports at all, booked/showed taken from the Sales Tracker.
+- Tyler: cash through Oct 18 is $undefined in the tracker, $0 in the Sales Tracker snapshot.
