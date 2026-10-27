@@ -48,19 +48,19 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
 .missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
-/* weekly targets */
-.gap{display:flex;gap:12px;margin-bottom:12px}
-.gap div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
-.gap small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.gap b{font-size:30px;font-weight:800}
+/* weeks ahead */
 table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
 th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
 th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
-td{padding:14px 18px;border-top:1px solid var(--line)}
-td:first-child{font-weight:700}
-td.next{background:#fffbea;font-size:22px;font-weight:800}
-th.next{background:#f0cd2b;color:#1d1f23}
-td .chip{margin-left:10px;vertical-align:2px}
+td{padding:14px 18px;border-top:1px solid var(--line);vertical-align:top}
+td b{font-size:24px;font-weight:800}
+td .of{color:var(--muted);font-weight:600}
+td small{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+td .wk{font-size:17px;font-weight:800}
+td .chip{display:inline-block;margin-top:8px}
+.chip.next{background:#d9d6cf;color:#3d4248}
+tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
+tr.next td{color:var(--muted)}
 </style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
 <h1>Kevin's month to date: Tuesday, October 20th</h1>
 <div class="pt">
@@ -86,12 +86,12 @@ td .chip{margin-left:10px;vertical-align:2px}
 <div class="grid"><div class="tile hit"><div class="l">Average weekly slots</div><div class="v">41</div><div class="s">6 booked · 35 open</div>
 <div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:72.5609756097561%"></b></div><div class="row"><span>Target 35</span><span class="chip">HIT</span></div></div></div><div class="tile hit"><div class="l">Live calls</div><div class="v">28</div>
 <div class="foot"><div class="bar"><i style="width:84.99999999999999%"></i><b style="left:84.99999999999999%"></b></div><div class="row"><span>Target 28</span><span class="chip">HIT</span></div></div></div><div class="tile hit"><div class="l">Average revenue</div><div class="v">$18,000</div>
-<div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:82.6388888888889%"></b></div><div class="row"><span>Target $17,500</span><span class="chip">HIT</span></div></div></div><div class="tile almost"><div class="l">Closes + pipeline</div><div class="v">2 <span>+ 8 = 10</span></div><div class="s">2 closed + 8 in pipeline<br><small>2 High Confidence<br>2 Soft Verbal<br>4 Working</small></div>
-<div class="foot"><div class="bar"><i style="width:70.83333333333334%"></i><b style="left:85%"></b></div><div class="row"><span>Target 12 closes</span><span class="chip">ALMOST</span></div></div></div></div>
-<h2>WEEKLY TARGETS</h2>
-<div class="gap"><div><small>Gap to target</small><b>$158K</b></div><div><small>Closes to go</small><b>10</b></div><div><small>Business days left</small><b>8</b></div></div>
-<table><thead><tr><th></th><th>Last week target<small>Oct 19 to 20</small></th><th>Last week actual</th><th class="next">This week target<small>Oct 21 to 27</small></th></tr></thead><tbody>
-<tr><td>Closes</td><td>1</td><td>0<span class="chip missed">MISSED</span></td><td class="next">4</td></tr>
-<tr><td>Cash collected</td><td>$9K</td><td>$0<span class="chip missed">MISSED</span></td><td class="next">$56K</td></tr>
-<tr><td>Slots (booked + open)</td><td>35</td><td>36<span class="chip hit">HIT</span></td><td class="next">35</td></tr>
+<div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:82.6388888888889%"></b></div><div class="row"><span>Target $17,500</span><span class="chip">HIT</span></div></div></div><div class="tile missed"><div class="l">Pacing</div><div class="v">$42K</div><div class="s">Cash collected vs goal for today<br><small>$42K behind · month goal $200K</small></div>
+<div class="foot"><div class="bar"><i style="width:42.609567459180745%"></i><b style="left:85%"></b></div><div class="row"><span>Goal to date $84K</span><span class="chip">MISSED</span></div></div></div></div>
+<h2>WEEKS AHEAD</h2>
+<table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
+<tr class="done"><td><div class="wk">Week 1</div><small>Oct 1 → 10 · Sun-Sat + 3-day lead-in</small></td><td><b>$6K</b> <span class="of">/ $38K</span><br><span class="chip missed">MISSED</span></td><td><b>0</b> <span class="of">/ 2</span><br><span class="chip missed">MISSED</span></td><td><b>38</b> <span class="of">/ 35</span><br><span class="chip hit">HIT</span></td></tr>
+<tr class="done"><td><div class="wk">Week 2</div><small>Oct 11 → 17 · Sun-Sat</small></td><td><b>$36K</b> <span class="of">/ $35K</span><br><span class="chip hit">HIT</span></td><td><b>2</b> <span class="of">/ 2</span><br><span class="chip hit">HIT</span></td><td><b>44</b> <span class="of">/ 35</span><br><span class="chip hit">HIT</span></td></tr>
+<tr class="now"><td><div class="wk">Week 3</div><small>Oct 18 → 24 · Sun-Sat</small></td><td><b>$0</b> <span class="of">/ $33K</span><br><span class="chip track">SO FAR</span></td><td><b>0</b> <span class="of">/ 2</span><br><span class="chip track">SO FAR</span></td><td><b>38</b> <span class="of">/ 35</span><small>Next 7 days: 7 booked · 31 open</small><span class="chip hit">HIT</span></td></tr>
+<tr class="next"><td><div class="wk">Week 4</div><small>Oct 25 → 31 · Sun-Sat</small></td><td><span class="of">Target $95K</span><br><span class="chip next">UPCOMING</span></td><td><span class="of">Target 6</span><br><span class="chip next">UPCOMING</span></td><td><span class="of">Target 35</span><br><span class="chip next">UPCOMING</span></td></tr>
 </tbody></table></div></body></html>

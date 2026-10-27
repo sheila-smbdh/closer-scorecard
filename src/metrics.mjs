@@ -1,7 +1,5 @@
-// Turns the raw pulls (tracker pace, activity windows, pipeline leads, slots) into scorecard metrics with a
+// Turns the raw pulls (tracker pace, activity windows, slots) into scorecard metrics with a
 // status per tile. Every definition here is mirrored in the README metric table; change both together.
-
-import { category, outcome, money } from './pipeline-labels.mjs';
 
 export const TARGETS = {
   slotsPerWeek: 35,        // capacity over the next 7 days: open discovery start times + booked client calls
@@ -80,7 +78,6 @@ export function closerMetrics(data, closer, edition) {
   };
   const slotsMtd = slotAvg(monthStart, ed.through_key);
   slotsMtd.since = Object.keys(data.messi_slots ?? {}).filter((d) => d >= monthStart).sort()[0] ?? null;
-  const slotsWeek = slotAvg(ed.week_days[0], ed.through_key);
   // Upcoming: the edition-day post, next 7 days
   const up = capacity(ed.slots_post_day) ?? (data.slots[edition][k] == null ? null : { open: data.slots[edition][k], booked: null, value: data.slots[edition][k] });
   const slots = up ? { ...up, target: TARGETS.slotsPerWeek, status: status(up.value, TARGETS.slotsPerWeek) }
@@ -115,8 +112,6 @@ export function closerMetrics(data, closer, edition) {
       paceRatio: cashExpected ? mtd[CASH] / cashExpected : null,
     };
   }
-  cash.remaining = cash.monthTarget ? Math.max(0, cash.monthTarget - (cash.value ?? 0)) : null;
-  cash.daysLeft = data.month.business_days - bdElapsed;
   // Pace chart (same as the tracker's closer view): daily cumulative cash, last month's curve on this
   // month's day axis (normalized for month length), and the goal-pace curve × month target
   if (tp?.daily_cash?.length && cash.monthTarget) {
@@ -132,36 +127,16 @@ export function closerMetrics(data, closer, edition) {
     };
   }
 
-  // Closes this month (Close 1); open pipeline leads are counted for the run flags
-  const closes = { actual: mtd[CLOSES], pipeline: pipelineFor(data, k) };
+  // Closes this month (Close 1)
+  const closes = { actual: mtd[CLOSES] };
 
   const wkAct = act[monday ? 'wk' : 'tw'];
   const salesTrackerWeek = { booked: wkAct[CALLS], showed: wkAct[LIVE] };
   // This past week (or this week so far on Wednesday), for the line under each month-to-date tile
   const week = { closes: wkAct[CLOSES], rev: wkAct[REV] };
   const filled = { week: wk.filled, mtd: mtdBS.filled };
-  return { closer, edition, ed, salesTrackerWeek, week, filled, live, slotsMtd, slotsWeek, slots, avgRevenue, cash, closes, newHire };
-}
-
-// Open leads in the closer's current-month Pipeline Review section, counted and valued (column D cash;
-// a lead with no amount is valued at the $17.5K average and counted in noAmount). Same labels as the
-// Friday pipeline report.
-export function pipelineFor(data, k) {
-  const raw = data.pipeline_leads?.[k];
-  const leads = Array.isArray(raw) ? raw : raw?.leads;
-  if (!leads) return null;
-  const p = { hc: 0, sv: 0, working: 0, cash: { hc: 0, sv: 0, working: 0 }, noAmount: 0, nonstandard: 0 };
-  for (const [, b, amount, f] of leads) {
-    const out = outcome(b, f);
-    if (out) continue; // closed, signed, delayed or lost
-    const cat = category(b);
-    if (!cat) { p.nonstandard++; continue; }
-    const v = money(amount);
-    if (v == null) p.noAmount++;
-    p[cat]++;
-    p.cash[cat] += v ?? TARGETS.avgRevenueFloor;
-  }
-  return p;
+  // slotAvg is kept for the Weeks Ahead table (each week's average slots)
+  return { closer, edition, ed, salesTrackerWeek, week, filled, live, slotsMtd, slotAvg, slots, avgRevenue, cash, closes, newHire };
 }
 
 // The tracker pull for an edition's window (keyed by its last day, "MM-DD")
@@ -215,9 +190,6 @@ export function runFlags(data, metrics, edition) {
     const inferred = (data.eod_inferred?.[k] ?? []).filter((d) => d >= ed.week_days[0] && d <= ed.through_key);
     if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
     if (m.slots.value != null && m.slots.booked == null) flags.push(`${k}: no Calendly booked-call count for ${ed.slots_post_day}; slots show open start times only.`);
-    if (m.closes.pipeline?.noAmount) flags.push(`${k}: ${m.closes.pipeline.noAmount} open pipeline leads have no cash amount (column D); valued at $17,500 each.`);
-    if (m.closes.pipeline?.nonstandard) flags.push(`${k}: ${m.closes.pipeline.nonstandard} open pipeline leads have no standard status.`);
-    if (!m.closes.pipeline) flags.push(`${k}: no Pipeline Review tab.`);
     if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {
       flags.push(`${k}: cash through ${ed.through} is $${m.cash.value?.toLocaleString('en-US')} in the tracker, $${m.cash.salesTrackerCash?.toLocaleString('en-US')} in the Sales Tracker snapshot.`);
     }

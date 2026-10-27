@@ -48,19 +48,19 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
 .missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
-/* weekly targets */
-.gap{display:flex;gap:12px;margin-bottom:12px}
-.gap div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
-.gap small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.gap b{font-size:30px;font-weight:800}
+/* weeks ahead */
 table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
 th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
 th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
-td{padding:14px 18px;border-top:1px solid var(--line)}
-td:first-child{font-weight:700}
-td.next{background:#fffbea;font-size:22px;font-weight:800}
-th.next{background:#f0cd2b;color:#1d1f23}
-td .chip{margin-left:10px;vertical-align:2px}
+td{padding:14px 18px;border-top:1px solid var(--line);vertical-align:top}
+td b{font-size:24px;font-weight:800}
+td .of{color:var(--muted);font-weight:600}
+td small{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+td .wk{font-size:17px;font-weight:800}
+td .chip{display:inline-block;margin-top:8px}
+.chip.next{background:#d9d6cf;color:#3d4248}
+tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
+tr.next td{color:var(--muted)}
 </style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
 <h1>Tyler's month to date: Sunday, October 18th</h1>
 <div class="pt">
@@ -77,6 +77,6 @@ td .chip{margin-left:10px;vertical-align:2px}
 <div class="grid"><div class="tile track"><div class="l">Average weekly slots</div><div class="v">–</div><div class="s">Not a Calendly host yet</div>
 <div class="foot"><div class="row"><span>Target 35</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Live calls</div><div class="v">9</div>
 <div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Average revenue</div><div class="v">–</div>
-<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Closes + pipeline</div><div class="v">0</div><div class="s">No pipeline tab yet</div>
-<div class="foot"><div class="row"><span></span><span class="chip">TRACKING</span></div></div></div></div>
+<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Pacing</div><div class="v">$0</div><div class="s">Cash collected month to date</div>
+<div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div></div>
 </div></body></html>

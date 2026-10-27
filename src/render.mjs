@@ -1,5 +1,5 @@
-// Closer card: pace chart with the headline numbers, month-to-date inputs, and
-// weekly targets (last week's target vs actual, and this week's target). Nothing else.
+// Closer card: pace chart with the headline numbers, month-to-date inputs (ending on Pacing: cash vs the
+// goal for today), and Weeks Ahead (every week of the month: cash, closes and slots, target vs actual).
 
 import { fmtMoney } from './metrics.mjs';
 import { SLOTS_TARGET } from './plan.mjs';
@@ -9,6 +9,7 @@ const $ = (v) => (v != null && Math.abs(v) >= 1000 ? `$${Math.round(v / 1000)}K`
 const delta = (a, b) => (b ? `${a >= b ? '+' : '−'}${Math.abs(Math.round(((a - b) / b) * 100))}%` : '–');
 const PACE = { hit: 'ON PACE', almost: 'SLIGHTLY BEHIND', missed: 'OFF PACE', track: 'NO TARGET YET' };
 const CHIP = { hit: 'HIT', almost: 'ALMOST', missed: 'MISSED', track: 'TRACKING' };
+const CHIP_TEXT = { hit: 'HIT', missed: 'MISSED', track: 'SO FAR', next: 'UPCOMING' };
 
 const CSS = `
 :root{--ink:#1d1f23;--muted:#5c6168;--line:#e3e1dc;--bg:#fafaf8;
@@ -60,19 +61,19 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
 .missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
-/* weekly targets */
-.gap{display:flex;gap:12px;margin-bottom:12px}
-.gap div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
-.gap small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.gap b{font-size:30px;font-weight:800}
+/* weeks ahead */
 table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
 th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
 th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
-td{padding:14px 18px;border-top:1px solid var(--line)}
-td:first-child{font-weight:700}
-td.next{background:#fffbea;font-size:22px;font-weight:800}
-th.next{background:#f0cd2b;color:#1d1f23}
-td .chip{margin-left:10px;vertical-align:2px}
+td{padding:14px 18px;border-top:1px solid var(--line);vertical-align:top}
+td b{font-size:24px;font-weight:800}
+td .of{color:var(--muted);font-weight:600}
+td small{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+td .wk{font-size:17px;font-weight:800}
+td .chip{display:inline-block;margin-top:8px}
+.chip.next{background:#d9d6cf;color:#3d4248}
+tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
+tr.next td{color:var(--muted)}
 `;
 
 function bar(value, target) {
@@ -128,7 +129,7 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
 <div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal</span>${ch.prior ? `<span><i style="background:#7d92ff"></i>${monthShort(ch.priorMonth)}, same day</span>` : ''}<span><i class="dot"></i>${month.label} to date</span></div>` : ''}
 </div>`;
 
-  const sm = m.slotsMtd, lv = m.live, ar = m.avgRevenue, pl = p.pipeline;
+  const sm = m.slotsMtd, lv = m.live, ar = m.avgRevenue;
   const tiles = [
     tile({ label: 'Average weekly slots', value: sm.value ?? '–', statusKey: sm.status,
       sub: sm.booked != null ? `${sm.booked} booked · ${sm.open} open` : sm.value == null ? 'Not a Calendly host yet' : `${sm.open} open`,
@@ -137,24 +138,32 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
       target: lv.target == null ? 'No target yet' : `Target ${Math.round(lv.target)}`, barHtml: bar(lv.value, lv.target) }),
     tile({ label: 'Average revenue', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
       target: 'Target $17,500', barHtml: bar(ar.value, ar.target) }),
-    pl ? tile({ label: 'Closes + pipeline', value: `${p.closes.actual} <span>+ ${pl.total} = ${pl.reach}</span>`, statusKey: pl.status,
-      sub: `${p.closes.actual} closed + ${pl.total} in pipeline<br><small>${pl.hc} High Confidence<br>${pl.sv} Soft Verbal<br>${pl.working} Working</small>`,
-      target: `Target ${p.closes.target} closes`, barHtml: bar(pl.reach, p.closes.target) })
-      : tile({ label: 'Closes + pipeline', value: `${p.closes.actual}`, statusKey: 'track', sub: 'No pipeline tab yet', target: p.closes.target != null ? `Target ${p.closes.target} closes` : '' }),
+    // Pacing: cash collected month to date vs where the 2M tracker's curve says it should be today
+    c.monthTarget ? tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: c.status,
+      sub: `Cash collected vs goal for today<br><small>${$(Math.abs((c.value ?? 0) - goalNow))} ${(c.value ?? 0) >= goalNow ? 'ahead' : 'behind'} · month goal ${$(c.monthTarget)}</small>`,
+      target: `Goal to date ${$(goalNow)}`, barHtml: bar(c.value ?? 0, goalNow) })
+      : tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: 'track', sub: 'Cash collected month to date', target: 'No target yet' }),
   ].join('');
 
   let weekly = '';
   if (p.weeks) {
-    const w = p.weeks, l = w.last;
-    const res = (hit) => (hit == null ? '' : `<span class="chip ${hit ? 'hit' : 'missed'}">${hit ? 'HIT' : 'MISSED'}</span>`);
-    const d0 = Number(m.ed.week_days[0].slice(3)), d1 = Number(m.ed.through_key.slice(3));
-    const mo = month.label.slice(0, 3);
-    weekly = `<h2>WEEKLY TARGETS</h2>
-<div class="gap"><div><small>Gap to target</small><b>${$(p.gap.cash)}</b></div><div><small>Closes to go</small><b>${p.gap.closes}</b></div><div><small>Business days left</small><b>${c.daysLeft}</b></div></div>
-<table><thead><tr><th></th><th>Last week target<small>${mo} ${d0} to ${d1}</small></th><th>Last week actual</th><th class="next">This week target<small>${mo} ${d1 + 1} to ${w.next.toEnd ? 'month end' : d1 + 7}</small></th></tr></thead><tbody>
-<tr><td>Closes</td><td>${l.target.closes}</td><td>${l.actual.closes}${res(l.hit.closes)}</td><td class="next">${w.next.closes}</td></tr>
-<tr><td>Cash collected</td><td>${$(l.target.cash)}</td><td>${$(l.actual.cash)}${res(l.hit.cash)}</td><td class="next">${$(w.next.cash)}</td></tr>
-<tr><td>Slots (booked + open)</td><td>${l.target.slots}</td><td>${l.actual.slots ?? '–'}${res(l.hit.slots)}</td><td class="next">${w.next.slots}</td></tr>
+    const chip = (key) => `<span class="chip ${key}">${CHIP_TEXT[key]}</span>`;
+    const cell = (w, k, fmt) => {
+      if (w.phase === 'next') return `<span class="of">Target ${fmt(w.target[k])}</span><br>${chip('next')}`;
+      const v = w.actual[k];
+      const key = w.phase === 'now' ? 'track' : w.hit[k] == null ? 'track' : w.hit[k] ? 'hit' : 'missed';
+      return `<b>${v == null ? '–' : fmt(v)}</b> <span class="of">/ ${fmt(w.target[k])}</span><br>${chip(key)}`;
+    };
+    const slotCell = (w) => {
+      const n = w.next7;
+      if (n === undefined) return cell(w, 'slots', String);
+      if (n === null) return `<span class="of">Target ${SLOTS_TARGET}</span><small>No Calendly slots yet</small>`;
+      return `<b>${n.value}</b> <span class="of">/ ${SLOTS_TARGET}</span><small>Next 7 days${n.booked != null ? `: ${n.booked} booked · ${n.open} open` : ''}</small>`
+        + (n.toOpen ? `<span class="chip missed">OPEN ${n.toOpen} MORE</span>` : chip('hit'));
+    };
+    weekly = `<h2>WEEKS AHEAD</h2>
+<table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
+${p.weeks.map((w) => `<tr class="${w.phase}"><td><div class="wk">${w.label}</div><small>${w.dates} · ${w.span}</small></td><td>${cell(w, 'cash', $)}</td><td>${cell(w, 'closes', String)}</td><td>${slotCell(w)}</td></tr>`).join('\n')}
 </tbody></table>`;
   }
 

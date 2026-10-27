@@ -48,19 +48,19 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
 .hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
 .missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
-/* weekly targets */
-.gap{display:flex;gap:12px;margin-bottom:12px}
-.gap div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
-.gap small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.gap b{font-size:30px;font-weight:800}
+/* weeks ahead */
 table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
 th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
 th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
-td{padding:14px 18px;border-top:1px solid var(--line)}
-td:first-child{font-weight:700}
-td.next{background:#fffbea;font-size:22px;font-weight:800}
-th.next{background:#f0cd2b;color:#1d1f23}
-td .chip{margin-left:10px;vertical-align:2px}
+td{padding:14px 18px;border-top:1px solid var(--line);vertical-align:top}
+td b{font-size:24px;font-weight:800}
+td .of{color:var(--muted);font-weight:600}
+td small{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+td .wk{font-size:17px;font-weight:800}
+td .chip{display:inline-block;margin-top:8px}
+.chip.next{background:#d9d6cf;color:#3d4248}
+tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
+tr.next td{color:var(--muted)}
 </style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
 <h1>Oliver's month to date: Sunday, October 18th</h1>
 <div class="pt">
@@ -86,12 +86,12 @@ td .chip{margin-left:10px;vertical-align:2px}
 <div class="grid"><div class="tile track"><div class="l">Average weekly slots</div><div class="v">–</div><div class="s">Not a Calendly host yet</div>
 <div class="foot"><div class="row"><span>Target 35</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Live calls</div><div class="v">3</div>
 <div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Average revenue</div><div class="v">–</div>
-<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Closes + pipeline</div><div class="v">0</div><div class="s">No pipeline tab yet</div>
-<div class="foot"><div class="row"><span>Target 3 closes</span><span class="chip">TRACKING</span></div></div></div></div>
-<h2>WEEKLY TARGETS</h2>
-<div class="gap"><div><small>Gap to target</small><b>$52K</b></div><div><small>Closes to go</small><b>3</b></div><div><small>Business days left</small><b>10</b></div></div>
-<table><thead><tr><th></th><th>Last week target<small>Oct 12 to 18</small></th><th>Last week actual</th><th class="next">This week target<small>Oct 19 to 25</small></th></tr></thead><tbody>
-<tr><td>Closes</td><td>1</td><td>0<span class="chip missed">MISSED</span></td><td class="next">1</td></tr>
-<tr><td>Cash collected</td><td>$11K</td><td>$0<span class="chip missed">MISSED</span></td><td class="next">$14K</td></tr>
-<tr><td>Slots (booked + open)</td><td>35</td><td>–</td><td class="next">35</td></tr>
+<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile missed"><div class="l">Pacing</div><div class="v">$0</div><div class="s">Cash collected vs goal for today<br><small>$20K behind · month goal $52K</small></div>
+<div class="foot"><div class="bar"><i style="width:0%"></i><b style="left:85%"></b></div><div class="row"><span>Goal to date $20K</span><span class="chip">MISSED</span></div></div></div></div>
+<h2>WEEKS AHEAD</h2>
+<table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
+<tr class="done"><td><div class="wk">Week 1</div><small>Oct 1 → 10 · Sun-Sat + 3-day lead-in</small></td><td><b>$0</b> <span class="of">/ $10K</span><br><span class="chip missed">MISSED</span></td><td><b>0</b> <span class="of">/ 1</span><br><span class="chip missed">MISSED</span></td><td><b>–</b> <span class="of">/ 35</span><br><span class="chip track">SO FAR</span></td></tr>
+<tr class="done"><td><div class="wk">Week 2</div><small>Oct 11 → 17 · Sun-Sat</small></td><td><b>$0</b> <span class="of">/ $9K</span><br><span class="chip missed">MISSED</span></td><td><b>0</b> <span class="of">/ 0</span><br><span class="chip hit">HIT</span></td><td><b>–</b> <span class="of">/ 35</span><br><span class="chip track">SO FAR</span></td></tr>
+<tr class="now"><td><div class="wk">Week 3</div><small>Oct 18 → 24 · Sun-Sat</small></td><td><b>$0</b> <span class="of">/ $9K</span><br><span class="chip track">SO FAR</span></td><td><b>0</b> <span class="of">/ 1</span><br><span class="chip track">SO FAR</span></td><td><span class="of">Target 35</span><small>No Calendly slots yet</small></td></tr>
+<tr class="next"><td><div class="wk">Week 4</div><small>Oct 25 → 31 · Sun-Sat</small></td><td><span class="of">Target $24K</span><br><span class="chip next">UPCOMING</span></td><td><span class="of">Target 1</span><br><span class="chip next">UPCOMING</span></td><td><span class="of">Target 35</span><br><span class="chip next">UPCOMING</span></td></tr>
 </tbody></table></div></body></html>
