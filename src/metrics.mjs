@@ -46,7 +46,9 @@ export function bookedShowed(data, key, from, to) {
 export function closerMetrics(data, closer, edition) {
   const ed = data.editions[edition];
   const act = data.activity[closer.key];
-  const monday = edition === 'monday';
+  // Monday and the 1st-of-month edition both cover full weeks: they read the Monday-style windows
+  // (mtd, wk, business_days_elapsed_mon). Wednesday reads mtd2 / tw.
+  const monday = edition !== 'wednesday';
   const mtd = monday ? act.mtd : act.mtd2;
   const bdElapsed = monday ? data.month.business_days_elapsed_mon : data.month.business_days_elapsed_wed;
   const newHire = closer.new_hire;
@@ -82,7 +84,7 @@ export function closerMetrics(data, closer, edition) {
   const slotsMtd = slotAvg(monthStart, ed.through_key);
   slotsMtd.since = Object.keys(data.messi_slots ?? {}).filter((d) => d >= monthStart).sort()[0] ?? null;
   // Upcoming: the edition-day post, next 7 days
-  const up = capacity(ed.slots_post_day) ?? (data.slots[edition][k] == null ? null : { open: data.slots[edition][k], booked: null, value: data.slots[edition][k] });
+  const up = capacity(ed.slots_post_day) ?? (data.slots?.[edition]?.[k] == null ? null : { open: data.slots[edition][k], booked: null, value: data.slots[edition][k] });
   const slots = up ? { ...up, target: TARGETS.slotsPerWeek, status: status(up.value, TARGETS.slotsPerWeek) }
     : { value: null, target: TARGETS.slotsPerWeek, status: 'track' };
 

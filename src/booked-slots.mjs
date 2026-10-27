@@ -1,5 +1,5 @@
 // Usage: node src/booked-slots.mjs <data.json> <calendly-events.json>
-// For each of Messi's daily slot posts (8am ET), counts the client calls each closer already had booked
+// For each of Messi's daily slot posts (6am ET since late Oct 2026, 8am before; `messi_post_hour_et`), counts the client calls each closer already had booked
 // over the same next 7 days, as Calendly stood at that moment: created before the post, and not cancelled
 // before it. Open slots (Messi) + booked calls = the closer's capacity, which is what the 35
 // target is measured on. Writes `slots_booked["MM-DD"][closer]` into the snapshot.
@@ -22,10 +22,12 @@ const isClientCall = () => true;
 
 const year = data.trackers ? Object.values(data.trackers)[0].through.slice(0, 4) : '2026';
 const DAY = 86400000;
-// 8am ET as UTC; EDT until Nov 1 2026, EST after
+// Messi's post time (ET hour, from the snapshot; 6am by default) as UTC, with the ET offset for that day
+const postHour = data.messi_post_hour_et ?? 6;
 const postTime = (mmdd) => {
-  const d = new Date(`${year}-${mmdd}T12:00:00Z`);
-  return d >= new Date(`${year}-11-01T06:00:00Z`) ? new Date(d.getTime() + 3600000) : d;
+  const noon = new Date(`${year}-${mmdd}T12:00:00Z`);
+  const etHour = Number(noon.toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric', hour12: false }));
+  return new Date(noon.getTime() + (postHour - etHour) * 3600000);
 };
 
 const days = Object.keys(data.messi_slots ?? {}).sort();
@@ -41,6 +43,6 @@ for (const day of days) {
   }
 }
 data.slots_booked = out;
-data._slots_booked_note = `Client calls already booked over the next 7 days at each Messi post (8am ET), per closer, from Calendly (pulled ${ev.pulled_at}). Open slots + booked = capacity, scored against the 35 target.`;
+data._slots_booked_note = `Client calls already booked over the next 7 days at each Messi post (${postHour}am ET), per closer, from Calendly (pulled ${ev.pulled_at}). Open slots + booked = capacity, scored against the 35 target.`;
 fs.writeFileSync(dataPath, JSON.stringify(data, null, 1) + '\n');
 console.log(`booked client calls for ${days.length} post days: ${days.join(', ')}`);

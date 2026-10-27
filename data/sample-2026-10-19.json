@@ -9085,5 +9085,6 @@
   "Oliver": {},
   "Tyler": {}
  },
- "_daily_closes_note": "Close 1 per closer per day (only days with closes), Sales Tracker 2026 Inputs column J, pulled 2026-10-27, trimmed to Oct 20 to match this snapshot. Used for the Weeks Ahead closes column."
+ "_daily_closes_note": "Close 1 per closer per day (only days with closes), Sales Tracker 2026 Inputs column J, pulled 2026-10-27, trimmed to Oct 20 to match this snapshot. Used for the Weeks Ahead closes column.",
+ "messi_post_hour_et": 8
 }
