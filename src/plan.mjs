@@ -1,12 +1,11 @@
-// Extra numbers for the v2 (simplified) card, all anchored on the month's closes target (month cash target ÷
+// Numbers for the card beyond src/metrics.mjs, all anchored on the month's closes target (month cash target ÷
 // $17.5K): closes vs target, closes + open pipeline against that target, and weekly targets.
 // Weekly targets come from the 2M tracker's goal curve: what is left at the start of a week × the share of
 // the rest of the month's curve that week covers. Cash works off the cash gap, closes off the closes gap.
 
-import { category, outcome } from './pipeline-labels.mjs';
 import { TARGETS, status, trackerFor } from './metrics.mjs';
 
-export const SLOTS_TARGET = 35; // booked + open over the next 7 days
+export const SLOTS_TARGET = TARGETS.slotsPerWeek; // booked + open over the next 7 days
 
 const day = (mmdd) => Number(mmdd.slice(3));
 
@@ -16,7 +15,7 @@ function curveShare(goal, from, to) {
   return g0 >= 1 ? 1 : (g1 - g0) / (1 - g0);
 }
 
-export function planV2(data, m) {
+export function plan(data, m) {
   const c = m.cash;
   const tr = trackerFor(data, m.ed);
   const t = tr?.closers?.[m.closer.key];
@@ -25,20 +24,12 @@ export function planV2(data, m) {
   const target = c.monthTarget ? Math.ceil(c.monthTarget / TARGETS.avgRevenueFloor) : null;
   out.closes = { actual: m.closes.actual, target, toGo: target != null ? Math.max(0, target - m.closes.actual) : null };
 
-  // This month's open pipeline by status, measured against the closes still to go
-  const raw = data.pipeline_leads?.[m.closer.key];
-  const leads = Array.isArray(raw) ? raw : raw?.leads;
-  if (leads) {
-    const n = { hc: 0, sv: 0, working: 0 };
-    for (const [, b, , f] of leads) {
-      if (outcome(b, f)) continue;
-      const cat = category(b);
-      if (cat) n[cat]++;
-    }
-    n.total = n.hc + n.sv + n.working;
-    // Closed so far + open pipeline, against the month's closes target: if every lead closed, would it be enough?
-    n.reach = m.closes.actual + n.total;
-    out.pipeline = { ...n, status: target ? status(n.reach, target) : 'track' };
+  // Closed so far + this month's open pipeline (High Confidence, Soft Verbal, Working), against the month's
+  // closes target: if every lead closed, would it be enough?
+  const pl = m.closes.pipeline;
+  if (pl) {
+    const total = pl.hc + pl.sv + pl.working, reach = m.closes.actual + total;
+    out.pipeline = { hc: pl.hc, sv: pl.sv, working: pl.working, total, reach, status: target ? status(reach, target) : 'track' };
   }
 
   // Weekly targets: last week (set at its start) vs actual, and this coming week

@@ -4,151 +4,94 @@
 --missed-bg:#f9e2e1;--missed:#c8423d;--track-bg:#e5ebf6;--track:#2d5bb8}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
-.card{width:1080px;padding:40px 44px 36px;background:var(--bg)}
+.card{width:1080px;padding:40px 44px 40px;background:var(--bg)}
 .eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
-h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
-.lede{font-size:19px;color:var(--muted)}
-.section{margin-top:30px}
-.section h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin-bottom:6px}
-.section p.key{font-size:16px;color:var(--muted);line-height:1.45;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.grid.two{grid-template-columns:repeat(2,1fr)}
-.tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:228px}
-.grid.two .tile{min-height:190px}
+h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 0}
+h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:32px 0 14px}
+/* pace */
+.pt{margin-top:24px;background:#0f0f0e;border-radius:16px;padding:26px 26px 18px;color:#fcf6e2}
+.pt-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
+.pt-num{font-family:Fraunces,Georgia,serif;font-size:64px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1;margin-top:12px}
+.pt-deltas{display:flex;gap:18px;margin-top:12px;font-size:19px;font-weight:700}
+.down{color:#ff7a58} .up{color:#6fd08a}
+.pt-deltas span small{font-size:14px;font-weight:600;color:rgba(252,246,226,.6);margin-left:4px}
+.pt-right{text-align:right}
+.pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
+.pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
+.pt-closes{margin-top:16px;font-size:15px;color:rgba(252,246,226,.7)}
+.pt-closes b{display:block;font-family:Fraunces,Georgia,serif;font-size:40px;font-weight:800;color:#fcf6e2;line-height:1.1}
+.pt-closes b span{font-size:22px;color:rgba(252,246,226,.6)}
+.pt-chart{margin-top:18px}
+.pt-chart svg{display:block}
+.pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
+.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
+.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
+/* tiles */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:190px}
 .tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
 .tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
 .tile.missed{background:var(--missed-bg);border-color:var(--missed)} .tile.missed .v{color:var(--missed)}
 .tile.track{background:var(--track-bg);border-color:var(--track)} .tile.track .v{color:var(--track)}
 .tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
-.tile .v{font-size:38px;font-weight:800;margin:6px 0 4px;letter-spacing:-.01em}
-.tile .v .of{font-size:24px;font-weight:700;opacity:.75}
-.tile .s{font-size:15px;color:#3d4248;line-height:1.35}
-.tile .small{font-size:13px;color:var(--muted);line-height:1.35;margin-top:6px}
-.tile .warn{font-size:13px;color:var(--missed);font-weight:600;margin-top:6px}
-.tile .foot{margin-top:auto;padding-top:10px}
-.tile .wk{font-size:13.5px;color:var(--ink);line-height:1.35;border-top:1px solid rgba(0,0,0,.08);padding-top:8px;margin-bottom:10px}
+.tile .v{font-size:40px;font-weight:800;margin:8px 0 4px;letter-spacing:-.01em}
+.tile .v span{font-size:24px;font-weight:700;opacity:.75}
+.tile .s{font-size:15px;color:#3d4248;line-height:1.4}
+.tile .s small{font-size:13px;color:var(--muted)}
+.tile .foot{margin-top:auto;padding-top:12px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
 .hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
-.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px;white-space:nowrap}
-.hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-/* pace chart: same look as the 2M tracker's closer view */
-.pt{margin-top:26px;background:#0f0f0e;border-radius:14px;padding:22px 24px 18px;color:#fcf6e2}
-.pt-head{display:flex;justify-content:space-between;align-items:center}
-.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
-.pt-pill{font-size:12px;font-weight:800;letter-spacing:.08em;border:1.5px solid;border-radius:6px;padding:5px 10px}
-.pt-pill.hit{color:#6fd08a} .pt-pill.almost{color:#f0cd2b} .pt-pill.missed{color:#ff7a58} .pt-pill.track{color:#9fb0ff}
-.pt-numrow{display:flex;align-items:baseline;gap:16px;margin-top:14px}
-.pt-num{font-family:Fraunces,Georgia,serif;font-size:56px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1}
-.pt-mom{font-size:20px;font-weight:700} .pt-mom.down{color:#ff7a58} .pt-mom.up{color:#6fd08a}
-.pt-ctx{font-size:16px;margin-top:10px;color:rgba(252,246,226,.85)}
-.pt-foot{font-size:13.5px;font-style:italic;margin-top:4px;color:rgba(252,246,226,.55)}
-.pt-chart{margin-top:14px}
-.pt-chart svg{display:block}
-.pt-legend{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:6px}
-.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
-.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
-.pt-day{margin-left:auto;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(252,246,226,.55)}
-.pt-cap{font-size:15px;line-height:1.5;margin-top:12px;color:rgba(252,246,226,.9)}
-/* path to target */
-.path{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 22px}
-.step{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
-.step:last-child{border-bottom:none}
-.sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center}
-.sw{flex:1}
-.sl{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
-.st{font-size:15px;color:#3d4248;line-height:1.4;margin-top:3px}
-.step>.sv{font-size:30px;font-weight:800;white-space:nowrap;text-align:right}
-.cases{display:flex;gap:10px}
-.cases>div{width:190px;background:#f4f2ee;border-radius:10px;padding:8px 12px}
-.cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
-.cases span{font-size:13.5px;color:#3d4248}
-.rows{margin-top:6px}
-.rows>div{display:flex;align-items:baseline;gap:12px;padding:5px 0}
-.rows>div+div{border-top:1px dashed var(--line)}
-.rl{flex:none;width:150px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.rt{flex:1;font-size:15px;color:#3d4248}
-.rows b{font-size:24px;font-weight:800;white-space:nowrap}
-.warnt{color:var(--missed);font-weight:600}
-.names{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
-.verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
-.verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
-.verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
-.footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
-/* leadership table */
-.wide{width:1500px}
-table{border-collapse:separate;border-spacing:0 6px;width:100%;font-size:15px}
-th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 10px;font-weight:700;vertical-align:bottom}
-th.grp{color:var(--track);border-bottom:2px solid var(--track);padding-bottom:6px}
-td{padding:11px 10px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-td:first-child{border-left:1px solid var(--line);border-radius:10px 0 0 10px;font-weight:700}
-td:last-child{border-right:1px solid var(--line);border-radius:0 10px 10px 0}
-td.hit{background:var(--hit-bg);color:var(--hit);font-weight:700}
-td.almost{background:var(--almost-bg);color:var(--almost-ink);font-weight:700}
-td.missed{background:var(--missed-bg);color:var(--missed);font-weight:700}
-td.track{background:var(--track-bg);color:var(--track);font-weight:600}
-td small{display:block;font-size:12px;font-weight:500;color:var(--muted)}
-tr.total td{background:#f1efea;font-weight:800}
-.legend{display:flex;gap:18px;font-size:14px;color:var(--muted);margin:14px 0 4px}
-.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
-</style></head><body><div class="card ">
-<div class="eyebrow">Closer scorecard · Month-to-date roundup</div>
+.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
+.hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
+.missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
+/* weekly targets */
+.gap{display:flex;gap:12px;margin-bottom:12px}
+.gap div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+.gap small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gap b{font-size:30px;font-weight:800}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
+th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
+th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
+td{padding:14px 18px;border-top:1px solid var(--line)}
+td:first-child{font-weight:700}
+td.next{background:#fffbea;font-size:22px;font-weight:800}
+th.next{background:#f0cd2b;color:#1d1f23}
+td .chip{margin-left:10px;vertical-align:2px}
+</style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
 <h1>JZ's month to date: Sunday, October 18th</h1>
-<div class="lede">27% of pace (team median 55%) · 16 live calls this month · 2 closes, 10 projected</div>
 <div class="pt">
-<div class="pt-head"><span class="pt-caps">Cash collected · October pace</span><span class="pt-pill missed">OFF PACE</span></div>
-<div class="pt-numrow"><span class="pt-num">$37.5K</span><span class="pt-mom down">−28% MoM</span></div>
-<div class="pt-ctx">vs pace $139K (−73%) · vs MED $42K (−11%)</div>
-<div class="pt-foot">vs Sep D17, same-day, normalized for month length</div>
-<div class="pt-chart"><svg viewBox="0 0 944 370" width="944" height="370" font-family="Inter, sans-serif">
-<line x1="64" x2="914" y1="336" y2="336" stroke="rgba(252,246,226,.10)"/><text x="54" y="340" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$0</text><line x1="64" x2="914" y1="260.5" y2="260.5" stroke="rgba(252,246,226,.10)"/><text x="54" y="264.5" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$91K</text><line x1="64" x2="914" y1="185" y2="185" stroke="rgba(252,246,226,.10)"/><text x="54" y="189" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$181K</text><line x1="64" x2="914" y1="109.5" y2="109.5" stroke="rgba(252,246,226,.10)"/><text x="54" y="113.5" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$272K</text><line x1="64" x2="914" y1="34" y2="34" stroke="rgba(252,246,226,.10)"/><text x="54" y="38" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$363K</text>
-<line x1="234" x2="234" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="234" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W1 end</text><line x1="432.3333333333333" x2="432.3333333333333" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="432.3333333333333" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W2 end</text><line x1="630.6666666666666" x2="630.6666666666666" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="630.6666666666666" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W3 end</text><line x1="829" x2="829" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="829" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W4 end</text>
-<path d="M 64,336 L 64.0,336.0 L 92.3,336.0 L 120.7,336.0 L 149.0,336.0 L 177.3,336.0 L 205.7,336.0 L 234.0,336.0 L 262.3,336.0 L 290.7,336.0 L 319.0,336.0 L 347.3,336.0 L 375.7,336.0 L 404.0,319.4 L 432.3,319.4 L 460.7,319.4 L 489.0,319.4 L 517.3,319.4 L 545.7,304.8 L 545.6666666666667,336 Z" fill="rgba(252,208,64,.22)"/>
-<polyline points="64.0,336.0 92.3,336.0 120.7,336.0 149.0,320.2 177.3,320.2 205.7,320.2 234.0,320.2 262.3,320.2 290.7,292.7 319.0,292.7 347.3,292.7 375.7,292.7 404.0,292.7 432.3,292.7 460.7,292.7 489.0,292.7 517.3,292.7 545.7,292.7 574.0,292.7 602.3,292.7 630.7,292.7 659.0,292.7 687.3,292.7 715.7,292.7 744.0,292.7 772.3,292.7 800.7,292.7 829.0,292.7 857.3,235.7 885.7,235.7 914.0,111.7" fill="none" stroke="#7d92ff" stroke-width="2.5" opacity=".85"/>
-<polyline points="64.0,330.3 92.3,323.5 120.7,319.2 149.0,313.2 177.3,308.5 205.7,308.0 234.0,302.4 262.3,296.0 290.7,287.6 319.0,279.4 347.3,271.2 375.7,265.4 404.0,260.2 432.3,250.4 460.7,244.5 489.0,235.1 517.3,227.1 545.7,220.3 574.0,213.6 602.3,209.5 630.7,202.7 659.0,194.7 687.3,188.6 715.7,177.0 744.0,170.1 772.3,159.0 800.7,147.0 829.0,132.7 857.3,118.4 885.7,34.0 914.0,34.0" fill="none" stroke="#ff7a58" stroke-width="2.5" stroke-dasharray="7 5"/>
-<polyline points="64.0,336.0 92.3,336.0 120.7,336.0 149.0,336.0 177.3,336.0 205.7,336.0 234.0,336.0 262.3,336.0 290.7,336.0 319.0,336.0 347.3,336.0 375.7,336.0 404.0,319.4 432.3,319.4 460.7,319.4 489.0,319.4 517.3,319.4 545.7,304.8" fill="none" stroke="#fcf6e2" stroke-width="3.5" stroke-linejoin="round"/>
-<circle cx="545.6666666666667" cy="304.79073394824087" r="8" fill="#f0cd2b" stroke="#0a0a0a" stroke-width="2.5"/>
-<text x="64" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D1</text><text x="177.33333333333331" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D5</text><text x="319" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D10</text><text x="460.6666666666667" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D15</text><text x="602.3333333333334" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D20</text><text x="744" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D25</text><text x="914" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D31</text>
+<div class="pt-top">
+  <div><div class="pt-caps">Cash collected · October</div>
+  <div class="pt-num">$38K</div>
+  <div class="pt-deltas"><span class="down">−73%<small>vs goal $139K</small></span><span class="down">−28%<small>vs Sep same day</small></span></div></div>
+  <div class="pt-right"><span class="pill missed">OFF PACE</span>
+  <div class="pt-closes">Closes this month<b>2 <span>/ 21 target</span></b></div></div>
+</div>
+<div class="pt-chart"><svg viewBox="0 0 940 340" width="940" height="340" font-family="Inter, sans-serif">
+<line x1="60" x2="910" y1="310" y2="310" stroke="rgba(252,246,226,.10)"/><text x="50" y="314" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$0</text><line x1="60" x2="910" y1="162" y2="162" stroke="rgba(252,246,226,.10)"/><text x="50" y="166" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$181K</text><line x1="60" x2="910" y1="14" y2="14" stroke="rgba(252,246,226,.10)"/><text x="50" y="18" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$363K</text>
+<path d="M 60,310 L 60.0,310.0 L 88.3,310.0 L 116.7,310.0 L 145.0,310.0 L 173.3,310.0 L 201.7,310.0 L 230.0,310.0 L 258.3,310.0 L 286.7,310.0 L 315.0,310.0 L 343.3,310.0 L 371.7,310.0 L 400.0,293.7 L 428.3,293.7 L 456.7,293.7 L 485.0,293.7 L 513.3,293.7 L 541.7,279.4 L 541.6666666666667,310 Z" fill="rgba(252,208,64,.20)"/>
+<polyline points="60.0,310.0 88.3,310.0 116.7,310.0 145.0,294.5 173.3,294.5 201.7,294.5 230.0,294.5 258.3,294.5 286.7,267.6 315.0,267.6 343.3,267.6 371.7,267.6 400.0,267.6 428.3,267.6 456.7,267.6 485.0,267.6 513.3,267.6 541.7,267.6 570.0,267.6 598.3,267.6 626.7,267.6 655.0,267.6 683.3,267.6 711.7,267.6 740.0,267.6 768.3,267.6 796.7,267.6 825.0,267.6 853.3,211.7 881.7,211.7 910.0,90.2" fill="none" stroke="#7d92ff" stroke-width="2.5" opacity=".85"/>
+<polyline points="60.0,304.4 88.3,297.7 116.7,293.5 145.0,287.7 173.3,283.1 201.7,282.5 230.0,277.1 258.3,270.8 286.7,262.5 315.0,254.5 343.3,246.5 371.7,240.8 400.0,235.7 428.3,226.1 456.7,220.3 485.0,211.1 513.3,203.3 541.7,196.6 570.0,190.0 598.3,186.0 626.7,179.3 655.0,171.6 683.3,165.5 711.7,154.2 740.0,147.4 768.3,136.5 796.7,124.8 825.0,110.7 853.3,96.7 881.7,14.0 910.0,14.0" fill="none" stroke="#ff7a58" stroke-width="2.5" stroke-dasharray="7 5"/>
+<polyline points="60.0,310.0 88.3,310.0 116.7,310.0 145.0,310.0 173.3,310.0 201.7,310.0 230.0,310.0 258.3,310.0 286.7,310.0 315.0,310.0 343.3,310.0 371.7,310.0 400.0,293.7 428.3,293.7 456.7,293.7 485.0,293.7 513.3,293.7 541.7,279.4" fill="none" stroke="#fcf6e2" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="541.6666666666667" cy="279.4107855916533" r="8" fill="#f0cd2b" stroke="#0a0a0a" stroke-width="2.5"/>
+<text x="60" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D1</text><text x="258.33333333333337" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D8</text><text x="456.6666666666667" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D15</text><text x="655" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D22</text><text x="910" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D31</text>
 </svg></div>
-<div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal pace</span><span><i style="background:#7d92ff"></i>Sep · same-day</span><span><i class="dot"></i>Actual MTD</span><span class="pt-day">Day 18 of 31</span></div>
-<p class="pt-cap">$37,500 collected through day 18, $102K behind the $139K goal pace, against $52,000 by the same day in September. The team median is $42K (55% of pace). At this pace October ends near $97.9K of your $363K target.</p>
+<div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal</span><span><i style="background:#7d92ff"></i>Sep, same day</span><span><i class="dot"></i>October to date</span></div>
 </div>
-<div class="section"><h2>HOW THE WEEK WENT</h2>
-<p class="key">Month to date, with this past week (Mon Oct 12 to Sun Oct 18) under each tile: the inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
-<div class="grid"><div class="tile hit">
-  <div class="l">Discovery slots, month to date</div><div class="v">35</div>
-  <div class="s">Average day since Oct 9: <b>8</b> booked + <b>28</b> still open over the next 7 days</div><div class="small">Lowest day 28 · team median 37</div>
-  <div class="foot"><div class="wk"><b>This past week:</b> 35 a day (8 booked + 27 open)</div><div class="bar"><i style="width:85%"></i><b style="left:60.71428571428571%"></b></div><div class="row"><span>Target 25 (booked + open)</span><span class="chip">HIT</span></div></div>
-</div><div class="tile missed">
-  <div class="l">Live calls, month to date</div><div class="v">16</div>
-  <div class="s">16 of 29 booked calls showed this month</div>
-  <div class="foot"><div class="wk"><b>This past week:</b> 6 live of 8 booked</div><div class="bar"><i style="width:52.307692307692314%"></i><b style="left:85%"></b></div><div class="row"><span>Team median 26</span><span class="chip">MISSED</span></div></div>
-</div><div class="tile hit">
-  <div class="l">Average revenue, month to date</div><div class="v">$18,750</div>
-  <div class="s">$37,500 revenue generated over 2 closes this month</div><div class="small">Team median $17,625</div>
-  <div class="foot"><div class="wk"><b>This past week:</b> $37,500 over 2 closes ($18,750 each)</div><div class="bar"><i style="width:85%"></i><b style="left:79.33333333333333%"></b></div><div class="row"><span>Target $17,500</span><span class="chip">HIT</span></div></div>
-</div><div class="tile track">
-  <div class="l">Closes, month to date: actual vs projected</div><div class="v">2 <span class="of">/ 10</span></div>
-  <div class="s">2 closes so far, 10 projected by month end</div><div class="small">Projected = 2 closed + 80% of 6 High Confidence + 50% of 7 Soft Verbal = 10.3. 4 Working not counted.</div>
-  <div class="foot"><div class="wk"><b>This past week:</b> 2 closes</div><div class="row"><span>Tracked, no target</span><span class="chip">TRACKING</span></div></div>
-</div></div>
-<div class="verdict missed"><b>To change:</b> 16 live calls this month vs a team median of 26: book and confirm more calls.</div></div>
-<div class="section"><h2>WHERE WE'RE HEADED: THE PATH TO $363K</h2>
-<p class="key">Working backwards from your month target: what is left, what your pipeline can cover, and what new calls can realistically add.</p>
-<div class="path">
-<div class="step"><span class="sn">1</span><div class="sw"><div class="sl">Gap to target</div><div class="st">$37.5K collected of $363K, 10 business days left.</div></div><div class="sv">$325K</div></div>
-<div class="step"><span class="sn">2</span><div class="sw"><div class="sl">Closes that takes</div><div class="st">19 at $17.5K each · 18 at your $18,750 average · 17 at $20K each.</div></div><div class="sv">17 to 19</div></div>
-<div class="step"><span class="sn">3</span><div class="sw"><div class="sl">Your pipeline</div><div class="rows">
-<div><span class="rl">If they all close</span><span class="rt">6 High Confidence $105K + 7 Soft Verbal $124K + 4 Working $77.5K</span><b>$307K</b></div>
-<div><span class="rl">At usual rates</span><span class="rt">80% of High Confidence + 50% of Soft Verbal + Working not counted</span><b>$146K</b></div>
-</div></div></div>
-<div class="step"><span class="sn">4</span><div class="sw"><div class="sl">Pull forward from your pipeline</div><div class="st">Closing every High Confidence and Soft Verbal lead brings $229K, leaving $96.4K. That means moving about <b>4 of your 4 Working leads</b> (about $19.4K each) to a yes this month: pick the ones closest to a decision and book their next call now. Even all of them leave $18.9K, which has to come from new calls.<div class="names">High Confidence: Matt Matherne $20K, Adam Fiala $20K, Rob L'amour $20K, Joe Cleary $15K, Lorenzo Hoff $15K, Shaun Barot $15K<br>Soft Verbal: Jason Bushan $20K, Daniel Oh $20K, Natasha Kiemnec $20K, Connor Barbare $18K, Vikram Modi $16K, Ryan Santwire $15K, +1 more</div></div></div><div class="sv">13 + 4 Working</div></div>
-<div class="step"><span class="sn">5</span><div class="sw"><div class="sl">New calls to month end</div><div class="st">At your pace this month (1.3 live calls a business day) that is about <b>13 more live calls</b> by October 31. At your 13% close rate, about <b>1.6</b> of them close this month at most: calls this week have the best shot, since a call in the last days rarely pays before the 1st.</div></div><div class="sv">~13 → ~2</div></div>
-<div class="step"><span class="sn">6</span><div class="sw"><div class="sl">Build November's pipeline</div><div class="st">The other ~11 calls are November's pipeline. Log each one as High Confidence, Soft Verbal or Working the same day and book the next step before you hang up, so you start November with deals already in motion (this month's target takes 21 closes).</div></div><div class="sv">~11</div></div>
-<div class="step"><span class="sn">7</span><div class="sw"><div class="sl">Your next 7 days</div><div class="st">12 calls already booked + 27 open slots: fill them this week, since these are the calls that can still close in October. Calendar open till 5pm ET (4pm Fri). Most days close by 5pm ET: open later slots.</div></div><div class="sv">12 + 27</div></div>
-</div>
-<div class="verdict missed"><b>Realistic October:</b> $37.5K collected + $146K from your pipeline at usual rates + about 1.6 new-call closes ($28.4K) ≈ <b>$212K</b>, 58% of $363K. The biggest lever is your pipeline: every Working or Soft Verbal lead you pull forward to a close adds about $19.4K.</div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target. Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the month figure averages each day since Messi's daily count started (Oct 9). The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes (tracked, no target): closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new calls to month end = your live calls per business day this month × business days left; close rate = closes ÷ live calls this month (team median until you have a close); realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K.</div></div></body></html>
+<h2>YOUR INPUTS, MONTH TO DATE</h2>
+<div class="grid"><div class="tile hit"><div class="l">Average weekly slots</div><div class="v">35</div><div class="s">8 booked · 28 open</div>
+<div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:85%"></b></div><div class="row"><span>Target 35</span><span class="chip">HIT</span></div></div></div><div class="tile missed"><div class="l">Live calls</div><div class="v">16</div>
+<div class="foot"><div class="bar"><i style="width:52.307692307692314%"></i><b style="left:85%"></b></div><div class="row"><span>Target 26</span><span class="chip">MISSED</span></div></div></div><div class="tile hit"><div class="l">Average revenue</div><div class="v">$18,750</div>
+<div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:79.33333333333333%"></b></div><div class="row"><span>Target $17,500</span><span class="chip">HIT</span></div></div></div><div class="tile almost"><div class="l">Closes + pipeline</div><div class="v">2 <span>+ 17 = 19</span></div><div class="s">2 closed + 17 in pipeline<br><small>6 High Confidence<br>7 Soft Verbal<br>4 Working</small></div>
+<div class="foot"><div class="bar"><i style="width:76.9047619047619%"></i><b style="left:85%"></b></div><div class="row"><span>Target 21 closes</span><span class="chip">ALMOST</span></div></div></div></div>
+<h2>WEEKLY TARGETS</h2>
+<div class="gap"><div><small>Gap to target</small><b>$325K</b></div><div><small>Closes to go</small><b>19</b></div><div><small>Business days left</small><b>10</b></div></div>
+<table><thead><tr><th></th><th>Last week target<small>Oct 12 to 18</small></th><th>Last week actual</th><th class="next">This week target<small>Oct 19 to 25</small></th></tr></thead><tbody>
+<tr><td>Closes</td><td>5</td><td>2<span class="chip missed">MISSED</span></td><td class="next">5</td></tr>
+<tr><td>Cash collected</td><td>$78K</td><td>$38K<span class="chip missed">MISSED</span></td><td class="next">$88K</td></tr>
+<tr><td>Slots (booked + open)</td><td>35</td><td>35<span class="chip hit">HIT</span></td><td class="next">35</td></tr>
+</tbody></table></div></body></html>
