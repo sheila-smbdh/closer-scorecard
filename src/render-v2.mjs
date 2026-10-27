@@ -1,7 +1,8 @@
 // v2 (simplified) closer card, for review: pace chart with the headline numbers, month-to-date inputs, and
 // weekly targets (last week's target vs actual, and this week's target). Nothing else.
 
-import { fmtPct, fmtMoney } from './metrics.mjs';
+import { fmtMoney, status } from './metrics.mjs';
+import { SLOTS_TARGET } from './plan-v2.mjs';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const $ = (v) => (v != null && Math.abs(v) >= 1000 ? `$${Math.round(v / 1000)}K` : fmtMoney(v, true));
@@ -126,19 +127,20 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
 <div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal</span>${ch.prior ? `<span><i style="background:#7d92ff"></i>${monthShort(ch.priorMonth)}, same day</span>` : ''}<span><i class="dot"></i>${month.label} to date</span></div>` : ''}
 </div>`;
 
-  const sm = m.slotsMtd, lv = m.live, ar = m.avgRevenue, cm = p.commit;
+  const sm = m.slotsMtd, lv = m.live, ar = m.avgRevenue, pl = p.pipeline;
+  const slotsStatus = sm.value == null ? 'track' : status(sm.value, SLOTS_TARGET);
   const tiles = [
-    tile({ label: 'Average weekly slots', value: sm.value ?? '–', statusKey: sm.status,
+    tile({ label: 'Average weekly slots', value: sm.value ?? '–', statusKey: slotsStatus,
       sub: sm.booked != null ? `${sm.booked} booked · ${sm.open} open` : sm.value == null ? 'Not a Calendly host yet' : `${sm.open} open`,
-      target: 'Target 25', barHtml: bar(sm.value, 25) }),
+      target: `Target ${SLOTS_TARGET}`, barHtml: bar(sm.value, SLOTS_TARGET) }),
     tile({ label: 'Live calls', value: lv.value, statusKey: lv.status,
       target: lv.target == null ? 'No target yet' : `Target ${Math.round(lv.target)}`, barHtml: bar(lv.value, lv.target) }),
     tile({ label: 'Average revenue', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
       target: 'Target $17,500', barHtml: bar(ar.value, ar.target) }),
-    cm ? tile({ label: 'Commitments closed', value: `${cm.kept} <span>/ ${cm.committed}</span>`, statusKey: cm.status,
-      sub: `${fmtPct(cm.rate)} of High Confidence + Soft Verbal`,
-      target: `On track: ${fmtPct(cm.expectedShare)}`, barHtml: bar(cm.kept, cm.committed * cm.expectedShare) })
-      : tile({ label: 'Commitments closed', value: '–', statusKey: 'track', sub: 'No pipeline tab yet', target: '' }),
+    pl ? tile({ label: 'Pipeline this month', value: `${pl.total} <span>leads</span>`, statusKey: pl.status,
+      sub: `${pl.hc} High Confidence · ${pl.sv} Soft Verbal · ${pl.working} Working`,
+      target: `${p.closes.toGo} closes to go`, barHtml: bar(pl.total, p.closes.toGo) })
+      : tile({ label: 'Pipeline this month', value: '–', statusKey: 'track', sub: 'No pipeline tab yet', target: p.closes.toGo != null ? `${p.closes.toGo} closes to go` : '' }),
   ].join('');
 
   let weekly = '';
