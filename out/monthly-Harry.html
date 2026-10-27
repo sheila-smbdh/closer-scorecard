@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&display=block"><style>
+:root{--ink:#1d1f23;--muted:#5c6168;--line:#e3e1dc;--bg:#fafaf8;
+--hit-bg:#e4f2e7;--hit:#24843a;--almost-bg:#fbf1cf;--almost:#d4a106;--almost-ink:#7d5f00;
+--missed-bg:#f9e2e1;--missed:#c8423d;--track-bg:#e5ebf6;--track:#2d5bb8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+.card{width:1080px;padding:40px 44px 40px;background:var(--bg)}
+.eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 0}
+h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:32px 0 14px}
+/* pace */
+.pt{margin-top:24px;background:#0f0f0e;border-radius:16px;padding:26px 26px 18px;color:#fcf6e2}
+.pt-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
+.pt-num{font-family:Fraunces,Georgia,serif;font-size:64px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1;margin-top:12px}
+.down{color:#ff7a58} .up{color:#6fd08a}
+.pt-right{text-align:right}
+.pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
+.pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
+.pt-stats{display:grid;grid-template-columns:repeat(2,auto);justify-content:start;column-gap:72px;margin-top:14px}
+.pt-stats .pt-caps{color:rgba(252,246,226,.6)}
+.pt-stats .pt-num{margin-top:8px}
+.pt-stats .goal{color:#fcf6e2}
+.pt-cl{font-family:Fraunces,Georgia,serif;font-size:34px;font-weight:800;color:#f0cd2b;margin-top:6px}
+.pt-cl.goal{color:#fcf6e2}
+.pt-cl small{font-family:Inter,sans-serif;font-size:16px;font-weight:600;color:rgba(252,246,226,.6);margin-left:8px}
+.pt-chart{margin-top:4px}
+.pt-chart svg{display:block}
+.pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
+.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
+.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
+/* tiles */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:190px}
+.tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
+.tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
+.tile.missed{background:var(--missed-bg);border-color:var(--missed)} .tile.missed .v{color:var(--missed)}
+.tile.track{background:var(--track-bg);border-color:var(--track)} .tile.track .v{color:var(--track)}
+.tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+.tile .v{font-size:40px;font-weight:800;margin:8px 0 4px;letter-spacing:-.01em}
+.tile .v span{font-size:24px;font-weight:700;opacity:.75}
+.tile .s{font-size:15px;color:#3d4248;line-height:1.4}
+.tile .s small{font-size:13px;color:var(--muted)}
+.tile .foot{margin-top:auto;padding-top:12px}
+.tile .foot>.chip{display:inline-block;margin-bottom:10px}
+.bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
+.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:26px;font-size:14px;color:#3d4248}
+.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
+.hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
+.missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
+/* weeks ahead */
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
+th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
+th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
+td{padding:14px 18px;border-top:1px solid var(--line);vertical-align:top}
+td b{font-size:24px;font-weight:800}
+td .of{color:var(--muted);font-weight:600}
+td small{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+td .wk{font-size:17px;font-weight:800}
+td .chip{display:inline-block;margin-top:8px}
+.chip.next{background:#d9d6cf;color:#3d4248}
+tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
+tr.next td{color:var(--muted)}
+tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
+.note{font-size:16px;color:#3d4248;margin:-4px 0 12px}
+</style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
+<h1>Harry's October: final, through Sunday, October 18th</h1>
+<div class="pt">
+<div class="pt-top">
+  <div><div class="pt-caps">Cash collected · October</div>
+  <div class="pt-stats">
+    <div class="pt-caps">Month to date</div><div class="pt-caps">Goal for the whole month</div>
+    <div class="pt-num">$39K</div><div class="pt-num goal">$261K</div>
+    <div class="pt-cl">2<small>closes</small></div><div class="pt-cl goal">15<small>closes</small></div>
+  </div>
+  </div>
+  <div class="pt-right"><span class="pill missed">BEHIND PACE</span></div>
+</div>
+<div class="pt-chart"><svg viewBox="0 0 940 360" width="940" height="360" font-family="Inter, sans-serif">
+<line x1="60" x2="910" y1="330" y2="330" stroke="rgba(252,246,226,.10)"/><text x="50" y="334" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$0</text><line x1="60" x2="910" y1="182" y2="182" stroke="rgba(252,246,226,.10)"/><text x="50" y="186" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$136K</text><line x1="60" x2="910" y1="34" y2="34" stroke="rgba(252,246,226,.10)"/><text x="50" y="38" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">$271K</text>
+<path d="M 60,330 L 60.0,330.0 L 88.3,330.0 L 116.7,330.0 L 145.0,330.0 L 173.3,330.0 L 201.7,330.0 L 230.0,330.0 L 258.3,308.2 L 286.7,308.2 L 315.0,308.2 L 343.3,287.4 L 371.7,287.4 L 400.0,287.4 L 428.3,287.4 L 456.7,287.4 L 485.0,287.4 L 513.3,287.4 L 541.7,287.4 L 541.6666666666667,330 Z" fill="rgba(252,208,64,.20)"/>
+<polyline points="60.0,330.0 88.3,330.0 116.7,330.0 145.0,313.6 173.3,313.6 201.7,313.6 230.0,313.6 258.3,291.8 286.7,272.1 315.0,272.1 343.3,272.1 371.7,272.1 400.0,272.1 428.3,272.1 456.7,272.1 485.0,272.1 513.3,272.1 541.7,272.1 570.0,253.0 598.3,253.0 626.7,253.0 655.0,253.0 683.3,213.7 711.7,213.7 740.0,213.7 768.3,183.1 796.7,183.1 825.0,140.5 853.3,140.5 881.7,108.8 910.0,34.0" fill="none" stroke="#7d92ff" stroke-width="2.5" opacity=".85"/>
+<polyline points="60.0,324.6 88.3,318.2 116.7,314.2 145.0,308.5 173.3,304.1 201.7,303.6 230.0,298.3 258.3,292.3 286.7,284.3 315.0,276.6 343.3,268.9 371.7,263.4 400.0,258.5 428.3,249.3 456.7,243.7 485.0,234.9 513.3,227.3 541.7,220.9 570.0,214.6 598.3,210.7 626.7,204.2 655.0,196.8 683.3,191.0 711.7,180.1 740.0,173.6 768.3,163.1 796.7,151.8 825.0,138.2 853.3,124.8 881.7,45.2 910.0,45.2" fill="none" stroke="#ff7a58" stroke-width="2.5" stroke-dasharray="7 5"/>
+<polyline points="60.0,330.0 88.3,330.0 116.7,330.0 145.0,330.0 173.3,330.0 201.7,330.0 230.0,330.0 258.3,308.2 286.7,308.2 315.0,308.2 343.3,287.4 371.7,287.4 400.0,287.4 428.3,287.4 456.7,287.4 485.0,287.4 513.3,287.4 541.7,287.4" fill="none" stroke="#fcf6e2" stroke-width="3.5" stroke-linejoin="round"/>
+<line x1="541.6666666666667" x2="541.6666666666667" y1="34" y2="330" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="541.6666666666667" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#f0cd2b">TODAY · Oct 18</text>
+<circle cx="541.6666666666667" cy="220.9" r="5" fill="#ff7a58" stroke="#0f0f0e" stroke-width="2"/><circle cx="541.6666666666667" cy="272.1" r="5" fill="#9fb0ff" stroke="#0f0f0e" stroke-width="2"/>
+<text x="557.6666666666667" y="227.9" text-anchor="start" font-size="20" font-weight="800" fill="#ff7a58" paint-order="stroke" stroke="#0f0f0e" stroke-width="8" stroke-linejoin="round">−61%<tspan font-size="14" font-weight="600" fill="rgba(252,246,226,.75)" dx="6">vs goal $100K</tspan></text><text x="557.6666666666667" y="279.1" text-anchor="start" font-size="20" font-weight="800" fill="#9fb0ff" paint-order="stroke" stroke="#0f0f0e" stroke-width="8" stroke-linejoin="round">−26%<tspan font-size="14" font-weight="600" fill="rgba(252,246,226,.75)" dx="6">vs Sep same day $53K</tspan></text>
+<circle cx="541.6666666666667" cy="287.40221402214024" r="8" fill="#f0cd2b" stroke="#0a0a0a" stroke-width="2.5"/>
+<text x="60" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D1</text><text x="258.33333333333337" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D8</text><text x="456.6666666666667" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D15</text><text x="655" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D22</text><text x="910" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.5)">D31</text>
+</svg></div>
+<div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal</span><span><i style="background:#7d92ff"></i>Sep, same day</span><span><i class="dot"></i>October to date</span></div>
+</div>
+<h2>YOUR INPUTS, MONTH TO DATE</h2>
+<div class="grid"><div class="tile almost"><div class="l">Average weekly slots</div><div class="v">33</div><div class="s">8 booked · 25 open</div>
+<div class="foot"><div class="bar"><i style="width:80.14285714285714%"></i><b style="left:85%"></b></div><div class="row"><span>Target 35</span><span class="chip">ALMOST</span></div></div></div><div class="tile hit"><div class="l">Live calls</div><div class="v">30</div>
+<div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:73.66666666666666%"></b></div><div class="row"><span>Target 26</span><span class="chip">HIT</span></div></div></div><div class="tile hit"><div class="l">Average revenue</div><div class="v">$19,500</div>
+<div class="foot"><div class="bar"><i style="width:85.00000000000001%"></i><b style="left:76.28205128205128%"></b></div><div class="row"><span>Target $17,500</span><span class="chip">HIT</span></div></div></div><div class="tile missed"><div class="l">Pacing</div><div class="v">$39K</div>
+<div class="foot"><span class="chip">BEHIND PACE</span><div class="bar"><i style="width:33.176715606642674%"></i><b style="left:85%"></b></div><div class="row"><span>Goal to date $100K</span></div></div></div></div>
+<h2>WEEKLY SCORECARD</h2>
+<table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
+<tr class="done"><td><div class="wk">Week 1</div><small>Oct 1 → 10 · Sun-Sat + 3-day lead-in</small></td><td><b>$20K</b> <span class="of">/ $49K</span><br><span class="chip missed">MISSED</span></td><td><b>1</b> <span class="of">/ 3</span><br><span class="chip missed">MISSED</span></td><td><b>36</b> <span class="of">/ 35</span><br><span class="chip hit">HIT</span></td></tr>
+<tr class="done"><td><div class="wk">Week 2</div><small>Oct 11 → 17 · Sun-Sat</small></td><td><b>$19K</b> <span class="of">/ $74K</span><br><span class="chip missed">MISSED</span></td><td><b>1</b> <span class="of">/ 4</span><br><span class="chip missed">MISSED</span></td><td><b>33</b> <span class="of">/ 35</span><br><span class="chip missed">MISSED</span></td></tr>
+<tr class="now"><td><div class="wk">Week 3</div><small>Oct 18 → 24 · Sun-Sat</small></td><td><b>$0</b> <span class="of">/ $98K</span><br><span class="chip track">SO FAR</span><small>Includes $55K carried from earlier weeks</small></td><td><b>0</b> <span class="of">/ 6</span><br><span class="chip track">SO FAR</span></td><td><b>42</b> <span class="of">/ 35</span><small>Next 7 days: 8 booked · 34 open</small><span class="chip hit">HIT</span></td></tr>
+<tr class="next"><td><div class="wk">Week 4</div><small>Oct 25 → 31 · Sun-Sat</small></td><td><span class="of">Target $124K</span><br><span class="chip next">UPCOMING</span></td><td><span class="of">Target 7</span><br><span class="chip next">UPCOMING</span></td><td><span class="of">Target 35</span><br><span class="chip next">UPCOMING</span></td></tr>
+<tr class="month"><td><div class="wk">October total</div><small>Month to date vs month goal</small></td><td><b>$39K</b> <span class="of">/ $261K</span></td><td><b>2</b> <span class="of">/ 15</span></td><td><b>33</b> <span class="of">/ 35</span><small>Average per week</small></td></tr>
+</tbody></table>
+<h2>NOVEMBER PLAN</h2>
+<p class="note">Starting point: $261K and 15 closes (this month's goal; November's isn't set yet). Each week keeps its share of the month if you change the goal.</p>
+<table><thead><tr><th>Week</th><th>Share of month</th><th>Cash collected<small>target</small></th><th>Closes<small>target</small></th><th>Slots (booked + open)<small>target</small></th></tr></thead><tbody>
+<tr><td><div class="wk">Week 1</div><small>Nov 1 → 7 · Sun-Sat</small></td><td><b>11%</b></td><td><b>$29K</b></td><td><b>2</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Week 2</div><small>Nov 8 → 14 · Sun-Sat</small></td><td><b>17%</b></td><td><b>$45K</b></td><td><b>2</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Week 3</div><small>Nov 15 → 21 · Sun-Sat</small></td><td><b>18%</b></td><td><b>$48K</b></td><td><b>3</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Week 4</div><small>Nov 22 → 28 · Sun-Sat</small></td><td><b>25%</b></td><td><b>$66K</b></td><td><b>4</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Final stretch</div><small>Nov 29 → 30 · 2-day finale</small></td><td><b>28%</b></td><td><b>$73K</b></td><td><b>4</b></td><td><b>35</b></td></tr>
+<tr class="month"><td><div class="wk">November total</div></td><td><b>100%</b></td><td><b>$261K</b></td><td><b>15</b></td><td><b>35</b><small>Every week</small></td></tr>
+</tbody></table></div></body></html>

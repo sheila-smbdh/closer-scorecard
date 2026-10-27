@@ -85,6 +85,24 @@ export function plan(data, m) {
     }
     return row;
   });
+  // 1st-of-month edition: next month's week-by-week plan for Jay's 1:1 (tracker target when it has a
+  // fresh one, else this month's target as the starting point; weeks are the curve's share of the month)
+  const nx = tr.next;
+  if (m.edition === 'monthly' && nx) {
+    const nTarget = nx.targets?.[m.closer.key]?.month_target ?? c.monthTarget;
+    const nCloses = Math.ceil(nTarget / TARGETS.avgRevenueFloor);
+    const g = (d) => (d > 0 ? nx.goal_shape[d - 1] : 0);
+    const [ny, nm] = nx.month.split('-').map(Number);
+    out.next = {
+      month: nx.month, cash: nTarget, closes: nCloses, fromThisMonth: nx.targets?.[m.closer.key] == null,
+      weeks: monthWeeks(ny, nm - 1, nx.days_in_month).map((w) => ({
+        ...w, share: g(w.end) - g(w.start - 1),
+        cash: nTarget * (g(w.end) - g(w.start - 1)),
+        closes: Math.round(nCloses * g(w.end)) - Math.round(nCloses * g(w.start - 1)),
+        slots: SLOTS_TARGET,
+      })),
+    };
+  }
   // Month row: month to date against the month's targets
   out.month = {
     target: { cash: c.monthTarget, closes: target, slots: SLOTS_TARGET },
