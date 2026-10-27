@@ -9031,5 +9031,59 @@
    ]
   ]
  },
- "_pipeline_leads_note": "Each closer's current-month section of Pipeline Review as [name, status (col B), expected cash (col D), outcome (col F), Close lead id], pulled 2026-10-20 (same pull and format as the Friday pipeline report). Open High Confidence / Soft Verbal / Working leads and their cash come from here."
+ "_pipeline_leads_note": "Each closer's current-month section of Pipeline Review as [name, status (col B), expected cash (col D), outcome (col F), Close lead id], pulled 2026-10-20 (same pull and format as the Friday pipeline report). Open High Confidence / Soft Verbal / Working leads and their cash come from here.",
+ "daily_closes": {
+  "Owen": {
+   "10-06": 2,
+   "10-07": 2,
+   "10-14": 1
+  },
+  "Adam": {
+   "10-02": 2,
+   "10-07": 1,
+   "10-12": 1
+  },
+  "JZ": {
+   "10-13": 1,
+   "10-18": 1
+  },
+  "VeJohn": {
+   "10-01": 1,
+   "10-03": 1,
+   "10-07": 1,
+   "10-14": 1,
+   "10-15": 1
+  },
+  "Julien": {
+   "10-15": 1,
+   "10-20": 2
+  },
+  "Nick": {
+   "10-01": 1,
+   "10-06": 1,
+   "10-14": 2
+  },
+  "Omar": {
+   "10-04": 1,
+   "10-19": 1,
+   "10-20": 1
+  },
+  "Harry": {
+   "10-08": 1,
+   "10-11": 1,
+   "10-20": 1
+  },
+  "Solomon": {
+   "10-13": 2,
+   "10-16": 1
+  },
+  "Daniel": {},
+  "Kevin": {
+   "10-14": 1,
+   "10-16": 1
+  },
+  "Oliver": {},
+  "Tyler": {}
+ },
+ "_daily_closes_note": "Close 1 per closer per day (only days with closes), Sales Tracker 2026 Inputs column J, pulled 2026-10-27, trimmed to Oct 20 to match this snapshot. Used for the Weeks Ahead closes column."
 }
