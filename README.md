@@ -4,8 +4,9 @@ Month-to-date scorecard image for each closer.
 
 **Friday pipeline report (live):** every Friday 11:30am ET, one image of all 13 closers by pod to #sales-strategy. See `docs/PIPELINE_ROUTINE.md`; build with `node src/pipeline-report.mjs data/pipeline-<date>.json out`. All sources are read-only.
 
-- **Monday 8:20am ET**: month to date through Sunday.
-- **Wednesday 8:20am ET**: month to date through Tuesday.
+- **1st of the month, 7:14am ET**: the whole previous month, every closer's card posted to #sales-reports for Jay's 1:1s.
+- **Monday 7:14am ET**: month to date through Sunday, by DM.
+- **Wednesday 7:14am ET**: month to date through Tuesday, by DM.
 
 Start with `docs/HANDOFF.md` for decisions and next steps.
 
@@ -44,7 +45,7 @@ Everything about closes is anchored on the month's closes target = month cash ta
 |---|---|---|---|
 | Pace / Pacing tile | Cash collected MTD vs the tracker's `expected_cash` by the last day of the window (back-loaded month curve). Badge from `pace.status`: On pace (ahead / on_pace), Slightly behind, Off pace. Chart: `daily_cumulative_cash` this month and last month (`/api/read/closers`, `?month=<prior>`); goal curve = `/api/read/month?through=<each day>` `pace.expected_cash` ÷ `goal`, × month target | Per-closer `month_target` | Tracker read API (`TRACKER_READ_TOKEN`) via `npm run tracker -- <through>` into `trackers["MM-DD"]`; provisional $200K straight line if there is no pull |
 | Closes | Close 1 month to date vs month target ÷ $17,500 | Closes target | Sales Tracker `Inputs` |
-| Average weekly slots | Every 8am Messi post this month (his count starts Oct 9): open discovery start times over the next 7 days + client calls already booked in those 7 days (as Calendly stood at 8am), averaged. Shown as booked · open | 35 (booked + open) | Messi in #sales-reports (`messi_slots`) + Calendly (`slots_booked`, via `node src/booked-slots.mjs <snapshot> <calendly-events.json>`) |
+| Average weekly slots | Every Messi post this month (6am ET; 8am before late Oct 2026) (his count starts Oct 9): open discovery start times over the next 7 days + client calls already booked in those 7 days (as Calendly stood at the post), averaged. Shown as booked · open | 35 (booked + open) | Messi in #sales-reports (`messi_slots`) + Calendly (`slots_booked`, via `node src/booked-slots.mjs <snapshot> <calendly-events.json>`) |
 | Live calls | Calls that showed, month to date (EOD reports; Sales Tracker for any day without one) | Team median of fully ramped closers, until a real target is set | EOD Tracker + Sales Tracker `Inputs` |
 | Average revenue | Revenue generated ÷ closes (Close 1), month to date | $17,500 (pass/fail) | `Inputs` |
 | Weekly Scorecard | Cash target: month target × the goal curve at the week's end, minus cash banked before the week (so a finished week is hit only if the closer is back on the pace line, and the first unfinished week carries any deficit); weeks after that get their plain slice of the curve. Closes: the same with the closes target (curve × closes target, rounded). Slots: 35. Actuals: cash from `daily_cash`, closes from `daily_closes`, slots = average of that week's Messi posts; next 7 days = the edition-day post | – | Tracker goal curve; Sales Tracker `Inputs` column J (Close 1) per day (`daily_closes`) |
