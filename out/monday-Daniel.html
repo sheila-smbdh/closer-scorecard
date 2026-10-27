@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><style>
+<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&display=block"><style>
 :root{--ink:#1d1f23;--muted:#5c6168;--line:#e3e1dc;--bg:#fafaf8;
 --hit-bg:#e4f2e7;--hit:#24843a;--almost-bg:#fbf1cf;--almost:#d4a106;--almost-ink:#7d5f00;
 --missed-bg:#f9e2e1;--missed:#c8423d;--track-bg:#e5ebf6;--track:#2d5bb8}
@@ -8,45 +8,81 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg
 .eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
 h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
 .lede{font-size:19px;color:var(--muted)}
-.wf{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
-.box{border-radius:14px;padding:22px 24px}
-.box h3{font-size:15px;letter-spacing:.1em;font-weight:700;margin-bottom:12px}
-.wins{background:var(--hit-bg)} .wins h3{color:var(--hit)}
-.fixes{background:var(--missed-bg)} .fixes h3{color:var(--missed)}
-.box ol{padding-left:22px;font-size:17px;line-height:1.45} .box li{margin-bottom:8px}
-.box .none{font-size:17px;color:var(--muted)}
 .section{margin-top:30px}
 .section h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin-bottom:6px}
 .section p.key{font-size:16px;color:var(--muted);line-height:1.45;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid.two{grid-template-columns:repeat(2,1fr)}
 .tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:228px}
+.grid.two .tile{min-height:190px}
 .tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
 .tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
 .tile.missed{background:var(--missed-bg);border-color:var(--missed)} .tile.missed .v{color:var(--missed)}
 .tile.track{background:var(--track-bg);border-color:var(--track)} .tile.track .v{color:var(--track)}
 .tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
 .tile .v{font-size:38px;font-weight:800;margin:6px 0 4px;letter-spacing:-.01em}
+.tile .v .of{font-size:24px;font-weight:700;opacity:.75}
 .tile .s{font-size:15px;color:#3d4248;line-height:1.35}
 .tile .small{font-size:13px;color:var(--muted);line-height:1.35;margin-top:6px}
 .tile .warn{font-size:13px;color:var(--missed);font-weight:600;margin-top:6px}
 .tile .foot{margin-top:auto;padding-top:10px}
+.tile .wk{font-size:13.5px;color:var(--ink);line-height:1.35;border-top:1px solid rgba(0,0,0,.08);padding-top:8px;margin-bottom:10px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
-.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)}
+.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
-.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
+.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px;white-space:nowrap}
 .hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-.mom{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.mom>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.mom .l{font-size:14px;color:var(--muted);font-weight:600}
-.mom .v{font-size:26px;font-weight:800;margin:4px 0}
-.mom .d{font-size:14px;font-weight:700} .up{color:var(--hit)} .down{color:var(--missed)} .flat{color:var(--muted)}
+/* pace chart: same look as the 2M tracker's closer view */
+.pt{margin-top:26px;background:#0f0f0e;border-radius:14px;padding:22px 24px 18px;color:#fcf6e2}
+.pt-head{display:flex;justify-content:space-between;align-items:center}
+.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
+.pt-pill{font-size:12px;font-weight:800;letter-spacing:.08em;border:1.5px solid;border-radius:6px;padding:5px 10px}
+.pt-pill.hit{color:#6fd08a} .pt-pill.almost{color:#f0cd2b} .pt-pill.missed{color:#ff7a58} .pt-pill.track{color:#9fb0ff}
+.pt-numrow{display:flex;align-items:baseline;gap:16px;margin-top:14px}
+.pt-num{font-family:Fraunces,Georgia,serif;font-size:56px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1}
+.pt-mom{font-size:20px;font-weight:700} .pt-mom.down{color:#ff7a58} .pt-mom.up{color:#6fd08a}
+.pt-ctx{font-size:16px;margin-top:10px;color:rgba(252,246,226,.85)}
+.pt-foot{font-size:13.5px;font-style:italic;margin-top:4px;color:rgba(252,246,226,.55)}
+.pt-chart{margin-top:14px}
+.pt-chart svg{display:block}
+.pt-legend{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:6px}
+.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
+.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
+.pt-day{margin-left:auto;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(252,246,226,.55)}
+.pt-cap{font-size:15px;line-height:1.5;margin-top:12px;color:rgba(252,246,226,.9)}
+/* path to target */
+.path{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 22px}
+.step{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.sw{flex:1}
+.sl{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+.st{font-size:15px;color:#3d4248;line-height:1.4;margin-top:3px}
+.step>.sv{font-size:30px;font-weight:800;white-space:nowrap;text-align:right}
+.cases{display:flex;gap:10px}
+.cases>div{width:190px;background:#f4f2ee;border-radius:10px;padding:8px 12px}
+.cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
+.cases span{font-size:13.5px;color:#3d4248}
+.rows{margin-top:6px}
+.rows>div{display:flex;align-items:baseline;gap:12px;padding:5px 0}
+.rows>div+div{border-top:1px dashed var(--line)}
+.rl{flex:none;width:150px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.rt{flex:1;font-size:15px;color:#3d4248}
+.rows b{font-size:24px;font-weight:800;white-space:nowrap}
+.warnt{color:var(--missed);font-weight:600}
+.names{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
+.verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
+.verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
+.verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
 .footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
 /* leadership table */
 .wide{width:1500px}
 table{border-collapse:separate;border-spacing:0 6px;width:100%;font-size:15px}
 th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 10px;font-weight:700;vertical-align:bottom}
+th.grp{color:var(--track);border-bottom:2px solid var(--track);padding-bottom:6px}
 td{padding:11px 10px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 td:first-child{border-left:1px solid var(--line);border-radius:10px 0 0 10px;font-weight:700}
 td:last-child{border-right:1px solid var(--line);border-radius:0 10px 10px 0}
@@ -59,49 +95,60 @@ tr.total td{background:#f1efea;font-weight:800}
 .legend{display:flex;gap:18px;font-size:14px;color:var(--muted);margin:14px 0 4px}
 .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
 </style></head><body><div class="card ">
-<div class="eyebrow">Closer scorecard · Week in review</div>
-<h1>Daniel's week: Mon Oct 12 to Sun Oct 18</h1>
-<div class="lede">You hit 1 of 4 targets, 1 almost · 8 booked calls · 0 closes · $0 revenue</div>
-<div class="wf">
-  <div class="box wins"><h3>WINS LAST WEEK</h3><ol><li><b>Open slots:</b> 37 open, target 25.</li></ol></div>
-  <div class="box fixes"><h3>FOCUS THIS WEEK</h3><ol><li><b>Booked calls:</b> 8 of 20.</li><li><b>Show rate:</b> 63%. 1 of 2 no-shows were confirmed.</li></ol></div>
+<div class="eyebrow">Closer scorecard · Month-to-date roundup</div>
+<h1>Daniel's month to date: Sunday, October 18th</h1>
+<div class="lede">0% of pace (team median 55%) · 15 live calls this month · 0 closes, 7 projected</div>
+<div class="pt">
+<div class="pt-head"><span class="pt-caps">Cash collected · October pace</span><span class="pt-pill missed">OFF PACE</span></div>
+<div class="pt-numrow"><span class="pt-num">$0</span><span class="pt-mom down">−100% MoM</span></div>
+<div class="pt-ctx">vs pace $76.6K (−100%) · vs MED $42K (−100%)</div>
+<div class="pt-foot">vs Sep D17, same-day, normalized for month length</div>
+<div class="pt-chart"><svg viewBox="0 0 944 370" width="944" height="370" font-family="Inter, sans-serif">
+<line x1="64" x2="914" y1="336" y2="336" stroke="rgba(252,246,226,.10)"/><text x="54" y="340" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$0</text><line x1="64" x2="914" y1="260.5" y2="260.5" stroke="rgba(252,246,226,.10)"/><text x="54" y="264.5" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$50K</text><line x1="64" x2="914" y1="185" y2="185" stroke="rgba(252,246,226,.10)"/><text x="54" y="189" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$100K</text><line x1="64" x2="914" y1="109.5" y2="109.5" stroke="rgba(252,246,226,.10)"/><text x="54" y="113.5" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$150K</text><line x1="64" x2="914" y1="34" y2="34" stroke="rgba(252,246,226,.10)"/><text x="54" y="38" text-anchor="end" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">$200K</text>
+<line x1="234" x2="234" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="234" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W1 end</text><line x1="432.3333333333333" x2="432.3333333333333" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="432.3333333333333" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W2 end</text><line x1="630.6666666666666" x2="630.6666666666666" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="630.6666666666666" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W3 end</text><line x1="829" x2="829" y1="34" y2="336" stroke="rgba(252,246,226,.30)" stroke-dasharray="4 4"/><text x="829" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(252,246,226,.55)">W4 end</text>
+<path d="M 64,336 L 64.0,336.0 L 92.3,336.0 L 120.7,336.0 L 149.0,336.0 L 177.3,336.0 L 205.7,336.0 L 234.0,336.0 L 262.3,336.0 L 290.7,336.0 L 319.0,336.0 L 347.3,336.0 L 375.7,336.0 L 404.0,336.0 L 432.3,336.0 L 460.7,336.0 L 489.0,336.0 L 517.3,336.0 L 545.7,336.0 L 545.6666666666667,336 Z" fill="rgba(252,208,64,.22)"/>
+<polyline points="64.0,336.0 92.3,309.6 120.7,309.6 149.0,309.6 177.3,309.6 205.7,309.6 234.0,309.6 262.3,309.6 290.7,309.6 319.0,309.6 347.3,309.6 375.7,309.6 404.0,309.6 432.3,309.6 460.7,286.9 489.0,286.9 517.3,286.9 545.7,286.9 574.0,286.9 602.3,286.9 630.7,286.9 659.0,286.9 687.3,286.9 715.7,259.7 744.0,259.7 772.3,259.7 800.7,259.7 829.0,237.1 857.3,237.1 885.7,209.9 914.0,72.5" fill="none" stroke="#7d92ff" stroke-width="2.5" opacity=".85"/>
+<polyline points="64.0,330.3 92.3,323.5 120.7,319.2 149.0,313.2 177.3,308.5 205.7,308.0 234.0,302.4 262.3,296.0 290.7,287.6 319.0,279.4 347.3,271.2 375.7,265.4 404.0,260.2 432.3,250.4 460.7,244.5 489.0,235.1 517.3,227.1 545.7,220.3 574.0,213.6 602.3,209.5 630.7,202.7 659.0,194.7 687.3,188.6 715.7,177.0 744.0,170.1 772.3,159.0 800.7,147.0 829.0,132.7 857.3,118.4 885.7,34.0 914.0,34.0" fill="none" stroke="#ff7a58" stroke-width="2.5" stroke-dasharray="7 5"/>
+<polyline points="64.0,336.0 92.3,336.0 120.7,336.0 149.0,336.0 177.3,336.0 205.7,336.0 234.0,336.0 262.3,336.0 290.7,336.0 319.0,336.0 347.3,336.0 375.7,336.0 404.0,336.0 432.3,336.0 460.7,336.0 489.0,336.0 517.3,336.0 545.7,336.0" fill="none" stroke="#fcf6e2" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="545.6666666666667" cy="336" r="8" fill="#f0cd2b" stroke="#0a0a0a" stroke-width="2.5"/>
+<text x="64" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D1</text><text x="177.33333333333331" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D5</text><text x="319" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D10</text><text x="460.6666666666667" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D15</text><text x="602.3333333333334" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D20</text><text x="744" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D25</text><text x="914" y="358" text-anchor="middle" font-size="13" font-weight="600" fill="rgba(252,246,226,.55)">D31</text>
+</svg></div>
+<div class="pt-legend"><span><i style="background:#ff7a58"></i>Goal pace</span><span><i style="background:#7d92ff"></i>Sep · same-day</span><span><i class="dot"></i>Actual MTD</span><span class="pt-day">Day 18 of 31</span></div>
+<p class="pt-cap">$0 collected through day 18, $76.6K behind the $76.6K goal pace, against $32,500 by the same day in September. The team median is $42K (55% of pace). At this pace October ends near $0 of your $200K target.</p>
 </div>
-<div class="section"><h2>YOUR NUMBERS VS TARGET</h2>
-<p class="key">Green: you hit the target. Yellow: almost there (75% of the target or more). Red: you missed it. Blue: a number we track, with no target. The black line on each bar is the target.</p>
+<div class="section"><h2>HOW THE WEEK WENT</h2>
+<p class="key">Month to date, with this past week (Mon Oct 12 to Sun Oct 18) under each tile: the inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
 <div class="grid"><div class="tile hit">
-  <div class="l">Open slots</div><div class="v">37</div>
-  <div class="s">Discovery start times open in Calendly over the next 7 days</div><div class="small">Calendar open till <b>6pm ET (5pm Fri)</b></div>
-  <div class="foot"><div class="bar"><i style="width:85%"></i><b style="left:57.432432432432435%"></b></div><div class="row"><span>Target 25</span><span class="chip">HIT</span></div></div>
+  <div class="l">Discovery slots, month to date</div><div class="v">50</div>
+  <div class="s">Average day since Oct 9: <b>2</b> booked + <b>47</b> still open over the next 7 days</div><div class="small">Lowest day 41 · team median 37</div>
+  <div class="foot"><div class="wk"><b>This past week:</b> 49 a day (2 booked + 47 open)</div><div class="bar"><i style="width:85%"></i><b style="left:42.5%"></b></div><div class="row"><span>Target 25 (booked + open)</span><span class="chip">HIT</span></div></div>
 </div><div class="tile missed">
-  <div class="l">Booked calls</div><div class="v">8</div>
-  <div class="s">8 calls booked on your calendar last week</div>
-  <div class="foot"><div class="bar"><i style="width:34%"></i><b style="left:85%"></b></div><div class="row"><span>Target 20</span><span class="chip">MISSED</span></div></div>
-</div><div class="tile almost">
-  <div class="l">Show rate</div><div class="v">63%</div>
-  <div class="s">5 of 8 booked calls showed up</div><div class="small">No-show: <b>2</b> · 1 pre-call confirmation sent by closer<br>Cancel: <b>0</b><br>Rescheduled: <b>1</b></div>
-  <div class="foot"><div class="bar"><i style="width:66.40624999999999%"></i><b style="left:85%"></b></div><div class="row"><span>Target 80%</span><span class="chip">ALMOST</span></div></div>
+  <div class="l">Live calls, month to date</div><div class="v">15</div>
+  <div class="s">15 of 21 booked calls showed this month</div>
+  <div class="foot"><div class="wk"><b>This past week:</b> 5 live of 8 booked</div><div class="bar"><i style="width:49.03846153846153%"></i><b style="left:85%"></b></div><div class="row"><span>Team median 26</span><span class="chip">MISSED</span></div></div>
 </div><div class="tile track">
-  <div class="l">Average revenue</div><div class="v">–</div>
-  <div class="s">No closes yet this month</div>
-  <div class="foot"><div class="row"><span>Floor $17,500</span><span class="chip">TRACKING</span></div></div>
-</div><div class="tile missed">
-  <div class="l">Cash collected pace</div><div class="v">$0</div>
-  <div class="s">Pace by Oct 18 is $109K (0% of pace)</div><div class="small">Month target $200K (provisional)</div>
-  <div class="foot"><div class="bar"><i style="width:0%"></i><b style="left:85%"></b></div><div class="row"><span>Pace $109K</span><span class="chip">MISSED</span></div></div>
+  <div class="l">Average revenue, month to date</div><div class="v">–</div>
+  <div class="s">No closes yet this month</div><div class="small">Team median $17,625</div>
+  <div class="foot"><div class="wk"><b>This past week:</b> no closes</div><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div>
 </div><div class="tile track">
-  <div class="l">Projected closes</div><div class="v">0</div>
-  <div class="s">0 High Confidence + 0 Soft Verbal / Reengaged in your October pipeline</div><div class="small">0 WIP (not counted)<br>Hit rate on last week’s projections starts Mon Oct 26</div><div class="warn">11 leads need a status</div>
-  <div class="foot"><div class="row"><span>No target</span><span class="chip">TRACKING</span></div></div>
-</div><div class="tile track">
-  <div class="l">Revenue per call</div><div class="v">$0</div>
-  <div class="s">$0 revenue generated over 21 booked calls this month</div>
-  <div class="foot"><div class="row"><span>No target</span><span class="chip">TRACKING</span></div></div>
-</div><div class="tile track">
-  <div class="l">Closes last week</div><div class="v">0</div>
-  <div class="s">No closes logged yet</div>
-  <div class="foot"><div class="row"><span>No target</span><span class="chip">TRACKING</span></div></div>
+  <div class="l">Closes, month to date: actual vs projected</div><div class="v">0 <span class="of">/ 7</span></div>
+  <div class="s">0 closes so far, 7 projected by month end</div><div class="small">Projected = 0 closed + 80% of 3 High Confidence + 50% of 9 Soft Verbal = 6.9. 4 Working not counted.</div>
+  <div class="foot"><div class="wk"><b>This past week:</b> 0 closes</div><div class="row"><span>Tracked, no target</span><span class="chip">TRACKING</span></div></div>
+</div></div>
+<div class="verdict missed"><b>To change:</b> 15 live calls this month vs a team median of 26: book and confirm more calls.</div></div>
+<div class="section"><h2>WHERE WE'RE HEADED: THE PATH TO $200K</h2>
+<p class="key">Working backwards from your month target: what is left, what your pipeline can cover, and what new calls can realistically add.</p>
+<div class="path">
+<div class="step"><span class="sn">1</span><div class="sw"><div class="sl">Gap to target</div><div class="st">$0 collected of $200K, 10 business days left.</div></div><div class="sv">$200K</div></div>
+<div class="step"><span class="sn">2</span><div class="sw"><div class="sl">Closes that takes</div><div class="st">12 at $17.5K each · 10 at $20K each.</div></div><div class="sv">10 to 12</div></div>
+<div class="step"><span class="sn">3</span><div class="sw"><div class="sl">Your pipeline</div><div class="rows">
+<div><span class="rl">If they all close</span><span class="rt">3 High Confidence $58K + 9 Soft Verbal $165K + 4 Working $70K</span><b>$293K</b></div>
+<div><span class="rl">At usual rates</span><span class="rt">80% of High Confidence + 50% of Soft Verbal + Working not counted</span><b>$129K</b></div>
 </div></div></div>
-<div class="section"><h2>MONTH OVER MONTH</h2>
-<p class="key">October 1 to 18 compared with the same days in September.</p>
-<div class="mom"><div><div class="l">Booked calls</div><div class="v">21</div><div class="d down">▼ 49% vs 41</div></div><div><div class="l">Closes</div><div class="v">0</div><div class="d down">▼ 100% vs 2</div></div><div><div class="l">Revenue generated</div><div class="v">$0</div><div class="d down">▼ 100% vs $32.5K</div></div><div><div class="l">Cash collected</div><div class="v">$0</div><div class="d down">▼ 100% vs $32.5K</div></div></div></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, Close and Calendly, times in ET. Booked calls: calls scheduled, from your EOD reports (Sales Tracker for any day without one), also used for month to date and revenue per call. Show rate: showed ÷ booked; the rest split into no-show, cancelled and rescheduled from your EOD reports. Confirmed: the no-show lead got a text or email the day before or the day of the call, before it started, from the closer or a setter (Close). Open slots: discovery start times Calendly offers over the next 7 days. Calendar open till: the latest end of your Calendly discovery hours, in ET. Average revenue: revenue generated ÷ closes, month to date; revenue generated is the contract value at close, cash collected is money received. Cash pace: month target × business days so far ÷ business days in the month. Projected closes: open High Confidence + Soft Verbal / Reengaged leads in your current-month pipeline tab; WIP (Working / Good Call) is shown but not counted. Revenue per call: revenue generated ÷ booked calls, month to date.</div></div></body></html>
+<div class="step"><span class="sn">4</span><div class="sw"><div class="sl">Pull forward from your pipeline</div><div class="st">Your 12 High Confidence and Soft Verbal leads ($223K) cover the gap if they close this month. Get each one to a signed yes, and book the follow-up before it slips.<div class="names">High Confidence: Pradepthi $20K, Molly Hennessy $20K, Tim Carkin $18K<br>Soft Verbal: Saqib Jamal $20K, Ryan Noble $20K, Venkatesh Rajan $20K, Bob Bruennig $20K, Ryan Lopez $20K, Jaimi Truhler $17.5K, +3 more</div></div></div><div class="sv">12 leads</div></div>
+<div class="step"><span class="sn">5</span><div class="sw"><div class="sl">New calls to month end</div><div class="st">At your pace this month (1.3 live calls a business day) that is about <b>13 more live calls</b> by October 31. At the team median 10% close rate, about <b>1.3</b> of them close this month at most: calls this week have the best shot, since a call in the last days rarely pays before the 1st.</div></div><div class="sv">~13 → ~1</div></div>
+<div class="step"><span class="sn">6</span><div class="sw"><div class="sl">Build November's pipeline</div><div class="st">The other ~12 calls are November's pipeline. Log each one as High Confidence, Soft Verbal or Working the same day and book the next step before you hang up, so you start November with deals already in motion (this month's target takes 12 closes).</div></div><div class="sv">~12</div></div>
+<div class="step"><span class="sn">7</span><div class="sw"><div class="sl">Your next 7 days</div><div class="st">3 calls already booked + 37 open slots: fill them this week, since these are the calls that can still close in October. Calendar open till 6pm ET (5pm Fri).</div></div><div class="sv">3 + 37</div></div>
+</div>
+<div class="verdict almost"><b>Realistic October:</b> $0 collected + $129K from your pipeline at usual rates + about 1.3 new-call closes ($22.0K) ≈ <b>$151K</b>, 75% of $200K. The biggest lever is your pipeline: every Working or Soft Verbal lead you pull forward to a close adds about $17.5K.</div></div>
+<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target. Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the month figure averages each day since Messi's daily count started (Oct 9). The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes (tracked, no target): closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new calls to month end = your live calls per business day this month × business days left; close rate = closes ÷ live calls this month (team median until you have a close); realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K.</div></div></body></html>

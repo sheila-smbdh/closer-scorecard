@@ -6,18 +6,20 @@
 - JZ: month to date also filled from the Sales Tracker on 10-01, 10-02, 10-07, 10-13, 10-15.
 - VeJohn: week totals (EOD + fills) 0 booked / 0 showed, Sales Tracker alone 5 / 3.
 - VeJohn: EOD "showed" left blank on 10-19; filled in as booked minus no-shows, cancels and reschedules.
+- Julien: 16 open pipeline leads have no cash amount (column D); valued at $17,500 each.
+- Julien: cash through Oct 20 is $48,000 in the tracker, $15,000 in the Sales Tracker snapshot.
 - Nick: week totals (EOD + fills) 4 booked / 2 showed, Sales Tracker alone 3 / 2.
 - Nick: month to date also filled from the Sales Tracker on 10-16.
-- Nick: 32 open pipeline leads have no standard status.
+- Nick: 29 open pipeline leads have no cash amount (column D); valued at $17,500 each.
 - Omar: week totals (EOD + fills) 5 booked / 4 showed, Sales Tracker alone 2 / 2.
 - Harry: month to date also filled from the Sales Tracker on 10-05.
 - Harry: 3 open pipeline leads have no standard status.
+- Harry: cash through Oct 20 is $58,000 in the tracker, $39,000 in the Sales Tracker snapshot.
 - Solomon: month to date also filled from the Sales Tracker on 10-09.
-- Solomon: 6 open pipeline leads have no standard status.
-- Daniel: 11 open pipeline leads have no standard status.
+- Solomon: 5 open pipeline leads have no standard status.
 - Kevin: month to date also filled from the Sales Tracker on 10-05.
-- Kevin: 8 open pipeline leads have no standard status.
 - Oliver: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Oliver: no Pipeline Review tab.
 - Tyler: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: no Pipeline Review tab.
+- Tyler: cash through Oct 20 is $undefined in the tracker, $0 in the Sales Tracker snapshot.

@@ -13,6 +13,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright';
+import { category, outcome, money } from './pipeline-labels.mjs';
 
 const [dataPath, outDir] = process.argv.slice(2);
 if (!dataPath || !outDir) {
@@ -31,29 +32,6 @@ export const PODS = [
 export const KPI = { hc: 0.8, sv: 0.5 };
 const CAT_LABEL = { hc: 'High Confidence', sv: 'Soft Verbal / Reengaged', working: 'Working', unknown: 'not recorded' };
 
-// Column B: the lead's category. "Verbal" counts as High Confidence (flagged so the label gets fixed).
-export function category(b) {
-  const s = b.toLowerCase().trim();
-  if (s.startsWith('high conf')) return 'hc';
-  if (s === 'verbal') return 'hc';
-  if (s.startsWith('soft verbal') || s.includes('reengag')) return 'sv';
-  if (s.startsWith('working') || s.includes('good call')) return 'working';
-  return null;
-}
-// Outcome from column F (new convention) or column B (old). Only Closed and Signed count as closed.
-export function outcome(b, f) {
-  const fs_ = f.toLowerCase().trim(), bs = b.toLowerCase().trim();
-  if (['closed', 'signed'].includes(fs_) || fs_ === 'true') return 'closed';
-  if (fs_ === 'delayed') return 'delayed';
-  if (['closed', 'signed'].includes(bs)) return 'closed';
-  if (bs === 'delayed') return 'delayed';
-  if (bs === 'lost' || fs_ === 'lost') return 'lost';
-  return null;
-}
-const money = (v) => {
-  const n = Number(String(v).replace(/[$,\s]/g, ''));
-  return String(v).trim() === '' || Number.isNaN(n) ? null : n;
-};
 const norm = (s) => s.toLowerCase().replace(/[^a-z ]/g, ' ').split(/\s+/).filter(Boolean);
 // Same person if one first name starts the other and last initials match ("Josh" = "Joshua", "Gee Vee" = "Gee Varughese")
 const sameName = (a, b) => {
