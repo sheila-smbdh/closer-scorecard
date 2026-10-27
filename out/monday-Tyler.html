@@ -4,124 +4,79 @@
 --missed-bg:#f9e2e1;--missed:#c8423d;--track-bg:#e5ebf6;--track:#2d5bb8}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
-.card{width:1080px;padding:40px 44px 36px;background:var(--bg)}
+.card{width:1080px;padding:40px 44px 40px;background:var(--bg)}
 .eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
-h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 8px}
-.lede{font-size:19px;color:var(--muted)}
-.section{margin-top:30px}
-.section h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin-bottom:6px}
-.section p.key{font-size:16px;color:var(--muted);line-height:1.45;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.grid.two{grid-template-columns:repeat(2,1fr)}
-.tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:228px}
-.grid.two .tile{min-height:190px}
+h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 0}
+h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:32px 0 14px}
+/* pace */
+.pt{margin-top:24px;background:#0f0f0e;border-radius:16px;padding:26px 26px 18px;color:#fcf6e2}
+.pt-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
+.pt-num{font-family:Fraunces,Georgia,serif;font-size:64px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1;margin-top:12px}
+.pt-deltas{display:flex;gap:18px;margin-top:12px;font-size:19px;font-weight:700}
+.down{color:#ff7a58} .up{color:#6fd08a}
+.pt-deltas span small{font-size:14px;font-weight:600;color:rgba(252,246,226,.6);margin-left:4px}
+.pt-right{text-align:right}
+.pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
+.pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
+.pt-closes{margin-top:16px;font-size:15px;color:rgba(252,246,226,.7)}
+.pt-closes b{display:block;font-family:Fraunces,Georgia,serif;font-size:40px;font-weight:800;color:#fcf6e2;line-height:1.1}
+.pt-closes b span{font-size:22px;color:rgba(252,246,226,.6)}
+.pt-chart{margin-top:18px}
+.pt-chart svg{display:block}
+.pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
+.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
+.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
+/* tiles */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:190px}
 .tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
 .tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
 .tile.missed{background:var(--missed-bg);border-color:var(--missed)} .tile.missed .v{color:var(--missed)}
 .tile.track{background:var(--track-bg);border-color:var(--track)} .tile.track .v{color:var(--track)}
 .tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
-.tile .v{font-size:38px;font-weight:800;margin:6px 0 4px;letter-spacing:-.01em}
-.tile .v .of{font-size:24px;font-weight:700;opacity:.75}
-.tile .s{font-size:15px;color:#3d4248;line-height:1.35}
-.tile .small{font-size:13px;color:var(--muted);line-height:1.35;margin-top:6px}
-.tile .warn{font-size:13px;color:var(--missed);font-weight:600;margin-top:6px}
-.tile .foot{margin-top:auto;padding-top:10px}
-.tile .wk{font-size:13.5px;color:var(--ink);line-height:1.35;border-top:1px solid rgba(0,0,0,.08);padding-top:8px;margin-bottom:10px}
+.tile .v{font-size:40px;font-weight:800;margin:8px 0 4px;letter-spacing:-.01em}
+.tile .v span{font-size:24px;font-weight:700;opacity:.75}
+.tile .s{font-size:15px;color:#3d4248;line-height:1.4}
+.tile .s small{font-size:13px;color:var(--muted)}
+.tile .foot{margin-top:auto;padding-top:12px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
 .hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
 .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#3d4248}
-.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px;white-space:nowrap}
-.hit .chip{background:var(--hit)} .almost .chip{background:var(--almost);color:#3a2c00} .missed .chip{background:var(--missed)} .track .chip{background:var(--track)}
-/* pace chart: same look as the 2M tracker's closer view */
-.pt{margin-top:26px;background:#0f0f0e;border-radius:14px;padding:22px 24px 18px;color:#fcf6e2}
-.pt-head{display:flex;justify-content:space-between;align-items:center}
-.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
-.pt-pill{font-size:12px;font-weight:800;letter-spacing:.08em;border:1.5px solid;border-radius:6px;padding:5px 10px}
-.pt-pill.hit{color:#6fd08a} .pt-pill.almost{color:#f0cd2b} .pt-pill.missed{color:#ff7a58} .pt-pill.track{color:#9fb0ff}
-.pt-numrow{display:flex;align-items:baseline;gap:16px;margin-top:14px}
-.pt-num{font-family:Fraunces,Georgia,serif;font-size:56px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1}
-.pt-mom{font-size:20px;font-weight:700} .pt-mom.down{color:#ff7a58} .pt-mom.up{color:#6fd08a}
-.pt-ctx{font-size:16px;margin-top:10px;color:rgba(252,246,226,.85)}
-.pt-foot{font-size:13.5px;font-style:italic;margin-top:4px;color:rgba(252,246,226,.55)}
-.pt-chart{margin-top:14px}
-.pt-chart svg{display:block}
-.pt-legend{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:6px}
-.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
-.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
-.pt-day{margin-left:auto;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(252,246,226,.55)}
-.pt-cap{font-size:15px;line-height:1.5;margin-top:12px;color:rgba(252,246,226,.9)}
-/* path to target */
-.path{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 22px}
-.step{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
-.step:last-child{border-bottom:none}
-.sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center}
-.sw{flex:1}
-.sl{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
-.st{font-size:15px;color:#3d4248;line-height:1.4;margin-top:3px}
-.step>.sv{font-size:30px;font-weight:800;white-space:nowrap;text-align:right}
-.cases{display:flex;gap:10px}
-.cases>div{width:190px;background:#f4f2ee;border-radius:10px;padding:8px 12px}
-.cases small{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.cases b{display:block;font-size:24px;font-weight:800;margin-top:2px}
-.cases span{font-size:13.5px;color:#3d4248}
-.rows{margin-top:6px}
-.rows>div{display:flex;align-items:baseline;gap:12px;padding:5px 0}
-.rows>div+div{border-top:1px dashed var(--line)}
-.rl{flex:none;width:150px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.rt{flex:1;font-size:15px;color:#3d4248}
-.rows b{font-size:24px;font-weight:800;white-space:nowrap}
-.warnt{color:var(--missed);font-weight:600}
-.names{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
-.verdict{margin-top:12px;border-radius:12px;padding:14px 18px;font-size:16px;line-height:1.45;border-left:6px solid}
-.verdict.hit{background:var(--hit-bg);border-color:var(--hit)} .verdict.almost{background:var(--almost-bg);border-color:var(--almost)}
-.verdict.missed{background:var(--missed-bg);border-color:var(--missed)} .verdict.track{background:var(--track-bg);border-color:var(--track)}
-.footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
-/* leadership table */
-.wide{width:1500px}
-table{border-collapse:separate;border-spacing:0 6px;width:100%;font-size:15px}
-th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 10px;font-weight:700;vertical-align:bottom}
-th.grp{color:var(--track);border-bottom:2px solid var(--track);padding-bottom:6px}
-td{padding:11px 10px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-td:first-child{border-left:1px solid var(--line);border-radius:10px 0 0 10px;font-weight:700}
-td:last-child{border-right:1px solid var(--line);border-radius:0 10px 10px 0}
-td.hit{background:var(--hit-bg);color:var(--hit);font-weight:700}
-td.almost{background:var(--almost-bg);color:var(--almost-ink);font-weight:700}
-td.missed{background:var(--missed-bg);color:var(--missed);font-weight:700}
-td.track{background:var(--track-bg);color:var(--track);font-weight:600}
-td small{display:block;font-size:12px;font-weight:500;color:var(--muted)}
-tr.total td{background:#f1efea;font-weight:800}
-.legend{display:flex;gap:18px;font-size:14px;color:var(--muted);margin:14px 0 4px}
-.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
-</style></head><body><div class="card ">
-<div class="eyebrow">Closer scorecard · Month-to-date roundup</div>
+.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
+.hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
+.missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
+/* weekly targets */
+.gap{display:flex;gap:12px;margin-bottom:12px}
+.gap div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+.gap small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gap b{font-size:30px;font-weight:800}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
+th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
+th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
+td{padding:14px 18px;border-top:1px solid var(--line)}
+td:first-child{font-weight:700}
+td.next{background:#fffbea;font-size:22px;font-weight:800}
+th.next{background:#f0cd2b;color:#1d1f23}
+td .chip{margin-left:10px;vertical-align:2px}
+</style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
 <h1>Tyler's month to date: Sunday, October 18th</h1>
-<div class="lede">– collected · 9 live calls this month · 0 closes</div>
-<div class="pt"><div class="pt-head"><span class="pt-caps">Cash collected · October pace</span><span class="pt-pill track">NO TARGET YET</span></div>
-<div class="pt-numrow"><span class="pt-num">$0</span></div>
-<div class="pt-ctx">Team median $42K</div>
-<p class="pt-cap">Your month target is coming, so there is no pace line yet.</p></div>
-<div class="section"><h2>HOW THE WEEK WENT</h2>
-<p class="key">Month to date, with this past week (Mon Oct 12 to Sun Oct 18) under each tile: the inputs you control that drive your pace. Green: on target. Yellow: close (75% of it or more). Red: below. The black line on each bar is the target; live calls are measured against the team median.</p>
-<div class="grid"><div class="tile track">
-  <div class="l">Discovery slots, month to date</div><div class="v">–</div>
-  <div class="s">Not set up as a discovery host in Calendly yet</div>
-  <div class="foot"><div class="row"><span>Target 25 (booked + open)</span><span class="chip">TRACKING</span></div></div>
-</div><div class="tile track">
-  <div class="l">Live calls, month to date</div><div class="v">9</div>
-  <div class="s">9 of 9 booked calls showed this month</div><div class="small">Compared with the team once you are ramped</div>
-  <div class="foot"><div class="wk"><b>This past week:</b> 9 live of 9 booked</div><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div>
-</div><div class="tile track">
-  <div class="l">Average revenue, month to date</div><div class="v">–</div>
-  <div class="s">No closes yet this month</div><div class="small">Team median $17,625</div>
-  <div class="foot"><div class="wk"><b>This past week:</b> no closes</div><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div>
-</div><div class="tile track">
-  <div class="l">Closes, month to date: actual vs projected</div><div class="v">0</div>
-  <div class="s">0 closes so far. No pipeline tab yet</div>
-  <div class="foot"><div class="wk"><b>This past week:</b> 0 closes</div><div class="row"><span>Tracked, no target</span><span class="chip">TRACKING</span></div></div>
-</div></div>
+<div class="pt">
+<div class="pt-top">
+  <div><div class="pt-caps">Cash collected · October</div>
+  <div class="pt-num">$0</div>
+  </div>
+  <div class="pt-right"><span class="pill track">NO TARGET YET</span>
+  </div>
 </div>
-<div class="section"><h2>WHERE WE'RE HEADED</h2>
-<p class="key">Your month target is coming. Until then: get set up as a discovery host in Calendly.</p></div>
-<div class="footer">From the EOD Tracker, the Sales Tracker 2026 (Inputs tab), the Pipeline Review sheet, the 2M tracker, Close and Calendly, times in ET. Pace: cash collected vs what the 2M tracker expects by this day on its month curve, which is back-loaded (more cash lands late in the month); month end at this pace = % of pace × month target. Team median: the middle value among fully ramped closers. Slots: client calls already booked in Calendly + discovery start times still open in Calendly over the next 7 days, as of each 8am post; the month figure averages each day since Messi's daily count started (Oct 9). The 25 target is on booked + open. Live calls: calls that showed, from your EOD reports (Sales Tracker for any day without one). Average revenue: revenue generated ÷ closes, month to date. Projected closes (tracked, no target): closes so far + 80% of open High Confidence + 50% of open Soft Verbal / Reengaged leads in your current-month pipeline; Working is shown, not counted. Path to target: gap = month target − cash collected; your pipeline is open leads at their column D amounts (a lead with no amount counts as $17.5K); new calls to month end = your live calls per business day this month × business days left; close rate = closes ÷ live calls this month (team median until you have a close); realistic month end = cash + pipeline at usual rates + new-call closes at $17.5K.</div></div></body></html>
+
+</div>
+<h2>YOUR INPUTS, MONTH TO DATE</h2>
+<div class="grid"><div class="tile track"><div class="l">Average weekly slots</div><div class="v">–</div><div class="s">Not a Calendly host yet</div>
+<div class="foot"><div class="row"><span>Target 35</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Live calls</div><div class="v">9</div>
+<div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Average revenue</div><div class="v">–</div>
+<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Closes + pipeline</div><div class="v">0</div><div class="s">No pipeline tab yet</div>
+<div class="foot"><div class="row"><span></span><span class="chip">TRACKING</span></div></div></div></div>
+</div></body></html>

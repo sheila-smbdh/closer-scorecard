@@ -1,7 +1,7 @@
 // Usage: node src/booked-slots.mjs <data.json> <calendly-events.json>
 // For each of Messi's daily slot posts (8am ET), counts the client calls each closer already had booked
 // over the same next 7 days, as Calendly stood at that moment: created before the post, and not cancelled
-// before it. Open slots (Messi) + booked calls = the closer's capacity, which is what the 25
+// before it. Open slots (Messi) + booked calls = the closer's capacity, which is what the 35
 // target is measured on. Writes `slots_booked["MM-DD"][closer]` into the snapshot.
 // The events file is a read-only Calendly pull: {closers: {key: [{name, start, status, created, canceled_at}]}}.
 
@@ -41,6 +41,6 @@ for (const day of days) {
   }
 }
 data.slots_booked = out;
-data._slots_booked_note = `Client calls already booked over the next 7 days at each Messi post (8am ET), per closer, from Calendly (pulled ${ev.pulled_at}). Open slots + booked = capacity, scored against the 25 target.`;
+data._slots_booked_note = `Client calls already booked over the next 7 days at each Messi post (8am ET), per closer, from Calendly (pulled ${ev.pulled_at}). Open slots + booked = capacity, scored against the 35 target.`;
 fs.writeFileSync(dataPath, JSON.stringify(data, null, 1) + '\n');
 console.log(`booked client calls for ${days.length} post days: ${days.join(', ')}`);
