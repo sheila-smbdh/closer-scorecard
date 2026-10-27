@@ -40,7 +40,7 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
 .pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
 /* tiles */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:190px}
 .tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
 .tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
@@ -49,7 +49,8 @@ h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:
 .tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
 .tile .v{font-size:40px;font-weight:800;margin:8px 0 4px;letter-spacing:-.01em}
 .tile .v span{font-size:24px;font-weight:700;opacity:.75}
-.tile .s{font-size:15px;color:#3d4248}
+.tile .s{font-size:15px;color:#3d4248;line-height:1.4}
+.tile .s small{font-size:13px;color:var(--muted)}
 .tile .foot{margin-top:auto;padding-top:12px}
 .bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
@@ -137,10 +138,10 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget)}</div>
       target: lv.target == null ? 'No target yet' : `Target ${Math.round(lv.target)}`, barHtml: bar(lv.value, lv.target) }),
     tile({ label: 'Average revenue', value: ar.value == null ? '–' : fmtMoney(ar.value), statusKey: ar.status,
       target: 'Target $17,500', barHtml: bar(ar.value, ar.target) }),
-    pl ? tile({ label: 'Pipeline this month', value: `${pl.total} <span>leads</span>`, statusKey: pl.status,
-      sub: `${pl.hc} High Confidence · ${pl.sv} Soft Verbal · ${pl.working} Working`,
-      target: `${p.closes.toGo} closes to go`, barHtml: bar(pl.total, p.closes.toGo) })
-      : tile({ label: 'Pipeline this month', value: '–', statusKey: 'track', sub: 'No pipeline tab yet', target: p.closes.toGo != null ? `${p.closes.toGo} closes to go` : '' }),
+    pl ? tile({ label: 'Closes + pipeline', value: `${p.closes.actual} <span>+ ${pl.total} = ${pl.reach}</span>`, statusKey: pl.status,
+      sub: `${p.closes.actual} closed + ${pl.total} in pipeline<br><small>${pl.hc} High Confidence<br>${pl.sv} Soft Verbal<br>${pl.working} Working</small>`,
+      target: `Target ${p.closes.target} closes`, barHtml: bar(pl.reach, p.closes.target) })
+      : tile({ label: 'Closes + pipeline', value: `${p.closes.actual}`, statusKey: 'track', sub: 'No pipeline tab yet', target: p.closes.target != null ? `Target ${p.closes.target} closes` : '' }),
   ].join('');
 
   let weekly = '';

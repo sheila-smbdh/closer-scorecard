@@ -1,5 +1,5 @@
 // Extra numbers for the v2 (simplified) card, all anchored on the month's closes target (month cash target ÷
-// $17.5K): closes vs target, this month's pipeline against the closes still to go, and weekly targets.
+// $17.5K): closes vs target, closes + open pipeline against that target, and weekly targets.
 // Weekly targets come from the 2M tracker's goal curve: what is left at the start of a week × the share of
 // the rest of the month's curve that week covers. Cash works off the cash gap, closes off the closes gap.
 
@@ -36,7 +36,9 @@ export function planV2(data, m) {
       if (cat) n[cat]++;
     }
     n.total = n.hc + n.sv + n.working;
-    out.pipeline = { ...n, status: out.closes.toGo ? status(n.total, out.closes.toGo) : 'track' };
+    // Closed so far + open pipeline, against the month's closes target: if every lead closed, would it be enough?
+    n.reach = m.closes.actual + n.total;
+    out.pipeline = { ...n, status: target ? status(n.reach, target) : 'track' };
   }
 
   // Weekly targets: last week (set at its start) vs actual, and this coming week
