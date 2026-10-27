@@ -4,12 +4,12 @@ Month-to-date scorecard image for each closer.
 
 **Friday pipeline report (live):** every Friday 11:30am ET, one image of all 13 closers by pod to #sales-strategy. See `docs/PIPELINE_ROUTINE.md`; build with `node src/pipeline-report.mjs data/pipeline-<date>.json out`. All sources are read-only.
 
-- **Monday 8:00am ET**: month to date through Sunday.
-- **Wednesday 8:00am ET**: month to date through Tuesday.
+- **Monday 8:20am ET**: month to date through Sunday.
+- **Wednesday 8:20am ET**: month to date through Tuesday.
 
 Start with `docs/HANDOFF.md` for decisions and next steps.
 
-Status: **samples only, awaiting leadership sign-off.** Nothing is scheduled and nothing is sent to closers yet.
+Status: **final card, routine paused.** The Monday and Wednesday routine (`docs/ROUTINE.md`) is set up but paused until sending starts in November. Oliver and Tyler are skipped until their ramp targets are set.
 
 ## Build the samples
 
@@ -60,8 +60,8 @@ Revenue generated is contract value booked at close; cash collected is money act
 
 ## Open items before launch
 
-1. Leadership sign-off on layout and definitions.
-2. Oliver and Tyler new-hire targets.
+1. Oliver and Tyler ramp targets (Sheila to send).
+2. Turn the routine on in November.
 3. A real live-calls target (the team median stands in).
 4. Revisit the month targets (closes targets are derived from them).
 5. Direct Calendly slot count to cross-check Messi (the discovery event is a round-robin, so per-closer slots come from each host's availability).
