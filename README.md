@@ -5,7 +5,7 @@ Month-to-date scorecard image for each closer.
 **Friday pipeline report (live):** every Friday 11:30am ET, one image of all 13 closers by pod to #sales-strategy. See `docs/PIPELINE_ROUTINE.md`; build with `node src/pipeline-report.mjs data/pipeline-<date>.json out`. All sources are read-only.
 
 - **1st of the month, 7:14am ET**: the whole previous month, every closer's card in a thread under one "<Month> closer scorecards are in @Jay" message in #sales-reports, for Jay's 1:1s. On a Monday or Wednesday 1st only this goes out (no DMs).
-- **Monday 7:14am ET**: month to date through Sunday, by DM.
+- **Monday 7:14am ET**: month to date through Sunday, by DM (first DMs Mon Nov 9, 2026).
 - **Wednesday 7:14am ET**: month to date through Tuesday, by DM.
 
 Start with `docs/HANDOFF.md` for decisions and next steps.

@@ -46,7 +46,7 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 
 ## Open items
 
-1. Turn the routine on before Nov 1 (paused; Sheila decides).
+1. Turn the routine on before Nov 1 (paused; Sheila decides). Nov 1: thread post to Jay; first closer DMs Mon Nov 9.
 2. Each month: Sheila sends closer-facing goals and the week-by-week split; save as `data/targets/<YYYY-MM>.json` before the 1st.
 3. Oliver and Tyler: no EOD reports yet and "not a discovery host" per Messi, so their slot tiles stay empty until they host.
 4. Julien's discovery hours taken from his "Sales Calls" Calendly schedule (8am-1pm ET); confirm.
