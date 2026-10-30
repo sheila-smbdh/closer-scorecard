@@ -25,3 +25,4 @@
 - Oliver: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: cash through Oct 18 is $undefined in the tracker, $0 in the Sales Tracker snapshot.
+- Next month's plan left off the cards: no targets file for 2026-11 (data/targets/2026-11.json).

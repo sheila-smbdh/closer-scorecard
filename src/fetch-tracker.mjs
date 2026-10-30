@@ -1,17 +1,13 @@
-// Usage: node src/fetch-tracker.mjs <data.json> <through YYYY-MM-DD> [--next-month]
+// Usage: node src/fetch-tracker.mjs <data.json> <through YYYY-MM-DD>
 // Pulls per-closer cash pace from the 2M tracker read API and writes it into the snapshot as
 // `trackers["MM-DD"]` (keyed by the last day of the window, so the Monday and Wednesday editions
 // each get their own). For the pace chart it also stores each closer's daily cumulative cash this
-// month and last month, and the tracker's goal-pace curve (expected cash by each day ÷ month goal).
-// --next-month (the 1st-of-month edition) also stores the following month's curve and per-closer
-// targets as `next`, for the planning table. Before that month has a fresh tracker refresh its numbers
-// are not usable, so the curve falls back to this month's resampled to the next month's length, and
-// targets are left out (the card then plans from this month's target).
-// Needs TRACKER_READ_TOKEN; the token is never printed.
+// month and last month. Targets and the goal curve are NOT taken from the tracker (management-facing):
+// the card uses Sheila's closer-facing data/targets/<month>.json (src/targets.mjs).
 
 import fs from 'node:fs';
 
-const [dataPath, through, flag] = process.argv.slice(2);
+const [dataPath, through] = process.argv.slice(2);
 if (!dataPath || !/^\d{4}-\d{2}-\d{2}$/.test(through ?? '')) {
   console.error('usage: node src/fetch-tracker.mjs <data.json> <through YYYY-MM-DD>');
   process.exit(1);
@@ -38,14 +34,6 @@ const body = await read(`closers?through=${through}`);
 const prev = await read(`closers?month=${prevMonth}`);
 const rows = body.data.closers;
 const dim = body.data.days_in_month;
-
-// Goal pace curve: the tracker's expected cash by each day of the month, as a share of the month goal.
-// Every closer's expected cash is this share × their month target.
-const goalShape = [];
-for (let d = 1; d <= dim; d++) {
-  const m = await read(`month?month=${month}&through=${month}-${String(d).padStart(2, '0')}`);
-  goalShape.push(Number((m.data.pace.expected_cash / m.data.goal).toFixed(5)));
-}
 
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
@@ -75,41 +63,12 @@ for (const c of data.closers) {
   };
 }
 
-// Next month (planning table on the 1st-of-month edition)
-let next;
-if (flag === '--next-month') {
-  const nextMonth = mo === 12 ? `${y + 1}-01` : `${y}-${String(mo + 1).padStart(2, '0')}`;
-  const [ny, nm] = nextMonth.split('-').map(Number);
-  const ndim = new Date(Date.UTC(ny, nm, 0)).getUTCDate();
-  const nc = await read(`closers?month=${nextMonth}`);
-  const fresh = nc.all_checks_pass !== false && nc.data.days_in_month === ndim
-    && !(nc.checks ?? []).some((ch) => ch.name === 'data_is_fresh' && !ch.ok);
-  let shape;
-  if (fresh) {
-    shape = [];
-    for (let d = 1; d <= ndim; d++) {
-      const m = await read(`month?month=${nextMonth}&through=${nextMonth}-${String(d).padStart(2, '0')}`);
-      shape.push(Number((m.data.pace.expected_cash / m.data.goal).toFixed(5)));
-    }
-  } else {
-    shape = Array.from({ length: ndim }, (_, i) => goalShape[Math.min(dim, Math.max(1, Math.round(((i + 1) * dim) / ndim))) - 1]);
-  }
-  const targets = {};
-  if (fresh) for (const c of data.closers) {
-    const r = findRow(nc.data.closers, c);
-    if (r?.month_target) targets[c.key] = { month_target: r.month_target, target_source: r.target_source ?? null };
-  }
-  next = { month: nextMonth, days_in_month: ndim, goal_shape: shape, goal_source: fresh ? 'tracker' : 'resampled', targets };
-}
-
 data.trackers = { ...data.trackers, [through.slice(5)]: {
   through, generated_at: body.generated_at, data_pulled_at: body.data_pulled_at,
   all_checks_pass: body.all_checks_pass,
   failed_checks: (body.checks ?? []).filter((ch) => !ch.ok).map((ch) => `${ch.name}: ${ch.detail ?? ''}`.trim()),
   targets_note: body.data.targets_note ?? null,
   days_in_month: dim, prior_month: prevMonth, prior_days_in_month: prev.data.days_in_month,
-  goal_shape: goalShape,
-  ...(next ? { next } : {}),
   unmatched, closers,
 } };
 delete data.tracker;
