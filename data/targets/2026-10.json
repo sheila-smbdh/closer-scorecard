@@ -1,45 +1,45 @@
 {
  "month": "2026-10",
- "_note": "Placeholder for October: the 2M tracker targets and curve (Sheila, Oct 30: there are no closer-facing numbers for October; Jay explains these are placeholders).",
+ "_note": "Sheila, Oct 30: October uses the November closer-facing goals (except Tyler, Oliver, Yobani and Quinn, who have no October goal) and the November week-by-week split. October has 4 tracker weeks (Oct 1-10 with a 3-day lead-in, 11-17, 18-24, 25-31); November has 5, so Week 4 takes November Week 4 + Final stretch (23% + 25%).",
  "weeks": [
-  0.1875,
-  0.1731,
-  0.1658,
-  0.4736
+  0.13,
+  0.19,
+  0.2,
+  0.48
  ],
  "closers": {
-  "Owen": {
-   "cash": 416738
-  },
-  "Adam": {
-   "cash": 285178
-  },
-  "JZ": {
-   "cash": 362873
-  },
-  "VeJohn": {
-   "cash": 265582
-  },
   "Julien": {
-   "cash": 195174
-  },
-  "Nick": {
-   "cash": 286163
-  },
-  "Omar": {
-   "cash": 275922
-  },
-  "Harry": {
-   "cash": 260757
-  },
-  "Solomon": {
    "cash": 200000
   },
   "Daniel": {
    "cash": 200000
   },
+  "Owen": {
+   "cash": 325000
+  },
+  "Adam": {
+   "cash": 275000
+  },
+  "VeJohn": {
+   "cash": 275000
+  },
+  "JZ": {
+   "cash": 300000
+  },
+  "Omar": {
+   "cash": 275000
+  },
+  "Nick": {
+   "cash": 275000
+  },
+  "Harry": {
+   "cash": 275000
+  },
   "Kevin": {
-   "cash": 200000
+   "cash": 225000
+  },
+  "Solomon": {
+   "cash": 225000
   }
  }
 }
