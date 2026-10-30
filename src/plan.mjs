@@ -25,6 +25,24 @@ export function plan(data, m) {
 
   // Weekly Scorecard: every week of the month, target vs actual for cash, closes and slots
   const tr = trackerFor(data, m.ed);
+  // 1st-of-month edition: next month's week-by-week plan for Jay's 1:1, from next month's targets file
+  // (no plan without one; the run flags say so). Built before the checks below so a closer with no goal
+  // this month (a new hire's first month) still gets next month's plan.
+  const nk = tr && nextMonthKey(tr.through.slice(0, 7));
+  const nf = nk ? targetsFor(data, nk) : null, nt = closerTargets(nf, m.closer.key);
+  if (m.edition === 'monthly' && nt && !checkTargets(nf, nk).length) {
+    const g = dailyCurve(nf, nk), at = (d) => (d > 0 ? g[d - 1] : 0);
+    const [ny, nm] = nk.split('-').map(Number);
+    out.next = {
+      month: nk, cash: nt.cash, closes: nt.closes,
+      weeks: monthWeeks(ny, nm - 1, daysIn(nk)).map((w, i) => ({
+        ...w, share: nf.weeks[i],
+        cash: nt.cash * nf.weeks[i],
+        closes: Math.round(nt.closes * at(w.end)) - Math.round(nt.closes * at(w.start - 1)),
+        slots: SLOTS_TARGET,
+      })),
+    };
+  }
   if (!c.chart || target == null) return out;
   const goal = c.chart.curve, dim = tr.days_in_month;
   const [year, mo] = tr.through.split('-').map(Number);
@@ -68,23 +86,6 @@ export function plan(data, m) {
     }
     return row;
   });
-  // 1st-of-month edition: next month's week-by-week plan for Jay's 1:1, from next month's targets file
-  // (no plan without one; the run flags say so)
-  const nk = nextMonthKey(tr.through.slice(0, 7));
-  const nf = targetsFor(data, nk), nt = closerTargets(nf, m.closer.key);
-  if (m.edition === 'monthly' && nt && !checkTargets(nf, nk).length) {
-    const g = dailyCurve(nf, nk), at = (d) => (d > 0 ? g[d - 1] : 0);
-    const [ny, nm] = nk.split('-').map(Number);
-    out.next = {
-      month: nk, cash: nt.cash, closes: nt.closes,
-      weeks: monthWeeks(ny, nm - 1, daysIn(nk)).map((w, i) => ({
-        ...w, share: nf.weeks[i],
-        cash: nt.cash * nf.weeks[i],
-        closes: Math.round(nt.closes * at(w.end)) - Math.round(nt.closes * at(w.start - 1)),
-        slots: SLOTS_TARGET,
-      })),
-    };
-  }
   // Month row: month to date against the month's targets
   out.month = {
     target: { cash: c.monthTarget, closes: target, slots: SLOTS_TARGET },
