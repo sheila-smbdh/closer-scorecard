@@ -4,6 +4,7 @@ Runs at 7:14am ET on the 1st of every month and every Monday and Wednesday (`CRO
 
 **Which run (ET date):**
 - **1st of the month: monthly edition.** The whole previous month (through its last day), every closer's card posted to **#sales-reports** (`C0C5CGGGE1M`) for Jay's 1:1s. The card adds a **<New month> plan** table: the new month's weeks with each week's share of the month and its cash, closes and slots targets, so Jay can set the month's goal with the closer. Its goal and weekly split come from `data/targets/<new month>.json`. No DMs from this edition.
+- **First DMs: Monday Nov 9, 2026** (Sheila, Oct 30). Monday and Wednesday runs before Nov 9 (Nov 2, 4) do nothing. The Nov 1 thread post still goes out.
 - **Monday: Monday edition**, month to date through Sunday, one DM per closer.
 - **Wednesday: Wednesday edition**, month to date through Tuesday, one DM per closer.
 - When the 1st is a Monday or Wednesday, run only the monthly edition: the #sales-reports post, no DMs to closers that day.
