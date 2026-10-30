@@ -153,6 +153,20 @@
    "short": "Tyler",
    "slack": "U0C4MFY6EBC",
    "new_hire": true
+  },
+  {
+   "key": "Yobani",
+   "name": "Yobani Mendoza",
+   "short": "Yobani",
+   "slack": "U0ARSKKNE1J",
+   "new_hire": true
+  },
+  {
+   "key": "Quinn",
+   "name": "Quinn Donelan",
+   "short": "Quinn",
+   "slack": "U0AR7J4RX9D",
+   "new_hire": true
   }
  ],
  "activity": {

@@ -24,8 +24,8 @@ node src/build.mjs data/sample-2026-10-19.json out monday Owen   # one closer
 
 ## Roster (13)
 
-Owen Henderson, Adam Larkins, Jordan Zadrozny (JZ), VeJohn C Heinemann, Julien Breteau, Nick Vaughan, Omar Kaddoura, Harry Whyte, Solomon House, Daniel Jenkins, Kevin Manuel, Oliver English (new hire), Tyler Johnson (new hire).
-Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin are setters on track for promotion: add them when promoted.
+Owen Henderson, Adam Larkins, Jordan Zadrozny (JZ), VeJohn C Heinemann, Julien Breteau, Nick Vaughan, Omar Kaddoura, Harry Whyte, Solomon House, Daniel Jenkins, Kevin Manuel, Oliver English (new hire), Tyler Johnson (new hire), Yobani Mendoza and Quinn Donelan (setters promoted to closer; cards from November).
+Not carded: Jay DeCristofaro (manages closers). Dave Martin is a setter on track for promotion: add him when promoted.
 
 ## Layout
 
