@@ -3,14 +3,14 @@
 Runs at 7:14am ET on the 1st of every month and every Monday and Wednesday (`CRON_TZ=America/New_York 14 7 1 * 1,3`: day-of-month and day-of-week together fire on either), after Messi's 6am slot post. **Paused until Sheila turns it on (sending starts in November).** Decisions behind each step are in `docs/HANDOFF.md`; metric definitions are in `README.md`.
 
 **Which run (ET date):**
-- **1st of the month: monthly edition.** The whole previous month (through its last day), every fully ramped closer's card posted to **#sales-reports** (`C0C5CGGGE1M`) for Jay's 1:1s. The card adds a **<New month> plan** table: the new month's weeks with each week's share of the month and its cash, closes and slots targets, so Jay can set the month's goal with the closer. Its goal and weekly split come from `data/targets/<new month>.json`. No DMs from this edition.
+- **1st of the month: monthly edition.** The whole previous month (through its last day), every closer's card posted to **#sales-reports** (`C0C5CGGGE1M`) for Jay's 1:1s. The card adds a **<New month> plan** table: the new month's weeks with each week's share of the month and its cash, closes and slots targets, so Jay can set the month's goal with the closer. Its goal and weekly split come from `data/targets/<new month>.json`. No DMs from this edition.
 - **Monday: Monday edition**, month to date through Sunday, one DM per closer.
 - **Wednesday: Wednesday edition**, month to date through Tuesday, one DM per closer.
 - When the 1st is a Monday or Wednesday, run only the monthly edition: the #sales-reports post, no DMs to closers that day.
 
 **Read-only rule:** never write to or change anything in Google Sheets, Calendly, the tracker, Slack history or any other source. The only outputs are the #sales-reports post on the 1st (one message, cards in its thread), one DM per closer on Monday and Wednesday, the flags DM to Sheila (Slack `U0BM6J8KM32`), and the run's snapshot committed to this repo.
 
-**Who gets a card:** the 11 fully ramped closers in `closers` (Owen, Adam, JZ, VeJohn, Julien, Nick, Omar, Harry, Solomon, Daniel, Kevin), each by Slack DM to the `slack` id in the roster. **Oliver and Tyler are skipped** until Sheila sets their ramp targets; list them in the flags as "not sent: ramp target not set".
+**Who gets a card:** all 13 closers in `closers` (Owen, Adam, JZ, VeJohn, Julien, Nick, Omar, Harry, Solomon, Daniel, Kevin, Oliver, Tyler), each by Slack DM to the `slack` id in the roster. Oliver and Tyler start in November (Sheila, Oct 30): their goals come from the targets file like everyone's. A closer with no goal in the month's targets file is not sent a card that month; list them in the flags.
 
 ## Access
 
@@ -31,8 +31,8 @@ Runs at 7:14am ET on the 1st of every month and every Monday and Wednesday (`CRO
 6. **Slots.** Every Messi 6am post in #sales-reports this month → `messi_slots["MM-DD"][key]` (set `messi_post_hour_et: 6`) (open start times, next 7 days; today's post included) and `slots.<edition>[key]` = today's numbers. Booked: pull every Calendly scheduled event, active and canceled, for each closer from the first post of the month through 7 days after today, save as `{pulled_at, closers: {key: [{name, start, status, created, canceled_at}]}}` (`canceled_at` = `cancellation.created_at`), then `node src/booked-slots.mjs data/scorecard-<today>.json <events.json>`.
 7. **Render.** `node src/build.mjs data/scorecard-<today>.json out <edition>`. Look at two or three PNGs before sending: title date, weekly rows add up (closes in the rows = closes in the month row), no blank tiles.
 8. **Send.**
-   - Monday / Wednesday: for each fully ramped closer, upload `out/<edition>-<key>.png` to their DM with one plain line: "Your scorecard, month to date through <Weekday, Month Dth>." No emojis, no other text.
-   - Monthly: post one message to #sales-reports (`C0C5CGGGE1M`): "<Month> closer scorecards are in <@U06Q63DTS13>" (<Month> = the month the cards cover, the one just ended; U06Q63DTS13 is Jay DeCristofaro). Then upload each fully ramped closer's `out/monthly-<key>.png` **in that message's thread** (`thread_ts` = its ts), in roster order, with the closer's full name as the comment. Nothing goes to the channel itself except that one message.
-9. **Flags.** DM Sheila `out/<edition>-flags.md` every run, with Oliver and Tyler listed as not sent.
+   - Monday / Wednesday: for each closer, upload `out/<edition>-<key>.png` to their DM with one plain line: "Your scorecard, month to date through <Weekday, Month Dth>." No emojis, no other text.
+   - Monthly: post one message to #sales-reports (`C0C5CGGGE1M`): "<Month> closer scorecards are in <@U06Q63DTS13>" (<Month> = the month the cards cover, the one just ended; U06Q63DTS13 is Jay DeCristofaro). Then upload each closer's `out/monthly-<key>.png` **in that message's thread** (`thread_ts` = its ts), in roster order, with the closer's full name as the comment. Nothing goes to the channel itself except that one message. On the 1st a closer with no goal for the month just ended (Oliver and Tyler on Nov 1) is still included when the new month's file has their goal: their card shows the month's actuals and the new month's plan.
+9. **Flags.** DM Sheila `out/<edition>-flags.md` every run.
 10. **Save.** Commit `data/scorecard-<today>.json` and push to `main`. Do not commit `out/` (the images go out by Slack).
 11. **Fail loudly.** If any source fails (sheet, Slack history, Calendly, tracker), DM Sheila what failed and send no cards that run (no channel post, no DMs). Never send partial cards.

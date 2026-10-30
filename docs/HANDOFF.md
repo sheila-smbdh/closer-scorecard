@@ -2,7 +2,7 @@
 
 Read this first in a new session. Owner: Sheila.
 
-**Repo rule:** only commit and push to `sheila-smbdh/closer-scorecard`. Never push, branch or open PRs on `zain-smbdh/smbdh-2m-tracker`; it is read-only reference (use its read API instead). The card is final (Oct 27). The routine (`docs/ROUTINE.md`) exists as a paused Claude routine, "Closer scorecard (Mon + Wed)"; Sheila turns it on when sending starts in November. Oliver and Tyler are skipped until Sheila gives their ramp targets.
+**Repo rule:** only commit and push to `sheila-smbdh/closer-scorecard`. Never push, branch or open PRs on `zain-smbdh/smbdh-2m-tracker`; it is read-only reference (use its read API instead). The card is final (Oct 27). The routine (`docs/ROUTINE.md`) exists as a paused Claude routine, "Closer scorecard (Mon + Wed)"; Sheila turns it on when sending starts in November. Oliver and Tyler get cards from November (Sheila, Oct 30); their goals come from the monthly targets file.
 
 ## Next step (do this first)
 
@@ -32,7 +32,7 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 
 **Delivery (not live yet):** image of each card by Slack DM, 7:14am ET Monday and Wednesday (Messi's slot post moved to 6am); on the 1st of each month the previous month's final cards for every closer (with next month's plan) go to #sales-reports for Jay's 1:1s, in a thread under one "<Month> closer scorecards are in @Jay" message; no DMs on a Monday or Wednesday 1st. Monday = month to date through Sunday. Wednesday = month to date through Tuesday. No leadership table (removed Oct 27).
 
-**Layout (Oct 27, second round):** pace chart headline = cash + closes MTD, the tracker's pace words on the badge (Ahead of pace / On pace / Slightly behind / Behind pace), month goal (cash + closes) shown large; "Your inputs, month to date" = average weekly slots, live calls, average revenue, **Pacing** (cash MTD / goal for today on the 2M curve, no small text); **Weekly Scorecard** = one table, a row per tracker week (Sun-Sat + lead-in), cash / closes / slots target vs actual with hit or missed, misses carried forward like the tracker's week cards, a month total row, plus next 7 days of slots vs 35 and how many more to open. Pipeline removed entirely (closers can move it, so it stays out of targets). Gap to target, closes to go and business days left removed. Oliver and Tyler: ramp-based cash targets coming from a separate discussion with Sheila.
+**Layout (Oct 27, second round):** pace chart headline = cash + closes MTD, the tracker's pace words on the badge (Ahead of pace / On pace / Slightly behind / Behind pace), month goal (cash + closes) shown large; "Your inputs, month to date" = average weekly slots, live calls, average revenue, **Pacing** (cash MTD / goal for today on the 2M curve, no small text); **Weekly Scorecard** = one table, a row per tracker week (Sun-Sat + lead-in), cash / closes / slots target vs actual with hit or missed, misses carried forward like the tracker's week cards, a month total row, plus next 7 days of slots vs 35 and how many more to open. Pipeline removed entirely (closers can move it, so it stays out of targets). Gap to target, closes to go and business days left removed. Oliver and Tyler: cards from November, goals in the monthly targets file.
 
 **Layout (Oct 27, first round, superseded):** pace chart (cash MTD headline, % vs goal and vs last month same day, big On pace / Off pace badge, closes vs closes target; three lines: goal, last month same day, this month), then "Your inputs, month to date" (average weekly slots booked · open, live calls, average revenue, closes + pipeline HC / SV / Working), then "Weekly targets" (gap to target, closes to go, business days left; closes, cash and slots: last week target vs actual, this week target). Closes target = month cash target ÷ $17,500, used everywhere. The longer card (path to target, how the week went) and the leadership table were removed Oct 27.
 
@@ -46,9 +46,8 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 
 ## Open items
 
-1. Cash pace via tracker read API (above).
-2. Oliver / Tyler new-hire targets (ask Sheila).
-3. Oliver and Tyler: no Pipeline Review tab, no EOD reports, "not a discovery host" per Messi (Tyler has Calendly hours on the round-robin event though).
-4. Pipeline statuses not standard for Nick (own labels), Kevin, Solomon, Daniel ("Verbal"/blank), Harry (3 blank). Shown as "N leads need a status".
-5. Julien's discovery hours taken from his "Sales Calls" Calendly schedule (8am-1pm ET); confirm.
-6. Leadership sign-off, then schedule the routine (do not schedule before Sheila says so).
+1. Turn the routine on before Nov 1 (paused; Sheila decides).
+2. Each month: Sheila sends closer-facing goals and the week-by-week split; save as `data/targets/<YYYY-MM>.json` before the 1st.
+3. Oliver and Tyler: no EOD reports yet and "not a discovery host" per Messi, so their slot tiles stay empty until they host.
+4. Julien's discovery hours taken from his "Sales Calls" Calendly schedule (8am-1pm ET); confirm.
+5. Yobani and Quinn have November goals in the targets file; add them to the roster when Sheila says they are closers.

@@ -10,7 +10,7 @@ Month-to-date scorecard image for each closer.
 
 Start with `docs/HANDOFF.md` for decisions and next steps.
 
-Status: **final card, routine paused.** The Monday and Wednesday routine (`docs/ROUTINE.md`) is set up but paused until sending starts in November. Oliver and Tyler are skipped until their ramp targets are set.
+Status: **final card, routine paused.** The Monday and Wednesday routine (`docs/ROUTINE.md`) is set up but paused until sending starts in November. Oliver and Tyler get cards from November.
 
 ## Build the samples
 
@@ -71,17 +71,16 @@ Revenue generated is contract value booked at close; cash collected is money act
 
 ## Known data issues (found while building the samples)
 
-- **Oliver and Tyler** are "not a discovery host" in Calendly yet and have no cash target, so they get no Pacing goal or Weekly Scorecard table.
+- **Oliver and Tyler** are "not a discovery host" in Calendly yet, so their slot tiles stay empty until they are. They had no closer-facing October goal; their November goals are in `data/targets/2026-11.json`.
 - `daily_closes` has to be pulled from the Sales Tracker `Inputs` tab (column J by date); the tracker read API's `closes_mtd` ignores `through`.
 - Messi's Calendly counts are a rolling next-7-days view, starting Oct 9, 2026; slots before that day cannot be reconstructed.
 
 ## Open items before launch
 
-1. Oliver and Tyler ramp targets (Sheila to send).
-2. Turn the routine on in November.
-3. A real live-calls target (the team median stands in).
-4. Revisit the month targets (closes targets are derived from them).
-5. Direct Calendly slot count to cross-check Messi (the discovery event is a round-robin, so per-closer slots come from each host's availability).
+1. Turn the routine on in November.
+2. A real live-calls target (the team median stands in).
+3. Revisit the month targets (closes targets are derived from them).
+4. Direct Calendly slot count to cross-check Messi (the discovery event is a round-robin, so per-closer slots come from each host's availability).
 
 ## Run flags
 
