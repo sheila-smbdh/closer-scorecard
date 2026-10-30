@@ -31,26 +31,40 @@ Not carded: Jay DeCristofaro (manages closers). Quinn, Yobani and Dave Martin ar
 
 Title: "<Closer>'s month to date: Sunday, October 18th" (the last day of the window).
 
-1. **Pace chart**: cash collected and closes month to date (headline), % vs goal pace and % vs last month on the same day, the 2M tracker's pace badge (Ahead of pace / On pace / Slightly behind / Behind pace), and the month goal (cash and closes). Three lines: goal (the 2M tracker's curve × month target), last month on the same normalized day, this month to date.
-2. **Your inputs, month to date**: average weekly slots (booked · open), live calls, average revenue, Pacing (cash collected month to date / the goal for today on the 2M tracker's curve, with the tracker's pace badge).
+1. **Pace chart**: cash collected and closes month to date (headline), % vs goal pace and % vs last month on the same day, a pace badge (Ahead of pace / On pace / Slightly behind / Behind pace, the tracker's words and bands), and the month goal (cash and closes). Three lines: goal (the closer-facing curve × month target), last month on the same normalized day, this month to date.
+2. **Your inputs, month to date**: average weekly slots (booked · open), live calls, average revenue, Pacing (cash collected month to date / the goal for today on the closer-facing curve, with the pace badge).
 3. **Weekly Scorecard**: one table, one row per week of the month (the 2M tracker's weeks: Sun-Sat, leading partial days folded into Week 1, a trailing remnant under 7 days is the "Final stretch"). Cash collected, closes and slots per week: actual / target with Hit / Missed for finished weeks, "so far" for the week in progress, target only for upcoming weeks. Misses carry forward like the tracker's week cards (see Weekly Scorecard below). The first unfinished week's slots cell shows the next 7 days (booked + open) against 35 and how many more slots to open. A last row gives the month: month to date vs the month goal.
 
-4. **<Month> plan** (1st-of-month edition only, `node src/build.mjs <snapshot> out monthly`): the new month's weeks with share of the month, cash, closes and slots targets, for Jay to set the month's goal with each closer. Target: the tracker's new-month target when it has a fresh one, else the month just ended's. Curve: the tracker's for the new month, else the month just ended's resampled to the new month's length.
+4. **<Month> plan** (1st-of-month edition only, `node src/build.mjs <snapshot> out monthly`): the new month's weeks with share of the month, cash, closes and slots targets, for Jay to set the month's goal with each closer. Goal and weekly split from the new month's targets file; left off (and flagged) when that file is missing.
 
 No pipeline on the card: pipeline is self-reported by closers, so it stays out of the targets.
 
 Everything about closes is anchored on the month's closes target = month cash target ÷ $17,500 (Owen: $417K → 24).
 
+## Closer targets (set by Sheila each month)
+
+`data/targets/<YYYY-MM>.json` holds the closer-facing numbers; the 2M tracker's targets and curve are management-facing and are not used on the card.
+
+```json
+{ "month": "2026-11",
+  "weeks": [0.12, 0.18, 0.2, 0.25, 0.25],
+  "closers": { "Owen": { "cash": 450000 }, "Nick": { "cash": 300000, "closes": 18 } } }
+```
+
+- `weeks`: each week's share of the month, one per week of the tracker's calendar (Sun-Sat, lead-in folded into Week 1, a trailing remnant under 7 days is its own "Final stretch"), adding up to 1. November 2026 has 5: Nov 1-7, 8-14, 15-21, 22-28, 29-30.
+- `closers[key].cash`: month goal; `closes` is optional (default cash ÷ $17,500).
+- `data/targets/2026-10.json` is a sample built from the tracker so the October samples render.
+
 ## Metrics
 
 | Metric | Definition | Target | Source |
 |---|---|---|---|
-| Pace / Pacing tile | Cash collected MTD vs the tracker's `expected_cash` by the last day of the window (back-loaded month curve). Badge from `pace.status`: On pace (ahead / on_pace), Slightly behind, Off pace. Chart: `daily_cumulative_cash` this month and last month (`/api/read/closers`, `?month=<prior>`); goal curve = `/api/read/month?through=<each day>` `pace.expected_cash` ÷ `goal`, × month target | Per-closer `month_target` | Tracker read API (`TRACKER_READ_TOKEN`) via `npm run tracker -- <through>` into `trackers["MM-DD"]`; provisional $200K straight line if there is no pull |
+| Pace / Pacing tile | Cash collected MTD vs goal to date = month goal × the closer-facing curve at the last day of the window (each week's share spread evenly over its days). Badge, with the tracker's bands: Ahead of pace (≥ +5%), On pace (≥ −3%), Slightly behind (≥ −10%), Behind pace. Chart: `daily_cumulative_cash` this month and last month (`/api/read/closers`, `?month=<prior>`) | Closer-facing month goal (`data/targets/<YYYY-MM>.json`) | Actual cash: tracker read API (`TRACKER_READ_TOKEN`) via `npm run tracker -- <through>`; goals: Sheila's targets file, never the tracker's (management-facing) targets |
 | Closes | Close 1 month to date vs month target ÷ $17,500 | Closes target | Sales Tracker `Inputs` |
 | Average weekly slots | Every Messi post this month (6am ET; 8am before late Oct 2026) (his count starts Oct 9): open discovery start times over the next 7 days + client calls already booked in those 7 days (as Calendly stood at the post), averaged. Shown as booked · open | 35 (booked + open) | Messi in #sales-reports (`messi_slots`) + Calendly (`slots_booked`, via `node src/booked-slots.mjs <snapshot> <calendly-events.json>`) |
 | Live calls | Calls that showed, month to date (EOD reports; Sales Tracker for any day without one) | Team median of fully ramped closers, until a real target is set | EOD Tracker + Sales Tracker `Inputs` |
 | Average revenue | Revenue generated ÷ closes (Close 1), month to date | $17,500 (pass/fail) | `Inputs` |
-| Weekly Scorecard | Cash target: month target × the goal curve at the week's end, minus cash banked before the week (so a finished week is hit only if the closer is back on the pace line, and the first unfinished week carries any deficit); weeks after that get their plain slice of the curve. Closes: the same with the closes target (curve × closes target, rounded). Slots: 35. Actuals: cash from `daily_cash`, closes from `daily_closes`, slots = average of that week's Messi posts; next 7 days = the edition-day post | – | Tracker goal curve; Sales Tracker `Inputs` column J (Close 1) per day (`daily_closes`) |
+| Weekly Scorecard | Cash target: month target × the goal curve at the week's end, minus cash banked before the week (so a finished week is hit only if the closer is back on the pace line, and the first unfinished week carries any deficit); weeks after that get their plain slice of the curve. Closes: the same with the closes target (curve × closes target, rounded). Slots: 35. Actuals: cash from `daily_cash`, closes from `daily_closes`, slots = average of that week's Messi posts; next 7 days = the edition-day post | – | Closer-facing targets file; Sales Tracker `Inputs` column J (Close 1) per day (`daily_closes`) |
 
 Colors: green hit, yellow 75%+ of target, red below, blue tracked with no target.
 Revenue generated is contract value booked at close; cash collected is money actually received (installments included). They are never mixed.

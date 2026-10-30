@@ -1,0 +1,45 @@
+{
+ "month": "2026-10",
+ "_note": "SAMPLE ONLY: built from the 2M tracker so the October sample cards still render. Real months come from Sheila (closer-facing targets and week-by-week curve).",
+ "weeks": [
+  0.1875,
+  0.1731,
+  0.1658,
+  0.4736
+ ],
+ "closers": {
+  "Owen": {
+   "cash": 416738
+  },
+  "Adam": {
+   "cash": 285178
+  },
+  "JZ": {
+   "cash": 362873
+  },
+  "VeJohn": {
+   "cash": 265582
+  },
+  "Julien": {
+   "cash": 195174
+  },
+  "Nick": {
+   "cash": 286163
+  },
+  "Omar": {
+   "cash": 275922
+  },
+  "Harry": {
+   "cash": 260757
+  },
+  "Solomon": {
+   "cash": 200000
+  },
+  "Daniel": {
+   "cash": 200000
+  },
+  "Kevin": {
+   "cash": 200000
+  }
+ }
+}

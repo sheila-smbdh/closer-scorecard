@@ -204,7 +204,7 @@ ${p.weeks.map((w) => `<tr class="${w.phase}"><td><div class="wk">${w.label}</div
   if (p.next) {
     const n = p.next, label = new Date(`${n.month}-01T00:00:00Z`).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' });
     nextPlan = `<h2>${label.toUpperCase()} PLAN</h2>
-<p class="note">Starting point: ${$(n.cash)} and ${n.closes} closes${n.fromThisMonth ? ` (this month's goal; ${label}'s isn't set yet)` : ` (${label} goal in the tracker)`}. Each week keeps its share of the month if you change the goal.</p>
+<p class="note">${label} goal: ${$(n.cash)} and ${n.closes} closes.</p>
 <table><thead><tr><th>Week</th><th>Share of month</th><th>Cash collected<small>target</small></th><th>Closes<small>target</small></th><th>Slots (booked + open)<small>target</small></th></tr></thead><tbody>
 ${n.weeks.map((w) => `<tr><td><div class="wk">${w.label}</div><small>${w.dates} · ${w.span}</small></td><td><b>${Math.round(w.share * 100)}%</b></td><td><b>${$(w.cash)}</b></td><td><b>${w.closes}</b></td><td><b>${w.slots}</b></td></tr>`).join('\n')}
 <tr class="month"><td><div class="wk">${label} total</div></td><td><b>100%</b></td><td><b>${$(n.cash)}</b></td><td><b>${n.closes}</b></td><td><b>${SLOTS_TARGET}</b><small>Every week</small></td></tr>

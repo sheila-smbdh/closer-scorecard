@@ -4,8 +4,9 @@
 export const TARGETS = {
   slotsPerWeek: 35,        // capacity over the next 7 days: open discovery start times + booked client calls
   avgRevenueFloor: 17500,  // MTD revenue generated / closes
-  monthlyCash: 200000,     // fallback straight-line pace, only when the snapshot has no tracker pull
 };
+
+import { targetsFor, closerTargets, checkTargets, dailyCurve, paceStatus, nextMonthKey } from './targets.mjs';
 
 // Activity arrays: [booked calls, live calls, offers, closes, revenue generated, cash collected]
 const CALLS = 0, LIVE = 1, CLOSES = 3, REV = 4, CASH = 5;
@@ -22,7 +23,6 @@ export function status(value, target) {
 const TRACKER_STATUS = { ahead: 'hit', on_pace: 'hit', slightly_behind: 'almost', behind: 'missed' };
 // The 2M tracker's pace words (pace_label / week pills), used for the badge and the Pacing tile
 export const PACE_LABEL = { ahead: 'Ahead of pace', on_pace: 'On pace', slightly_behind: 'Slightly behind', behind: 'Behind pace' };
-const PACE_FROM_STATUS = { hit: 'on_pace', almost: 'slightly_behind', missed: 'behind' };
 
 // Booked/showed for one closer over [from, to] ("MM-DD"). EOD Tracker is the source of truth; a day the
 // closer has no EOD report for is filled from the Sales Tracker. No-show/cancel/reschedule only exist in EOD.
@@ -50,7 +50,6 @@ export function closerMetrics(data, closer, edition) {
   // (mtd, wk, business_days_elapsed_mon). Wednesday reads mtd2 / tw.
   const monday = edition !== 'wednesday';
   const mtd = monday ? act.mtd : act.mtd2;
-  const bdElapsed = monday ? data.month.business_days_elapsed_mon : data.month.business_days_elapsed_wed;
   const newHire = closer.new_hire;
 
   const k = closer.key;
@@ -96,30 +95,27 @@ export function closerMetrics(data, closer, edition) {
   avgRevenue.status = avgRevenue.value == null ? 'track'
     : avgRevenue.value >= TARGETS.avgRevenueFloor ? 'hit' : 'missed';
 
-  // Cash pace: the tracker read API (back-loaded month curve, per-closer targets) when the snapshot has it
+  // Cash pace: actual cash from the tracker read API; the goal (month target, curve, goal to date, pace
+  // badge) from Sheila's closer-facing targets file for the month (src/targets.mjs), never the tracker's
   const tr = trackerFor(data, ed);
   const tp = tr?.closers?.[k] ?? null;
-  let cash;
-  if (tp) {
-    const hasPace = tp.expected_cash != null && tp.target_source !== 'ramping_no_target';
-    cash = {
-      value: tp.cash, expected: hasPace ? tp.expected_cash : null, monthTarget: hasPace ? tp.month_target : null,
-      targetSource: tp.target_source, source: 'tracker', salesTrackerCash: mtd[CASH],
-      status: hasPace ? (TRACKER_STATUS[tp.status] ?? status(tp.cash, tp.expected_cash)) : 'track',
-      paceRatio: hasPace ? tp.pct_of_pace ?? (tp.expected_cash ? tp.cash / tp.expected_cash : null) : null,
-    };
-  } else {
-    const cashExpected = newHire ? null
-      : TARGETS.monthlyCash * (bdElapsed / data.month.business_days);
-    cash = {
-      value: mtd[CASH], expected: cashExpected, monthTarget: newHire ? null : TARGETS.monthlyCash, source: 'provisional',
-      status: status(mtd[CASH], cashExpected),
-      paceRatio: cashExpected ? mtd[CASH] / cashExpected : null,
-    };
-  }
-  cash.pace = cash.status === 'track' ? null : (cash.source === 'tracker' && tp.status in PACE_LABEL ? tp.status : PACE_FROM_STATUS[cash.status]);
-  // Pace chart (same as the tracker's closer view): daily cumulative cash, last month's curve on this
-  // month's day axis (normalized for month length), and the goal-pace curve × month target
+  const monthKey = tr?.through?.slice(0, 7);
+  const tf = monthKey ? targetsFor(data, monthKey) : null;
+  const ct = closerTargets(tf, k);
+  const usable = ct && !checkTargets(tf, monthKey).length;
+  const curve = usable ? dailyCurve(tf, monthKey) : null;
+  const cashValue = tp ? tp.cash : mtd[CASH];
+  const dayNow = tp?.daily_cash?.length ?? null;
+  const expected = usable && dayNow ? ct.cash * curve[dayNow - 1] : null;
+  const pace = expected ? paceStatus(cashValue ?? 0, expected) : null;
+  const cash = {
+    value: cashValue, expected, monthTarget: usable ? ct.cash : null, closesTarget: usable ? ct.closes : null,
+    source: tp ? 'tracker' : 'sales_tracker', salesTrackerCash: mtd[CASH], targetsMonth: monthKey,
+    status: pace ? TRACKER_STATUS[pace] : 'track', pace,
+    paceRatio: expected ? (cashValue ?? 0) / expected : null,
+  };
+  // Pace chart: daily cumulative cash, last month's curve on this month's day axis (normalized for month
+  // length), and the goal curve × month target
   if (tp?.daily_cash?.length && cash.monthTarget) {
     const dim = tr.days_in_month, pdim = tr.prior_days_in_month;
     const prior = tp.prior_daily_cash?.length
@@ -128,7 +124,7 @@ export function closerMetrics(data, closer, edition) {
     const day = tp.daily_cash.length;
     cash.chart = {
       dim, day, daily: tp.daily_cash, prior, priorMonth: tr.prior_month, priorDim: pdim,
-      goal: tr.goal_shape.map((g) => g * cash.monthTarget),
+      curve, goal: curve.map((g) => g * cash.monthTarget),
       priorSameDay: prior ? prior[day - 1] : null,
     };
   }
@@ -199,13 +195,16 @@ export function runFlags(data, metrics, edition) {
     if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {
       flags.push(`${k}: cash through ${ed.through} is $${m.cash.value?.toLocaleString('en-US')} in the tracker, $${m.cash.salesTrackerCash?.toLocaleString('en-US')} in the Sales Tracker snapshot.`);
     }
-    if (m.cash.source === 'tracker' && m.cash.status === 'track' && !m.newHire) flags.push(`${k}: tracker has no cash target (${m.cash.targetSource ?? 'unknown'}).`);
+    if (!m.cash.monthTarget && !m.newHire) flags.push(`${k}: no closer target for ${m.cash.targetsMonth ?? 'this month'} in data/targets; card shows no goal.`);
   }
   const t = trackerFor(data, ed);
-  if (!t) flags.push(`Cash pace: no tracker pull through ${ed.through}; used the provisional $200K straight-line pace.`);
+  if (!t) flags.push(`Cash: no tracker pull through ${ed.through}; cash taken from the Sales Tracker and the pace chart left out.`);
   else {
     if (t.all_checks_pass === false) flags.push(`Tracker checks failed: ${t.failed_checks.join('; ') || 'see /api/read/closers'}.`);
-    if (t.unmatched?.length) flags.push(`Tracker has no row for ${t.unmatched.join(', ')}; their cash pace is provisional.`);
+    if (t.unmatched?.length) flags.push(`Tracker has no row for ${t.unmatched.join(', ')}; their cash comes from the Sales Tracker.`);
+    const mk = t.through.slice(0, 7);
+    for (const problem of checkTargets(targetsFor(data, mk), mk)) flags.push(`Closer targets: ${problem}.`);
+    if (edition === 'monthly') for (const problem of checkTargets(targetsFor(data, nextMonthKey(mk)), nextMonthKey(mk))) flags.push(`Next month's plan left off the cards: ${problem}.`);
   }
   return flags;
 }

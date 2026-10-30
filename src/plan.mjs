@@ -1,49 +1,32 @@
-// Numbers for the card beyond src/metrics.mjs: closes vs the month's closes target (month cash target ÷
-// $17.5K) and the Weekly Scorecard table. Weeks follow the 2M tracker (Sun-Sat, leading partial days folded
+// Numbers for the card beyond src/metrics.mjs: closes vs the month's closes target and the Weekly
+// Scorecard table. Targets and the month curve come from Sheila's closer-facing targets file
+// (src/targets.mjs), not the 2M tracker. Weeks follow the 2M tracker (Sun-Sat, leading partial days folded
 // into Week 1, a trailing remnant under 7 days is the "Final stretch"). Targets carry misses forward like
 // the tracker's week cards: a week's target is the goal curve at the week's end minus what was banked
 // before the week started, so a finished week is hit only if the closer is back on the pace line by its
 // end. The first unfinished week carries any deficit; weeks after it show their plain slice of the curve.
 
 import { TARGETS, trackerFor } from './metrics.mjs';
+import { targetsFor, closerTargets, checkTargets, dailyCurve, nextMonthKey, daysIn, monthWeeks } from './targets.mjs';
+
+export { monthWeeks };
 
 export const SLOTS_TARGET = TARGETS.slotsPerWeek; // booked + open over the next 7 days
 
-const MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const day = (mmdd) => Number(mmdd.slice(3));
 const mmdd = (mo, d) => `${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-
-// Port of the tracker's computeMonthWeeks (src/lib/compute/projections.ts in smbdh-2m-tracker)
-export function monthWeeks(year, monthIdx, dim) {
-  const dow = (d) => new Date(Date.UTC(year, monthIdx, d)).getUTCDay();
-  const mon = MONTH_ABBR[monthIdx];
-  let firstSunday = 1;
-  while (firstSunday <= 7 && dow(firstSunday) !== 0) firstSunday++;
-  const segs = [{ start: 1, end: Math.min(firstSunday + 6, dim) }];
-  for (let s = segs[0].end + 1; s <= dim; s = segs.at(-1).end + 1) segs.push({ start: s, end: Math.min(s + 6, dim) });
-  return segs.map((seg, i) => {
-    const days = seg.end - seg.start + 1;
-    const final = i === segs.length - 1 && segs.length > 1 && days < 7;
-    return {
-      ...seg,
-      label: final ? 'Final stretch' : `Week ${i + 1}`,
-      dates: seg.start === seg.end ? `${mon} ${seg.start}` : `${mon} ${seg.start} → ${seg.end}`,
-      span: final ? `${days}-day finale` : i === 0 && firstSunday > 1 ? `Sun-Sat + ${firstSunday - 1}-day lead-in` : 'Sun-Sat',
-    };
-  });
-}
 
 export function plan(data, m) {
   const c = m.cash;
   const out = {};
 
-  const target = c.monthTarget ? Math.ceil(c.monthTarget / TARGETS.avgRevenueFloor) : null;
+  const target = c.closesTarget;
   out.closes = { actual: m.closes.actual, target };
 
   // Weekly Scorecard: every week of the month, target vs actual for cash, closes and slots
   const tr = trackerFor(data, m.ed);
   if (!c.chart || target == null) return out;
-  const goal = tr.goal_shape, dim = tr.days_in_month;
+  const goal = c.chart.curve, dim = tr.days_in_month;
   const [year, mo] = tr.through.split('-').map(Number);
   const through = day(m.ed.through_key);
   const curveAt = (d) => (d > 0 ? goal[d - 1] : 0);
@@ -85,20 +68,19 @@ export function plan(data, m) {
     }
     return row;
   });
-  // 1st-of-month edition: next month's week-by-week plan for Jay's 1:1 (tracker target when it has a
-  // fresh one, else this month's target as the starting point; weeks are the curve's share of the month)
-  const nx = tr.next;
-  if (m.edition === 'monthly' && nx) {
-    const nTarget = nx.targets?.[m.closer.key]?.month_target ?? c.monthTarget;
-    const nCloses = Math.ceil(nTarget / TARGETS.avgRevenueFloor);
-    const g = (d) => (d > 0 ? nx.goal_shape[d - 1] : 0);
-    const [ny, nm] = nx.month.split('-').map(Number);
+  // 1st-of-month edition: next month's week-by-week plan for Jay's 1:1, from next month's targets file
+  // (no plan without one; the run flags say so)
+  const nk = nextMonthKey(tr.through.slice(0, 7));
+  const nf = targetsFor(data, nk), nt = closerTargets(nf, m.closer.key);
+  if (m.edition === 'monthly' && nt && !checkTargets(nf, nk).length) {
+    const g = dailyCurve(nf, nk), at = (d) => (d > 0 ? g[d - 1] : 0);
+    const [ny, nm] = nk.split('-').map(Number);
     out.next = {
-      month: nx.month, cash: nTarget, closes: nCloses, fromThisMonth: nx.targets?.[m.closer.key] == null,
-      weeks: monthWeeks(ny, nm - 1, nx.days_in_month).map((w) => ({
-        ...w, share: g(w.end) - g(w.start - 1),
-        cash: nTarget * (g(w.end) - g(w.start - 1)),
-        closes: Math.round(nCloses * g(w.end)) - Math.round(nCloses * g(w.start - 1)),
+      month: nk, cash: nt.cash, closes: nt.closes,
+      weeks: monthWeeks(ny, nm - 1, daysIn(nk)).map((w, i) => ({
+        ...w, share: nf.weeks[i],
+        cash: nt.cash * nf.weeks[i],
+        closes: Math.round(nt.closes * at(w.end)) - Math.round(nt.closes * at(w.start - 1)),
         slots: SLOTS_TARGET,
       })),
     };
