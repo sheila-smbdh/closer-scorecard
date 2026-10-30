@@ -45,7 +45,9 @@ export function bookedShowed(data, key, from, to) {
 
 export function closerMetrics(data, closer, edition) {
   const ed = data.editions[edition];
-  const act = data.activity[closer.key];
+  // A closer with no Sales Tracker rows yet (a newly promoted setter) reads as all zeros
+  const zero = [0, 0, 0, 0, 0, 0];
+  const act = data.activity[closer.key] ?? { mtd: zero, mtd2: zero, wk: zero, tw: zero };
   // Monday and the 1st-of-month edition both cover full weeks: they read the Monday-style windows
   // (mtd, wk, business_days_elapsed_mon). Wednesday reads mtd2 / tw.
   const monday = edition !== 'wednesday';

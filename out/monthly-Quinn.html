@@ -1,0 +1,100 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Closer Scorecard</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&display=block"><style>
+:root{--ink:#1d1f23;--muted:#5c6168;--line:#e3e1dc;--bg:#fafaf8;
+--hit-bg:#e4f2e7;--hit:#24843a;--almost-bg:#fbf1cf;--almost:#d4a106;--almost-ink:#7d5f00;
+--missed-bg:#f9e2e1;--missed:#c8423d;--track-bg:#e5ebf6;--track:#2d5bb8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+.card{width:1080px;padding:40px 44px 40px;background:var(--bg)}
+.eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 0}
+h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:32px 0 14px}
+/* pace */
+.pt{margin-top:24px;background:#0f0f0e;border-radius:16px;padding:26px 26px 18px;color:#fcf6e2}
+.pt-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.pt-caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:#f0cd2b}
+.pt-num{font-family:Fraunces,Georgia,serif;font-size:64px;font-weight:800;letter-spacing:-.02em;color:#f0cd2b;line-height:1;margin-top:12px}
+.down{color:#ff7a58} .up{color:#6fd08a}
+.pt-right{text-align:right}
+.pill{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.06em;border-radius:12px;padding:12px 22px;color:#0f0f0e}
+.pill.hit{background:#6fd08a} .pill.almost{background:#f0cd2b} .pill.missed{background:#ff7a58} .pill.track{background:#9fb0ff}
+.pt-stats{display:grid;grid-template-columns:repeat(2,auto);justify-content:start;column-gap:72px;margin-top:14px}
+.pt-stats .pt-caps{color:rgba(252,246,226,.6)}
+.pt-stats .pt-num{margin-top:8px}
+.pt-stats .goal{color:#fcf6e2}
+.pt-cl{font-family:Fraunces,Georgia,serif;font-size:34px;font-weight:800;color:#f0cd2b;margin-top:6px}
+.pt-cl.goal{color:#fcf6e2}
+.pt-cl small{font-family:Inter,sans-serif;font-size:16px;font-weight:600;color:rgba(252,246,226,.6);margin-left:8px}
+.pt-chart{margin-top:4px}
+.pt-chart svg{display:block}
+.pt-legend{display:flex;gap:22px;font-size:14px;font-weight:600;color:rgba(252,246,226,.85);margin-top:8px}
+.pt-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
+.pt-legend i.dot{width:11px;height:11px;border-radius:50%;background:#f0cd2b;vertical-align:-1px}
+/* tiles */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{border-radius:12px;border-left:6px solid;padding:16px 18px 14px;display:flex;flex-direction:column;min-height:190px}
+.tile.hit{background:var(--hit-bg);border-color:var(--hit)} .tile.hit .v{color:var(--hit)}
+.tile.almost{background:var(--almost-bg);border-color:var(--almost)} .tile.almost .v{color:var(--almost-ink)}
+.tile.missed{background:var(--missed-bg);border-color:var(--missed)} .tile.missed .v{color:var(--missed)}
+.tile.track{background:var(--track-bg);border-color:var(--track)} .tile.track .v{color:var(--track)}
+.tile .l{font-size:14px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+.tile .v{font-size:40px;font-weight:800;margin:8px 0 4px;letter-spacing:-.01em}
+.tile .v span{font-size:24px;font-weight:700;opacity:.75}
+.tile .s{font-size:15px;color:#3d4248;line-height:1.4}
+.tile .s small{font-size:13px;color:var(--muted)}
+.tile .foot{margin-top:auto;padding-top:12px}
+.tile .foot>.chip{display:inline-block;margin-bottom:10px}
+.bar{position:relative;height:8px;background:rgba(0,0,0,.07);border-radius:4px;margin-bottom:10px}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.bar b{position:absolute;top:-5px;width:3px;height:18px;background:var(--ink);border-radius:1px}
+.hit .bar i{background:var(--hit)} .almost .bar i{background:var(--almost)} .missed .bar i{background:var(--missed)} .track .bar i{background:var(--track)}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:26px;font-size:14px;color:#3d4248}
+.chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;border-radius:999px;padding:4px 10px}
+.hit .chip,.chip.hit{background:var(--hit)} .almost .chip,.chip.almost{background:var(--almost);color:#3a2c00}
+.missed .chip,.chip.missed{background:var(--missed)} .track .chip,.chip.track{background:var(--track)}
+/* weeks ahead */
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:17px}
+th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:14px 18px;background:#f4f2ee;vertical-align:bottom}
+th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
+td{padding:14px 18px;border-top:1px solid var(--line);vertical-align:top}
+td b{font-size:24px;font-weight:800}
+td .of{color:var(--muted);font-weight:600}
+td small{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+td .wk{font-size:17px;font-weight:800}
+td .chip{display:inline-block;margin-top:8px}
+.chip.next{background:#d9d6cf;color:#3d4248}
+tr.now td{background:#fffbea} tr.now td:first-child{box-shadow:inset 6px 0 0 #f0cd2b}
+tr.next td{color:var(--muted)}
+tr.month td{background:#f4f2ee;border-top:2px solid var(--ink)}
+.note{font-size:16px;color:#3d4248;margin:-4px 0 12px}
+</style></head><body><div class="card"><div class="eyebrow">Closer scorecard · Month to date</div>
+<h1>Quinn's October: final, through Sunday, October 18th</h1>
+<div class="pt">
+<div class="pt-top">
+  <div><div class="pt-caps">Cash collected · October</div>
+  <div class="pt-stats">
+    <div class="pt-caps">Month to date</div><div></div>
+    <div class="pt-num">$0</div><div></div>
+    <div class="pt-cl">0<small>closes</small></div><div></div>
+  </div>
+  </div>
+  <div class="pt-right"><span class="pill track">NO TARGET YET</span></div>
+</div>
+
+</div>
+<h2>YOUR INPUTS, MONTH TO DATE</h2>
+<div class="grid"><div class="tile track"><div class="l">Average weekly slots</div><div class="v">–</div><div class="s">Not a Calendly host yet</div>
+<div class="foot"><div class="row"><span>Target 35</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Live calls</div><div class="v">0</div>
+<div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Average revenue</div><div class="v">–</div>
+<div class="foot"><div class="row"><span>Target $17,500</span><span class="chip">TRACKING</span></div></div></div><div class="tile track"><div class="l">Pacing</div><div class="v">$0</div>
+<div class="foot"><div class="row"><span>No target yet</span><span class="chip">TRACKING</span></div></div></div></div>
+
+<h2>NOVEMBER PLAN</h2>
+<p class="note">November goal: $50K and 3 closes.</p>
+<table><thead><tr><th>Week</th><th>Share of month</th><th>Cash collected<small>target</small></th><th>Closes<small>target</small></th><th>Slots (booked + open)<small>target</small></th></tr></thead><tbody>
+<tr><td><div class="wk">Week 1</div><small>Nov 1 → 7 · Sun-Sat</small></td><td><b>13%</b></td><td><b>$7K</b></td><td><b>0</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Week 2</div><small>Nov 8 → 14 · Sun-Sat</small></td><td><b>19%</b></td><td><b>$10K</b></td><td><b>1</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Week 3</div><small>Nov 15 → 21 · Sun-Sat</small></td><td><b>20%</b></td><td><b>$10K</b></td><td><b>1</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Week 4</div><small>Nov 22 → 28 · Sun-Sat</small></td><td><b>23%</b></td><td><b>$12K</b></td><td><b>0</b></td><td><b>35</b></td></tr>
+<tr><td><div class="wk">Final stretch</div><small>Nov 29 → 30 · 2-day finale</small></td><td><b>25%</b></td><td><b>$13K</b></td><td><b>1</b></td><td><b>35</b></td></tr>
+<tr class="month"><td><div class="wk">November total</div></td><td><b>100%</b></td><td><b>$50K</b></td><td><b>3</b></td><td><b>35</b><small>Every week</small></td></tr>
+</tbody></table></div></body></html>

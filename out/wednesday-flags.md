@@ -17,3 +17,5 @@
 - Oliver: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: no EOD reports at all, booked/showed taken from the Sales Tracker.
 - Tyler: cash through Oct 20 is $undefined in the tracker, $0 in the Sales Tracker snapshot.
+- Yobani: no EOD reports at all, booked/showed taken from the Sales Tracker.
+- Quinn: no EOD reports at all, booked/showed taken from the Sales Tracker.
