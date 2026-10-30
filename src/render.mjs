@@ -179,6 +179,8 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget, c.value ?? 0, month.lab
     const cell = (w, k, fmt) => {
       if (w.phase === 'next') return `<span class="of">Target ${fmt(w.target[k])}</span><br>${chip('next')}`;
       const v = w.actual[k];
+      // a finished week with nothing to measure (no usable slot posts that week): no chip
+      if (v == null && w.phase === 'done') return `<b>–</b> <span class="of">/ ${fmt(w.target[k])}</span><small>No slot count that week</small>`;
       const key = w.phase === 'now' ? 'track' : w.hit[k] == null ? 'track' : w.hit[k] ? 'hit' : 'missed';
       return `<b>${v == null ? '–' : fmt(v)}</b> <span class="of">/ ${fmt(w.target[k])}</span><br>${chip(key)}`;
     };

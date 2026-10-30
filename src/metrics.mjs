@@ -72,8 +72,11 @@ export function closerMetrics(data, closer, edition) {
     return { open, booked, value: open + (booked ?? 0) };
   };
   // Average over Messi's daily posts in a window (his count starts Oct 9, so month to date = since then)
+  // `messi_slots_from` ("MM-DD"): posts before it used an older, less accurate count and are left out
+  // (October 2026: Messi switched to the team discovery links on the Oct 21 post)
+  const validFrom = data.messi_slots_from ?? '00-00';
   const slotAvg = (from, to) => {
-    const posts = Object.keys(data.messi_slots ?? {}).filter((d) => d >= from && d <= to).sort().map(capacity).filter(Boolean);
+    const posts = Object.keys(data.messi_slots ?? {}).filter((d) => d >= from && d <= to && d >= validFrom).sort().map(capacity).filter(Boolean);
     if (!posts.length) return { value: null, target: TARGETS.slotsPerWeek, status: 'track' };
     const avg = (f) => Math.round(posts.reduce((a, p) => a + f(p), 0) / posts.length);
     const hasBooked = posts.every((p) => p.booked != null);
@@ -83,7 +86,7 @@ export function closerMetrics(data, closer, edition) {
       status: status(value, TARGETS.slotsPerWeek) };
   };
   const slotsMtd = slotAvg(monthStart, ed.through_key);
-  slotsMtd.since = Object.keys(data.messi_slots ?? {}).filter((d) => d >= monthStart).sort()[0] ?? null;
+  slotsMtd.since = Object.keys(data.messi_slots ?? {}).filter((d) => d >= monthStart && d >= validFrom).sort()[0] ?? null;
   // Upcoming: the edition-day post, next 7 days
   const up = capacity(ed.slots_post_day) ?? (data.slots?.[edition]?.[k] == null ? null : { open: data.slots[edition][k], booked: null, value: data.slots[edition][k] });
   const slots = up ? { ...up, target: TARGETS.slotsPerWeek, status: status(up.value, TARGETS.slotsPerWeek) }
