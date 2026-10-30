@@ -1,0 +1,58 @@
+{
+ "month": "2026-11",
+ "_note": "Closer-facing targets from Sheila, Oct 30. Weekly split shifts expected cash from month end toward the first weeks. Yobani and Quinn are setters on track for promotion (no card until they are on the roster).",
+ "weeks": [
+  0.13,
+  0.19,
+  0.2,
+  0.23,
+  0.25
+ ],
+ "closers": {
+  "Julien": {
+   "cash": 200000
+  },
+  "Daniel": {
+   "cash": 200000
+  },
+  "Yobani": {
+   "cash": 50000
+  },
+  "Quinn": {
+   "cash": 50000
+  },
+  "Owen": {
+   "cash": 325000
+  },
+  "Adam": {
+   "cash": 275000
+  },
+  "VeJohn": {
+   "cash": 275000
+  },
+  "JZ": {
+   "cash": 300000
+  },
+  "Omar": {
+   "cash": 275000
+  },
+  "Nick": {
+   "cash": 275000
+  },
+  "Harry": {
+   "cash": 275000
+  },
+  "Kevin": {
+   "cash": 225000
+  },
+  "Solomon": {
+   "cash": 225000
+  },
+  "Tyler": {
+   "cash": 100000
+  },
+  "Oliver": {
+   "cash": 100000
+  }
+ }
+}
