@@ -1,0 +1,227 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+:root{--ink:#1d1f23;--muted:#5c6168;--line:#e3e1dc;--bg:#fafaf8;
+--hit-bg:#e4f2e7;--hit:#24843a;--almost-bg:#fbf1cf;--almost:#d4a106;--almost-ink:#7d5f00;
+--missed-bg:#f9e2e1;--missed:#c8423d;--track-bg:#e5ebf6;--track:#2d5bb8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+.card{width:1280px;padding:40px 44px;background:var(--bg)}
+.eyebrow{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h1{font-size:40px;font-weight:800;letter-spacing:-.01em;margin:10px 0 0}
+h1 .thru{display:block;font-size:22px;font-weight:600;color:var(--muted);margin-top:6px}
+h2{font-size:17px;letter-spacing:.1em;color:var(--track);font-weight:700;margin:32px 0 14px}
+.hero{margin-top:24px;background:#0f0f0e;border-radius:16px;padding:26px;color:#fcf6e2;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.caps{font-size:13px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;color:rgba(252,246,226,.6)}
+.big{font-family:Fraunces,Georgia,serif;font-size:48px;font-weight:800;color:#f0cd2b;line-height:1;margin-top:10px}
+.big small{font-family:Inter,sans-serif;font-size:18px;font-weight:600;color:rgba(252,246,226,.6);margin-left:6px}
+.sub{font-size:14px;color:rgba(252,246,226,.75);margin-top:8px;line-height:1.4}
+.dist{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.03em;color:#fff;border-radius:999px;padding:5px 11px;white-space:nowrap}
+.chip.hit{background:var(--hit)} .chip.almost{background:var(--almost);color:#3a2c00} .chip.missed{background:var(--missed)} .chip.track{background:var(--track)}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:16px}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:12px 14px;background:#f4f2ee;vertical-align:bottom}
+th small{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:12px}
+td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:middle}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td b{font-size:19px;font-weight:800}
+td .of{color:var(--muted);font-weight:600}
+td small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+td.hit,td.g{color:var(--hit);font-weight:700} td.almost{color:var(--almost-ink);font-weight:700} td.missed{color:var(--missed);font-weight:700}
+.nm{font-weight:700}
+tr.tot td{background:#f4f2ee;border-top:2px solid var(--ink);font-weight:700}
+td.lbl{font-weight:700;color:var(--muted);text-transform:uppercase;font-size:12px;letter-spacing:.08em}
+.note{font-size:15px;color:#3d4248;margin:-4px 0 12px}
+.foot{font-size:13px;color:var(--muted);margin-top:22px;line-height:1.5}
+</style></head><body><div class="card">
+<div class="eyebrow">Management view · not sent to closers</div>
+<h1>October closer scorecards, final<span class="thru">through Saturday, October 31</span></h1>
+
+<div class="hero">
+  <div><div class="caps">Team cash vs goal</div><div class="big">$1.96M<small>/ $2.85M</small></div>
+    <div class="dist"><span class="chip missed">69% of goal</span></div>
+    <div class="sub">11 closers with an October goal</div></div>
+  <div><div class="caps">Closes vs target</div><div class="big">114<small>/ 167</small></div>
+    <div class="sub">68% of the closes target<br>0 of 11 hit their closes target</div></div>
+  <div><div class="caps">Pace bands</div>
+    <div class="dist"><span class="chip hit">0 Ahead of pace</span><span class="chip hit">1 On pace</span><span class="chip almost">0 Slightly behind</span><span class="chip missed">10 Behind pace</span></div>
+    <div class="sub">Ahead ≥ +5%, On pace ≥ −3%, Slightly behind ≥ −10%</div></div>
+  <div><div class="caps">All 15 closers</div><div class="big">$2.05M</div>
+    <div class="sub">119 closes, including 4 with no October goal<br>Team medians (ramped): 48 live calls · $17K avg revenue</div></div>
+</div>
+
+<h2>CLOSERS WITH AN OCTOBER GOAL · RANKED BY % OF GOAL</h2>
+<table>
+<tr><th>Closer</th><th>Cash<small>collected / month goal</small></th><th>% of goal</th><th>Closes<small>/ target</small></th><th>Cash weeks hit<small>misses carried forward</small></th><th>Live calls<small>vs median 48</small></th><th>Avg revenue<small>floor $17.5K</small></th><th>Avg weekly slots<small>target 35</small></th><th>Nov goal</th></tr>
+<tr>
+  <td><div class="nm">Owen Henderson</div></td>
+  <td class="num"><b>$339K</b> <span class="of">/ $325K</span></td>
+  <td><span class="chip hit">104% · On pace</span></td>
+  <td class="num "><b>17</b> <span class="of">/ 19</span></td>
+  <td class="num">2<span class="of">/4</span></td>
+  <td class="num hit">48</td>
+  <td class="num hit">$20K</td>
+  <td class="num missed">23<small>11 booked · 12 open</small></td>
+  <td class="num">$325K</td>
+</tr>
+<tr>
+  <td><div class="nm">Harry Whyte</div></td>
+  <td class="num"><b>$221K</b> <span class="of">/ $275K</span></td>
+  <td><span class="chip missed">80% · Behind pace</span></td>
+  <td class="num "><b>12</b> <span class="of">/ 16</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num hit">68</td>
+  <td class="num hit">$18K</td>
+  <td class="num missed">23<small>10 booked · 13 open</small></td>
+  <td class="num">$275K</td>
+</tr>
+<tr>
+  <td><div class="nm">Nick Vaughan</div></td>
+  <td class="num"><b>$209K</b> <span class="of">/ $275K</span></td>
+  <td><span class="chip missed">76% · Behind pace</span></td>
+  <td class="num "><b>13</b> <span class="of">/ 16</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num hit">48</td>
+  <td class="num missed">$16K</td>
+  <td class="num missed">14<small>7 booked · 6 open</small></td>
+  <td class="num">$275K</td>
+</tr>
+<tr>
+  <td><div class="nm">VeJohn C Heinemann</div></td>
+  <td class="num"><b>$206K</b> <span class="of">/ $275K</span></td>
+  <td><span class="chip missed">75% · Behind pace</span></td>
+  <td class="num "><b>13</b> <span class="of">/ 16</span></td>
+  <td class="num">1<span class="of">/4</span></td>
+  <td class="num hit">52</td>
+  <td class="num missed">$16K</td>
+  <td class="num missed">13<small>6 booked · 8 open</small></td>
+  <td class="num">$275K</td>
+</tr>
+<tr>
+  <td><div class="nm">Omar Kaddoura</div></td>
+  <td class="num"><b>$184K</b> <span class="of">/ $275K</span></td>
+  <td><span class="chip missed">67% · Behind pace</span></td>
+  <td class="num "><b>11</b> <span class="of">/ 16</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num hit">61</td>
+  <td class="num hit">$18K</td>
+  <td class="num missed">26<small>10 booked · 16 open</small></td>
+  <td class="num">$275K</td>
+</tr>
+<tr>
+  <td><div class="nm">Kevin Manuel</div></td>
+  <td class="num"><b>$148K</b> <span class="of">/ $225K</span></td>
+  <td><span class="chip missed">66% · Behind pace</span></td>
+  <td class="num "><b>8</b> <span class="of">/ 13</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num hit">48</td>
+  <td class="num hit">$18K</td>
+  <td class="num missed">22<small>6 booked · 16 open</small></td>
+  <td class="num">$225K</td>
+</tr>
+<tr>
+  <td><div class="nm">Julien Breteau</div></td>
+  <td class="num"><b>$128K</b> <span class="of">/ $200K</span></td>
+  <td><span class="chip missed">64% · Behind pace</span></td>
+  <td class="num "><b>8</b> <span class="of">/ 12</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num missed">14</td>
+  <td class="num missed">$16K</td>
+  <td class="num track">–</td>
+  <td class="num">$200K</td>
+</tr>
+<tr>
+  <td><div class="nm">Jordan Zadrozny</div></td>
+  <td class="num"><b>$190K</b> <span class="of">/ $300K</span></td>
+  <td><span class="chip missed">63% · Behind pace</span></td>
+  <td class="num "><b>12</b> <span class="of">/ 18</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num missed">30</td>
+  <td class="num missed">$16K</td>
+  <td class="num missed">18<small>6 booked · 12 open</small></td>
+  <td class="num">$300K</td>
+</tr>
+<tr>
+  <td><div class="nm">Adam Larkins</div></td>
+  <td class="num"><b>$155K</b> <span class="of">/ $275K</span></td>
+  <td><span class="chip missed">56% · Behind pace</span></td>
+  <td class="num "><b>9</b> <span class="of">/ 16</span></td>
+  <td class="num">1<span class="of">/4</span></td>
+  <td class="num almost">42</td>
+  <td class="num missed">$17K</td>
+  <td class="num missed">20<small>7 booked · 13 open</small></td>
+  <td class="num">$275K</td>
+</tr>
+<tr>
+  <td><div class="nm">Solomon House</div></td>
+  <td class="num"><b>$104K</b> <span class="of">/ $225K</span></td>
+  <td><span class="chip missed">46% · Behind pace</span></td>
+  <td class="num "><b>6</b> <span class="of">/ 13</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num hit">52</td>
+  <td class="num missed">$17K</td>
+  <td class="num almost">33<small>4 booked · 29 open</small></td>
+  <td class="num">$225K</td>
+</tr>
+<tr>
+  <td><div class="nm">Daniel Jenkins</div></td>
+  <td class="num"><b>$81K</b> <span class="of">/ $200K</span></td>
+  <td><span class="chip missed">40% · Behind pace</span></td>
+  <td class="num "><b>5</b> <span class="of">/ 12</span></td>
+  <td class="num">0<span class="of">/4</span></td>
+  <td class="num almost">38</td>
+  <td class="num missed">$16K</td>
+  <td class="num missed">18<small>4 booked · 14 open</small></td>
+  <td class="num">$200K</td>
+</tr>
+<tr class="tot"><td>Team</td><td class="num"><b>$1.96M</b> <span class="of">/ $2.85M</span></td><td>69%</td><td class="num"><b>114</b> <span class="of">/ 167</span></td><td></td><td class="num">501</td><td class="num">$17K</td><td></td><td class="num">$2.85M</td></tr>
+</table>
+
+<h2>NEW HIRES AND PROMOTED SETTERS · NO OCTOBER GOAL</h2>
+<table>
+<tr><th>Closer</th><th>Cash collected</th><th>Closes</th><th>Live calls</th><th>Avg revenue</th><th>Avg weekly slots</th><th>Next month goal</th></tr>
+<tr>
+  <td><div class="nm">Oliver English</div></td>
+  <td class="num"><b>$0</b></td>
+  <td class="num">0</td>
+  <td class="num">42</td>
+  <td class="num">–</td>
+  <td class="num">26</td>
+  <td class="num">$100K</td>
+</tr>
+<tr>
+  <td><div class="nm">Tyler Johnson</div></td>
+  <td class="num"><b>$15K</b></td>
+  <td class="num">1</td>
+  <td class="num">45</td>
+  <td class="num">$15K</td>
+  <td class="num">49</td>
+  <td class="num">$100K</td>
+</tr>
+<tr>
+  <td><div class="nm">Yobani Mendoza</div></td>
+  <td class="num"><b>$72K</b></td>
+  <td class="num">4</td>
+  <td class="num">5</td>
+  <td class="num">$19K</td>
+  <td class="num">–</td>
+  <td class="num">$50K</td>
+</tr>
+<tr>
+  <td><div class="nm">Quinn Donelan</div></td>
+  <td class="num"><b>$0</b></td>
+  <td class="num">0</td>
+  <td class="num">1</td>
+  <td class="num">–</td>
+  <td class="num">–</td>
+  <td class="num">$50K</td>
+</tr>
+</table>
+
+<h2>NOVEMBER PLAN · TEAM</h2>
+<p class="note">15 closers, $3.15M cash goal, 185 closes. Each week's share comes from the closer-facing targets.</p>
+<table class="plan"><tr><th>Week</th><th>Week 1<small>Nov 1 → 7</small></th><th>Week 2<small>Nov 8 → 14</small></th><th>Week 3<small>Nov 15 → 21</small></th><th>Week 4<small>Nov 22 → 28</small></th><th>Final stretch<small>Nov 29 → 30</small></th><th>Month</th></tr>
+<tr><td class="lbl">Share</td><td class="num">13%</td><td class="num">19%</td><td class="num">20%</td><td class="num">23%</td><td class="num">25%</td><td class="num">100%</td></tr>
+<tr><td class="lbl">Cash</td><td class="num"><b>$410K</b></td><td class="num"><b>$599K</b></td><td class="num"><b>$630K</b></td><td class="num"><b>$725K</b></td><td class="num"><b>$788K</b></td><td class="num"><b>$3.15M</b></td></tr>
+</table>
+
+<div class="foot">Same numbers as the closer cards: cash from the 2M tracker read API (pulled 2026-11-01 11:34 UTC, all checks pass); goals and weekly split from Sheila's closer-facing targets (2026-10 goals = 2026-11 goals), not the tracker's management targets. Closes = Close 1 from the Sales Tracker; closes target = goal ÷ $17,500. Live calls = showed, EOD Tracker with Sales Tracker fills. Slots = Messi's next-7-days post + Calendly booked calls, averaged over the month's posts from 10-22.</div>
+</div></body></html>
