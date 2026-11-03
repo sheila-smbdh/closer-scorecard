@@ -64,7 +64,7 @@ const closerRow = (r) => {
   <td class="num ${m.live.status}">${m.live.value}</td>
   <td class="num ${m.avgRevenue.status}">${K(m.avgRevenue.value)}</td>
   <td class="num ${s.status}">${s.value ?? '–'}${s.booked != null ? `<small>${s.booked} booked · ${s.open} open</small>` : ''}</td>
-  <td class="num">${K(nt?.cash)}</td>
+  ${final ? `<td class="num">${K(nt?.cash)}</td>` : ''}
 </tr>`;
 };
 
@@ -78,12 +78,14 @@ const noGoalRow = (r) => {
   <td class="num">${m.live.value}</td>
   <td class="num">${K(m.avgRevenue.value)}</td>
   <td class="num">${m.slotsMtd.value ?? '–'}</td>
-  <td class="num">${K(nt?.cash)}</td>
+  ${final ? `<td class="num">${K(nt?.cash)}</td>` : ''}
 </tr>`;
 };
 
 // Next month's plan, team level: sum of every closer's goal, split by the weekly shares
 const nf = targetsFor(data, nk);
+const cf = targetsFor(data, monthKey);
+const sameGoals = !!(cf && nf) && Object.entries(cf.closers).every(([k, v]) => nf.closers[k]?.cash === v.cash);
 let nextHtml = '';
 if (nf) {
   const [ny, nm] = nk.split('-').map(Number);
@@ -141,20 +143,20 @@ td.lbl{font-weight:700;color:var(--muted);text-transform:uppercase;font-size:12p
 
 <h2>CLOSERS WITH ${art.toUpperCase()} ${esc(data.month.label.toUpperCase())} GOAL · RANKED BY % OF ${final ? 'GOAL' : 'PACE'}</h2>
 <table>
-<tr><th>Closer</th><th>Cash<small>collected / ${final ? 'month goal' : 'goal to date'}</small></th><th>% of ${final ? 'goal' : 'pace'}</th><th>Closes<small>/ target</small></th><th>Cash weeks hit<small>misses carried forward</small></th><th>Live calls<small>vs median ${team.live}</small></th><th>Avg revenue<small>floor $17.5K</small></th><th>Avg weekly slots<small>target 35</small></th><th>${esc(nShort)} goal</th></tr>
+<tr><th>Closer</th><th>Cash<small>collected / ${final ? 'month goal' : 'goal to date'}</small></th><th>% of ${final ? 'goal' : 'pace'}</th><th>Closes<small>/ month target</small></th><th>Cash weeks hit<small>misses carried forward</small></th><th>Live calls<small>vs median ${team.live}</small></th><th>Avg revenue<small>floor $17.5K</small></th><th>Avg weekly slots<small>target 35</small></th>${final ? `<th>${esc(nShort)} goal</th>` : ''}</tr>
 ${goaled.map(closerRow).join('\n')}
-<tr class="tot"><td>Team</td><td class="num"><b>${K(teamCash)}</b> <span class="of">/ ${K(final ? teamGoal : teamExpected)}</span></td><td>${pct(teamExpected ? teamCash / teamExpected : null)}</td><td class="num"><b>${teamCloses}</b> <span class="of">/ ${teamClosesTarget}</span></td><td></td><td class="num">${sum(goaled, (r) => r.m.live.value)}</td><td class="num">${K(sum(goaled, (r) => r.m.avgRevenue.rev) / (teamCloses || 1))}</td><td></td><td class="num">${K(sum(goaled, (r) => closerTargets(nf, r.m.closer.key)?.cash))}</td></tr>
+<tr class="tot"><td>Team</td><td class="num"><b>${K(teamCash)}</b> <span class="of">/ ${K(final ? teamGoal : teamExpected)}</span></td><td>${pct(teamExpected ? teamCash / teamExpected : null)}</td><td class="num"><b>${teamCloses}</b> <span class="of">/ ${teamClosesTarget}</span></td><td></td><td class="num">${sum(goaled, (r) => r.m.live.value)}</td><td class="num">${K(sum(goaled, (r) => r.m.avgRevenue.rev) / (teamCloses || 1))}</td><td></td>${final ? `<td class="num">${K(sum(goaled, (r) => closerTargets(nf, r.m.closer.key)?.cash))}</td>` : ''}</tr>
 </table>
 
-${noGoal.length ? `<h2>NEW HIRES AND PROMOTED SETTERS · NO ${esc(data.month.label.toUpperCase())} GOAL</h2>
+${noGoal.length ? `<h2>NEW HIRES AND PROMOTED SETTERS · NO ${esc(data.month.label.toUpperCase())} GOAL${final ? '' : ' · NO CARD THIS RUN'}</h2>
 <table>
-<tr><th>Closer</th><th>Cash collected</th><th>Closes</th><th>Live calls</th><th>Avg revenue</th><th>Avg weekly slots</th><th>Next month goal</th></tr>
+<tr><th>Closer</th><th>Cash collected</th><th>Closes</th><th>Live calls</th><th>Avg revenue</th><th>Avg weekly slots</th>${final ? '<th>Next month goal</th>' : ''}</tr>
 ${noGoal.map(noGoalRow).join('\n')}
 </table>` : ''}
 
 ${final ? nextHtml : ''}
 
-<div class="foot">Same numbers as the closer cards: cash from the 2M tracker read API (pulled ${esc(tr.data_pulled_at?.slice(0, 16).replace('T', ' '))} UTC, all checks ${tr.all_checks_pass ? 'pass' : 'FAILED'}); goals and weekly split from Sheila's closer-facing targets (${esc(monthKey)} goals = ${esc(nk)} goals), not the tracker's management targets. Closes = Close 1 from the Sales Tracker; closes target = goal ÷ $17,500. Live calls = showed, EOD Tracker with Sales Tracker fills. Slots = Messi's next-7-days post + Calendly booked calls, averaged over the month's posts${data.messi_slots_from ? ` from ${esc(data.messi_slots_from)}` : ''}.</div>
+<div class="foot">Same numbers as the closer cards: cash from the 2M tracker read API (pulled ${esc(tr.data_pulled_at?.slice(0, 16).replace('T', ' '))} UTC, all checks ${tr.all_checks_pass ? 'pass' : 'FAILED'}); goals and weekly split from Sheila's closer-facing targets ${sameGoals ? ` (${esc(monthKey)} goals = ${esc(nk)} goals)` : ''}, not the tracker's management targets. Closes = Close 1 from the Sales Tracker; closes target = goal ÷ $17,500. Live calls = showed, EOD Tracker with Sales Tracker fills. Slots = Messi's next-7-days post + Calendly booked calls, averaged over the month's posts${data.messi_slots_from ? ` from ${esc(data.messi_slots_from)}` : ''}.</div>
 </div></body></html>`;
 
 fs.mkdirSync(outDir, { recursive: true });
