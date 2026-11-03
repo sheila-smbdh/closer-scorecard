@@ -8,6 +8,8 @@ Month-to-date scorecard image for each closer.
 - **Monday 7:14am ET**: month to date through Sunday, by DM (first DMs Mon Nov 9, 2026).
 - **Wednesday 7:14am ET**: month to date through Tuesday, by DM.
 
+**Management view** (Jay and Sheila only): every closer's numbers on one page, team totals and next month's plan, from the same metrics as the cards: `node src/management.mjs data/scorecard-<date>.json out monthly` → `out/monthly-management.png`. Every Monday and Wednesday run that DMs closers also posts `out/<edition>-management.png` to #sales-leadership.
+
 Start with `docs/HANDOFF.md` for decisions and next steps.
 
 Status: **final card, routine paused.** The Monday and Wednesday routine (`docs/ROUTINE.md`) is set up but paused until sending starts in November. Oliver and Tyler get cards from November.
