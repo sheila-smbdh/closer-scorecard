@@ -139,19 +139,6 @@ td.lbl{font-weight:700;color:var(--muted);text-transform:uppercase;font-size:12p
 <div class="eyebrow">Management view · not sent to closers</div>
 <h1>${esc(data.month.label)} closer scorecards${final ? ', final' : ''}<span class="thru">through ${esc(throughDate)}</span></h1>
 
-<div class="hero">
-  <div><div class="caps">Team cash vs goal</div><div class="big">${K(teamCash)}<small>/ ${K(final ? teamGoal : teamExpected)}</small></div>
-    <div class="dist"><span class="chip ${teamBand}">${pct(teamExpected ? teamCash / teamExpected : null)} of ${final ? 'goal' : 'goal to date'}</span></div>
-    <div class="sub">${goaled.length} closers with ${art} ${esc(data.month.label)} goal</div></div>
-  <div><div class="caps">Closes vs target</div><div class="big">${teamCloses}<small>/ ${teamClosesTarget}</small></div>
-    <div class="sub">${pct(teamClosesTarget ? teamCloses / teamClosesTarget : null)} of the closes target<br>${goaled.filter((r) => r.m.closes.actual >= r.m.cash.closesTarget).length} of ${goaled.length} hit their closes target</div></div>
-  <div><div class="caps">Pace bands</div>
-    <div class="dist">${Object.entries(PACE_LABEL).map(([k, l]) => `<span class="chip ${BAND[k]}">${counts[k]} ${esc(l)}</span>`).join('')}</div>
-    <div class="sub">Ahead ≥ +5%, On pace ≥ −3%, Slightly behind ≥ −10%</div></div>
-  <div><div class="caps">All ${rows.length} closers</div><div class="big">${K(allCash)}</div>
-    <div class="sub">${allCloses} closes, including ${noGoal.length} with no ${esc(data.month.label)} goal<br>Team medians (ramped): ${team.live} live calls · ${K(team.avgRevenue)} avg revenue</div></div>
-</div>
-
 <h2>CLOSERS WITH ${art.toUpperCase()} ${esc(data.month.label.toUpperCase())} GOAL · RANKED BY % OF ${final ? 'GOAL' : 'PACE'}</h2>
 <table>
 <tr><th>Closer</th><th>Cash<small>collected / ${final ? 'month goal' : 'goal to date'}</small></th><th>% of ${final ? 'goal' : 'pace'}</th><th>Closes<small>/ target</small></th><th>Cash weeks hit<small>misses carried forward</small></th><th>Live calls<small>vs median ${team.live}</small></th><th>Avg revenue<small>floor $17.5K</small></th><th>Avg weekly slots<small>target 35</small></th><th>${esc(nShort)} goal</th></tr>
