@@ -6,7 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright';
-import { closerMetrics, withTeam, trackerFor, fmtMoney, PACE_LABEL } from './metrics.mjs';
+import { closerMetrics, withTeam, trackerFor, fmtMoney, PACE_LABEL, TARGETS } from './metrics.mjs';
 import { plan } from './plan.mjs';
 import { targetsFor, closerTargets, nextMonthKey, monthWeeks, daysIn } from './targets.mjs';
 
@@ -50,11 +50,44 @@ const weeksHit = (p) => {
   return { cash: done.filter((w) => w.hit.cash).length, closes: done.filter((w) => w.hit.closes).length, n: done.length };
 };
 
+// Slots, mirroring the card's Weekly Scorecard rows: the last finished week's daily average, and this
+// week's next-7-days count (edition-day post). The 1st-of-month card has no current week, so the final
+// view shows the month row instead.
+const [tYear, tMo] = tr.through.split('-').map(Number);
+const tDay = Number(ed.through_key.slice(3));
+const mm = (d) => `${String(tMo).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+const lastWeek = monthWeeks(tYear, tMo - 1, tr.days_in_month).filter((w) => w.end <= tDay).at(-1) ?? null;
+const SLOTS_T = TARGETS.slotsPerWeek;
+const postDay = new Date(`${tYear}-${ed.slots_post_day}T12:00:00Z`).toLocaleString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const slotsOf = (r) => {
+  const wk = r.p.weeks?.find((w) => lastWeek && w.start === lastWeek.start);
+  const last = wk ? wk.actual?.slots ?? null : lastWeek ? r.m.slotAvg(mm(lastWeek.start), mm(lastWeek.end)).value : null;
+  const now = r.p.weeks?.find((w) => w.next7 !== undefined);
+  const next7 = now ? now.next7 : r.m.slots.value == null ? null : r.m.slots;
+  return { last, next7 };
+};
+const lastCell = (r) => {
+  const { last } = slotsOf(r);
+  if (last == null) return '<td class="num">–</td>';
+  return `<td class="num ${last >= SLOTS_T ? 'hit' : 'missed'}">${last}</td>`;
+};
+const nextCell = (r) => {
+  if (final) {
+    const s = r.m.slotsMtd;
+    return `<td class="num ${s.value == null ? '' : s.status}">${s.value ?? '–'}${s.booked != null ? `<small>${s.booked} booked · ${s.open} open</small>` : ''}</td>`;
+  }
+  const n = slotsOf(r).next7;
+  if (n == null) return '<td class="num">–</td>';
+  const more = Math.max(0, SLOTS_T - n.value);
+  return `<td class="num ${more ? 'missed' : 'hit'}">${n.value}<small>${n.booked != null ? `${n.booked} booked · ${n.open} open` : `${n.open} open`}${more ? ` · open ${more} more` : ''}</small></td>`;
+};
+const lastHead = lastWeek ? `${esc(lastWeek.label)} slots<small>${esc(lastWeek.dates)}, daily avg / ${SLOTS_T}</small>` : `Last week slots<small>no finished week yet</small>`;
+const nextHead = final ? `Month slots<small>daily avg / ${SLOTS_T}</small>` : `Next 7 days slots<small>${esc(postDay)} post / ${SLOTS_T}</small>`;
+
 const closerRow = (r) => {
   const { m, p } = r, c = m.cash, wh = weeksHit(p);
   const band = BAND[c.pace] ?? 'track';
   const nt = closerTargets(targetsFor(data, nk), m.closer.key);
-  const s = m.slotsMtd;
   return `<tr>
   <td><div class="nm">${esc(m.closer.name ?? m.closer.short)}</div></td>
   <td class="num"><b>${K(c.value)}</b> <span class="of">/ ${K(final ? c.monthTarget : c.expected)}</span></td>
@@ -63,7 +96,8 @@ const closerRow = (r) => {
   <td class="num">${wh.n ? `${wh.cash}<span class="of">/${wh.n}</span>` : '–'}</td>
   <td class="num ${m.live.status}">${m.live.value}</td>
   <td class="num ${m.avgRevenue.status}">${K(m.avgRevenue.value)}</td>
-  <td class="num ${s.status}">${s.value ?? '–'}${s.booked != null ? `<small>${s.booked} booked · ${s.open} open</small>` : ''}</td>
+  ${lastCell(r)}
+  ${nextCell(r)}
   ${final ? `<td class="num">${K(nt?.cash)}</td>` : ''}
 </tr>`;
 };
@@ -77,7 +111,8 @@ const noGoalRow = (r) => {
   <td class="num">${m.closes.actual}</td>
   <td class="num">${m.live.value}</td>
   <td class="num">${K(m.avgRevenue.value)}</td>
-  <td class="num">${m.slotsMtd.value ?? '–'}</td>
+  ${lastCell(r)}
+  ${nextCell(r)}
   ${final ? `<td class="num">${K(nt?.cash)}</td>` : ''}
 </tr>`;
 };
@@ -143,20 +178,20 @@ td.lbl{font-weight:700;color:var(--muted);text-transform:uppercase;font-size:12p
 
 <h2>CLOSERS WITH ${art.toUpperCase()} ${esc(data.month.label.toUpperCase())} GOAL · RANKED BY % OF ${final ? 'GOAL' : 'PACE'}</h2>
 <table>
-<tr><th>Closer</th><th>Cash<small>collected / ${final ? 'month goal' : 'goal to date'}</small></th><th>% of ${final ? 'goal' : 'pace'}</th><th>Closes<small>/ month target</small></th><th>Cash weeks hit<small>misses carried forward</small></th><th>Live calls<small>vs median ${team.live}</small></th><th>Avg revenue<small>floor $17.5K</small></th><th>Avg weekly slots<small>target 35</small></th>${final ? `<th>${esc(nShort)} goal</th>` : ''}</tr>
+<tr><th>Closer</th><th>Cash<small>collected / ${final ? 'month goal' : 'goal to date'}</small></th><th>% of ${final ? 'goal' : 'pace'}</th><th>Closes<small>/ month target</small></th><th>Cash weeks hit<small>misses carried forward</small></th><th>Live calls<small>vs median ${team.live}</small></th><th>Avg revenue<small>floor $17.5K</small></th><th>${lastHead}</th><th>${nextHead}</th>${final ? `<th>${esc(nShort)} goal</th>` : ''}</tr>
 ${goaled.map(closerRow).join('\n')}
-<tr class="tot"><td>Team</td><td class="num"><b>${K(teamCash)}</b> <span class="of">/ ${K(final ? teamGoal : teamExpected)}</span></td><td>${pct(teamExpected ? teamCash / teamExpected : null)}</td><td class="num"><b>${teamCloses}</b> <span class="of">/ ${teamClosesTarget}</span></td><td></td><td class="num">${sum(goaled, (r) => r.m.live.value)}</td><td class="num">${K(sum(goaled, (r) => r.m.avgRevenue.rev) / (teamCloses || 1))}</td><td></td>${final ? `<td class="num">${K(sum(goaled, (r) => closerTargets(nf, r.m.closer.key)?.cash))}</td>` : ''}</tr>
+<tr class="tot"><td>Team</td><td class="num"><b>${K(teamCash)}</b> <span class="of">/ ${K(final ? teamGoal : teamExpected)}</span></td><td>${pct(teamExpected ? teamCash / teamExpected : null)}</td><td class="num"><b>${teamCloses}</b> <span class="of">/ ${teamClosesTarget}</span></td><td></td><td class="num">${sum(goaled, (r) => r.m.live.value)}</td><td class="num">${K(sum(goaled, (r) => r.m.avgRevenue.rev) / (teamCloses || 1))}</td><td></td><td></td>${final ? `<td class="num">${K(sum(goaled, (r) => closerTargets(nf, r.m.closer.key)?.cash))}</td>` : ''}</tr>
 </table>
 
 ${noGoal.length ? `<h2>NEW HIRES AND PROMOTED SETTERS · NO ${esc(data.month.label.toUpperCase())} GOAL${final ? '' : ' · NO CARD THIS RUN'}</h2>
 <table>
-<tr><th>Closer</th><th>Cash collected</th><th>Closes</th><th>Live calls</th><th>Avg revenue</th><th>Avg weekly slots</th>${final ? '<th>Next month goal</th>' : ''}</tr>
+<tr><th>Closer</th><th>Cash collected</th><th>Closes</th><th>Live calls</th><th>Avg revenue</th><th>${lastHead}</th><th>${nextHead}</th>${final ? '<th>Next month goal</th>' : ''}</tr>
 ${noGoal.map(noGoalRow).join('\n')}
 </table>` : ''}
 
 ${final ? nextHtml : ''}
 
-<div class="foot">Same numbers as the closer cards: cash from the 2M tracker read API (pulled ${esc(tr.data_pulled_at?.slice(0, 16).replace('T', ' '))} UTC, all checks ${tr.all_checks_pass ? 'pass' : 'FAILED'}); goals and weekly split from Sheila's closer-facing targets ${sameGoals ? ` (${esc(monthKey)} goals = ${esc(nk)} goals)` : ''}, not the tracker's management targets. Closes = Close 1 from the Sales Tracker; closes target = goal ÷ $17,500. Live calls = showed, EOD Tracker with Sales Tracker fills. Slots = Messi's next-7-days post + Calendly booked calls, averaged over the month's posts${data.messi_slots_from ? ` from ${esc(data.messi_slots_from)}` : ''}.</div>
+<div class="foot">Same numbers as the closer cards: cash from the 2M tracker read API (pulled ${esc(tr.data_pulled_at?.slice(0, 16).replace('T', ' '))} UTC, all checks ${tr.all_checks_pass ? 'pass' : 'FAILED'}); goals and weekly split from Sheila's closer-facing targets ${sameGoals ? ` (${esc(monthKey)} goals = ${esc(nk)} goals)` : ''}, not the tracker's management targets. Closes = Close 1 from the Sales Tracker; closes target = goal ÷ $17,500. Live calls = showed, EOD Tracker with Sales Tracker fills. Slots = Messi's next-7-days post + Calendly booked calls (booked + open), as on the cards' Weekly Scorecard: a finished week is the average of that week's daily posts${data.messi_slots_from ? ` (from ${esc(data.messi_slots_from)})` : ''}${final ? '; month = average of all the month\'s posts' : `; next 7 days = the ${esc(postDay)} post`}.</div>
 </div></body></html>`;
 
 fs.mkdirSync(outDir, { recursive: true });

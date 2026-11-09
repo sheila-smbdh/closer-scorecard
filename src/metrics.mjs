@@ -81,7 +81,9 @@ export function closerMetrics(data, closer, edition) {
     const avg = (f) => Math.round(posts.reduce((a, p) => a + f(p), 0) / posts.length);
     const hasBooked = posts.every((p) => p.booked != null);
     const value = avg((p) => p.value);
-    return { value, open: avg((p) => p.open), booked: hasBooked ? avg((p) => p.booked) : null,
+    // Round the total and booked; open is the remainder, so booked + open always equals the total shown
+    const booked = hasBooked ? Math.min(value, avg((p) => p.booked)) : null;
+    return { value, open: booked == null ? avg((p) => p.open) : value - booked, booked,
       low: Math.min(...posts.map((p) => p.value)), posts: posts.length, target: TARGETS.slotsPerWeek,
       status: status(value, TARGETS.slotsPerWeek) };
   };
