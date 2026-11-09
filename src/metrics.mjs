@@ -44,7 +44,7 @@ export function bookedShowed(data, key, from, to) {
 }
 
 export function closerMetrics(data, closer, edition) {
-  const ed = data.editions[edition];
+  const ed = cardEdition(data, edition);
   // A closer with no Sales Tracker rows yet (a newly promoted setter) reads as all zeros
   const zero = [0, 0, 0, 0, 0, 0];
   const act = data.activity[closer.key] ?? { mtd: zero, mtd2: zero, wk: zero, tw: zero };
@@ -94,8 +94,17 @@ export function closerMetrics(data, closer, edition) {
   const slots = up ? { ...up, target: TARGETS.slotsPerWeek, status: status(up.value, TARGETS.slotsPerWeek) }
     : { value: null, target: TARGETS.slotsPerWeek, status: 'track' };
 
+  // Revenue generated is only pulled month to date. A trimmed window uses `daily_rev` (per day, from the same
+  // Sales Tracker rows as daily_closes) when the snapshot has it; without it the month-to-date revenue still
+  // holds when nobody closed after the window's last day, and otherwise there is no number (flagged)
+  let revCloses = mtd[CLOSES], rev = mtd[REV], revUncut = false;
+  if (ed.tracker_key) {
+    revCloses = closesTo(data, k, monthStart, ed.through_key);
+    if (data.daily_rev?.[k]) rev = Object.entries(data.daily_rev[k]).filter(([d]) => d >= monthStart && d <= ed.through_key).reduce((a, [, v]) => a + v, 0);
+    else if (closesTo(data, k, nextDay(ed.through_key), ed.data_through_key) > 0) { rev = null; revUncut = true; }
+  }
   const avgRevenue = {
-    value: mtd[CLOSES] ? mtd[REV] / mtd[CLOSES] : null, rev: mtd[REV], closes: mtd[CLOSES],
+    value: revCloses && rev != null ? rev / revCloses : null, rev, closes: revCloses, uncut: revUncut,
     target: TARGETS.avgRevenueFloor,
   };
   // A floor is pass/fail: no yellow band
@@ -111,26 +120,18 @@ export function closerMetrics(data, closer, edition) {
   const ct = closerTargets(tf, k);
   const usable = ct && !checkTargets(tf, monthKey).length;
   const curve = usable ? dailyCurve(tf, monthKey) : null;
+  // No tracker row (a setter not yet in the 2M tracker): Sales Tracker month to date, which a trimmed
+  // window cannot cut at its last day (flagged in runFlags)
   const cashValue = tp ? tp.cash : mtd[CASH];
   const dayNow = tp?.daily_cash?.length || (tr?.through ? Number(tr.through.slice(8, 10)) : null);
-  // Goal to date. Monday and 1st-of-month cards cover full weeks, so their goal stops at the end of the last
-  // finished week of the Weekly Scorecard and always equals the finished week rows (Sheila, Nov 9). From
-  // Dec 2026 weeks end on Sunday, so this is the through day itself; in Nov 2026 (Sun-Sat weeks) a Monday
-  // card's goal stops at Saturday. Wednesday is mid-week and runs through Tuesday.
-  let goalDay = dayNow;
-  if (monday && dayNow && monthKey) {
-    const [gy, gm] = monthKey.split('-').map(Number);
-    const ended = monthWeeks(gy, gm - 1, daysIn(monthKey)).filter((w) => w.end <= dayNow).at(-1);
-    if (ended) goalDay = ended.end;
-  }
-  const expected = usable && goalDay ? ct.cash * curve[goalDay - 1] : null;
+  // Goal to date at the window's last day (cardEdition: on Monday cards, the end of the last finished week)
+  const expected = usable && dayNow ? ct.cash * curve[dayNow - 1] : null;
   const pace = expected ? paceStatus(cashValue ?? 0, expected) : null;
   const cash = {
     value: cashValue, expected, monthTarget: usable ? ct.cash : null, closesTarget: usable ? ct.closes : null,
     source: tp ? 'tracker' : 'sales_tracker', salesTrackerCash: mtd[CASH], targetsMonth: monthKey,
     status: pace ? TRACKER_STATUS[pace] : 'track', pace,
     paceRatio: expected ? (cashValue ?? 0) / expected : null,
-    goalDay: expected ? goalDay : null, goalThrough: goalDay !== dayNow && tr?.through ? `${tr.through.slice(0, 8)}${String(goalDay).padStart(2, '0')}` : null,
   };
   // Pace chart: daily cumulative cash, last month's curve on this month's day axis (normalized for month
   // length), and the goal curve × month target
@@ -147,8 +148,8 @@ export function closerMetrics(data, closer, edition) {
     };
   }
 
-  // Closes this month (Close 1)
-  const closes = { actual: mtd[CLOSES] };
+  // Closes this month (Close 1); a trimmed window counts the per-day closes up to its last day
+  const closes = { actual: ed.tracker_key ? closesTo(data, k, monthStart, ed.through_key) : mtd[CLOSES] };
 
   const wkAct = act[monday ? 'wk' : 'tw'];
   const salesTrackerWeek = { booked: wkAct[CALLS], showed: wkAct[LIVE] };
@@ -159,9 +160,34 @@ export function closerMetrics(data, closer, edition) {
   return { closer, edition, ed, salesTrackerWeek, week, filled, live, slotsMtd, slotAvg, slots, avgRevenue, cash, closes, newHire };
 }
 
-// The tracker pull for an edition's window (keyed by its last day, "MM-DD")
+// The window a card covers. Monday and 1st-of-month cards cover full weeks of the Weekly Scorecard: their
+// month to date ends at the last finished week, so every number on the card (cash, closes, live calls,
+// average revenue, slots, goal to date, title date) lines up with the week rows (Sheila, Nov 9). From Dec
+// 2026 weeks end on Sunday, the Monday card's last day, so nothing moves. In Nov 2026 (Sun-Sat weeks) a
+// Monday card ends on Saturday, and Sunday counts toward the next week (first seen on Wednesday's card).
+// A trimmed edition keeps the pull's key in `tracker_key` and the data's last day in `data_through_key`.
+export function cardEdition(data, edition) {
+  const ed = data.editions[edition];
+  if (edition === 'wednesday' || !ed) return ed;
+  const through = data.trackers?.[ed.through_key]?.through;
+  if (!through) return ed;
+  const [y, mo] = through.split('-').map(Number);
+  const mk = through.slice(0, 7), day = Number(ed.through_key.slice(3));
+  const ended = monthWeeks(y, mo - 1, daysIn(mk)).filter((w) => w.end <= day).at(-1);
+  if (!ended || ended.end === day) return ed;
+  return { ...ed, through_key: `${ed.through_key.slice(0, 3)}${String(ended.end).padStart(2, '0')}`,
+    tracker_key: ed.through_key, data_through_key: ed.through_key };
+}
+
+// The tracker pull for an edition's window (keyed by its last day, "MM-DD"). For a trimmed window
+// (cardEdition) each closer's cash and daily cash are cut at the window's last day.
 export function trackerFor(data, ed) {
-  return data.trackers?.[ed.through_key] ?? null;
+  const t = data.trackers?.[ed.tracker_key ?? ed.through_key] ?? null;
+  if (!t || !ed.tracker_key) return t;
+  const cut = Number(ed.through_key.slice(3));
+  const closers = Object.fromEntries(Object.entries(t.closers ?? {}).map(([k, c]) => [k, c.daily_cash?.length
+    ? { ...c, cash: c.daily_cash[Math.min(cut, c.daily_cash.length) - 1], daily_cash: c.daily_cash.slice(0, cut) } : c]));
+  return { ...t, through: `${t.through.slice(0, 8)}${String(cut).padStart(2, '0')}`, closers };
 }
 
 // Last month's day that matches `day` this month, scaled for month length (the tracker's same-day MoM)
@@ -197,6 +223,8 @@ export function median(values) {
 export function runFlags(data, metrics, edition) {
   const flags = [];
   const ed = data.editions[edition];
+  const card = cardEdition(data, edition);
+  if (card?.tracker_key) flags.push(`Cards cover month to date through ${card.through_key} (the end of the last finished week), not ${ed.through_key}: activity on ${nextDay(card.through_key)} to ${ed.through_key} counts toward the next week. Use that date in the DM line.`);
   for (const m of metrics) {
     const k = m.closer.key;
     const st = m.salesTrackerWeek;
@@ -210,7 +238,9 @@ export function runFlags(data, metrics, edition) {
     const inferred = (data.eod_inferred?.[k] ?? []).filter((d) => d >= ed.week_days[0] && d <= ed.through_key);
     if (inferred.length) flags.push(`${k}: EOD "showed" left blank on ${inferred.join(', ')}; filled in as booked minus no-shows, cancels and reschedules.`);
     if (m.slots.value != null && m.slots.booked == null) flags.push(`${k}: no Calendly booked-call count for ${ed.slots_post_day}; slots show open start times only.`);
-    if (m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {
+    if (card?.tracker_key && m.cash.source !== 'tracker' && m.cash.value) flags.push(`${k}: not in the 2M tracker, so cash ($${m.cash.value.toLocaleString('en-US')}) is the Sales Tracker's through ${ed.through_key} and could not be cut at ${card.through_key}.`);
+    if (m.avgRevenue.uncut) flags.push(`${k}: closed on a day after ${card.through_key} and the snapshot has no daily_rev, so average revenue is left blank.`);
+    if (!card?.tracker_key && m.cash.source === 'tracker' && m.cash.salesTrackerCash !== m.cash.value) {
       flags.push(`${k}: cash through ${ed.through} is $${m.cash.value?.toLocaleString('en-US')} in the tracker, $${m.cash.salesTrackerCash?.toLocaleString('en-US')} in the Sales Tracker snapshot.`);
     }
     if (!m.cash.monthTarget && !m.newHire) flags.push(`${k}: no closer target for ${m.cash.targetsMonth ?? 'this month'} in data/targets; card shows no goal.`);
@@ -233,3 +263,9 @@ export const fmtMoney = (v, short = false) => {
   if (short && Math.abs(v) >= 1000) return `$${(v / 1000).toFixed(v % 1000 === 0 || v >= 100000 ? 0 : 1)}K`;
   return `$${Math.round(v).toLocaleString('en-US')}`;
 };
+
+// Close 1 per day ("MM-DD"), summed over [from, to]
+function closesTo(data, key, from, to) {
+  return Object.entries(data.daily_closes?.[key] ?? {}).filter(([d]) => d >= from && d <= to).reduce((a, [, n]) => a + n, 0);
+}
+const nextDay = (mmdd) => `${mmdd.slice(0, 3)}${String(Number(mmdd.slice(3)) + 1).padStart(2, '0')}`;
