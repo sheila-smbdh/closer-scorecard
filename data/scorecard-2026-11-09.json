@@ -1,0 +1,2172 @@
+{
+ "_note": "Monday edition run Mon 2026-11-09 (month to date through Sun Nov 8). Activity arrays are [booked calls, live calls, offers, closes, revenue generated, cash collected]. Slots: open counts from Messi 6am #sales-reports posts; booked from Calendly.",
+ "month": {
+  "label": "November",
+  "prev_label": "October",
+  "business_days": 21,
+  "business_days_elapsed_mon": 5,
+  "days_mon": 8
+ },
+ "editions": {
+  "monday": {
+   "date": "Monday, Nov 9",
+   "week_label": "Mon Nov 2 to Sun Nov 8",
+   "week_days": [
+    "11-02",
+    "11-03",
+    "11-04",
+    "11-05",
+    "11-06",
+    "11-07",
+    "11-08"
+   ],
+   "workdays_elapsed": 5,
+   "through": "Nov 8",
+   "through_key": "11-08",
+   "slots_post_day": "11-09"
+  }
+ },
+ "closers": [
+  {
+   "key": "Owen",
+   "name": "Owen Henderson",
+   "short": "Owen",
+   "slack": "U08PHDM1HFE",
+   "new_hire": false
+  },
+  {
+   "key": "Adam",
+   "name": "Adam Larkins",
+   "short": "Adam",
+   "slack": "U09PVSS26GM",
+   "new_hire": false
+  },
+  {
+   "key": "JZ",
+   "name": "Jordan Zadrozny",
+   "short": "JZ",
+   "slack": "U06TMEKK9E1",
+   "new_hire": false
+  },
+  {
+   "key": "VeJohn",
+   "name": "VeJohn C Heinemann",
+   "short": "VeJohn",
+   "slack": "U09TW8ZC6HF",
+   "new_hire": false
+  },
+  {
+   "key": "Julien",
+   "name": "Julien Breteau",
+   "short": "Julien",
+   "slack": "U0B01Q061B6",
+   "new_hire": false
+  },
+  {
+   "key": "Nick",
+   "name": "Nick Vaughan",
+   "short": "Nick",
+   "slack": "U0AUK90SG3A",
+   "new_hire": false
+  },
+  {
+   "key": "Omar",
+   "name": "Omar Kaddoura",
+   "short": "Omar",
+   "slack": "U08U0S37C0P",
+   "new_hire": false
+  },
+  {
+   "key": "Harry",
+   "name": "Harry Whyte",
+   "short": "Harry",
+   "slack": "U0BA8C73GK1",
+   "new_hire": false
+  },
+  {
+   "key": "Solomon",
+   "name": "Solomon House",
+   "short": "Solomon",
+   "slack": "U0BMBFU1UHH",
+   "new_hire": false
+  },
+  {
+   "key": "Daniel",
+   "name": "Daniel Jenkins",
+   "short": "Daniel",
+   "slack": "U0BKT632M9Q",
+   "new_hire": false
+  },
+  {
+   "key": "Kevin",
+   "name": "Kevin Manuel",
+   "short": "Kevin",
+   "slack": "U0BK51SUY8Z",
+   "new_hire": false
+  },
+  {
+   "key": "Oliver",
+   "name": "Oliver English",
+   "short": "Oliver",
+   "slack": "U0C4C8J3N05",
+   "new_hire": true
+  },
+  {
+   "key": "Tyler",
+   "name": "Tyler Johnson",
+   "short": "Tyler",
+   "slack": "U0C4MFY6EBC",
+   "new_hire": true
+  },
+  {
+   "key": "Yobani",
+   "name": "Yobani Mendoza",
+   "short": "Yobani",
+   "slack": "U0ARSKKNE1J",
+   "new_hire": true
+  },
+  {
+   "key": "Quinn",
+   "name": "Quinn Donelan",
+   "short": "Quinn",
+   "slack": "U0AR7J4RX9D",
+   "new_hire": true
+  }
+ ],
+ "activity": {
+  "Owen": {
+   "mtd": [
+    12,
+    6,
+    4,
+    2,
+    40000,
+    40000
+   ],
+   "wk": [
+    12,
+    6,
+    4,
+    2,
+    40000,
+    40000
+   ]
+  },
+  "Adam": {
+   "mtd": [
+    17,
+    10,
+    7,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    17,
+    10,
+    7,
+    0,
+    0,
+    0
+   ]
+  },
+  "JZ": {
+   "mtd": [
+    5,
+    2,
+    1,
+    3,
+    49000,
+    41000
+   ],
+   "wk": [
+    5,
+    2,
+    1,
+    3,
+    49000,
+    41000
+   ]
+  },
+  "VeJohn": {
+   "mtd": [
+    14,
+    7,
+    4,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    14,
+    7,
+    4,
+    0,
+    0,
+    0
+   ]
+  },
+  "Julien": {
+   "mtd": [
+    0,
+    0,
+    0,
+    1,
+    20000,
+    20000
+   ],
+   "wk": [
+    0,
+    0,
+    0,
+    1,
+    20000,
+    20000
+   ]
+  },
+  "Nick": {
+   "mtd": [
+    7,
+    5,
+    2,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    7,
+    5,
+    2,
+    0,
+    0,
+    0
+   ]
+  },
+  "Omar": {
+   "mtd": [
+    25,
+    14,
+    9,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    25,
+    14,
+    9,
+    0,
+    0,
+    0
+   ]
+  },
+  "Harry": {
+   "mtd": [
+    11,
+    8,
+    4,
+    2,
+    39000,
+    39000
+   ],
+   "wk": [
+    11,
+    8,
+    4,
+    2,
+    39000,
+    39000
+   ]
+  },
+  "Solomon": {
+   "mtd": [
+    23,
+    13,
+    11,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    23,
+    13,
+    11,
+    0,
+    0,
+    0
+   ]
+  },
+  "Daniel": {
+   "mtd": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "Kevin": {
+   "mtd": [
+    18,
+    10,
+    9,
+    1,
+    17500,
+    17500
+   ],
+   "wk": [
+    18,
+    10,
+    9,
+    1,
+    17500,
+    17500
+   ]
+  },
+  "Oliver": {
+   "mtd": [
+    23,
+    15,
+    10,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    23,
+    15,
+    10,
+    0,
+    0,
+    0
+   ]
+  },
+  "Tyler": {
+   "mtd": [
+    18,
+    12,
+    6,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    17,
+    11,
+    5,
+    0,
+    0,
+    0
+   ]
+  },
+  "Yobani": {
+   "mtd": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "Quinn": {
+   "mtd": [
+    3,
+    3,
+    3,
+    0,
+    0,
+    0
+   ],
+   "wk": [
+    3,
+    3,
+    3,
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "slots": {
+  "monday": {
+   "Adam": 8,
+   "VeJohn": 14,
+   "Omar": 15,
+   "Kevin": 16,
+   "Owen": 16,
+   "Nick": 18,
+   "Harry": 19,
+   "Oliver": 19,
+   "Daniel": 20,
+   "JZ": 22,
+   "Solomon": 25,
+   "Tyler": 39,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  }
+ },
+ "messi_slots": {
+  "11-09": {
+   "Adam": 8,
+   "VeJohn": 14,
+   "Omar": 15,
+   "Kevin": 16,
+   "Owen": 16,
+   "Nick": 18,
+   "Harry": 19,
+   "Oliver": 19,
+   "Daniel": 20,
+   "JZ": 22,
+   "Solomon": 25,
+   "Tyler": 39,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-08": {
+   "Adam": 10,
+   "VeJohn": 16,
+   "Omar": 17,
+   "Kevin": 19,
+   "Oliver": 19,
+   "Harry": 20,
+   "Nick": 20,
+   "Daniel": 23,
+   "JZ": 24,
+   "Owen": 25,
+   "Solomon": 29,
+   "Tyler": 34,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-07": {
+   "VeJohn": 13,
+   "Adam": 15,
+   "Oliver": 16,
+   "Omar": 18,
+   "Harry": 19,
+   "Kevin": 19,
+   "Daniel": 21,
+   "Nick": 21,
+   "JZ": 23,
+   "Owen": 23,
+   "Tyler": 26,
+   "Solomon": 33,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-06": {
+   "Harry": 13,
+   "VeJohn": 13,
+   "Adam": 15,
+   "Omar": 15,
+   "Kevin": 17,
+   "Nick": 17,
+   "Oliver": 17,
+   "Owen": 20,
+   "Daniel": 22,
+   "JZ": 22,
+   "Solomon": 28,
+   "Tyler": 35,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-05": {
+   "VeJohn": 12,
+   "Adam": 13,
+   "Harry": 14,
+   "Kevin": 15,
+   "JZ": 17,
+   "Nick": 17,
+   "Omar": 17,
+   "Owen": 20,
+   "Daniel": 21,
+   "Oliver": 23,
+   "Solomon": 23,
+   "Tyler": 28,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-04": {
+   "Nick": 7,
+   "Harry": 11,
+   "VeJohn": 11,
+   "Adam": 12,
+   "JZ": 15,
+   "Owen": 15,
+   "Kevin": 16,
+   "Omar": 19,
+   "Daniel": 22,
+   "Oliver": 26,
+   "Solomon": 26,
+   "Tyler": 32,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-03": {
+   "Nick": 2,
+   "Owen": 11,
+   "Kevin": 14,
+   "Adam": 16,
+   "Harry": 16,
+   "Omar": 16,
+   "VeJohn": 16,
+   "JZ": 21,
+   "Daniel": 24,
+   "Solomon": 33,
+   "Oliver": 50,
+   "Tyler": 55,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-02": {
+   "Nick": 4,
+   "Owen": 8,
+   "Harry": 10,
+   "Adam": 13,
+   "Omar": 13,
+   "Kevin": 14,
+   "VeJohn": 16,
+   "Daniel": 19,
+   "JZ": 19,
+   "Oliver": 32,
+   "Solomon": 32,
+   "Tyler": 50,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  },
+  "11-01": {
+   "Nick": 5,
+   "Owen": 9,
+   "Adam": 13,
+   "Harry": 13,
+   "Kevin": 14,
+   "Omar": 17,
+   "VeJohn": 18,
+   "JZ": 19,
+   "Daniel": 23,
+   "Oliver": 27,
+   "Solomon": 36,
+   "Tyler": 46,
+   "Julien": null,
+   "Yobani": null,
+   "Quinn": null
+  }
+ },
+ "messi_post_hour_et": 6,
+ "eod_inferred": {
+  "Harry": [
+   "11-02",
+   "11-05"
+  ],
+  "VeJohn": [
+   "11-02",
+   "11-04",
+   "11-07"
+  ],
+  "Nick": [
+   "11-02"
+  ],
+  "Omar": [
+   "11-05"
+  ],
+  "Kevin": [
+   "11-06"
+  ]
+ },
+ "daily_eod": {
+  "Tyler": {
+   "11-01": [
+    2,
+    1,
+    1,
+    0,
+    0
+   ],
+   "11-02": [
+    8,
+    6,
+    2,
+    0,
+    0
+   ],
+   "11-03": [
+    3,
+    2,
+    1,
+    0,
+    0
+   ],
+   "11-04": [
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "11-06": [
+    3,
+    2,
+    0,
+    1,
+    0
+   ],
+   "11-07": [
+    2,
+    1,
+    1,
+    0,
+    0
+   ],
+   "11-08": [
+    4,
+    1,
+    2,
+    1,
+    0
+   ]
+  },
+  "Kevin": {
+   "11-02": [
+    5,
+    3,
+    1,
+    0,
+    1
+   ],
+   "11-03": [
+    4,
+    3,
+    1,
+    0,
+    0
+   ],
+   "11-04": [
+    2,
+    1,
+    0,
+    0,
+    1
+   ],
+   "11-05": [
+    4,
+    2,
+    2,
+    0,
+    0
+   ],
+   "11-06": [
+    6,
+    5,
+    0,
+    0,
+    1
+   ]
+  },
+  "Harry": {
+   "11-02": [
+    4,
+    4,
+    0,
+    0,
+    0
+   ],
+   "11-04": [
+    2,
+    2,
+    0,
+    0,
+    0
+   ],
+   "11-05": [
+    6,
+    6,
+    0,
+    0,
+    0
+   ]
+  },
+  "Owen": {
+   "11-02": [
+    5,
+    4,
+    1,
+    0,
+    0
+   ],
+   "11-03": [
+    4,
+    3,
+    0,
+    1,
+    0
+   ],
+   "11-04": [
+    4,
+    0,
+    3,
+    1,
+    0
+   ],
+   "11-05": [
+    4,
+    4,
+    0,
+    0,
+    0
+   ]
+  },
+  "Oliver": {
+   "11-02": [
+    7,
+    4,
+    3,
+    0,
+    0
+   ],
+   "11-03": [
+    5,
+    4,
+    1,
+    0,
+    0
+   ],
+   "11-04": [
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "11-05": [
+    1,
+    0,
+    1,
+    0,
+    0
+   ],
+   "11-06": [
+    3,
+    2,
+    1,
+    0,
+    0
+   ],
+   "11-07": [
+    4,
+    2,
+    2,
+    0,
+    0
+   ],
+   "11-08": [
+    3,
+    3,
+    0,
+    0,
+    0
+   ]
+  },
+  "Solomon": {
+   "11-02": [
+    7,
+    6,
+    1,
+    0,
+    0
+   ],
+   "11-03": [
+    3,
+    2,
+    0,
+    1,
+    0
+   ],
+   "11-04": [
+    5,
+    3,
+    1,
+    1,
+    0
+   ],
+   "11-05": [
+    5,
+    4,
+    1,
+    0,
+    0
+   ],
+   "11-06": [
+    4,
+    0,
+    3,
+    0,
+    1
+   ],
+   "11-08": [
+    2,
+    0,
+    1,
+    1,
+    0
+   ]
+  },
+  "VeJohn": {
+   "11-02": [
+    4,
+    3,
+    0,
+    0,
+    1
+   ],
+   "11-03": [
+    2,
+    2,
+    0,
+    0,
+    0
+   ],
+   "11-04": [
+    4,
+    2,
+    0,
+    1,
+    1
+   ],
+   "11-05": [
+    2,
+    2,
+    0,
+    0,
+    0
+   ],
+   "11-06": [
+    3,
+    1,
+    0,
+    2,
+    0
+   ],
+   "11-07": [
+    3,
+    3,
+    0,
+    0,
+    0
+   ]
+  },
+  "Nick": {
+   "11-02": [
+    5,
+    5,
+    0,
+    0,
+    0
+   ],
+   "11-03": [
+    4,
+    2,
+    2,
+    0,
+    0
+   ],
+   "11-05": [
+    2,
+    2,
+    0,
+    0,
+    0
+   ]
+  },
+  "Adam": {
+   "11-03": [
+    2,
+    0,
+    2,
+    0,
+    0
+   ],
+   "11-04": [
+    4,
+    1,
+    3,
+    0,
+    0
+   ],
+   "11-05": [
+    3,
+    3,
+    0,
+    0,
+    0
+   ]
+  },
+  "Omar": {
+   "11-03": [
+    6,
+    3,
+    3,
+    0,
+    0
+   ],
+   "11-04": [
+    6,
+    3,
+    3,
+    0,
+    0
+   ],
+   "11-05": [
+    5,
+    5,
+    0,
+    0,
+    0
+   ],
+   "11-06": [
+    5,
+    3,
+    1,
+    1,
+    0
+   ]
+  }
+ },
+ "daily_st": {
+  "Tyler": {
+   "11-01": [
+    1,
+    1
+   ],
+   "11-02": [
+    8,
+    5
+   ],
+   "11-04": [
+    1,
+    1
+   ],
+   "11-05": [
+    2,
+    2
+   ],
+   "11-06": [
+    2,
+    1
+   ],
+   "11-07": [
+    2,
+    1
+   ],
+   "11-08": [
+    2,
+    1
+   ]
+  },
+  "Harry": {
+   "11-02": [
+    4,
+    3
+   ],
+   "11-04": [
+    2,
+    2
+   ],
+   "11-05": [
+    5,
+    3
+   ]
+  },
+  "Kevin": {
+   "11-02": [
+    4,
+    3
+   ],
+   "11-03": [
+    3,
+    2
+   ],
+   "11-04": [
+    1,
+    1
+   ],
+   "11-05": [
+    4,
+    2
+   ],
+   "11-06": [
+    6,
+    2
+   ]
+  },
+  "Owen": {
+   "11-02": [
+    4,
+    2
+   ],
+   "11-06": [
+    2,
+    1
+   ],
+   "11-04": [
+    3,
+    0
+   ],
+   "11-05": [
+    3,
+    3
+   ]
+  },
+  "Oliver": {
+   "11-02": [
+    5,
+    2
+   ],
+   "11-03": [
+    5,
+    4
+   ],
+   "11-04": [
+    1,
+    1
+   ],
+   "11-05": [
+    1,
+    0
+   ],
+   "11-06": [
+    4,
+    3
+   ],
+   "11-07": [
+    4,
+    2
+   ],
+   "11-08": [
+    3,
+    3
+   ]
+  },
+  "Solomon": {
+   "11-02": [
+    7,
+    6
+   ],
+   "11-04": [
+    5,
+    2
+   ],
+   "11-05": [
+    5,
+    4
+   ],
+   "11-06": [
+    3,
+    0
+   ],
+   "11-07": [
+    1,
+    1
+   ],
+   "11-08": [
+    2,
+    0
+   ]
+  },
+  "VeJohn": {
+   "11-02": [
+    3,
+    0
+   ],
+   "11-03": [
+    2,
+    2
+   ],
+   "11-04": [
+    3,
+    1
+   ],
+   "11-05": [
+    2,
+    2
+   ],
+   "11-06": [
+    1,
+    1
+   ],
+   "11-07": [
+    3,
+    1
+   ]
+  },
+  "JZ": {
+   "11-03": [
+    2,
+    1
+   ],
+   "11-06": [
+    0,
+    0
+   ],
+   "11-04": [
+    3,
+    1
+   ],
+   "11-07": [
+    0,
+    0
+   ]
+  },
+  "Julien": {
+   "11-03": [
+    0,
+    0
+   ]
+  },
+  "Omar": {
+   "11-06": [
+    10,
+    6
+   ],
+   "11-04": [
+    6,
+    3
+   ],
+   "11-05": [
+    9,
+    5
+   ]
+  },
+  "Nick": {
+   "11-03": [
+    4,
+    2
+   ],
+   "11-04": [
+    1,
+    1
+   ],
+   "11-05": [
+    2,
+    2
+   ]
+  },
+  "Adam": {
+   "11-03": [
+    2,
+    0
+   ],
+   "11-04": [
+    4,
+    1
+   ],
+   "11-02": [
+    4,
+    3
+   ],
+   "11-05": [
+    3,
+    3
+   ],
+   "11-06": [
+    4,
+    3
+   ]
+  },
+  "Quinn": {
+   "11-05": [
+    3,
+    3
+   ]
+  }
+ },
+ "daily_closes": {
+  "Harry": {
+   "11-02": 1,
+   "11-05": 1
+  },
+  "Julien": {
+   "11-03": 1
+  },
+  "JZ": {
+   "11-06": 2,
+   "11-07": 1
+  },
+  "Owen": {
+   "11-04": 1,
+   "11-05": 1
+  },
+  "Kevin": {
+   "11-05": 1
+  }
+ },
+ "closer_targets": {
+  "2026-11": {
+   "month": "2026-11",
+   "_note": "Closer-facing targets from Sheila, Oct 30. Weekly split shifts expected cash from month end toward the first weeks. Yobani and Quinn are setters on track for promotion (no card until they are on the roster).",
+   "weeks": [
+    0.13,
+    0.19,
+    0.2,
+    0.23,
+    0.25
+   ],
+   "closers": {
+    "Julien": {
+     "cash": 200000
+    },
+    "Daniel": {
+     "cash": 200000
+    },
+    "Yobani": {
+     "cash": 50000
+    },
+    "Quinn": {
+     "cash": 50000
+    },
+    "Owen": {
+     "cash": 325000
+    },
+    "Adam": {
+     "cash": 275000
+    },
+    "VeJohn": {
+     "cash": 275000
+    },
+    "JZ": {
+     "cash": 300000
+    },
+    "Omar": {
+     "cash": 275000
+    },
+    "Nick": {
+     "cash": 275000
+    },
+    "Harry": {
+     "cash": 275000
+    },
+    "Kevin": {
+     "cash": 225000
+    },
+    "Solomon": {
+     "cash": 225000
+    },
+    "Tyler": {
+     "cash": 100000
+    },
+    "Oliver": {
+     "cash": 100000
+    }
+   }
+  }
+ },
+ "slots_booked": {
+  "11-01": {
+   "Owen": 13,
+   "Adam": 7,
+   "JZ": 1,
+   "VeJohn": 5,
+   "Julien": 1,
+   "Nick": 11,
+   "Omar": 8,
+   "Harry": 7,
+   "Solomon": 6,
+   "Daniel": 4,
+   "Kevin": 7,
+   "Oliver": 5,
+   "Tyler": 10,
+   "Yobani": 13,
+   "Quinn": 20
+  },
+  "11-02": {
+   "Owen": 14,
+   "Adam": 7,
+   "JZ": 1,
+   "VeJohn": 6,
+   "Julien": 1,
+   "Nick": 12,
+   "Omar": 12,
+   "Harry": 10,
+   "Solomon": 10,
+   "Daniel": 7,
+   "Kevin": 7,
+   "Oliver": 6,
+   "Tyler": 10,
+   "Yobani": 20,
+   "Quinn": 25
+  },
+  "11-03": {
+   "Owen": 13,
+   "Adam": 4,
+   "JZ": 3,
+   "VeJohn": 7,
+   "Julien": 1,
+   "Nick": 9,
+   "Omar": 16,
+   "Harry": 11,
+   "Solomon": 7,
+   "Daniel": 0,
+   "Kevin": 8,
+   "Oliver": 5,
+   "Tyler": 5,
+   "Yobani": 15,
+   "Quinn": 22
+  },
+  "11-04": {
+   "Owen": 12,
+   "Adam": 9,
+   "JZ": 5,
+   "VeJohn": 11,
+   "Julien": 0,
+   "Nick": 6,
+   "Omar": 12,
+   "Harry": 12,
+   "Solomon": 14,
+   "Daniel": 0,
+   "Kevin": 7,
+   "Oliver": 1,
+   "Tyler": 4,
+   "Yobani": 13,
+   "Quinn": 21
+  },
+  "11-05": {
+   "Owen": 10,
+   "Adam": 8,
+   "JZ": 3,
+   "VeJohn": 9,
+   "Julien": 0,
+   "Nick": 4,
+   "Omar": 13,
+   "Harry": 12,
+   "Solomon": 11,
+   "Daniel": 0,
+   "Kevin": 10,
+   "Oliver": 4,
+   "Tyler": 4,
+   "Yobani": 23,
+   "Quinn": 21
+  },
+  "11-06": {
+   "Owen": 9,
+   "Adam": 6,
+   "JZ": 1,
+   "VeJohn": 8,
+   "Julien": 0,
+   "Nick": 5,
+   "Omar": 15,
+   "Harry": 12,
+   "Solomon": 8,
+   "Daniel": 0,
+   "Kevin": 8,
+   "Oliver": 8,
+   "Tyler": 3,
+   "Yobani": 19,
+   "Quinn": 15
+  },
+  "11-07": {
+   "Owen": 9,
+   "Adam": 5,
+   "JZ": 6,
+   "VeJohn": 8,
+   "Julien": 0,
+   "Nick": 3,
+   "Omar": 12,
+   "Harry": 7,
+   "Solomon": 6,
+   "Daniel": 0,
+   "Kevin": 4,
+   "Oliver": 9,
+   "Tyler": 12,
+   "Yobani": 16,
+   "Quinn": 16
+  },
+  "11-08": {
+   "Owen": 10,
+   "Adam": 6,
+   "JZ": 9,
+   "VeJohn": 6,
+   "Julien": 0,
+   "Nick": 4,
+   "Omar": 13,
+   "Harry": 9,
+   "Solomon": 7,
+   "Daniel": 0,
+   "Kevin": 5,
+   "Oliver": 5,
+   "Tyler": 10,
+   "Yobani": 23,
+   "Quinn": 21
+  },
+  "11-09": {
+   "Owen": 13,
+   "Adam": 8,
+   "JZ": 11,
+   "VeJohn": 8,
+   "Julien": 0,
+   "Nick": 6,
+   "Omar": 15,
+   "Harry": 10,
+   "Solomon": 9,
+   "Daniel": 0,
+   "Kevin": 8,
+   "Oliver": 3,
+   "Tyler": 9,
+   "Yobani": 31,
+   "Quinn": 27
+  }
+ },
+ "_slots_booked_note": "Client calls already booked over the next 7 days at each Messi post (6am ET), per closer, from Calendly (pulled 2026-11-09T12:26:40Z). Open slots + booked = capacity, scored against the 35 target.",
+ "trackers": {
+  "11-08": {
+   "through": "2026-11-08",
+   "generated_at": "2026-11-09T12:26:48.322Z",
+   "data_pulled_at": "2026-11-09T11:33:18.535Z",
+   "all_checks_pass": false,
+   "failed_checks": [
+    "closer_cash_adds_up_to_team_cash: per-closer cash sums to $137,500; team cash is $157,500"
+   ],
+   "targets_note": "Targets are the ones the dashboard shows right now.",
+   "days_in_month": 30,
+   "prior_month": "2026-10",
+   "prior_days_in_month": 31,
+   "unmatched": [
+    "Yobani",
+    "Quinn"
+   ],
+   "closers": {
+    "Owen": {
+     "tracker_name": "Owen",
+     "rep_id": "owen",
+     "month_target": 432068,
+     "target_source": "auto_split",
+     "cash": 40000,
+     "expected_cash": 61835,
+     "pct_of_pace": 0.6469,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 40000,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      20000,
+      40000,
+      40000,
+      40000,
+      40000
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      38000,
+      77000,
+      77000,
+      77000,
+      77000,
+      77000,
+      77000,
+      77000,
+      97000,
+      97000,
+      97000,
+      97000,
+      97000,
+      97000,
+      97000,
+      116000,
+      134000,
+      134000,
+      134000,
+      134000,
+      153000,
+      168000,
+      203000,
+      203000,
+      278500,
+      338500
+     ]
+    },
+    "Adam": {
+     "tracker_name": "Adam L",
+     "rep_id": "adam-l",
+     "month_target": 251635,
+     "target_source": "auto_split",
+     "cash": 0,
+     "expected_cash": 36012,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "prior_daily_cash": [
+      0,
+      35000,
+      35000,
+      35000,
+      35000,
+      35000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      68000,
+      85500,
+      121500,
+      154500
+     ]
+    },
+    "JZ": {
+     "tracker_name": "Jay Z",
+     "rep_id": "jay-z",
+     "month_target": 334722,
+     "target_source": "auto_split",
+     "cash": 41000,
+     "expected_cash": 47903,
+     "pct_of_pace": 0.8559,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 41000,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      26000,
+      41000,
+      41000
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      20000,
+      20000,
+      20000,
+      20000,
+      20000,
+      37500,
+      37500,
+      37500,
+      37500,
+      37500,
+      37500,
+      37500,
+      37500,
+      52500,
+      52500,
+      52500,
+      107500,
+      136500,
+      189500
+     ]
+    },
+    "VeJohn": {
+     "tracker_name": "VeJohn",
+     "rep_id": "vejohn",
+     "month_target": 313634,
+     "target_source": "auto_split",
+     "cash": 0,
+     "expected_cash": 44885,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "prior_daily_cash": [
+      16000,
+      16000,
+      31000,
+      31000,
+      31000,
+      31000,
+      46000,
+      46000,
+      46000,
+      46000,
+      46000,
+      46000,
+      46000,
+      66000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      81000,
+      98500,
+      131000,
+      131000,
+      176000,
+      206000
+     ]
+    },
+    "Julien": {
+     "tracker_name": "Julien",
+     "rep_id": "julien",
+     "month_target": 187513,
+     "target_source": "auto_split",
+     "cash": 20000,
+     "expected_cash": 26836,
+     "pct_of_pace": 0.7453,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      20000,
+      20000,
+      20000,
+      20000,
+      20000,
+      20000
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      48000,
+      48000,
+      63000,
+      78000,
+      78000,
+      78000,
+      78000,
+      78000,
+      93000,
+      93000,
+      93000,
+      128000
+     ]
+    },
+    "Nick": {
+     "tracker_name": "Nick",
+     "rep_id": "nick",
+     "month_target": 267211,
+     "target_source": "auto_split",
+     "cash": 0,
+     "expected_cash": 38241,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "prior_daily_cash": [
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      35000,
+      35000,
+      35000,
+      35000,
+      35000,
+      35000,
+      35000,
+      35000,
+      69000,
+      69000,
+      69000,
+      69000,
+      69000,
+      69000,
+      69000,
+      84000,
+      102000,
+      102000,
+      102000,
+      102000,
+      132000,
+      161000,
+      161000,
+      178500,
+      208500,
+      208500
+     ]
+    },
+    "Omar": {
+     "tracker_name": "Omar",
+     "rep_id": "omar",
+     "month_target": 251231,
+     "target_source": "auto_split",
+     "cash": 0,
+     "expected_cash": 35954,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      35000,
+      55000,
+      55000,
+      55000,
+      55000,
+      55000,
+      55000,
+      91000,
+      91000,
+      91000,
+      109000,
+      156000,
+      184000
+     ]
+    },
+    "Harry": {
+     "tracker_name": "Harry",
+     "rep_id": "harry",
+     "month_target": 319601,
+     "target_source": "auto_split",
+     "cash": 39000,
+     "expected_cash": 45739,
+     "pct_of_pace": 0.8527,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 39000,
+     "daily_cash": [
+      0,
+      20000,
+      20000,
+      20000,
+      39000,
+      39000,
+      39000,
+      39000
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      20000,
+      20000,
+      20000,
+      39000,
+      39000,
+      39000,
+      39000,
+      39000,
+      39000,
+      39000,
+      39000,
+      39000,
+      58000,
+      58000,
+      58000,
+      58000,
+      58000,
+      58000,
+      96000,
+      96000,
+      112000,
+      131000,
+      189000,
+      221000
+     ]
+    },
+    "Solomon": {
+     "tracker_name": "Solomon",
+     "rep_id": "solomon",
+     "month_target": 153530,
+     "target_source": "auto_split",
+     "cash": 0,
+     "expected_cash": 21972,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      36000,
+      36000,
+      36000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      56000,
+      74000,
+      89000,
+      104000
+     ]
+    },
+    "Daniel": {
+     "tracker_name": "Daniel",
+     "rep_id": "daniel",
+     "month_target": 124402,
+     "target_source": "auto_split",
+     "cash": 0,
+     "expected_cash": 17804,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      17500,
+      62500,
+      62500,
+      80500
+     ]
+    },
+    "Kevin": {
+     "tracker_name": "Kevin",
+     "rep_id": "kevin",
+     "month_target": 164453,
+     "target_source": "auto_split",
+     "cash": 17500,
+     "expected_cash": 23535,
+     "pct_of_pace": 0.7436,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 17500,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      17500,
+      17500,
+      17500,
+      17500
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6000,
+      6000,
+      6000,
+      6000,
+      6000,
+      6000,
+      24000,
+      24000,
+      42000,
+      42000,
+      42000,
+      42000,
+      42000,
+      42000,
+      42000,
+      57000,
+      57000,
+      57000,
+      72000,
+      72000,
+      72000,
+      90000,
+      128000,
+      148000
+     ]
+    },
+    "Oliver": {
+     "tracker_name": "Oliver",
+     "rep_id": "oliver",
+     "month_target": 100000,
+     "target_source": "new_rep_ramp",
+     "cash": 0,
+     "expected_cash": 14311,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    "Tyler": {
+     "tracker_name": "Tyler",
+     "rep_id": "tyler",
+     "month_target": 100000,
+     "target_source": "new_rep_ramp",
+     "cash": 0,
+     "expected_cash": 14311,
+     "pct_of_pace": 0,
+     "status": "behind",
+     "through_date": "2026-11-08",
+     "cash_mtd": 0,
+     "daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "prior_daily_cash": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      15000,
+      15000
+     ]
+    }
+   }
+  }
+ }
+}
