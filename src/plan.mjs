@@ -1,7 +1,7 @@
 // Numbers for the card beyond src/metrics.mjs: closes vs the month's closes target and the Weekly
 // Scorecard table. Targets and the month curve come from Sheila's closer-facing targets file
-// (src/targets.mjs), not the 2M tracker. Weeks end on Sunday (monthWeeks in
-// src/targets.mjs), like the Monday card, so its goal to date equals the finished weeks' targets. Targets carry misses forward like
+// (src/targets.mjs), not the 2M tracker. Weeks come from monthWeeks in
+// src/targets.mjs: from Dec 2026 they end on Sunday like the Monday card; until then Sun-Sat. Targets carry misses forward like
 // the tracker's week cards: a week's target is the goal curve at the week's end minus what was banked
 // before the week started, so a finished week is hit only if the closer is back on the pace line by its
 // end. The first unfinished week carries any deficit; weeks after it show their plain slice of the curve.

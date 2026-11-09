@@ -1,12 +1,12 @@
 {
  "month": "2026-11",
- "_note": "Closer-facing targets from Sheila, Oct 30. Weekly split shifts expected cash from month end toward the first weeks. Yobani and Quinn are setters on track for promotion (no card until they are on the roster). Nov 9: weeks now end on Sunday (Week 1 Nov 1-8, Week 2 9-15, Week 3 16-22, Week 4 23-29, Final stretch Nov 30). Sheila's split was 13/19/20/23/25% on the Sun-Sat weeks (Nov 1-7, 8-14, 15-21, 22-28, 29-30); these shares are that same daily curve regrouped, so the goal at the end of each Sunday is unchanged.",
+ "_note": "Closer-facing targets from Sheila, Oct 30. Weekly split shifts expected cash from month end toward the first weeks. Yobani and Quinn are setters on track for promotion (no card until they are on the roster).",
  "weeks": [
-  0.157143,
-  0.191429,
-  0.204286,
-  0.322143,
-  0.124999
+  0.13,
+  0.19,
+  0.2,
+  0.23,
+  0.25
  ],
  "closers": {
   "Yobani": {

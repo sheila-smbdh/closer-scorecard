@@ -5,7 +5,7 @@
 // File shape:
 //   { "month": "2026-11",
 //     "weeks": [0.12, 0.18, 0.2, 0.25, 0.25],        // share of the month per week (Mon-Sun weeks from
-//                                                     // Nov 2026, see monthWeeks below), must add up to 1
+//                                                     // Dec 2026, see monthWeeks below), must add up to 1
 //     "closers": { "Owen": { "cash": 450000, "closes": 26 }, ... } }   // closes optional: cash ÷ $17,500
 
 import fs from 'node:fs';
@@ -15,14 +15,16 @@ import { fileURLToPath } from 'node:url';
 const MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 // Weeks of the month for the Weekly Scorecard and the targets file's weekly shares.
-// From November 2026 (Sheila, Nov 9): every week ends on a Sunday, the day the Monday card's window
+// From December 2026 (Sheila, Nov 9): every week ends on a Sunday, the day the Monday card's window
 // ends, so a Monday card always closes out a week and its goal to date equals that week's row.
 // Week 1 runs from the 1st through the first Sunday (Dec 2026: Tue Dec 1 to Sun Dec 6); when the 1st is
 // itself a Sunday, that day joins the next week. The last week ends on the month's last day.
-// Earlier months keep the tracker's Sun-Sat weeks (monthWeeksSunSat) so their history rebuilds unchanged.
+// November 2026 and earlier keep the tracker's Sun-Sat weeks (monthWeeksSunSat): closers had already seen
+// November's weekly targets. In those months the Monday card's goal to date stops at the last finished
+// week instead (src/metrics.mjs), so it still equals a week row.
 const DAY = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export function monthWeeks(year, monthIdx, dim) {
-  if (year * 12 + monthIdx < 2026 * 12 + 10) return monthWeeksSunSat(year, monthIdx, dim);
+  if (year * 12 + monthIdx < 2026 * 12 + 11) return monthWeeksSunSat(year, monthIdx, dim);
   const dow = (d) => new Date(Date.UTC(year, monthIdx, d)).getUTCDay();
   const mon = MONTH_ABBR[monthIdx];
   let firstSunday = 1;

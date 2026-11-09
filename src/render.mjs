@@ -98,7 +98,8 @@ function tile({ label, value, sub, statusKey, target, barHtml = '', chipText = C
 function todayMarker(ch, x, y, top, bottom, value, mo) {
   const xt = x(ch.day), right = xt < 640;
   const tx = right ? xt + 16 : xt - 16, anchor = right ? 'start' : 'end';
-  const labels = [{ v: ch.goal[ch.day - 1], color: '#ff7a58', text: 'vs goal' }];
+  // The goal label uses the card's goal to date (on a Nov 2026 Monday card, the end of the last finished week)
+  const labels = [{ v: ch.goalNow ?? ch.goal[ch.day - 1], color: '#ff7a58', text: ch.goalText ?? 'vs goal' }];
   if (ch.priorSameDay != null) labels.push({ v: ch.priorSameDay, color: '#9fb0ff', text: `vs ${monthShort(ch.priorMonth)} same day` });
   for (const l of labels) l.y = y(l.v);
   // keep the two labels at least 40px apart
@@ -141,7 +142,9 @@ const monthShort = (ym) => new Date(`${ym}-01T00:00:00Z`).toLocaleString('en-US'
 
 export function closerCard(m, p, month, title) {
   const c = m.cash, ch = c.chart;
-  const goalNow = ch ? ch.goal[ch.day - 1] : c.expected;
+  const goalNow = c.expected ?? (ch ? ch.goal[ch.day - 1] : null);
+  const goalShort = c.goalThrough ? new Date(`${c.goalThrough}T12:00:00Z`).toLocaleString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }) : null;
+  if (ch) { ch.goalNow = goalNow; ch.goalText = goalShort ? `vs goal to ${goalShort}` : 'vs goal'; }
 
   const pace = `<div class="pt">
 <div class="pt-top">
@@ -169,7 +172,7 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget, c.value ?? 0, month.lab
       target: 'Target $17,500', barHtml: bar(ar.value, ar.target) }),
     // Pacing: cash collected month to date vs where the 2M tracker's curve says it should be today
     c.monthTarget ? tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: c.status,
-      target: `Goal to date ${$(goalNow)}`, barHtml: bar(c.value ?? 0, goalNow), chipText: PACE_LABEL[c.pace].toUpperCase(), chipAbove: true })
+      target: goalShort ? `Goal through ${goalShort} ${$(goalNow)}` : `Goal to date ${$(goalNow)}`, barHtml: bar(c.value ?? 0, goalNow), chipText: PACE_LABEL[c.pace].toUpperCase(), chipAbove: true })
       : tile({ label: 'Pacing', value: $(c.value ?? 0), statusKey: 'track', target: 'No target yet' }),
   ].join('');
 
