@@ -54,6 +54,13 @@ export function plan(data, m) {
     .filter(([d]) => day(d) >= from && day(d) <= Math.min(to, through)).reduce((a, [, n]) => a + n, 0);
 
   const closesBefore = (d) => closesIn(1, d - 1);
+  // This week's "so far" runs to the last day of data, which on a Nov 2026 Monday card is the Sunday after
+  // the card's Saturday (month to date stops Saturday; Sunday's cash and closes show in Week 2)
+  const dataThrough = m.ed.data_through_key ? day(m.ed.data_through_key) : through;
+  const dataDaily = c.chart.dataDaily ?? c.chart.daily;
+  const cashSoFar = (d) => (d > 0 ? dataDaily[Math.min(d, dataThrough, dataDaily.length) - 1] ?? 0 : 0);
+  const closesSoFar = (from, to) => Object.entries(dailyCloses)
+    .filter(([d]) => day(d) >= from && day(d) <= Math.min(to, dataThrough)).reduce((a, [, n]) => a + n, 0);
   let carried = false;
   out.weeks = monthWeeks(year, mo - 1, dim).map((w) => {
     // The first unfinished week is this week, even when the card ends on the day before it starts (a Nov
@@ -77,7 +84,9 @@ export function plan(data, m) {
       row.next7 = s.value == null ? null : { ...s, toOpen: Math.max(0, SLOTS_TARGET - s.value) };
     }
     if (phase !== 'next') {
-      row.actual = { cash: cashAt(w.end) - cashAt(w.start - 1), closes: closesIn(w.start, w.end) };
+      row.actual = phase === 'now'
+        ? { cash: cashSoFar(w.end) - cashAt(w.start - 1), closes: closesSoFar(w.start, w.end) }
+        : { cash: cashAt(w.end) - cashAt(w.start - 1), closes: closesIn(w.start, w.end) };
       if (phase === 'done') {
         row.actual.slots = m.slotAvg(mmdd(mo, w.start), mmdd(mo, w.end)).value;
         row.hit = {
