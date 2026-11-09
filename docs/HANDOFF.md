@@ -28,7 +28,7 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 
 ## Decisions Sheila made (do not re-ask)
 
-**Roster (13):** Owen Henderson, Adam Larkins, Jordan Zadrozny (JZ, "Jay Z" in the Sales Tracker, "Jordan" in EOD), VeJohn C Heinemann, Julien Breteau (spelled Julien), Nick Vaughan, Omar Kaddoura, Harry Whyte, Solomon House, Daniel Jenkins, Kevin Manuel, Oliver English (new hire, oliver@smbdealhunter.xyz, Slack U0C4C8J3N05), Tyler Johnson (new hire, tyler@smbdealhunter.xyz, Slack U0C4MFY6EBC). Chris Cha and EJ were fired. Yobani Mendoza (Slack U0ARSKKNE1J) and Quinn Donelan (U0AR7J4RX9D) get cards from November (Sheila, Oct 30). Dave Martin is a setter to add later when promoted. Jay DeCristofaro gets no card.
+**Roster (13):** Owen Henderson, Adam Larkins, Jordan Zadrozny (JZ, "Jay Z" in the Sales Tracker, "Jordan" in EOD), VeJohn C Heinemann, Nick Vaughan, Omar Kaddoura, Harry Whyte, Solomon House, Kevin Manuel, Oliver English (new hire, oliver@smbdealhunter.xyz, Slack U0C4C8J3N05), Tyler Johnson (new hire, tyler@smbdealhunter.xyz, Slack U0C4MFY6EBC). Chris Cha and EJ were fired. Daniel Jenkins and Julien Breteau left the company (Nov 9, 2026). Yobani Mendoza (Slack U0ARSKKNE1J) and Quinn Donelan (U0AR7J4RX9D) get cards from November (Sheila, Oct 30). Dave Martin is a setter to add later when promoted. Jay DeCristofaro gets no card.
 
 **Delivery (not live yet):** image of each card by Slack DM, 7:14am ET Monday and Wednesday (Messi's slot post moved to 6am); on the 1st of each month the previous month's final cards for every closer (with next month's plan) go to #sales-reports for Jay's 1:1s, in a thread under one "<Month> closer scorecards are in @Jay" message; no DMs on a Monday or Wednesday 1st. Monday = month to date through Sunday. Wednesday = month to date through Tuesday. No leadership table (removed Oct 27). **Management view** (Sheila, Nov 3): `src/management.mjs` puts every closer's card numbers on one page; on every Monday and Wednesday run that DMs closers it goes to #sales-leadership (`C0ALMSYHZB6`) so management sees what the closers were sent.
 
@@ -49,5 +49,5 @@ Build: `npm run monday` / `npm run wednesday` (Playwright from the global instal
 1. Turn the routine on before Nov 1 (paused; Sheila decides). Nov 1: thread post to Jay; first closer DMs Mon Nov 9.
 2. Each month: Sheila sends closer-facing goals and the week-by-week split; save as `data/targets/<YYYY-MM>.json` before the 1st.
 3. Oliver and Tyler: no EOD reports yet and "not a discovery host" per Messi, so their slot tiles stay empty until they host.
-4. Julien's discovery hours taken from his "Sales Calls" Calendly schedule (8am-1pm ET); confirm.
+4. (Closed: Julien left the company on Nov 9, 2026.)
 5. Nov 1, 2026 delivery goes into Sheila's thread in D0BNJ9DNKNE (ts 1793394580.080129), not a new #sales-reports message; from Dec 1 the #sales-reports message + thread.
