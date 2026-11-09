@@ -5,7 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright';
-import { closerMetrics, withTeam, runFlags, trackerFor } from './metrics.mjs';
+import { closerMetrics, withTeam, runFlags, trackerFor, cardEdition } from './metrics.mjs';
 import { plan } from './plan.mjs';
 import { closerCard } from './render.mjs';
 
@@ -22,8 +22,9 @@ withTeam(all);
 const metrics = all.filter((m) => !only.length || only.includes(m.closer.key));
 
 // "Sunday, October 18th"
-const [mm, dd] = data.editions[edition].through_key.split('-').map(Number);
-const year = Number(trackerFor(data, data.editions[edition])?.through?.slice(0, 4)) || new Date().getUTCFullYear();
+const cardEd = cardEdition(data, edition);
+const [mm, dd] = cardEd.through_key.split('-').map(Number);
+const year = Number(trackerFor(data, cardEd)?.through?.slice(0, 4)) || new Date().getUTCFullYear();
 const d = new Date(Date.UTC(year, mm - 1, dd));
 const sfx = [11, 12, 13].includes(dd) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[dd % 10] ?? 'th');
 const dateText = `${d.toLocaleString('en-US', { weekday: 'long', timeZone: 'UTC' })}, ${d.toLocaleString('en-US', { month: 'long', timeZone: 'UTC' })} ${dd}${sfx}`;

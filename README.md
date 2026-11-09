@@ -74,7 +74,8 @@ Revenue generated is contract value booked at close; cash collected is money act
 ## Known data issues (found while building the samples)
 
 - **Oliver and Tyler** are "not a discovery host" in Calendly yet, so their slot tiles stay empty until they are. They had no closer-facing October goal; their November goals are in `data/targets/2026-11.json`.
-- `daily_closes` has to be pulled from the Sales Tracker `Inputs` tab (column J by date); the tracker read API's `closes_mtd` ignores `through`.
+- `daily_closes` has to be pulled from the Sales Tracker `Inputs` tab (column J by date); the tracker read API's `closes_mtd` ignores `through`. `daily_rev` (column V by date) lets a Monday card that ends before the pull's last day (November 2026: Saturday) cut average revenue there; without it, average revenue is left blank and flagged when someone closed on the days left out.
+- Card window (`cardEdition` in `src/metrics.mjs`): Monday and 1st-of-month cards end at the last finished week of the Weekly Scorecard, so cash, closes, live calls, average revenue, slots, goal to date and the title date all line up with the week rows, and the management view uses the same window. From December 2026 that is the Sunday the data runs through; in November 2026 it is the Saturday before.
 - Messi's Calendly counts are a rolling next-7-days view, starting Oct 9, 2026; slots before that day cannot be reconstructed.
 
 ## Open items before launch

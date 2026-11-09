@@ -6,7 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright';
-import { closerMetrics, withTeam, trackerFor, fmtMoney, PACE_LABEL, TARGETS } from './metrics.mjs';
+import { closerMetrics, withTeam, trackerFor, fmtMoney, PACE_LABEL, TARGETS, cardEdition } from './metrics.mjs';
 import { plan } from './plan.mjs';
 import { targetsFor, closerTargets, nextMonthKey, monthWeeks, daysIn } from './targets.mjs';
 
@@ -19,7 +19,7 @@ const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 const all = data.closers.map((c) => closerMetrics(data, c, edition));
 const team = withTeam(all);
 const rows = all.map((m) => ({ m, p: plan(data, m) }));
-const ed = data.editions[edition];
+const ed = cardEdition(data, edition); // same window as the cards (Monday: last finished week)
 const tr = trackerFor(data, ed);
 const monthKey = tr.through.slice(0, 7);
 const nk = nextMonthKey(monthKey);
