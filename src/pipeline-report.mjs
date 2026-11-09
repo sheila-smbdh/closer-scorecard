@@ -25,8 +25,8 @@ const SNAP_DIR = path.join(path.dirname(dataPath), 'pipeline-snapshots');
 
 export const PODS = [
   { title: "Owen's pod", note: 'Owen and his trainees', keys: ['Owen', 'JZ', 'Adam', 'VeJohn'] },
-  { title: "Jay's pod: fully ramped", note: "Jay's trainees", keys: ['Nick', 'Harry', 'Omar', 'Julien'] },
-  { title: "Jay's pod: newly ramped", note: 'Month 4', keys: ['Kevin', 'Solomon', 'Daniel'] },
+  { title: "Jay's pod: fully ramped", note: "Jay's trainees", keys: ['Nick', 'Harry', 'Omar'] },
+  { title: "Jay's pod: newly ramped", note: 'Month 4', keys: ['Kevin', 'Solomon'] },
   { title: 'Ramping', note: 'Not fully ramped yet', keys: ['Tyler', 'Oliver'] },
 ];
 export const KPI = { hc: 0.8, sv: 0.5 };

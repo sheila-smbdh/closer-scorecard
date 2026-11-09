@@ -4,17 +4,17 @@ Runs every Friday at 11:30am ET (`CRON_TZ=America/New_York 30 11 * * 5`), ahead 
 
 **Read-only rule (Sheila):** never write to or change anything in Google Sheets, Close, Calendly, the tracker, Slack history or any other source. Only read. The only outputs are the report image in #sales-strategy and the flags DM to Sheila. Never message closers.
 
-## Pods (13 closers)
+## Pods (11 closers)
 1. Owen's pod: Owen, JZ (Jay Z), Adam, VeJohn
-2. Jay's pod, fully ramped: Nick, Harry, Omar, Julien
-3. Jay's pod, newly ramped (month 4): Kevin, Solomon, Daniel
+2. Jay's pod, fully ramped: Nick, Harry, Omar
+3. Jay's pod, newly ramped (month 4): Kevin, Solomon
 4. Ramping: Tyler, Oliver
 
 ## Steps
 1. **Dates.** `report_date` = today (ET, YYYY-MM-DD). `month` = this month's name. `as_of_label` like `Fri Oct 23`.
 2. **Snapshot file.** Copy `data/pipeline-2026-10-20.json` to `data/pipeline-<report_date>.json` and replace every data block below (keep `closers`). Drop `cash_notes` unless verified this run.
-3. **Pipeline Review** (`1pX0nlLTJkQ-cAzgUk0QLQrhX6xjfaviAFoQIc_NaHVc`, Composio googlesheets, read only). Tabs Owen, JZ, Adam, VeJohn, Julien, Nick, Omar, Harry, Kevin, Solomon, Daniel (Oliver and Tyler have none yet; add them when a tab appears). Rows under this month's header until the next month header, skipping blank names, as `pipeline_leads[key] = [[name, B status, D cash, F outcome, Close lead id from the C link], ...]`. For every Close-paid lead (step 4) not in this month's section, record where it sits: `pipeline_index[lead_id] = [section header, name, B status, D cash]`.
-4. **Close** (Close MCP `find_opportunities`, read only): `status_type: won`, `close_at` from the 1st of the month to the 1st of next month, paginate to the end. Keep those with a "Cash Collected" custom field as `close_won = [[closer key, contact name, lead id, cash collected, "MM-DD" close date], ...]`. Map owner names: Owen Henderson -> Owen, Jordan Zadrozny -> JZ, Adam Larkins -> Adam, VeJohn Heinemann -> VeJohn, Julien Breteau -> Julien, Nick Vaughan -> Nick, Omar Kaddoura -> Omar, Harry Whyte -> Harry, Kevin Manuel -> Kevin, Solomon House -> Solomon, Daniel Jenkins -> Daniel, Oliver English -> Oliver, Tyler Johnson -> Tyler; anyone else (setters) keep their first name. Set `close_pulled_at`.
+3. **Pipeline Review** (`1pX0nlLTJkQ-cAzgUk0QLQrhX6xjfaviAFoQIc_NaHVc`, Composio googlesheets, read only). Tabs Owen, JZ, Adam, VeJohn, Nick, Omar, Harry, Kevin, Solomon (Daniel and Julien left the company on Nov 9, 2026: skip their tabs and leave their Close wins out of `close_won`; Oliver and Tyler have none yet; add them when a tab appears). Rows under this month's header until the next month header, skipping blank names, as `pipeline_leads[key] = [[name, B status, D cash, F outcome, Close lead id from the C link], ...]`. For every Close-paid lead (step 4) not in this month's section, record where it sits: `pipeline_index[lead_id] = [section header, name, B status, D cash]`.
+4. **Close** (Close MCP `find_opportunities`, read only): `status_type: won`, `close_at` from the 1st of the month to the 1st of next month, paginate to the end. Keep those with a "Cash Collected" custom field as `close_won = [[closer key, contact name, lead id, cash collected, "MM-DD" close date], ...]`. Map owner names: Owen Henderson -> Owen, Jordan Zadrozny -> JZ, Adam Larkins -> Adam, VeJohn Heinemann -> VeJohn, Nick Vaughan -> Nick, Omar Kaddoura -> Omar, Harry Whyte -> Harry, Kevin Manuel -> Kevin, Solomon House -> Solomon, Oliver English -> Oliver, Tyler Johnson -> Tyler; anyone else (setters) keep their first name. Set `close_pulled_at`.
 5. **Sales Tracker 2026** (`1Y7LCecej4lj2XNfVw0b_9L0KAp7Qj8WKeYM711UGsp0`, `Inputs`, read only): this month's rows (A Closer, E Date, J Close 1, W Cash Collected) with a close or cash, as `sales_tracker[key] = [["MM-DD", close1, cash], ...]` ("Jay Z" -> JZ, "Adam L" -> Adam; every closer key present, `[]` if none). This is the source of truth for the closed count and actual cash.
 6. **Cash differences.** For any closer where the run flags "Sales Tracker cash vs Close", search #cash-collected (`C072K6CFXD5`, read only) for the lead and add a one-line explanation to `cash_notes[key]` (e.g. split payments across months).
 7. **Render.** `node src/pipeline-report.mjs data/pipeline-<report_date>.json out` (Playwright: `ln -s "$(npm root -g)" node_modules` if missing). Look at the PNG before posting.
