@@ -92,13 +92,6 @@
    "new_hire": false
   },
   {
-   "key": "Julien",
-   "name": "Julien Breteau",
-   "short": "Julien",
-   "slack": "U0B01Q061B6",
-   "new_hire": false
-  },
-  {
    "key": "Nick",
    "name": "Nick Vaughan",
    "short": "Nick",
@@ -124,13 +117,6 @@
    "name": "Solomon House",
    "short": "Solomon",
    "slack": "U0BMBFU1UHH",
-   "new_hire": false
-  },
-  {
-   "key": "Daniel",
-   "name": "Daniel Jenkins",
-   "short": "Daniel",
-   "slack": "U0BKT632M9Q",
    "new_hire": false
   },
   {

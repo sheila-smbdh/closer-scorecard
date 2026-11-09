@@ -112,7 +112,7 @@ export function closerMetrics(data, closer, edition) {
   const usable = ct && !checkTargets(tf, monthKey).length;
   const curve = usable ? dailyCurve(tf, monthKey) : null;
   const cashValue = tp ? tp.cash : mtd[CASH];
-  const dayNow = tp?.daily_cash?.length ?? null;
+  const dayNow = tp?.daily_cash?.length || (tr?.through ? Number(tr.through.slice(8, 10)) : null);
   const expected = usable && dayNow ? ct.cash * curve[dayNow - 1] : null;
   const pace = expected ? paceStatus(cashValue ?? 0, expected) : null;
   const cash = {
