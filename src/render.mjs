@@ -193,7 +193,7 @@ ${ch ? `<div class="pt-chart">${chart(ch, c.monthTarget, c.value ?? 0, month.lab
     };
     // The 1st-of-month card also has next month's plan, so name the month this table covers
     weekly = `<h2>${m.edition === 'monthly' ? `${month.label.toUpperCase()} ` : ''}WEEKLY SCORECARD</h2>
-<table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>weekly average / target</small></th></tr></thead><tbody>
+<table><thead><tr><th>Week</th><th>Cash collected<small>actual / target</small></th><th>Closes<small>actual / target</small></th><th>Slots (booked + open)<small>finished weeks: daily average · this week: next 7 days / target</small></th></tr></thead><tbody>
 ${p.weeks.map((w) => `<tr class="${w.phase}"><td><div class="wk">${w.label}</div><small>${w.dates} · ${w.span}</small></td><td>${cell(w, 'cash', $)}${w.carried ? `<small>Includes ${$(w.carried)} carried from earlier weeks</small>` : ''}</td><td>${cell(w, 'closes', String)}</td><td>${slotCell(w)}</td></tr>`).join('\n')}
 <tr class="month"><td><div class="wk">${month.label} total</div><small>Month to date vs month goal</small></td>${['cash', 'closes', 'slots'].map((k) => {
       const fmt = k === 'cash' ? $ : String, v = p.month.actual[k];
