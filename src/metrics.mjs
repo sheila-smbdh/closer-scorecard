@@ -6,7 +6,7 @@ export const TARGETS = {
   avgRevenueFloor: 17500,  // MTD revenue generated / closes
 };
 
-import { targetsFor, closerTargets, checkTargets, dailyCurve, paceStatus, nextMonthKey } from './targets.mjs';
+import { targetsFor, closerTargets, checkTargets, dailyCurve, paceStatus, nextMonthKey, monthWeeks, daysIn } from './targets.mjs';
 
 // Activity arrays: [booked calls, live calls, offers, closes, revenue generated, cash collected]
 const CALLS = 0, LIVE = 1, CLOSES = 3, REV = 4, CASH = 5;
@@ -113,13 +113,24 @@ export function closerMetrics(data, closer, edition) {
   const curve = usable ? dailyCurve(tf, monthKey) : null;
   const cashValue = tp ? tp.cash : mtd[CASH];
   const dayNow = tp?.daily_cash?.length || (tr?.through ? Number(tr.through.slice(8, 10)) : null);
-  const expected = usable && dayNow ? ct.cash * curve[dayNow - 1] : null;
+  // Goal to date. Monday and 1st-of-month cards cover full weeks, so their goal stops at the end of the last
+  // finished week of the Weekly Scorecard and always equals the finished week rows (Sheila, Nov 9). From
+  // Dec 2026 weeks end on Sunday, so this is the through day itself; in Nov 2026 (Sun-Sat weeks) a Monday
+  // card's goal stops at Saturday. Wednesday is mid-week and runs through Tuesday.
+  let goalDay = dayNow;
+  if (monday && dayNow && monthKey) {
+    const [gy, gm] = monthKey.split('-').map(Number);
+    const ended = monthWeeks(gy, gm - 1, daysIn(monthKey)).filter((w) => w.end <= dayNow).at(-1);
+    if (ended) goalDay = ended.end;
+  }
+  const expected = usable && goalDay ? ct.cash * curve[goalDay - 1] : null;
   const pace = expected ? paceStatus(cashValue ?? 0, expected) : null;
   const cash = {
     value: cashValue, expected, monthTarget: usable ? ct.cash : null, closesTarget: usable ? ct.closes : null,
     source: tp ? 'tracker' : 'sales_tracker', salesTrackerCash: mtd[CASH], targetsMonth: monthKey,
     status: pace ? TRACKER_STATUS[pace] : 'track', pace,
     paceRatio: expected ? (cashValue ?? 0) / expected : null,
+    goalDay: expected ? goalDay : null, goalThrough: goalDay !== dayNow && tr?.through ? `${tr.through.slice(0, 8)}${String(goalDay).padStart(2, '0')}` : null,
   };
   // Pace chart: daily cumulative cash, last month's curve on this month's day axis (normalized for month
   // length), and the goal curve × month target

@@ -4,8 +4,8 @@
 //
 // File shape:
 //   { "month": "2026-11",
-//     "weeks": [0.12, 0.18, 0.2, 0.25, 0.25],        // share of the month per week (the tracker's weeks,
-//                                                     // see monthWeeks below), must add up to 1
+//     "weeks": [0.12, 0.18, 0.2, 0.25, 0.25],        // share of the month per week (Mon-Sun weeks from
+//                                                     // Dec 2026, see monthWeeks below), must add up to 1
 //     "closers": { "Owen": { "cash": 450000, "closes": 26 }, ... } }   // closes optional: cash ÷ $17,500
 
 import fs from 'node:fs';
@@ -14,8 +14,39 @@ import { fileURLToPath } from 'node:url';
 
 const MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-// Port of the tracker's computeMonthWeeks (src/lib/compute/projections.ts in smbdh-2m-tracker)
+// Weeks of the month for the Weekly Scorecard and the targets file's weekly shares.
+// From December 2026 (Sheila, Nov 9): every week ends on a Sunday, the day the Monday card's window
+// ends, so a Monday card always closes out a week and its goal to date equals that week's row.
+// Week 1 runs from the 1st through the first Sunday (Dec 2026: Tue Dec 1 to Sun Dec 6); when the 1st is
+// itself a Sunday, that day joins the next week. The last week ends on the month's last day.
+// November 2026 and earlier keep the tracker's Sun-Sat weeks (monthWeeksSunSat): closers had already seen
+// November's weekly targets. In those months the Monday card's goal to date stops at the last finished
+// week instead (src/metrics.mjs), so it still equals a week row.
+const DAY = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export function monthWeeks(year, monthIdx, dim) {
+  if (year * 12 + monthIdx < 2026 * 12 + 11) return monthWeeksSunSat(year, monthIdx, dim);
+  const dow = (d) => new Date(Date.UTC(year, monthIdx, d)).getUTCDay();
+  const mon = MONTH_ABBR[monthIdx];
+  let firstSunday = 1;
+  while (dow(firstSunday) !== 0) firstSunday++;
+  if (firstSunday === 1) firstSunday = 8; // a Sunday 1st joins the first Mon-Sun week
+  const segs = [{ start: 1, end: Math.min(firstSunday, dim) }];
+  for (let s = segs[0].end + 1; s <= dim; s = segs.at(-1).end + 1) segs.push({ start: s, end: Math.min(s + 6, dim) });
+  return segs.map((seg, i) => {
+    const days = seg.end - seg.start + 1;
+    const final = i === segs.length - 1 && segs.length > 1 && dow(seg.end) !== 0;
+    const range = `${DAY[dow(seg.start)]}-${DAY[dow(seg.end)]}`;
+    return {
+      ...seg,
+      label: final ? 'Final stretch' : `Week ${i + 1}`,
+      dates: seg.start === seg.end ? `${mon} ${seg.start}` : `${mon} ${seg.start} → ${seg.end}`,
+      span: final ? `${days}-day finale` : days === 7 ? 'Mon-Sun' : `${range}, ${days} days`,
+    };
+  });
+}
+
+// Port of the tracker's computeMonthWeeks (src/lib/compute/projections.ts in smbdh-2m-tracker)
+function monthWeeksSunSat(year, monthIdx, dim) {
   const dow = (d) => new Date(Date.UTC(year, monthIdx, d)).getUTCDay();
   const mon = MONTH_ABBR[monthIdx];
   let firstSunday = 1;
