@@ -146,6 +146,9 @@ export function closerMetrics(data, closer, edition) {
       curve, goal: curve.map((g) => g * cash.monthTarget),
       priorSameDay: prior ? prior[day - 1] : null,
     };
+    // A trimmed card (Nov 2026 Monday, ends Saturday) keeps the pull's full daily cash: the current week's
+    // "so far" counts the days after the card's last day (Sunday belongs to Week 2)
+    if (ed.tracker_key) cash.chart.dataDaily = data.trackers[ed.tracker_key]?.closers?.[k]?.daily_cash ?? null;
   }
 
   // Closes this month (Close 1); a trimmed window counts the per-day closes up to its last day
