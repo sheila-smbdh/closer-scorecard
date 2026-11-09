@@ -35,7 +35,7 @@ Title: "<Closer>'s month to date: Sunday, October 18th" (the last day of the win
 
 1. **Pace chart**: cash collected and closes month to date (headline), % vs goal pace and % vs last month on the same day, a pace badge (Ahead of pace / On pace / Slightly behind / Behind pace, the tracker's words and bands), and the month goal (cash and closes). Three lines: goal (the closer-facing curve × month target), last month on the same normalized day, this month to date.
 2. **Your inputs, month to date**: average weekly slots (booked · open), live calls, average revenue, Pacing (cash collected month to date / the goal for today on the closer-facing curve, with the pace badge).
-3. **Weekly Scorecard**: one table, one row per week of the month (the 2M tracker's weeks: Sun-Sat, leading partial days folded into Week 1, a trailing remnant under 7 days is the "Final stretch"). Cash collected, closes and slots per week: actual / target with Hit / Missed for finished weeks, "so far" for the week in progress, target only for upcoming weeks. Misses carry forward like the tracker's week cards (see Weekly Scorecard below). The first unfinished week's slots cell shows the next 7 days (booked + open) against 35 and how many more slots to open. A last row gives the month: month to date vs the month goal.
+3. **Weekly Scorecard**: one table, one row per week of the month (weeks end on Sunday, the day the Monday card's window ends (Sheila, Nov 9, 2026): Week 1 is the 1st through the first Sunday (a Sunday 1st joins the next week), then Mon-Sun weeks, and the days after the last Sunday are the "Final stretch". So a Monday card's goal to date always equals the target of the week it closes out. Months before November 2026 keep the 2M tracker's Sun-Sat weeks). Cash collected, closes and slots per week: actual / target with Hit / Missed for finished weeks, "so far" for the week in progress, target only for upcoming weeks. Misses carry forward like the tracker's week cards (see Weekly Scorecard below). The first unfinished week's slots cell shows the next 7 days (booked + open) against 35 and how many more slots to open. A last row gives the month: month to date vs the month goal.
 
 4. **<Month> plan** (1st-of-month edition only, `node src/build.mjs <snapshot> out monthly`): the new month's weeks with share of the month, cash, closes and slots targets, for Jay to set the month's goal with each closer. Goal and weekly split from the new month's targets file; left off (and flagged) when that file is missing.
 
@@ -53,7 +53,7 @@ Everything about closes is anchored on the month's closes target = month cash ta
   "closers": { "Owen": { "cash": 450000 }, "Nick": { "cash": 300000, "closes": 18 } } }
 ```
 
-- `weeks`: each week's share of the month, one per week of the tracker's calendar (Sun-Sat, lead-in folded into Week 1, a trailing remnant under 7 days is its own "Final stretch"), adding up to 1. November 2026 has 5: Nov 1-7, 8-14, 15-21, 22-28, 29-30.
+- `weeks`: each week's share of the month, one per week of the Weekly Scorecard (weeks end on Sunday; see above), adding up to 1. November 2026 has 5: Nov 1-8, 9-15, 16-22, 23-29, 30. December 2026 has 5: Dec 1-6, 7-13, 14-20, 21-27, 28-31. Each week's share is spread evenly over its days for goal to date.
 - `closers[key].cash`: month goal; `closes` is optional (default cash ÷ $17,500).
 - `data/targets/2026-10.json` is a sample built from the tracker so the October samples render.
 
