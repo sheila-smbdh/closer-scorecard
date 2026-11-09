@@ -56,7 +56,9 @@ export function plan(data, m) {
   const closesBefore = (d) => closesIn(1, d - 1);
   let carried = false;
   out.weeks = monthWeeks(year, mo - 1, dim).map((w) => {
-    const phase = w.end <= through ? 'done' : w.start <= through ? 'now' : 'next';
+    // The first unfinished week is this week, even when the card ends on the day before it starts (a Nov
+    // 2026 Monday card ends Saturday; its Week 2 starts Sunday): it gets the highlight and "so far" numbers
+    const phase = w.end <= through ? 'done' : !carried ? 'now' : 'next';
     const cashLine = (d) => c.monthTarget * curveAt(d), closesLine = (d) => Math.round(target * curveAt(d));
     // Finished weeks and the first unfinished one start from what was actually banked; later weeks
     // start from the pace line
