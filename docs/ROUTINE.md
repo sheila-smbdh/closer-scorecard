@@ -20,6 +20,7 @@ Runs at 7:14am ET on the 1st of every month and every Monday and Wednesday (`CRO
 - Calendly: `list_events` per closer, read only.
 - Tracker read API via `node src/fetch-tracker.mjs` (pre-approved in `.claude/settings.json`; it reads `TRACKER_READ_TOKEN`, never print it).
 - Playwright: `ln -s "$(npm root -g)" node_modules` if `node_modules` is missing.
+- **Compute locally, never in Composio's sandbox** (Sheila, Nov 14): do all parsing and number-crunching with `node` or `python3` in this session, on files saved here. Never use `COMPOSIO_REMOTE_WORKBENCH` or `COMPOSIO_REMOTE_BASH_TOOL`. Composio is only for reading sources (for example `COMPOSIO_MULTI_EXECUTE_TOOL` for Google Sheets). The Close guard hook asks for approval on any Composio call whose text mentions "close" (which "closer" and "closes" trip), and a scheduled run has nobody to approve it, so the run stalls (this is what stopped the Nov 11 run).
 
 ## Steps
 
