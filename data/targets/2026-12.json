@@ -1,0 +1,46 @@
+{
+ "month": "2026-12",
+ "_note": "Closer-facing targets from Sheila, Nov 27 ($2.75M team). Her Closer pace split was given on Sun-Sat weeks (Dec 1-12 25%, 13-19 16.3%, 20-26 18.1%, 27-31 40.5%); converted onto the card's Sunday-ending weeks (Dec 1-6, 7-13, 14-20, 21-27, 28-31) by spreading each of her weeks evenly over its days and scaling to 100% (her shares added up to 99.9%). Tyler and Oliver have no December goal: no December cards or DMs for them (Sheila, Nov 27).",
+ "weeks": [
+  0.1251,
+  0.1484,
+  0.1657,
+  0.2364,
+  0.3244
+ ],
+ "closers": {
+  "Owen": {
+   "cash": 380000
+  },
+  "JZ": {
+   "cash": 315000
+  },
+  "Harry": {
+   "cash": 300000
+  },
+  "Omar": {
+   "cash": 285000
+  },
+  "VeJohn": {
+   "cash": 280000
+  },
+  "Adam": {
+   "cash": 275000
+  },
+  "Nick": {
+   "cash": 285000
+  },
+  "Kevin": {
+   "cash": 215000
+  },
+  "Solomon": {
+   "cash": 215000
+  },
+  "Yobani": {
+   "cash": 100000
+  },
+  "Quinn": {
+   "cash": 100000
+  }
+ }
+}

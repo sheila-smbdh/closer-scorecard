@@ -55,6 +55,7 @@ Everything about closes is anchored on the month's closes target = month cash ta
 
 - `weeks`: each week's share of the month, one per week of the Weekly Scorecard (weeks end on Sunday; see above), adding up to 1. November 2026 has 5 Sun-Sat weeks: Nov 1-7, 8-14, 15-21, 22-28, 29-30. December 2026 has 5: Dec 1-6, 7-13, 14-20, 21-27, 28-31. Each week's share is spread evenly over its days for goal to date.
 - `closers[key].cash`: month goal; `closes` is optional (default cash ÷ $17,500).
+- A closer with no goal in the file gets no card that month (the build skips them and flags it). December 2026 (`data/targets/2026-12.json`, $2.75M): no goal for Tyler or Oliver; Sheila's split came on Sun-Sat weeks and was converted onto the Sunday-ending weeks (see the file's note).
 - `data/targets/2026-10.json` is a sample built from the tracker so the October samples render.
 
 ## Metrics
