@@ -1,6 +1,6 @@
 # Closer Scorecard routine
 
-Runs at 7:14am ET on the 1st of every month and every Monday and Wednesday (`CRON_TZ=America/New_York 14 7 1 * 1,3`: day-of-month and day-of-week together fire on either), after Messi's 6am slot post. **Paused until Sheila turns it on (sending starts in November).** Decisions behind each step are in `docs/HANDOFF.md`; metric definitions are in `README.md`.
+Runs at 6:20am ET on the 1st of every month and every Monday and Wednesday (`CRON_TZ=America/New_York 20 6 1 * 1,3`: day-of-month and day-of-week together fire on either), after Messi's 6am slot post. **Paused until Sheila turns it on (sending starts in November).** Decisions behind each step are in `docs/HANDOFF.md`; metric definitions are in `README.md`.
 
 **Which run (ET date):**
 - **1st of the month: monthly edition.** The whole previous month (through its last day), every closer's card posted to **#sales-reports** (`C0C5CGGGE1M`) for Jay's 1:1s. The card adds a **<New month> plan** table: the new month's weeks with each week's share of the month and its cash, closes and slots targets, so Jay can set the month's goal with the closer. Its goal and weekly split come from `data/targets/<new month>.json`. No DMs from this edition.

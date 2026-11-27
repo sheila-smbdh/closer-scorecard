@@ -4,9 +4,9 @@ Month-to-date scorecard image for each closer.
 
 **Friday pipeline report (live):** every Friday 11:30am ET, one image of all 13 closers by pod to #sales-strategy. See `docs/PIPELINE_ROUTINE.md`; build with `node src/pipeline-report.mjs data/pipeline-<date>.json out`. All sources are read-only.
 
-- **1st of the month, 7:14am ET**: the whole previous month, every closer's card in a thread under one "<Month> closer scorecards are in @Jay" message in #sales-reports, for Jay's 1:1s. On a Monday or Wednesday 1st only this goes out (no DMs).
-- **Monday 7:14am ET**: month to date through Sunday, by DM (first DMs Mon Nov 9, 2026).
-- **Wednesday 7:14am ET**: month to date through Tuesday, by DM.
+- **1st of the month, 6:20am ET**: the whole previous month, every closer's card in a thread under one "<Month> closer scorecards are in @Jay" message in #sales-reports, for Jay's 1:1s. On a Monday or Wednesday 1st only this goes out (no DMs).
+- **Monday 6:20am ET**: month to date through Sunday, by DM (first DMs Mon Nov 9, 2026).
+- **Wednesday 6:20am ET**: month to date through Tuesday, by DM.
 
 **Management view** (Jay and Sheila only): every closer's numbers on one page, team totals and next month's plan, from the same metrics as the cards. Slots mirror the cards' Weekly Scorecard rows: the last finished week's daily average and the next 7 days from the edition-day post (on the 1st: last week and the month average). Command: `node src/management.mjs data/scorecard-<date>.json out monthly` → `out/monthly-management.png`. Every Monday and Wednesday run that DMs closers also posts `out/<edition>-management.png` to #sales-leadership.
 
